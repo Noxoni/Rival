@@ -1,0 +1,110 @@
+{
+  "report_schema_version": 1,
+  "generated_utc": "2026-08-22T21:38:01.440Z",
+  "protocol": "rival-m04p1-natural-treatment-definition-v1",
+  "prospective": true,
+  "source_baseline_analysis": {
+    "filename": "natural_baseline_analysis.json",
+    "sha256": "2f73269058f1771647aa51ae5e3e4f10cb95cc6003bad4bd4113c337d3fd4a27",
+    "matches": 8,
+    "policy_decisions": 43792
+  },
+  "patterns_considered": [
+    {
+      "pattern": "apparent_pressure_release_after_closing_abort",
+      "independent_episodes": 510,
+      "matches_with_episode": 8,
+      "opponent_next_touch_rate": 0.3392156862745098,
+      "near_term_concession_rate": 0.08235294117647059,
+      "selected": false,
+      "reason": "highest frequency, but the detector is inference-only and overlaps the previously rejected broad challenge direction"
+    },
+    {
+      "pattern": "low_resource_aerial_commitment",
+      "independent_episodes": 104,
+      "matches_with_episode": 8,
+      "opponent_next_touch_rate": 0.36538461538461536,
+      "near_term_concession_rate": 0.125,
+      "selected": true,
+      "reason": "recurs across every match, has the highest observed near-term concession rate, and has a narrow live-state correction boundary"
+    },
+    {
+      "pattern": "boost_pickup_with_eta_possession_flip",
+      "independent_episodes": 66,
+      "matches_with_episode": 8,
+      "opponent_next_touch_rate": 0.22727272727272727,
+      "near_term_concession_rate": 0.09090909090909091,
+      "selected": false,
+      "reason": "lower frequency and consequence, with less direct action-level attribution"
+    }
+  ],
+  "selected_behavior": {
+    "name": "low_resource_losing_race_aerial_commitment",
+    "supporting_slice": {
+      "raw_candidate_windows_with_boost_below_30_and_eta_at_or_below_zero": 77,
+      "opponent_next_touch": 44,
+      "self_next_touch": 23,
+      "none_next_touch": 10,
+      "opponent_next_touch_rate": 0.5714285714285714,
+      "approximate_windows_also_meeting_distance_and_baseline_commitment_gates": 36,
+      "approximate_gate_slice_next_touch": {
+        "opponent": 18,
+        "self": 13,
+        "none": 5
+      }
+    }
+  },
+  "treatment": {
+    "parameter_version": "m04p1-low-resource-aerial-v1",
+    "mode_for_treatment_batch": "intervene",
+    "default_mode": "off",
+    "action_space": "existing legal Wisp discrete actions only",
+    "state_features": [
+      "self boost",
+      "ball height",
+      "self-to-ball distance",
+      "possession ETA advantage",
+      "self grounded or airborne state",
+      "match phase",
+      "defensive-emergency safety state",
+      "previous baseline aerial-like decision"
+    ],
+    "state_gate": {
+      "maximum_boost_exclusive": 30.0,
+      "minimum_ball_height_inclusive": 300.0,
+      "minimum_ball_distance_inclusive": 650.0,
+      "maximum_possession_eta_advantage_inclusive": 0.0,
+      "phase": "Active",
+      "requires_new_aerial_like_transition": true,
+      "requires_baseline_resource_commitment": true,
+      "defensive_emergency_excluded": true
+    },
+    "graded_logit_penalty": {
+      "minimum": 0.15,
+      "maximum": 0.55,
+      "severity_weights": {
+        "boost_deficit": 0.45,
+        "eta_disadvantage": 0.3,
+        "ball_height": 0.15,
+        "ball_distance": 0.1
+      },
+      "grounded_penalized_actions": "jump actions",
+      "airborne_penalized_actions": "boost actions"
+    },
+    "history_bound": "one baseline aerial-like transition; continuous repeats are not re-ranked",
+    "model_weights_changed": false,
+    "challenge_calibration_mode": "off"
+  },
+  "acceptance_rule": {
+    "requires_applied_interventions": true,
+    "primary_metric": "low_resource_aerial_commitment episode frequency and consequences",
+    "supporting_metrics": [
+      "applied-intervention next-touch and near-term-goal outcomes",
+      "favorable ETA share",
+      "possession-loss transitions and concessions after loss",
+      "goal differential and scores as context"
+    ],
+    "decision": "accept only if directionally and meaningfully better without an obvious damaging regression; otherwise leave default off",
+    "post_freeze_compensating_rules": "not allowed"
+  }
+}

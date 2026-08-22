@@ -10,6 +10,10 @@ from uuid import uuid4
 from analysis.tactical_metrics import TacticalMetrics
 from policy.decision import PolicyDecision
 from strategy.challenge_calibration import ChallengeCalibrationDecision
+from strategy.natural_adjustment import (
+    NaturalAdjustmentDecision,
+    NaturalAdjustmentMode,
+)
 
 
 class DecisionTelemetryLogger:
@@ -90,12 +94,21 @@ class DecisionTelemetryLogger:
         runtime: Mapping[str, Any],
         direct_packet: Mapping[str, Any] | None = None,
         calibration: ChallengeCalibrationDecision | None = None,
+        natural_adjustment: NaturalAdjustmentDecision | None = None,
     ) -> bool:
         if not self.enabled:
             return False
 
         decision_record = decision.to_record(include_logits=self.include_logits)
-        if calibration is None:
+        action_layer: ChallengeCalibrationDecision | NaturalAdjustmentDecision | None
+        if (
+            natural_adjustment is not None
+            and natural_adjustment.mode is not NaturalAdjustmentMode.OFF
+        ):
+            action_layer = natural_adjustment
+        else:
+            action_layer = calibration
+        if action_layer is None:
             decision_record.update(
                 {
                     "baseline_action_index": decision.action_index,
@@ -110,28 +123,28 @@ class DecisionTelemetryLogger:
         else:
             decision_record.update(
                 {
-                    "baseline_action_index": calibration.baseline_action_index,
+                    "baseline_action_index": action_layer.baseline_action_index,
                     "baseline_controller_action": (
-                        calibration.baseline_controller_action.to_record()
+                        action_layer.baseline_controller_action.to_record()
                     ),
-                    "final_action_index": calibration.final_action_index,
+                    "final_action_index": action_layer.final_action_index,
                     "final_controller_action": (
-                        calibration.final_controller_action.to_record()
+                        action_layer.final_controller_action.to_record()
                     ),
                     "hypothetical_action_index": (
-                        calibration.hypothetical_action_index
+                        action_layer.hypothetical_action_index
                     ),
                     "hypothetical_controller_action": (
                         None
-                        if calibration.hypothetical_controller_action is None
-                        else calibration.hypothetical_controller_action.to_record()
+                        if action_layer.hypothetical_controller_action is None
+                        else action_layer.hypothetical_controller_action.to_record()
                     ),
-                    "intervention_applied": calibration.applied,
+                    "intervention_applied": action_layer.applied,
                     # Keep these legacy fields as the action actually sent to RLBot so
                     # schema-v1/v2 event code does not mistake a hypothetical jump for
                     # an executed treatment action.
-                    "action_index": calibration.final_action_index,
-                    "controller_action": calibration.final_controller_action.to_record(),
+                    "action_index": action_layer.final_action_index,
+                    "controller_action": action_layer.final_controller_action.to_record(),
                 }
             )
         record = {
@@ -141,6 +154,11 @@ class DecisionTelemetryLogger:
             "decision": decision_record,
             "challenge_calibration": (
                 None if calibration is None else calibration.to_record()
+            ),
+            "natural_adjustment": (
+                None
+                if natural_adjustment is None
+                else natural_adjustment.to_record()
             ),
             "tactical_metrics": tactical_metrics.to_record(),
             "state": dict(state),

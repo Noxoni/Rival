@@ -109,6 +109,20 @@ def _touch_sequence(decisions: Iterable[Mapping[str, Any]]) -> list[dict[str, An
     ]
 
 
+def _next_touch(
+    touches: Iterable[Mapping[str, Any]],
+    anchor: float,
+) -> Mapping[str, Any] | None:
+    return next(
+        (
+            touch
+            for touch in touches
+            if float(touch["game_time"]) > anchor + 1e-4
+        ),
+        None,
+    )
+
+
 def _goal_events(
     decisions: Iterable[Mapping[str, Any]],
     rival_team: int,
@@ -351,11 +365,39 @@ def _session_metrics(
         for loss in possession_losses
     )
     raw_expected = _mapping(batch_session.get("raw_telemetry")).get("sha256")
-    intervention_records = [
-        _mapping(record.get("natural_adjustment"))
+    intervention_decisions = [
+        (record, _mapping(record.get("natural_adjustment")))
         for record in session.decisions
         if isinstance(record.get("natural_adjustment"), Mapping)
     ]
+    applied_outcome_touches: Counter[str] = Counter()
+    applied_outcome_goals: Counter[str] = Counter()
+    applied_severities: list[float] = []
+    reason_counts: Counter[str] = Counter()
+    for record, adjustment in intervention_decisions:
+        reason_counts[str(adjustment.get("reason") or "unknown")] += 1
+        if not bool(adjustment.get("applied")):
+            continue
+        anchor = _decision_time(record)
+        if anchor is None:
+            applied_outcome_touches["none"] += 1
+            applied_outcome_goals["none"] += 1
+            continue
+        next_touch = _next_touch(touches, anchor)
+        applied_outcome_touches[
+            "none" if next_touch is None else str(next_touch["role"])
+        ] += 1
+        goal = _next_goal(
+            goals,
+            anchor,
+            parameters.goal_consequence_window_seconds,
+        )
+        applied_outcome_goals[
+            "none" if goal is None else str(goal["rival_outcome"])
+        ] += 1
+        severity = _finite(adjustment.get("severity"))
+        if severity is not None:
+            applied_severities.append(severity)
     return (
         {
             "session_id": session.session_id,
@@ -377,13 +419,40 @@ def _session_metrics(
             "possession_loss_transition_count": len(possession_losses),
             "goals_conceded_within_window_after_possession_loss": conceded_after_loss,
             "goals_scored_within_window_after_possession_loss": scored_after_loss,
-            "natural_adjustment_record_count": len(intervention_records),
+            "natural_adjustment_record_count": len(intervention_decisions),
             "natural_adjustment_eligible_decision_count": sum(
-                bool(record.get("eligible")) for record in intervention_records
+                bool(adjustment.get("eligible"))
+                for _, adjustment in intervention_decisions
             ),
             "natural_adjustment_applied_decision_count": sum(
-                bool(record.get("applied")) for record in intervention_records
+                bool(adjustment.get("applied"))
+                for _, adjustment in intervention_decisions
             ),
+            "natural_adjustment_hypothetical_change_count": sum(
+                adjustment.get("hypothetical_action") is not None
+                for _, adjustment in intervention_decisions
+            ),
+            "natural_adjustment_applied_next_touch": {
+                "self": applied_outcome_touches["self"],
+                "opponent": applied_outcome_touches["opponent"],
+                "none": applied_outcome_touches["none"],
+            },
+            "natural_adjustment_applied_next_goal": {
+                "window_seconds": parameters.goal_consequence_window_seconds,
+                "scored": applied_outcome_goals["scored"],
+                "conceded": applied_outcome_goals["conceded"],
+                "none": applied_outcome_goals["none"],
+            },
+            "natural_adjustment_applied_severity": {
+                "minimum": min(applied_severities) if applied_severities else None,
+                "mean": (
+                    sum(applied_severities) / len(applied_severities)
+                    if applied_severities
+                    else None
+                ),
+                "maximum": max(applied_severities) if applied_severities else None,
+            },
+            "natural_adjustment_reason_counts": dict(sorted(reason_counts.items())),
             "raw_telemetry_sha256": session.raw_sha256,
             "raw_hash_matches_batch": session.raw_sha256 == raw_expected,
             "loader_warnings": session.warnings,
@@ -398,6 +467,40 @@ def _aggregate_sessions(sessions: list[Mapping[str, Any]]) -> dict[str, Any]:
         int(session["favorable_eta_observation_count"]) for session in sessions
     )
     goal_differentials = [int(session["goal_differential"]) for session in sessions]
+    applied_next_touch = sum(
+        (
+            Counter(_mapping(session.get("natural_adjustment_applied_next_touch")))
+            for session in sessions
+        ),
+        Counter(),
+    )
+    applied_next_goal = sum(
+        (
+            Counter(
+                {
+                    key: value
+                    for key, value in _mapping(
+                        session.get("natural_adjustment_applied_next_goal")
+                    ).items()
+                    if key != "window_seconds"
+                }
+            )
+            for session in sessions
+        ),
+        Counter(),
+    )
+    applied_severities = [
+        float(value)
+        for session in sessions
+        if (
+            value := _finite(
+                _mapping(session.get("natural_adjustment_applied_severity")).get(
+                    "mean"
+                )
+            )
+        )
+        is not None
+    ]
     return {
         "match_count": len(sessions),
         "wins": sum(value > 0 for value in goal_differentials),
@@ -447,6 +550,25 @@ def _aggregate_sessions(sessions: list[Mapping[str, Any]]) -> dict[str, Any]:
             "applied_decision_count": sum(
                 int(session["natural_adjustment_applied_decision_count"])
                 for session in sessions
+            ),
+            "hypothetical_change_count": sum(
+                int(session["natural_adjustment_hypothetical_change_count"])
+                for session in sessions
+            ),
+            "applied_next_touch": {
+                "self": applied_next_touch["self"],
+                "opponent": applied_next_touch["opponent"],
+                "none": applied_next_touch["none"],
+            },
+            "applied_next_goal": {
+                "scored": applied_next_goal["scored"],
+                "conceded": applied_next_goal["conceded"],
+                "none": applied_next_goal["none"],
+            },
+            "mean_session_applied_severity": (
+                sum(applied_severities) / len(applied_severities)
+                if applied_severities
+                else None
             ),
         },
     }
@@ -566,6 +688,12 @@ def markdown_summary(report: Mapping[str, Any]) -> str:
             f"{aggregate.get('goals_conceded_within_window_after_possession_loss', 0)} |"
         ),
         f"| Adjustment applied decisions | {adjustment.get('applied_decision_count', 0)} |",
+        (
+            "| Applied next touch self / opponent / none | "
+            f"{_mapping(adjustment.get('applied_next_touch')).get('self', 0)} / "
+            f"{_mapping(adjustment.get('applied_next_touch')).get('opponent', 0)} / "
+            f"{_mapping(adjustment.get('applied_next_touch')).get('none', 0)} |"
+        ),
         "",
         "Scores are context only; natural trajectories are not paired skill evidence.",
         "",

@@ -38,6 +38,11 @@ from strategy import (
     ChallengeCalibrationParameters,
     ChallengeCommitmentParameters,
     ChallengeSample,
+    NaturalAdjustmentController,
+    NaturalAdjustmentDecision,
+    NaturalAdjustmentMode,
+    NaturalAdjustmentParameters,
+    NaturalAdjustmentSample,
 )
 from telemetry.decision_logger import DecisionTelemetryLogger
 from telemetry.packet_snapshot import extract_packet_snapshot
@@ -95,6 +100,14 @@ class RivalBot(rlbot.managers.Bot):
             calibration_parameters,
         )
         self.last_challenge_decision: ChallengeCalibrationDecision | None = None
+        natural_parameters = NaturalAdjustmentParameters(
+            version=config.NATURAL_PARAMETER_VERSION,
+        )
+        self.natural_adjustment = NaturalAdjustmentController(
+            config.NATURAL_ADJUSTMENT_MODE,
+            natural_parameters,
+        )
+        self.last_natural_decision: NaturalAdjustmentDecision | None = None
         self.last_tactical_metrics = None
         session_metadata = {
             **config.TELEMETRY_SESSION_METADATA,
@@ -105,6 +118,14 @@ class RivalBot(rlbot.managers.Bot):
                     is ChallengeCalibrationMode.INTERVENE
                 ),
                 "parameters": calibration_parameters.to_record(),
+            },
+            "natural_adjustment": {
+                "mode": self.natural_adjustment.mode.value,
+                "treatment_enabled": (
+                    self.natural_adjustment.mode
+                    is NaturalAdjustmentMode.INTERVENE
+                ),
+                "parameters": natural_parameters.to_record(),
             },
         }
         self.telemetry = DecisionTelemetryLogger(
@@ -211,15 +232,21 @@ class RivalBot(rlbot.managers.Bot):
             eta_opponent_ball=eta_opponent_ball,
             eta_method="wisp_rough_eta_ball_prediction",
         )
+        live_state_needed = bool(
+            packet is not None
+            and (
+                self.challenge_calibration.mode is not ChallengeCalibrationMode.OFF
+                or self.natural_adjustment.mode is not NaturalAdjustmentMode.OFF
+            )
+        )
         sample = (
-            None
-            if self.challenge_calibration.mode is ChallengeCalibrationMode.OFF
-            or packet is None
-            else ChallengeSample.from_packet(
+            ChallengeSample.from_packet(
                 packet,
                 self.index,
                 tactical_metrics,
             )
+            if live_state_needed and packet is not None
+            else None
         )
         calibration_decision = self.challenge_calibration.evaluate(
             decision,
@@ -230,6 +257,30 @@ class RivalBot(rlbot.managers.Bot):
         if calibration_decision.final_action_index != decision.action_index:
             self.new_action = self.action_parser.get_action(
                 calibration_decision.final_action_index,
+                player,
+                state,
+            )
+            tactical_metrics = compute_tactical_metrics(
+                state,
+                player,
+                opponent,
+                self.new_action,
+                score_diff=score_diff,
+                seconds_remaining=seconds_remaining,
+                eta_self_ball=eta_self_ball,
+                eta_opponent_ball=eta_opponent_ball,
+                eta_method="wisp_rough_eta_ball_prediction",
+            )
+        natural_sample = NaturalAdjustmentSample.from_live(sample, tactical_metrics)
+        natural_decision = self.natural_adjustment.evaluate(
+            decision,
+            natural_sample,
+            lambda index: self.action_parser.get_action(index, player, state),
+        )
+        self.last_natural_decision = natural_decision
+        if natural_decision.final_action_index != decision.action_index:
+            self.new_action = self.action_parser.get_action(
+                natural_decision.final_action_index,
                 player,
                 state,
             )
@@ -265,6 +316,7 @@ class RivalBot(rlbot.managers.Bot):
                         "deterministic": config.DETERMINISTIC,
                         "strategic_overrides_enabled": config.STRATEGIC_OVERRIDES_ENABLED,
                         "challenge_calibration_mode": self.challenge_calibration.mode.value,
+                        "natural_adjustment_mode": self.natural_adjustment.mode.value,
                         "tick_skip": config.TICK_SKIP,
                         "action_delay": config.ACTION_DELAY,
                         "tick_window": self.ticks,
@@ -278,6 +330,7 @@ class RivalBot(rlbot.managers.Bot):
                         )
                     ),
                     calibration_decision,
+                    natural_decision,
                 )
             except (OSError, TypeError, ValueError) as exc:
                 self.logger.warning("Disabling Rival telemetry after write failure: %s", exc)
@@ -326,7 +379,9 @@ class RivalBot(rlbot.managers.Bot):
                 self.policy_tick = 0
                 self.last_decision = None
                 self.last_challenge_decision = None
+                self.last_natural_decision = None
                 self.challenge_calibration.reset("timer_rewind")
+                self.natural_adjustment.reset("timer_rewind")
 
             # Compute tick delta like C++
             if self.prev_time is not None:

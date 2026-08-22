@@ -121,5 +121,32 @@ CHALLENGE_MAX_DEFERRAL_TICKS = _environment_int(
     "RIVAL_CHALLENGE_MAX_DEFERRAL_TICKS", 1
 )
 
+NATURAL_ADJUSTMENT_MODE = os.environ.get(
+    "RIVAL_NATURAL_ADJUSTMENT_MODE", "off"
+).strip().lower()
+if NATURAL_ADJUSTMENT_MODE not in {"off", "observe", "intervene"}:
+    raise ValueError(
+        "RIVAL_NATURAL_ADJUSTMENT_MODE must be off, observe, or intervene; "
+        f"got {NATURAL_ADJUSTMENT_MODE!r}"
+    )
+NATURAL_PARAMETER_VERSION = os.environ.get(
+    "RIVAL_NATURAL_PARAMETER_VERSION", "none"
+).strip()
+if not NATURAL_PARAMETER_VERSION:
+    raise ValueError("RIVAL_NATURAL_PARAMETER_VERSION cannot be empty")
+if (
+    NATURAL_ADJUSTMENT_MODE != "off"
+    and NATURAL_PARAMETER_VERSION != "m04p1-low-resource-aerial-v1"
+):
+    raise ValueError(
+        "active natural adjustment requires parameter version "
+        "'m04p1-low-resource-aerial-v1'; got "
+        f"{NATURAL_PARAMETER_VERSION!r}"
+    )
+if NATURAL_ADJUSTMENT_MODE != "off" and CHALLENGE_CALIBRATION_MODE != "off":
+    raise ValueError(
+        "natural adjustment and challenge calibration cannot be active together"
+    )
+
 # Milestone 01 is measurement-only. This is intentionally not environment-toggleable.
 STRATEGIC_OVERRIDES_ENABLED = False

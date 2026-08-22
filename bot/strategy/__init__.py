@@ -13,6 +13,14 @@ from .challenge_commitment import (
     ChallengeSample,
     projected_closest_approach,
 )
+from .natural_adjustment import (
+    NaturalAdjustmentController,
+    NaturalAdjustmentDecision,
+    NaturalAdjustmentMode,
+    NaturalAdjustmentParameters,
+    NaturalAdjustmentSample,
+    SUPPORTED_PARAMETER_VERSION,
+)
 
 __all__ = [
     "ChallengeCalibrationController",
@@ -23,5 +31,11 @@ __all__ = [
     "ChallengeCommitmentParameters",
     "ChallengeCommitmentTracker",
     "ChallengeSample",
+    "NaturalAdjustmentController",
+    "NaturalAdjustmentDecision",
+    "NaturalAdjustmentMode",
+    "NaturalAdjustmentParameters",
+    "NaturalAdjustmentSample",
+    "SUPPORTED_PARAMETER_VERSION",
     "projected_closest_approach",
 ]

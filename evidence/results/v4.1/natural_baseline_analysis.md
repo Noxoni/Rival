@@ -13,6 +13,7 @@ Analyzer `rival-m04p1-natural-v1` processed **8** full natural matches and **43,
 | Possession-loss transitions | 367 |
 | Goals conceded within the consequence window after loss | 41 |
 | Adjustment applied decisions | 0 |
+| Applied next touch self / opponent / none | 0 / 0 / 0 |
 
 Scores are context only; natural trajectories are not paired skill evidence.
 

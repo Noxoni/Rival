@@ -17,6 +17,11 @@ from strategy.challenge_calibration import (
     ChallengeCalibrationMode,
     ChallengeCalibrationParameters,
 )
+from strategy.natural_adjustment import (
+    NaturalAdjustmentDecision,
+    NaturalAdjustmentMode,
+    NaturalAdjustmentParameters,
+)
 
 
 ACTION = ControllerAction(1.0, 0.0, 0.0, 0.0, 0.0, False, True, False)
@@ -143,6 +148,46 @@ def test_schema_v3_serializes_baseline_final_and_challenge_explanation(tmp_path)
     assert record["challenge_calibration"]["mode"] == "intervene"
     assert record["challenge_calibration"]["baseline_action"]["action_index"] == 1
     assert record["challenge_calibration"]["final_action"]["action_index"] == 0
+
+
+def test_schema_v3_serializes_natural_adjustment_as_final_action_layer(tmp_path) -> None:
+    output = tmp_path / "natural-treatment.jsonl"
+    baseline = _decision()
+    continuation = ControllerAction(1.0, 0.0, 0.0, 0.0, 0.0, False, False, False)
+    natural = replace(
+        NaturalAdjustmentDecision.exact_baseline(
+            baseline,
+            NaturalAdjustmentParameters(),
+        ),
+        mode=NaturalAdjustmentMode.INTERVENE,
+        final_action_index=0,
+        final_controller_action=continuation,
+        hypothetical_action_index=0,
+        hypothetical_controller_action=continuation,
+        eligible=True,
+        applied=True,
+        reason="graded_resource_possession_rerank",
+    )
+    logger = DecisionTelemetryLogger(output, enabled=True)
+
+    logger.log(
+        baseline,
+        _metrics(),
+        {},
+        {},
+        natural_adjustment=natural,
+    )
+    logger.close()
+
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+    record = records[1]
+    assert record["decision"]["action_index"] == 0
+    assert record["decision"]["baseline_action_index"] == 1
+    assert record["decision"]["final_action_index"] == 0
+    assert record["decision"]["intervention_applied"] is True
+    assert record["natural_adjustment"]["mode"] == "intervene"
+    assert record["natural_adjustment"]["baseline_action"]["action_index"] == 1
+    assert record["natural_adjustment"]["final_action"]["action_index"] == 0
 
 
 def test_verbose_telemetry_includes_raw_and_masked_logits(tmp_path) -> None:
