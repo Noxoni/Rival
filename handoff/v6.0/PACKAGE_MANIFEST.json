@@ -1,0 +1,29 @@
+{
+  "package_version": "v6.0",
+  "purpose": "first serious staged RLGym/RocketSim Rival training campaign",
+  "required_starting_boundary": "4c9aa6f596b3231856107b3a1e59d9a7c4f663db",
+  "campaign_ceiling_agent_steps": 100000000,
+  "files": [
+    "handoff/v6.0/README.md",
+    "handoff/v6.0/VERSION.md",
+    "handoff/v6.0/TRAINING_CAMPAIGN.md",
+    "handoff/v6.0/REWARD_AND_CURRICULUM.md",
+    "handoff/v6.0/EVALUATION_AND_PROMOTION.md",
+    "handoff/v6.0/MILESTONE_06_SPEC.md",
+    "handoff/v6.0/CODEX_START_PROMPT.md",
+    "handoff/v6.0/PACKAGE_MANIFEST.json"
+  ],
+  "inherits": [
+    "handoff/v5.0/",
+    "handoff/v5.1/",
+    "docs/MILESTONE_05_RESULTS.md",
+    "training/"
+  ],
+  "production_policy": "unchanged_frozen_wisp_until_promotion_gate",
+  "notes": [
+    "Natural 1v1 remains the majority training distribution.",
+    "Appended actions 90-157 are opened gradually and measured rather than unsuppressed all at once.",
+    "Large checkpoints and rollout data stay Git-ignored; compact hashes/manifests and stage reports are committed.",
+    "100M agent-steps is a ceiling, not a quota."
+  ]
+}
