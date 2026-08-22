@@ -19,7 +19,7 @@ def utc_now() -> str:
 def make_session_id(source: str, opponent: str, rival_team: int) -> str:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     side = "blue" if rival_team == 0 else "orange"
-    return f"rival-v2-{source}-{opponent}-{side}-{stamp}-{uuid4().hex[:8]}"
+    return f"rival-v3-{source}-{opponent}-{side}-{stamp}-{uuid4().hex[:8]}"
 
 
 def _package_version(name: str) -> str | None:
@@ -83,12 +83,13 @@ def build_session_metadata(
         "probe": probe,
         "runtime_versions": runtime_versions(),
         "telemetry_configuration": {
-            "schema_version": 2,
+            "schema_version": 3,
             "include_logits": False,
             "decision_path": str(telemetry_path),
             "deterministic_policy": True,
             "strategic_overrides_enabled": False,
         },
+        "experiment_milestone": "m03-challenge-calibration",
         "start_timestamp_utc": utc_now(),
     }
 

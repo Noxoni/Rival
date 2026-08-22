@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 import json
 
 import torch
@@ -11,6 +12,11 @@ from policy.decision import (
     PolicyDecision,
 )
 from telemetry.decision_logger import DecisionTelemetryLogger
+from strategy.challenge_calibration import (
+    ChallengeCalibrationDecision,
+    ChallengeCalibrationMode,
+    ChallengeCalibrationParameters,
+)
 
 
 ACTION = ControllerAction(1.0, 0.0, 0.0, 0.0, 0.0, False, True, False)
@@ -92,14 +98,51 @@ def test_enabled_telemetry_writes_one_machine_readable_record(tmp_path) -> None:
         "rival_session_end",
     ]
     record = records[1]
-    assert record["schema_version"] == 2
+    assert record["schema_version"] == 3
     assert record["session_id"] == "test-session"
     assert record["decision"]["action_index"] == 1
+    assert record["decision"]["baseline_action_index"] == 1
+    assert record["decision"]["final_action_index"] == 1
     assert record["decision"]["legal_mask"] == [True, True]
     assert "raw_logits" not in record["decision"]
     assert record["runtime"]["strategic_overrides_enabled"] is False
     assert records[0]["metadata"]["source"] == "synthetic_test"
     assert records[2]["decision_record_count"] == 1
+
+
+def test_schema_v3_serializes_baseline_final_and_challenge_explanation(tmp_path) -> None:
+    output = tmp_path / "treatment.jsonl"
+    baseline = _decision()
+    continuation = ControllerAction(1.0, 0.0, 0.0, 0.0, 0.0, False, False, False)
+    calibration = replace(
+        ChallengeCalibrationDecision.exact_baseline(
+            baseline,
+            ChallengeCalibrationParameters(),
+        ),
+        mode=ChallengeCalibrationMode.INTERVENE,
+        final_action_index=0,
+        final_controller_action=continuation,
+        hypothetical_action_index=0,
+        hypothetical_controller_action=continuation,
+        eligible=True,
+        applied=True,
+        reason="ambiguous_pressure_one_tick_deferral",
+    )
+    logger = DecisionTelemetryLogger(output, enabled=True)
+
+    logger.log(baseline, _metrics(), {}, {}, calibration=calibration)
+    logger.close()
+
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+    record = records[1]
+    assert record["decision"]["action_index"] == 0
+    assert record["decision"]["baseline_action_index"] == 1
+    assert record["decision"]["final_action_index"] == 0
+    assert record["decision"]["hypothetical_action_index"] == 0
+    assert record["decision"]["intervention_applied"] is True
+    assert record["challenge_calibration"]["mode"] == "intervene"
+    assert record["challenge_calibration"]["baseline_action"]["action_index"] == 1
+    assert record["challenge_calibration"]["final_action"]["action_index"] == 0
 
 
 def test_verbose_telemetry_includes_raw_and_masked_logits(tmp_path) -> None:

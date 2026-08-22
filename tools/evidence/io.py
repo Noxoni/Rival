@@ -63,7 +63,7 @@ def load_session(path: Path) -> EvidenceSession:
             warnings.append(f"non_object_line:{line_number}")
             continue
         schema = record.get("schema_version")
-        if schema not in (1, 2):
+        if schema not in (1, 2, 3):
             warnings.append(f"unsupported_schema:{line_number}:{schema}")
             continue
         record["_raw_line"] = line_number

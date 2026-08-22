@@ -38,6 +38,27 @@ def _environment_flag(name: str, default: bool = False) -> bool:
     raise ValueError(f"{name} must be a boolean value, got {value!r}")
 
 
+def _environment_float(name: str, default: float) -> float:
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    try:
+        converted = float(value)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a number, got {value!r}") from exc
+    return converted
+
+
+def _environment_int(name: str, default: int) -> int:
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be an integer, got {value!r}") from exc
+
+
 POLICY_TOP_N = int(os.environ.get("RIVAL_POLICY_TOP_N", "5"))
 TELEMETRY_ENABLED = _environment_flag("RIVAL_TELEMETRY_ENABLED", False)
 TELEMETRY_INCLUDE_LOGITS = _environment_flag(
@@ -64,6 +85,36 @@ def _load_session_metadata() -> dict[str, Any]:
 
 
 TELEMETRY_SESSION_METADATA = _load_session_metadata()
+
+CHALLENGE_CALIBRATION_MODE = os.environ.get(
+    "RIVAL_CHALLENGE_CALIBRATION_MODE", "off"
+).strip().lower()
+if CHALLENGE_CALIBRATION_MODE not in {"off", "observe", "intervene"}:
+    raise ValueError(
+        "RIVAL_CHALLENGE_CALIBRATION_MODE must be off, observe, or intervene; "
+        f"got {CHALLENGE_CALIBRATION_MODE!r}"
+    )
+
+# The environment surface is intentionally small and named so every controlled
+# parameter attempt can be reconstructed without changing the frozen Wisp policy.
+CHALLENGE_LOW_THRESHOLD = _environment_float("RIVAL_CHALLENGE_LOW_THRESHOLD", 0.34)
+CHALLENGE_HIGH_THRESHOLD = _environment_float("RIVAL_CHALLENGE_HIGH_THRESHOLD", 0.70)
+CHALLENGE_PRESSURE_DISTANCE = _environment_float(
+    "RIVAL_CHALLENGE_PRESSURE_DISTANCE", 1900.0
+)
+CHALLENGE_PRESSURE_ETA = _environment_float("RIVAL_CHALLENGE_PRESSURE_ETA", 1.40)
+CHALLENGE_PROJECTED_MISS_REFERENCE = _environment_float(
+    "RIVAL_CHALLENGE_PROJECTED_MISS_REFERENCE", 450.0
+)
+CHALLENGE_CONTROL_DISTANCE = _environment_float(
+    "RIVAL_CHALLENGE_CONTROL_DISTANCE", 650.0
+)
+CHALLENGE_MAX_LOGIT_GAP = _environment_float(
+    "RIVAL_CHALLENGE_MAX_LOGIT_GAP", 0.85
+)
+CHALLENGE_MAX_DEFERRAL_TICKS = _environment_int(
+    "RIVAL_CHALLENGE_MAX_DEFERRAL_TICKS", 1
+)
 
 # Milestone 01 is measurement-only. This is intentionally not environment-toggleable.
 STRATEGIC_OVERRIDES_ENABLED = False

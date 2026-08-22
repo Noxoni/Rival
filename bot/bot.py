@@ -31,6 +31,14 @@ from eta import rough_eta
 from obs_builder import CustomObs
 from policy.decision import PolicyDecision
 from policy.inspector import PolicyInspector
+from strategy import (
+    ChallengeCalibrationController,
+    ChallengeCalibrationDecision,
+    ChallengeCalibrationMode,
+    ChallengeCalibrationParameters,
+    ChallengeCommitmentParameters,
+    ChallengeSample,
+)
 from telemetry.decision_logger import DecisionTelemetryLogger
 from telemetry.packet_snapshot import extract_packet_snapshot
 
@@ -68,12 +76,41 @@ class RivalBot(rlbot.managers.Bot):
         self.policy_tick = 0
         self.policy_inspector = PolicyInspector(config.POLICY_TOP_N)
         self.last_decision: PolicyDecision | None = None
+        commitment_parameters = ChallengeCommitmentParameters(
+            low_threshold=config.CHALLENGE_LOW_THRESHOLD,
+            high_threshold=config.CHALLENGE_HIGH_THRESHOLD,
+            pressure_distance=config.CHALLENGE_PRESSURE_DISTANCE,
+            pressure_eta=config.CHALLENGE_PRESSURE_ETA,
+            projected_miss_reference=config.CHALLENGE_PROJECTED_MISS_REFERENCE,
+        )
+        calibration_parameters = ChallengeCalibrationParameters(
+            commitment=commitment_parameters,
+            control_distance=config.CHALLENGE_CONTROL_DISTANCE,
+            maximum_logit_gap=config.CHALLENGE_MAX_LOGIT_GAP,
+            maximum_deferral_policy_ticks=config.CHALLENGE_MAX_DEFERRAL_TICKS,
+        )
+        self.challenge_calibration = ChallengeCalibrationController(
+            config.CHALLENGE_CALIBRATION_MODE,
+            calibration_parameters,
+        )
+        self.last_challenge_decision: ChallengeCalibrationDecision | None = None
         self.last_tactical_metrics = None
+        session_metadata = {
+            **config.TELEMETRY_SESSION_METADATA,
+            "challenge_calibration": {
+                "mode": self.challenge_calibration.mode.value,
+                "treatment_enabled": (
+                    self.challenge_calibration.mode
+                    is ChallengeCalibrationMode.INTERVENE
+                ),
+                "parameters": calibration_parameters.to_record(),
+            },
+        }
         self.telemetry = DecisionTelemetryLogger(
             config.TELEMETRY_PATH,
             enabled=config.TELEMETRY_ENABLED,
             include_logits=config.TELEMETRY_INCLUDE_LOGITS,
-            session_metadata=config.TELEMETRY_SESSION_METADATA,
+            session_metadata=session_metadata,
         )
         self._latest_packet_score: dict[str, int | None] | None = None
 
@@ -173,6 +210,39 @@ class RivalBot(rlbot.managers.Bot):
             eta_opponent_ball=eta_opponent_ball,
             eta_method="wisp_rough_eta_ball_prediction",
         )
+        sample = (
+            None
+            if self.challenge_calibration.mode is ChallengeCalibrationMode.OFF
+            or packet is None
+            else ChallengeSample.from_packet(
+                packet,
+                self.index,
+                tactical_metrics,
+            )
+        )
+        calibration_decision = self.challenge_calibration.evaluate(
+            decision,
+            sample,
+            lambda index: self.action_parser.get_action(index, player, state),
+        )
+        self.last_challenge_decision = calibration_decision
+        if calibration_decision.final_action_index != decision.action_index:
+            self.new_action = self.action_parser.get_action(
+                calibration_decision.final_action_index,
+                player,
+                state,
+            )
+            tactical_metrics = compute_tactical_metrics(
+                state,
+                player,
+                opponent,
+                self.new_action,
+                score_diff=score_diff,
+                seconds_remaining=seconds_remaining,
+                eta_self_ball=eta_self_ball,
+                eta_opponent_ball=eta_opponent_ball,
+                eta_method="wisp_rough_eta_ball_prediction",
+            )
         self.last_tactical_metrics = tactical_metrics
 
         if self.telemetry.enabled:
@@ -193,6 +263,7 @@ class RivalBot(rlbot.managers.Bot):
                     {
                         "deterministic": config.DETERMINISTIC,
                         "strategic_overrides_enabled": config.STRATEGIC_OVERRIDES_ENABLED,
+                        "challenge_calibration_mode": self.challenge_calibration.mode.value,
                         "tick_skip": config.TICK_SKIP,
                         "action_delay": config.ACTION_DELAY,
                         "tick_window": self.ticks,
@@ -205,6 +276,7 @@ class RivalBot(rlbot.managers.Bot):
                             packet, self.index, getattr(self, "field_info", None)
                         )
                     ),
+                    calibration_decision,
                 )
             except (OSError, TypeError, ValueError) as exc:
                 self.logger.warning("Disabling Rival telemetry after write failure: %s", exc)
@@ -252,6 +324,8 @@ class RivalBot(rlbot.managers.Bot):
                 self.update_action_flag = True
                 self.policy_tick = 0
                 self.last_decision = None
+                self.last_challenge_decision = None
+                self.challenge_calibration.reset("timer_rewind")
 
             # Compute tick delta like C++
             if self.prev_time is not None:

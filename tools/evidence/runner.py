@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+from dataclasses import dataclass, field
+import logging
+import math
 from pathlib import Path
+import statistics
 import time
 from typing import Any, Iterable
 
@@ -29,6 +33,96 @@ from .session import (
 RAW_EVIDENCE_ROOT = REPOSITORY_ROOT / "evidence" / "raw"
 RIVAL_CONFIG = REPOSITORY_ROOT / "bot" / "rival.bot.toml"
 PROBE_CONFIG = REPOSITORY_ROOT / "probes" / "controlled_opponent" / "probe.bot.toml"
+
+
+@dataclass
+class GameSpeedMonitor:
+    requested: float
+    tolerance: float = 0.15
+    observed_all: list[float] = field(default_factory=list)
+    observed_sustained: list[float] = field(default_factory=list)
+    first_game_time: float | None = None
+    last_game_time: float | None = None
+    apply_count: int = 0
+    reached_requested_speed: bool = False
+
+    def __post_init__(self) -> None:
+        if not math.isfinite(self.requested) or self.requested <= 0.0:
+            raise ValueError("requested game speed must be a positive finite number")
+
+    def observe(
+        self,
+        manager: rlbot.managers.MatchManager,
+        packet: Any,
+        *,
+        allow_state_setting: bool,
+    ) -> None:
+        info = getattr(packet, "match_info", None)
+        if info is None or _phase_name(packet) not in {"Countdown", "Kickoff", "Active"}:
+            return
+        game_time = float(info.seconds_elapsed)
+        observed = float(getattr(info, "game_speed", 1.0))
+        if math.isfinite(observed):
+            self.observed_all.append(observed)
+            if abs(observed - self.requested) <= self.tolerance:
+                self.reached_requested_speed = True
+            if self.reached_requested_speed:
+                self.observed_sustained.append(observed)
+        if self.first_game_time is None:
+            self.first_game_time = game_time
+        self.last_game_time = game_time
+        if (
+            allow_state_setting
+            and abs(observed - self.requested) > self.tolerance
+        ):
+            manager.set_game_state(
+                match_info=flat.DesiredMatchInfo(game_speed=self.requested)
+            )
+            self.apply_count += 1
+
+    def to_record(self, wall_duration_seconds: float) -> dict[str, Any]:
+        def stats(values: list[float]) -> dict[str, float | int | None]:
+            if not values:
+                return {"samples": 0, "minimum": None, "median": None, "maximum": None}
+            return {
+                "samples": len(values),
+                "minimum": min(values),
+                "median": statistics.median(values),
+                "maximum": max(values),
+            }
+
+        advanced = (
+            0.0
+            if self.first_game_time is None or self.last_game_time is None
+            else max(0.0, self.last_game_time - self.first_game_time)
+        )
+        return {
+            "requested_game_speed": self.requested,
+            "requested_speed_reached": self.reached_requested_speed,
+            "state_setting_apply_count": self.apply_count,
+            "observed_game_speed_all_active": stats(self.observed_all),
+            "observed_game_speed_sustained": stats(self.observed_sustained),
+            "game_seconds_advanced": advanced,
+            "wall_duration_seconds": wall_duration_seconds,
+            "effective_game_seconds_per_wall_second": (
+                advanced / wall_duration_seconds if wall_duration_seconds > 0.0 else None
+            ),
+        }
+
+
+class RuntimeWarningCapture(logging.Handler):
+    """Capture relevant Python-side RLBot warnings without hiding console output."""
+
+    KEYWORDS = ("queue", "missed", "packet", "disconnect", "socket", "restart")
+
+    def __init__(self) -> None:
+        super().__init__(level=logging.WARNING)
+        self.messages: list[str] = []
+
+    def emit(self, record: logging.LogRecord) -> None:
+        message = self.format(record)
+        if any(keyword in message.lower() for keyword in self.KEYWORDS):
+            self.messages.append(message)
 
 
 def _environment(values: dict[str, str]) -> list[flat.EnvironmentVariable]:
@@ -70,9 +164,10 @@ def build_match_configuration(
     opponent_config: Path,
     launcher: flat.Launcher = flat.Launcher.Steam,
     state_setting: bool = False,
+    instant_start: bool | None = None,
     opponent_environment: dict[str, str] | None = None,
     rival_environment: dict[str, str] | None = None,
-    auto_save_replay: bool = True,
+    auto_save_replay: bool = False,
 ) -> flat.MatchConfiguration:
     if rival_team not in (0, 1):
         raise ValueError("rival_team must be 0 (blue) or 1 (orange)")
@@ -98,9 +193,11 @@ def build_match_configuration(
         script_configurations=[],
         game_mode=flat.GameMode.Soccar,
         skip_replays=True,
-        instant_start=state_setting,
+        instant_start=state_setting if instant_start is None else instant_start,
         mutators=flat.MutatorSettings(
             match_length=flat.MatchLengthMutator.FiveMinutes,
+            max_score=flat.MaxScoreMutator.Unlimited,
+            overtime=flat.OvertimeMutator.Unlimited,
             game_speed=flat.GameSpeedMutator.Default,
             boost_amount=flat.BoostAmountMutator.NormalBoost,
             boost_strength=flat.BoostStrengthMutator.One,
@@ -108,11 +205,11 @@ def build_match_configuration(
             demolish=flat.DemolishMutator.Default,
         ),
         existing_match_behavior=flat.ExistingMatchBehavior.Restart,
-        enable_rendering=flat.DebugRendering.OffByDefault,
+        enable_rendering=flat.DebugRendering.AlwaysOff,
         enable_state_setting=state_setting,
         auto_save_replay=auto_save_replay,
         freeplay=False,
-        performance_monitor=flat.PerformanceMonitor.ShowWhenSuboptimal,
+        performance_monitor=flat.PerformanceMonitor.NeverShow,
     )
 
 
@@ -121,6 +218,8 @@ def describe_match_configuration(
     opponent: str,
     rival_team: int,
     state_setting: bool = False,
+    requested_game_speed: float = 1.0,
+    instant_start: bool = False,
 ) -> dict[str, Any]:
     reference = discover_reference(opponent)
     return {
@@ -131,12 +230,25 @@ def describe_match_configuration(
         "game_mode": "Soccar",
         "map": "Stadium_P",
         "match_length": "FiveMinutes",
-        "game_speed": "Default",
+        "game_speed_mutator": "Default",
+        "requested_game_speed": requested_game_speed,
         "boost_amount": "NormalBoost",
         "boost_strength": "One",
         "gravity": "Default",
         "demolish": "Default",
         "state_setting": state_setting,
+        "state_setting_scope": (
+            "desired_match_info.game_speed_only" if requested_game_speed != 1.0 else "none"
+        ),
+        "skip_replays": True,
+        "auto_save_replay": False,
+        "enable_rendering": "AlwaysOff",
+        "performance_monitor": "NeverShow",
+        "auto_start_agents": True,
+        "wait_for_agents": True,
+        "instant_start": instant_start,
+        "existing_match_behavior": "Restart",
+        "freeplay": False,
         "installed_reference_mutation": False,
     }
 
@@ -201,11 +313,18 @@ def _wait_game_seconds(
     anchor: float,
     duration: float,
     wall_timeout: float = 30.0,
+    speed_monitor: GameSpeedMonitor | None = None,
 ) -> Any:
     deadline = time.monotonic() + wall_timeout
     while time.monotonic() < deadline:
         packet = manager.packet
         if packet is not None:
+            if speed_monitor is not None:
+                speed_monitor.observe(
+                    manager,
+                    packet,
+                    allow_state_setting=True,
+                )
             elapsed = float(packet.match_info.seconds_elapsed)
             if elapsed >= anchor + duration:
                 return packet
@@ -224,6 +343,8 @@ def _finalize_manifest(
     replay_before: set[Path],
     schedule: list[dict[str, Any]] | None = None,
     error: str | None = None,
+    execution: dict[str, Any] | None = None,
+    runtime_warnings: list[str] | None = None,
 ) -> dict[str, Any]:
     telemetry_path = session_dir / "decisions.jsonl"
     new_replays = sorted(_replay_files() - replay_before, key=lambda path: path.stat().st_mtime)
@@ -231,17 +352,28 @@ def _finalize_manifest(
         {"path": str(path), "bytes": path.stat().st_size, "sha256": sha256_file(path)}
         for path in new_replays
     ]
+    wall_duration = round(time.monotonic() - started_wall, 3)
+    telemetry_summary = summarize_telemetry(telemetry_path)
+    decision_count = int(
+        telemetry_summary["record_counts"].get("rival_policy_decision", 0)
+    )
+    execution_record = dict(execution or {})
+    execution_record["decision_records_per_wall_second"] = (
+        decision_count / wall_duration if wall_duration > 0.0 else None
+    )
     manifest = {
         **metadata,
         "end_timestamp_utc": utc_now(),
         "status": status,
         "termination_reason": termination_reason,
         "final_score": final_score,
-        "wall_duration_seconds": round(time.monotonic() - started_wall, 3),
-        "raw_telemetry": summarize_telemetry(telemetry_path),
+        "wall_duration_seconds": wall_duration,
+        "raw_telemetry": telemetry_summary,
         "replays": replay_records,
         "schedule": schedule or [],
         "error": error,
+        "execution": execution_record,
+        "runtime_warnings": list(runtime_warnings or []),
     }
     write_json(session_dir / "session_manifest.json", manifest)
     return manifest
@@ -253,46 +385,66 @@ def run_natural_match(
     rival_team: int,
     launcher: str = "steam",
     timeout: float = 900.0,
+    game_speed: float = 5.0,
+    challenge_mode: str = "off",
+    lane_id: str = "lane-1",
+    smoke_game_seconds: float | None = None,
     manager: rlbot.managers.MatchManager | None = None,
 ) -> dict[str, Any]:
     reference = discover_reference(opponent_key)
-    session_id = make_session_id("natural", reference.key, rival_team)
+    source_key = "speed-smoke" if smoke_game_seconds is not None else "natural"
+    source = "speed_integrity_smoke" if smoke_game_seconds is not None else "natural_match"
+    session_id = make_session_id(source_key, reference.key, rival_team)
     session_dir = RAW_EVIDENCE_ROOT / session_id
     telemetry_path = session_dir / "decisions.jsonl"
     metadata_path = session_dir / "session_start.json"
+    accelerated = abs(game_speed - 1.0) > 1e-6
     match_record = describe_match_configuration(
         opponent=opponent_key,
         rival_team=rival_team,
-        state_setting=False,
+        state_setting=accelerated,
+        requested_game_speed=game_speed,
+        instant_start=False,
     )
     metadata = build_session_metadata(
         session_id=session_id,
-        source="natural_match",
+        source=source,
         opponent=reference,
         rival_team=rival_team,
         match=match_record,
         telemetry_path=telemetry_path,
     )
+    metadata["challenge_calibration"] = {"mode": challenge_mode}
+    metadata["execution_request"] = {
+        "lane_id": lane_id,
+        "requested_game_speed": game_speed,
+        "smoke_game_seconds": smoke_game_seconds,
+    }
     write_json(metadata_path, metadata)
     rival_environment = {
         "RIVAL_TELEMETRY_ENABLED": "1",
         "RIVAL_TELEMETRY_INCLUDE_LOGITS": "0",
         "RIVAL_TELEMETRY_PATH": str(telemetry_path),
         "RIVAL_SESSION_METADATA_PATH": str(metadata_path),
+        "RIVAL_CHALLENGE_CALIBRATION_MODE": challenge_mode,
     }
     config = build_match_configuration(
         rival_team=rival_team,
         opponent_config=reference.config_path,
         launcher=_launcher(launcher),
         rival_environment=rival_environment,
-        state_setting=False,
-        auto_save_replay=True,
+        state_setting=accelerated,
+        instant_start=False,
+        auto_save_replay=False,
     )
 
     owned_manager = manager is None
     manager = manager or rlbot.managers.MatchManager()
     replay_before = _replay_files()
     started_wall = time.monotonic()
+    speed_monitor = GameSpeedMonitor(game_speed)
+    warning_capture = RuntimeWarningCapture()
+    logging.getLogger().addHandler(warning_capture)
     last_score = {"blue": None, "orange": None}
     last_phase = "none"
     termination = "unknown"
@@ -301,7 +453,13 @@ def run_natural_match(
     try:
         print(f"START {session_id} Rival {'blue' if rival_team == 0 else 'orange'} vs {reference.identity}", flush=True)
         manager.start_match(config, wait_for_start=True, ensure_server_started=True)
-        _wait_for_active_packet(manager)
+        first_packet = _wait_for_active_packet(manager)
+        speed_monitor.observe(
+            manager,
+            first_packet,
+            allow_state_setting=accelerated,
+        )
+        smoke_anchor = float(first_packet.match_info.seconds_elapsed)
         deadline = time.monotonic() + timeout
         next_status = time.monotonic()
         while time.monotonic() < deadline:
@@ -310,6 +468,11 @@ def run_natural_match(
                 time.sleep(0.05)
                 continue
             phase = _phase_name(packet)
+            speed_monitor.observe(
+                manager,
+                packet,
+                allow_state_setting=accelerated,
+            )
             last_score = _scores(packet)
             if phase != last_phase or time.monotonic() >= next_status:
                 remaining = float(packet.match_info.game_time_remaining)
@@ -321,6 +484,13 @@ def run_natural_match(
                 next_status = time.monotonic() + 30.0
             if phase == "Ended":
                 termination = "match_phase_ended"
+                status = "complete"
+                break
+            if smoke_game_seconds is not None and (
+                float(packet.match_info.seconds_elapsed) - smoke_anchor
+                >= smoke_game_seconds
+            ):
+                termination = "speed_integrity_window_complete"
                 status = "complete"
                 break
             time.sleep(0.05)
@@ -336,6 +506,21 @@ def run_natural_match(
         except Exception as exc:
             error = error or f"stop_match:{type(exc).__name__}:{exc}"
         time.sleep(2.0)
+        wall_duration = time.monotonic() - started_wall
+        server_process = getattr(manager, "rlbot_server_process", None)
+        execution = speed_monitor.to_record(wall_duration)
+        execution.update(
+            {
+                "lane_id": lane_id,
+                "rlbot_server_port": getattr(manager, "rlbot_server_port", None),
+                "rlbot_server_pid": getattr(server_process, "pid", None),
+                "sequential_or_parallel": "sequential",
+                "natural_match_clock": "FiveMinutes",
+                "natural_state_setting_scope": (
+                    "desired_match_info.game_speed_only" if accelerated else "none"
+                ),
+            }
+        )
         manifest = _finalize_manifest(
             session_dir,
             metadata,
@@ -345,7 +530,10 @@ def run_natural_match(
             started_wall=started_wall,
             replay_before=replay_before,
             error=error,
+            execution=execution,
+            runtime_warnings=warning_capture.messages,
         )
+        logging.getLogger().removeHandler(warning_capture)
         if owned_manager:
             manager.shut_down()
     print(f"END {session_id} status={status} score={last_score['blue']}-{last_score['orange']}", flush=True)
@@ -359,6 +547,9 @@ def _run_probe_session(
     cases: Iterable[FakeChallengeParameters | ResourceAerialParameters],
     rival_team: int,
     launcher: str,
+    game_speed: float,
+    challenge_mode: str,
+    lane_id: str = "lane-1",
     manager: rlbot.managers.MatchManager | None = None,
 ) -> dict[str, Any]:
     cases = list(cases)
@@ -379,10 +570,18 @@ def _run_probe_session(
         "game_mode": "Soccar",
         "map": "Stadium_P",
         "match_length": "FiveMinutes",
-        "game_speed": "Default",
+        "game_speed_mutator": "Default",
+        "requested_game_speed": game_speed,
         "boost_amount": "NormalBoost",
         "gravity": "Default",
         "state_setting": True,
+        "state_setting_scope": "controlled_state_and_desired_match_info.game_speed",
+        "skip_replays": True,
+        "auto_save_replay": False,
+        "enable_rendering": "AlwaysOff",
+        "performance_monitor": "NeverShow",
+        "instant_start": True,
+        "existing_match_behavior": "Restart",
         "installed_reference_mutation": False,
     }
     metadata = build_session_metadata(
@@ -394,12 +593,18 @@ def _run_probe_session(
         telemetry_path=telemetry_path,
         probe={"family": family, "behavior": behavior, "cases": case_records},
     )
+    metadata["challenge_calibration"] = {"mode": challenge_mode}
+    metadata["execution_request"] = {
+        "lane_id": lane_id,
+        "requested_game_speed": game_speed,
+    }
     write_json(metadata_path, metadata)
     rival_environment = {
         "RIVAL_TELEMETRY_ENABLED": "1",
         "RIVAL_TELEMETRY_INCLUDE_LOGITS": "0",
         "RIVAL_TELEMETRY_PATH": str(telemetry_path),
         "RIVAL_SESSION_METADATA_PATH": str(metadata_path),
+        "RIVAL_CHALLENGE_CALIBRATION_MODE": challenge_mode,
     }
     opponent_environment = {
         "RIVAL_PROBE_BEHAVIOR": behavior,
@@ -414,6 +619,7 @@ def _run_probe_session(
         rival_environment=rival_environment,
         opponent_environment=opponent_environment,
         state_setting=True,
+        instant_start=True,
         auto_save_replay=False,
     )
 
@@ -421,6 +627,9 @@ def _run_probe_session(
     manager = manager or rlbot.managers.MatchManager()
     replay_before = _replay_files()
     started_wall = time.monotonic()
+    speed_monitor = GameSpeedMonitor(game_speed)
+    warning_capture = RuntimeWarningCapture()
+    logging.getLogger().addHandler(warning_capture)
     last_score = {"blue": None, "orange": None}
     schedule: list[dict[str, Any]] = []
     status = "failed"
@@ -430,21 +639,28 @@ def _run_probe_session(
         print(f"START {session_id} controlled {family}/{behavior}", flush=True)
         manager.start_match(config, wait_for_start=True, ensure_server_started=True)
         packet = _wait_for_active_packet(manager)
+        speed_monitor.observe(manager, packet, allow_state_setting=True)
         for index, case in enumerate(cases):
             if isinstance(case, FakeChallengeParameters):
                 cars, balls = fake_challenge_state(case, rival_team)
             else:
                 cars, balls = resource_aerial_state(case, rival_team)
             manager.set_game_state(cars=cars, balls=balls)
-            time.sleep(0.20)
+            time.sleep(min(0.20, 0.25 / game_speed))
             packet = manager.packet or packet
+            speed_monitor.observe(manager, packet, allow_state_setting=True)
             anchor = float(packet.match_info.seconds_elapsed)
             entry = {
                 "index": index,
                 "start_game_time": anchor,
                 "parameters": case.to_record(),
             }
-            packet = _wait_game_seconds(manager, anchor, float(case.window_seconds))
+            packet = _wait_game_seconds(
+                manager,
+                anchor,
+                float(case.window_seconds),
+                speed_monitor=speed_monitor,
+            )
             entry["end_game_time"] = float(packet.match_info.seconds_elapsed)
             entry["score_after"] = _scores(packet)
             schedule.append(entry)
@@ -464,6 +680,18 @@ def _run_probe_session(
         except Exception as exc:
             error = error or f"stop_match:{type(exc).__name__}:{exc}"
         time.sleep(2.0)
+        wall_duration = time.monotonic() - started_wall
+        server_process = getattr(manager, "rlbot_server_process", None)
+        execution = speed_monitor.to_record(wall_duration)
+        execution.update(
+            {
+                "lane_id": lane_id,
+                "rlbot_server_port": getattr(manager, "rlbot_server_port", None),
+                "rlbot_server_pid": getattr(server_process, "pid", None),
+                "sequential_or_parallel": "sequential",
+                "controlled_state_setting": True,
+            }
+        )
         manifest = _finalize_manifest(
             session_dir,
             metadata,
@@ -474,7 +702,10 @@ def _run_probe_session(
             replay_before=replay_before,
             schedule=schedule,
             error=error,
+            execution=execution,
+            runtime_warnings=warning_capture.messages,
         )
+        logging.getLogger().removeHandler(warning_capture)
         if owned_manager:
             manager.shut_down()
     print(f"END {session_id} status={status} probes={len(schedule)}", flush=True)
@@ -487,6 +718,8 @@ def run_fake_challenge_probes(
     rival_team: int = 0,
     launcher: str = "steam",
     behaviors: Iterable[str] = FAKE_CHALLENGE_BEHAVIORS,
+    game_speed: float = 5.0,
+    challenge_mode: str = "off",
 ) -> list[dict[str, Any]]:
     results = []
     manager = rlbot.managers.MatchManager()
@@ -503,6 +736,8 @@ def run_fake_challenge_probes(
                     cases=cases,
                     rival_team=rival_team,
                     launcher=launcher,
+                    game_speed=game_speed,
+                    challenge_mode=challenge_mode,
                     manager=manager,
                 )
             )
@@ -516,6 +751,8 @@ def run_resource_aerial_probes(
     rival_team: int = 0,
     launcher: str = "steam",
     cases: Iterable[ResourceAerialParameters] | None = None,
+    game_speed: float = 5.0,
+    challenge_mode: str = "off",
 ) -> dict[str, Any]:
     grid = list(cases or default_resource_aerial_grid())
     return _run_probe_session(
@@ -524,4 +761,6 @@ def run_resource_aerial_probes(
         cases=grid,
         rival_team=rival_team,
         launcher=launcher,
+        game_speed=game_speed,
+        challenge_mode=challenge_mode,
     )

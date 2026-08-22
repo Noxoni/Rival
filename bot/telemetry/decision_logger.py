@@ -9,6 +9,7 @@ from uuid import uuid4
 
 from analysis.tactical_metrics import TacticalMetrics
 from policy.decision import PolicyDecision
+from strategy.challenge_calibration import ChallengeCalibrationDecision
 
 
 class DecisionTelemetryLogger:
@@ -17,7 +18,7 @@ class DecisionTelemetryLogger:
     Disabled mode is deliberately inert: it creates neither directories nor files.
     """
 
-    SCHEMA_VERSION = 2
+    SCHEMA_VERSION = 3
 
     def __init__(
         self,
@@ -88,15 +89,59 @@ class DecisionTelemetryLogger:
         state: Mapping[str, Any],
         runtime: Mapping[str, Any],
         direct_packet: Mapping[str, Any] | None = None,
+        calibration: ChallengeCalibrationDecision | None = None,
     ) -> bool:
         if not self.enabled:
             return False
 
+        decision_record = decision.to_record(include_logits=self.include_logits)
+        if calibration is None:
+            decision_record.update(
+                {
+                    "baseline_action_index": decision.action_index,
+                    "baseline_controller_action": decision.controller_action.to_record(),
+                    "final_action_index": decision.action_index,
+                    "final_controller_action": decision.controller_action.to_record(),
+                    "hypothetical_action_index": None,
+                    "hypothetical_controller_action": None,
+                    "intervention_applied": False,
+                }
+            )
+        else:
+            decision_record.update(
+                {
+                    "baseline_action_index": calibration.baseline_action_index,
+                    "baseline_controller_action": (
+                        calibration.baseline_controller_action.to_record()
+                    ),
+                    "final_action_index": calibration.final_action_index,
+                    "final_controller_action": (
+                        calibration.final_controller_action.to_record()
+                    ),
+                    "hypothetical_action_index": (
+                        calibration.hypothetical_action_index
+                    ),
+                    "hypothetical_controller_action": (
+                        None
+                        if calibration.hypothetical_controller_action is None
+                        else calibration.hypothetical_controller_action.to_record()
+                    ),
+                    "intervention_applied": calibration.applied,
+                    # Keep these legacy fields as the action actually sent to RLBot so
+                    # schema-v1/v2 event code does not mistake a hypothetical jump for
+                    # an executed treatment action.
+                    "action_index": calibration.final_action_index,
+                    "controller_action": calibration.final_controller_action.to_record(),
+                }
+            )
         record = {
             "schema_version": self.SCHEMA_VERSION,
             "record_type": "rival_policy_decision",
             "session_id": self.session_id,
-            "decision": decision.to_record(include_logits=self.include_logits),
+            "decision": decision_record,
+            "challenge_calibration": (
+                None if calibration is None else calibration.to_record()
+            ),
             "tactical_metrics": tactical_metrics.to_record(),
             "state": dict(state),
             "packet": None if direct_packet is None else dict(direct_packet),
