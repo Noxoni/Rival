@@ -1,0 +1,436 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "rlgym_ppo_integration": {
+    "rollout": "rlgym_ppo.batched_agents.BatchedAgentManager via Learner",
+    "update": "rlgym_ppo.ppo.PPOLearner",
+    "experience": "rlgym_ppo.ppo.ExperienceBuffer and Learner.add_new_experience"
+  },
+  "worker_count": 24,
+  "device": "cuda:0",
+  "iterations_before_reload": 2,
+  "iterations_after_reload": 1,
+  "agent_steps_per_iteration_target": 2048,
+  "batch_size": 1024,
+  "minibatch_size": 256,
+  "epochs": 2,
+  "iteration_reports": [
+    {
+      "iteration": 1,
+      "phase": "before_reload",
+      "collected_agent_steps": 2064,
+      "experience_records": 2064,
+      "mean_reward": -0.00016877840733272475,
+      "minimum_reward": -0.0002220001188106835,
+      "maximum_reward": 0.0,
+      "appended_action_count": 0,
+      "appended_action_rate": 0.0,
+      "top_action_counts": [
+        {
+          "action_index": 71,
+          "count": 99
+        },
+        {
+          "action_index": 77,
+          "count": 98
+        },
+        {
+          "action_index": 85,
+          "count": 92
+        },
+        {
+          "action_index": 73,
+          "count": 87
+        },
+        {
+          "action_index": 18,
+          "count": 81
+        },
+        {
+          "action_index": 69,
+          "count": 77
+        },
+        {
+          "action_index": 87,
+          "count": 73
+        },
+        {
+          "action_index": 89,
+          "count": 73
+        },
+        {
+          "action_index": 22,
+          "count": 69
+        },
+        {
+          "action_index": 67,
+          "count": 68
+        }
+      ],
+      "collection_seconds": 0.4031175998970866,
+      "agent_steps_per_second": 5120.093988768851,
+      "iteration_seconds": 0.7829802999040112,
+      "PPO Batch Consumption Time": 0.08634865283966064,
+      "Cumulative Model Updates": 4,
+      "Policy Entropy": 3.121068522334099,
+      "Mean KL Divergence": 0.005335747817298397,
+      "Value Function Loss": 0.00023379758567898534,
+      "SB3 Clip Fraction": 0.052490234375,
+      "Policy Update Magnitude": 0.0443253219127655,
+      "Value Function Update Magnitude": 0.09375838190317154,
+      "all_metrics_finite": true
+    },
+    {
+      "iteration": 2,
+      "phase": "before_reload",
+      "collected_agent_steps": 2056,
+      "experience_records": 2028,
+      "mean_reward": 0.0024800614633991324,
+      "minimum_reward": -0.0019464654615148902,
+      "maximum_reward": 0.06871196627616882,
+      "appended_action_count": 0,
+      "appended_action_rate": 0.0,
+      "top_action_counts": [
+        {
+          "action_index": 62,
+          "count": 67
+        },
+        {
+          "action_index": 42,
+          "count": 66
+        },
+        {
+          "action_index": 13,
+          "count": 58
+        },
+        {
+          "action_index": 12,
+          "count": 56
+        },
+        {
+          "action_index": 20,
+          "count": 56
+        },
+        {
+          "action_index": 26,
+          "count": 50
+        },
+        {
+          "action_index": 7,
+          "count": 50
+        },
+        {
+          "action_index": 52,
+          "count": 49
+        },
+        {
+          "action_index": 84,
+          "count": 49
+        },
+        {
+          "action_index": 50,
+          "count": 49
+        }
+      ],
+      "collection_seconds": 0.22354519995860755,
+      "agent_steps_per_second": 9197.245122600245,
+      "iteration_seconds": 0.291605299920775,
+      "PPO Batch Consumption Time": 0.023267507553100586,
+      "Cumulative Model Updates": 6,
+      "Policy Entropy": 3.4330639839172363,
+      "Mean KL Divergence": 0.00016370504090446047,
+      "Value Function Loss": 0.002855145081412047,
+      "SB3 Clip Fraction": 0.00048828125,
+      "Policy Update Magnitude": 0.018245765939354897,
+      "Value Function Update Magnitude": 0.039085302501916885,
+      "all_metrics_finite": true
+    },
+    {
+      "iteration": 3,
+      "phase": "after_reload",
+      "collected_agent_steps": 2048,
+      "experience_records": 2022,
+      "mean_reward": 0.00032378116759277455,
+      "minimum_reward": -0.0016992290038615465,
+      "maximum_reward": 0.031131695955991745,
+      "appended_action_count": 0,
+      "appended_action_rate": 0.0,
+      "top_action_counts": [
+        {
+          "action_index": 20,
+          "count": 98
+        },
+        {
+          "action_index": 12,
+          "count": 69
+        },
+        {
+          "action_index": 16,
+          "count": 61
+        },
+        {
+          "action_index": 13,
+          "count": 47
+        },
+        {
+          "action_index": 28,
+          "count": 47
+        },
+        {
+          "action_index": 7,
+          "count": 44
+        },
+        {
+          "action_index": 21,
+          "count": 44
+        },
+        {
+          "action_index": 26,
+          "count": 39
+        },
+        {
+          "action_index": 50,
+          "count": 39
+        },
+        {
+          "action_index": 8,
+          "count": 37
+        }
+      ],
+      "collection_seconds": 0.2215993000427261,
+      "agent_steps_per_second": 9241.90644828359,
+      "iteration_seconds": 0.2764469999819994,
+      "PPO Batch Consumption Time": 0.01883566379547119,
+      "Cumulative Model Updates": 8,
+      "Policy Entropy": 3.690556973218918,
+      "Mean KL Divergence": 5.881344259250909e-05,
+      "Value Function Loss": 0.0006188454644870944,
+      "SB3 Clip Fraction": 0.0,
+      "Policy Update Magnitude": 0.017134174704551697,
+      "Value Function Update Magnitude": 0.038256336003541946,
+      "all_metrics_finite": true
+    }
+  ],
+  "checkpoint_manifest": {
+    "directory": "training/checkpoints/milestone05_smoke",
+    "files": {
+      "PPO_POLICY.pt": {
+        "sha256": "b32205bbc608ec89fc10a1b8056c141206c39cd9fb6dad78fb4d5d4efb986e6d",
+        "size_bytes": 13707637
+      },
+      "PPO_POLICY_OPTIMIZER.pt": {
+        "sha256": "2fdc57c20781ae68a0c170b4f2f2dbf7b8606300438df71511f86011cf247b7f",
+        "size_bytes": 27419709
+      },
+      "PPO_VALUE_NET.pt": {
+        "sha256": "e235fc47a43315ee61f591f1d5603102e1c4370d10b6943ed01ae512929f2a28",
+        "size_bytes": 710813
+      },
+      "PPO_VALUE_NET_OPTIMIZER.pt": {
+        "sha256": "a6033ff65b09393056ddb41cd2c34e13f72df0b54d5b369d4fdac5beebb3a576",
+        "size_bytes": 1421805
+      },
+      "RIVAL_TRAINER_STATE.json": {
+        "sha256": "91e8f4f2a3af2aa5c52823d7eee8c5bd6744b0b9ea9a6f5d5caf31d8a8e6c9c8",
+        "size_bytes": 127
+      }
+    },
+    "trainer_state": {
+      "completed_iterations": 2,
+      "cumulative_agent_steps": 4120,
+      "cumulative_model_updates": 6,
+      "worker_count": 24
+    }
+  },
+  "reload_proof": {
+    "fresh_instance": true,
+    "restored_trainer_state": {
+      "completed_iterations": 2,
+      "cumulative_agent_steps": 4120,
+      "cumulative_model_updates": 6,
+      "worker_count": 24
+    },
+    "max_abs_logit_error": 0.0,
+    "exact_logits": true,
+    "optimizer_state_loaded": true
+  },
+  "resume_proof": {
+    "post_reload_iterations": 1,
+    "post_reload_update_magnitude": 0.017134174704551697,
+    "passed": true
+  },
+  "expanded_head_after_smoke": {
+    "appended_weight_norm": 0.0004461986245587468,
+    "appended_bias_mean": -11.999984741210938,
+    "sampled_action_count": 6114,
+    "appended_action_count": 0,
+    "appended_action_rate": 0.0,
+    "full_action_counts": [
+      33,
+      78,
+      49,
+      67,
+      52,
+      72,
+      77,
+      99,
+      94,
+      72,
+      65,
+      85,
+      133,
+      112,
+      59,
+      32,
+      117,
+      75,
+      114,
+      43,
+      179,
+      93,
+      106,
+      54,
+      50,
+      48,
+      94,
+      46,
+      93,
+      56,
+      91,
+      61,
+      17,
+      61,
+      84,
+      78,
+      20,
+      23,
+      74,
+      72,
+      31,
+      16,
+      115,
+      63,
+      82,
+      78,
+      63,
+      76,
+      76,
+      47,
+      93,
+      74,
+      80,
+      53,
+      34,
+      11,
+      18,
+      16,
+      72,
+      60,
+      26,
+      21,
+      102,
+      62,
+      65,
+      70,
+      57,
+      109,
+      77,
+      111,
+      62,
+      125,
+      58,
+      108,
+      9,
+      11,
+      64,
+      130,
+      15,
+      17,
+      61,
+      94,
+      21,
+      21,
+      87,
+      122,
+      59,
+      104,
+      60,
+      100,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "actor_checkpoint": {
+    "path": "training/artifacts/ppo/milestone05_smoke_actor.pt",
+    "sha256": "1b20810de5a3f0229a648333a4cfefd3d6552ae526a91b2a5ab0d6339d93d7bb",
+    "size_bytes": 13707157,
+    "format": "rival-student-actor-v1",
+    "action_count": 158
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "environment": "training/.venv",
+  "python": "3.12.13",
+  "pip": "26.2.1",
+  "requirements_sha256": "95c28c7f971358432fab86f8a2f130fe3db1f328a0fe30a3ab9e5650eedcfbb4",
+  "requirements_lock_sha256": "16edcfe293d3855029712f05e56ec53c01c29836cd301ec6cab750cac6454541",
+  "core": {
+    "torch": "2.13.0+cu130",
+    "rlgym": "2.0.1",
+    "rlgym-api": "2.0.0",
+    "rlgym-rocket-league": "2.0.1",
+    "rlgym-tools": "2.6.5",
+    "RocketSim": "2.2.1",
+    "rlgym-ppo": "1.3.13",
+    "numpy": "1.26.4"
+  },
+  "rlgym_ppo_source": {
+    "url": "https://github.com/AechPro/rlgym-ppo.git",
+    "commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea"
+  },
+  "cuda_probe": {
+    "available": true,
+    "device": "NVIDIA GeForce RTX 5090",
+    "compute_capability": [12, 0],
+    "finite_matrix_multiply": true
+  },
+  "known_packaging_metadata_issue": {
+    "command": "python -m pip check",
+    "result": "rocketsim 2.2.1 is not supported on this platform",
+    "cause": "The published Windows wheel embeds a cp311 WHEEL tag although its generic RocketSim.pyd loads under CPython 3.12.",
+    "bounded_acceptance_evidence": [
+      "RocketSim import and soccar arena construction pass",
+      "both cadence reset/step smokes pass",
+      "5,000-decision environment stress passes",
+      "all four multiprocess throughput candidates pass",
+      "three PPO iterations including checkpoint resume pass"
+    ],
+    "resolution_for_future_rebuild": "Prefer an officially cp312-tagged RocketSim wheel when published; do not patch installed metadata or downgrade the production RLBot environment."
+  }
+}

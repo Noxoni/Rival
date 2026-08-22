@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "selected_path": "A_direct_trainable_reconstruction",
+  "bounded_elapsed_seconds": 0.29342670005280524,
+  "architecture": {
+    "schema_version": 1,
+    "bootstrap_path": "A_direct_trainable_reconstruction",
+    "teacher_input_size": 432,
+    "teacher_action_count": 90,
+    "student_action_count": 158,
+    "shared_layers": [
+      432,
+      1024,
+      1024
+    ],
+    "policy_layers": [
+      1024,
+      1024,
+      512,
+      512,
+      128,
+      158
+    ],
+    "hidden_normalization": "LayerNorm after each hidden Linear",
+    "activation": "ReLU",
+    "parameter_count": 3424542,
+    "appended_initialization": "zero weights and bias -12.0"
+  },
+  "teacher_hashes_before": {
+    "all_match": true,
+    "files": {
+      "bot/models/POLICY.lt": {
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "actual_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "matches": true,
+        "size_bytes": 7689613
+      },
+      "bot/models/SHARED_HEAD.lt": {
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "actual_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "matches": true,
+        "size_bytes": 5995907
+      }
+    }
+  },
+  "numerical_parity": {
+    "batch_size": 4096,
+    "seed": 20260822,
+    "device": "cuda",
+    "reference_shape": [
+      4096,
+      90
+    ],
+    "student_prefix_shape": [
+      4096,
+      90
+    ],
+    "max_abs_logit_error": 0.0,
+    "mean_abs_logit_error": 0.0,
+    "allclose_atol_1e-6_rtol_1e-6": true,
+    "teacher_student_top1_agreement": 1.0,
+    "appended_action_selection_rate": 0.0
+  },
+  "teacher_hashes_after": {
+    "all_match": true,
+    "files": {
+      "bot/models/POLICY.lt": {
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "actual_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "matches": true,
+        "size_bytes": 7689613
+      },
+      "bot/models/SHARED_HEAD.lt": {
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "actual_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "matches": true,
+        "size_bytes": 5995907
+      }
+    }
+  },
+  "student_checkpoint": {
+    "path": "training/artifacts/bootstrap/wisp_student_expanded_v1.pt",
+    "sha256": "0ae817b0dd15330c3a4e8ee469803c01ad4bde4fbe07d42a606d1ac513015a37",
+    "size_bytes": 13707125,
+    "format": "rival-student-actor-v1",
+    "action_count": 158
+  },
+  "behavior_distillation": {
+    "run": false,
+    "reason": "Direct reconstruction passed exact numerical parity; ordered fallback was not needed.",
+    "dataset_records": 0
+  },
+  "passed": true
+}

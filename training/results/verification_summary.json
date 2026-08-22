@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-22",
+  "status": "passed_with_documented_dependency_metadata_warning",
+  "checks": {
+    "existing_rival_pytest": {
+      "passed": 70,
+      "failed": 0,
+      "warnings": 2
+    },
+    "training_pytest": {
+      "passed": 13,
+      "failed": 0,
+      "warnings": 15
+    },
+    "ruff_training": "passed",
+    "compileall_training": "passed",
+    "powershell_parse": "passed",
+    "json_parse_files": 11,
+    "production_policy_freeze": {
+      "status": "passed",
+      "baseline_commit": "4f2b21c00e2fcb7108ab1006fd950b066fbd0484"
+    },
+    "production_action_prefix": "passed_exact",
+    "teacher_hashes_before_after": "passed",
+    "environment_stress": "passed",
+    "throughput_candidates": "8_12_16_24_all_stable",
+    "ppo_checkpoint_reload_resume": "passed",
+    "deployment_inference_export": "passed",
+    "secret_pattern_scan": "passed",
+    "machine_local_artifact_path_scan": "passed",
+    "git_diff_check": "passed"
+  },
+  "non_gating_warnings": [
+    "PyTorch 2.13 deprecates torch.jit load/script/save; retained for frozen Wisp artifact compatibility in this milestone.",
+    "pip check reports RocketSim 2.2.1 unsupported because the published Windows wheel embeds a cp311 tag; direct CPython 3.12 execution evidence passed and the issue is fully recorded in training/dependency_manifest.json."
+  ]
+}

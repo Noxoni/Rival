@@ -48,28 +48,24 @@ The training architecture is intended to support learning advanced mechanics and
 
 Winning and useful 1v1 outcomes remain the primary objective. Mechanics are valuable only when they improve those outcomes.
 
-## Current Codex handoff — v5.1
+## Milestone 05 result
 
-Start here:
-
-`handoff/v5.1/CODEX_START_PROMPT.md`
-
-v5.1 activates the complete architecture/specification in `handoff/v5.0/` after the clean v4.1 completion boundary.
-
-Milestone 05 builds the first functional training foundation:
+The v5.1 handoff has now produced the first functional training foundation:
 
 - isolated RLGym/RocketSim training environment;
 - natural headless 1v1 self-play;
 - exact Wisp 90-action prefix plus an expanded mechanics-capable action space;
-- Wisp teacher bootstrap through verified reconstruction or behavior distillation;
+- Wisp teacher bootstrap through verified direct reconstruction;
 - outcome-dominant reward system with modest mechanics/recovery shaping;
 - headless rollout throughput benchmarking;
 - bounded PPO smoke with checkpoint save/reload/resume;
 - inference/export seam back to RLBot.
 
-Milestone 05 does **not** launch the first long mechanics training campaign. It proves the trainer is correct and resumable so the next milestone can spend compute on actual learning rather than infrastructure debugging.
+The implementation lives under `training/`. Its compact evidence is under `training/results/`, and the complete outcome is recorded in `docs/MILESTONE_05_RESULTS.md`.
 
-Previous handoffs remain under `handoff/` as recoverable project history.
+Milestone 05 did **not** launch the first long mechanics training campaign. It proved the trainer is correct and resumable so the next milestone can spend compute on actual learning rather than infrastructure debugging. The current live RLBot bot remains the frozen Wisp baseline.
+
+The governing activation prompt remains at `handoff/v5.1/CODEX_START_PROMPT.md`; previous handoffs remain under `handoff/` as recoverable project history.
 
 ## Distribution
 

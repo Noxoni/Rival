@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "environment": {
+    "distribution": "natural_headless_1v1",
+    "engine": "RocketSimEngine",
+    "physics_tick_rate_hz": 120,
+    "default_cadence": "mechanics4",
+    "cadence_ticks": {
+      "legacy8": 8,
+      "mechanics4": 4
+    },
+    "renderer": null,
+    "rlbot_action_delay": true,
+    "goal_terminates_episode": true,
+    "no_touch_timeout_seconds": 30,
+    "episode_timeout_seconds": 300
+  },
+  "actions": {
+    "version": "RivalExpandedActionV1",
+    "wisp_prefix_count": 90,
+    "expanded_count": 158,
+    "advanced_lookup": {
+      "torque_subdivisions": 3,
+      "flip_bins": 16,
+      "include_stalls": true
+    }
+  },
+  "observation": {
+    "version": "WispCompatible432RLGymV1",
+    "size": 432
+  },
+  "bootstrap": {
+    "order": [
+      "direct_trainable_reconstruction",
+      "behavior_distillation_if_direct_fails"
+    ],
+    "random_validation_batch": 4096,
+    "appended_action_bias": -12.0
+  },
+  "reward": {
+    "version": "RivalOutcomeRewardV1",
+    "goal": 10.0,
+    "concede": -10.0,
+    "named_mechanic_rewards_enabled": false
+  },
+  "throughput": {
+    "worker_candidates": [8, 12, 16, 24],
+    "warmup_agent_steps": 512,
+    "measured_agent_steps": 4096
+  },
+  "ppo_smoke": {
+    "iterations_before_reload": 2,
+    "iterations_after_reload": 1,
+    "agent_steps_per_iteration": 2048,
+    "batch_size": 1024,
+    "minibatch_size": 256,
+    "epochs": 2,
+    "policy_learning_rate": 1e-5,
+    "critic_learning_rate": 1e-4,
+    "standardize_observations": false,
+    "standardize_returns": false
+  },
+  "seed": 20260822
+}

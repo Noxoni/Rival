@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checkpoint_metadata": {
+    "source": "milestone05_bounded_ppo_smoke",
+    "cumulative_model_updates": 8,
+    "cumulative_agent_steps": 6168
+  },
+  "input_shape": [
+    432
+  ],
+  "action_index": 83,
+  "controller_action": [
+    1.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "logits_shape": [
+    158
+  ],
+  "logits_finite": true,
+  "mirror_controller_exact": true,
+  "torchscript_export": {
+    "path": "training/artifacts/deploy/milestone05_actor.ts",
+    "sha256": "39f06d047b3e3056c85969ffbfc2cec85f61a6632773222d883c28bf624dfec2",
+    "size_bytes": 13724445,
+    "input_shape": [
+      1,
+      432
+    ],
+    "output_shape": [
+      1,
+      158
+    ]
+  },
+  "torchscript_max_abs_error": 0.0,
+  "torchscript_allclose": true,
+  "production_runtime_replaced": false
+}
