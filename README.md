@@ -1,48 +1,73 @@
 # Rival
 
-Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The current default gameplay remains the verified Milestone 02 Wisp v2-75B-derived baseline. Milestone 03 implemented and tested an experimental challenge-commitment calibration layer, but the treatment was rejected and remains disabled.
+Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The current deployed gameplay remains the verified Wisp v2-75B-derived baseline while the project pivots to training a new Rival policy with **RLGym + RocketSim**.
 
 Rival is for offline RLBot play only. It must not be used to cheat or otherwise break Rocket League's terms of service.
 
-## Current verified baseline
+## Current verified deployment baseline
 
 - RLBot display name: `Rival Dev`
 - Default agent id: `noxoni/rival/dev-v1`
 - Runtime config: `bot/rival.bot.toml`
-- Completed Milestone 03 result commit: `e4cc175a4259202d5cc7ee437abef224b731354f`
-- Completed Milestone 02 evidence baseline: `e7b68c6e33faf6fc644a3fc9a07e811d43d2918e`
 - Frozen Wisp-equivalent gameplay baseline: `4f2b21c00e2fcb7108ab1006fd950b066fbd0484`
 - Baseline models: unchanged Wisp v2-75B `POLICY.lt` and `SHARED_HEAD.lt`
 - Challenge calibration default: `off`
-- Six Milestone 02 natural baseline matches completed: three vs Nexto, three vs Wisp v2-75B
+- Natural adjustment default: `off`
+- Completed Milestone 04 / v4.1 boundary: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
 
-See `docs/MILESTONE_03_RESULTS.md`, `docs/MILESTONE_02_RESULTS.md`, and `evidence/results/` for the current evidence.
+## Milestone 04 result
 
-## Current direction
+v4.1 completed a natural-play optimization cycle using 16 full five-minute Soccar matches against installed Nexto and Wisp v2-75B at approximately 5x effective simulation speed.
 
-Milestone 03 showed that trying to judge gameplay from independently scripted challenge trajectories was not useful enough: both treatment attempts applied zero interventions while their trajectories still diverged. The project is therefore moving away from scenario-specific tuning as the primary optimization method.
+The tested `m04p1-low-resource-aerial-v1` intervention was **rejected**. It changed Wisp's selected action 17 times but produced unfavorable targeted and aggregate results, so normal Rival remains on the exact frozen Wisp policy. The rejected implementation remains available behind an explicit switch for reproducibility only.
 
-Rival should improve from **natural accelerated Rocket League play**:
+The v4.1 evidence now serves as a real deployment benchmark for future trained Rival checkpoints rather than as a reason to add another heuristic patch.
 
-`natural matches -> telemetry -> recurring state/outcome pattern -> one live state-conditioned adjustment -> natural matches -> aggregate comparison`
+See `docs/MILESTONE_04_RESULTS.md`, `evidence/results/v4.1/milestone_04_decision.json`, and earlier milestone reports under `docs/` and `evidence/results/`.
 
-Gameplay logic should use current observable opponent/ball/Rival state and short history, not labels from hand-authored test scenarios.
+## Current direction — train Rival
 
-Milestone 03 also demonstrated genuine accelerated simulation: requested 5x produced approximately 4.92x and 5.00x simulated-game-time progression per wall second against Nexto and Wisp. The packet `match_info.game_speed` echo remained at `1.0`, so that field is treated as stale diagnostic data rather than proof that acceleration failed.
+The project is no longer centered on accumulating tactical re-ranking rules around Wisp.
 
-## Current Codex handoff — v4.1
+Primary architecture:
+
+`Wisp teacher -> RLGym/RocketSim natural 1v1 -> trainable Rival student -> RLBot deployment/benchmark`
+
+RLGym/RocketSim becomes the training environment. RLBot/Rocket League remains the deployment, telemetry, and benchmark environment.
+
+The training architecture is intended to support learning advanced mechanics and recovery behavior through reinforcement learning rather than hard-coded macros, including:
+
+- flip resets and useful reset follow-ups;
+- ceiling resets/control;
+- controlled aerial possession and opponent outplays;
+- musty/breezi/Meeri-pop-like sequences when useful;
+- wavedash/zap-dash/wall-dash-style recovery and acceleration;
+- sidewall recovery/skimming;
+- use of flips to preserve aerial momentum and conserve boost;
+- rapid defensive recovery after missed offense or possession loss.
+
+Winning and useful 1v1 outcomes remain the primary objective. Mechanics are valuable only when they improve those outcomes.
+
+## Current Codex handoff — v5.1
 
 Start here:
 
-`handoff/v4.1/CODEX_START_PROMPT.md`
+`handoff/v5.1/CODEX_START_PROMPT.md`
 
-Codex must read the complete `handoff/v4.1/` package before modifying implementation code.
+v5.1 activates the complete architecture/specification in `handoff/v5.0/` after the clean v4.1 completion boundary.
 
-v4.1 supersedes the unexecuted v4.0 deterministic-pairing direction. The main development environment is now full five-minute natural 1v1 matches at approximately **5x effective simulation speed**, with telemetry aggregated across many unrelated trajectories. Scripted probes may remain as optional regression/smoke checks, but they are not the main training set or acceptance gate.
+Milestone 05 builds the first functional training foundation:
 
-The intended v4.1 run gathers a natural accelerated baseline batch against installed Nexto and Wisp v2-75B, ranks recurring high-impact behavior from telemetry, implements one state-conditioned correction using live observations, then runs another natural accelerated batch and compares aggregate outcomes. The rejected Milestone 03 challenge parameters remain disabled unless a new natural-play result supports a different treatment.
+- isolated RLGym/RocketSim training environment;
+- natural headless 1v1 self-play;
+- exact Wisp 90-action prefix plus an expanded mechanics-capable action space;
+- Wisp teacher bootstrap through verified reconstruction or behavior distillation;
+- outcome-dominant reward system with modest mechanics/recovery shaping;
+- headless rollout throughput benchmarking;
+- bounded PPO smoke with checkpoint save/reload/resume;
+- inference/export seam back to RLBot.
 
-Parallel Rocket League instances remain optional; do not spend substantial engineering time on them. Sequential 5x matches are already the primary throughput improvement.
+Milestone 05 does **not** launch the first long mechanics training campaign. It proves the trainer is correct and resumable so the next milestone can spend compute on actual learning rather than infrastructure debugging.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
@@ -50,9 +75,9 @@ Previous handoffs remain under `handoff/` as recoverable project history.
 
 For another Windows PC, do not distribute only `bot/`: the development TOML depends on the repository-local `.venv`. Build the self-contained Windows x64 ZIP with `scripts/build_windows_release.ps1`; the complete procedure and verification contract are in `docs/BUILD_WINDOWS_RELEASE.md`.
 
-## Local RLBot BotPack references
+## Local RLBot references
 
-The installed RLBot v5 bots used as read-only references are under:
+Installed RLBot v5 bots used as read-only benchmark/teacher references are under:
 
 `C:\Users\patri\AppData\Local\RLBot5\bots`
 
@@ -60,4 +85,4 @@ The primary local references are Wisp v2-75B and Nexto. Exact local and upstream
 
 ## Repository policy
 
-This repository is the canonical location for Rival implementation work, tests, provenance, evidence tooling, progress, and stable commits. Meaningful completed work should be committed and pushed here rather than existing only in a local Codex workspace.
+This repository is the canonical location for Rival implementation work, tests, provenance, evidence tooling, training infrastructure, progress, and stable commits. Meaningful completed work should be committed and pushed here rather than existing only in a local Codex workspace.
