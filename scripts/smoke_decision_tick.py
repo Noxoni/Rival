@@ -116,8 +116,13 @@ def main() -> int:
             if line
         ]
         decision = rival.last_decision
+        decision_records = [
+            record
+            for record in records
+            if record.get("record_type") == "rival_policy_decision"
+        ]
         result = {
-            "status": "pass" if len(records) == 1 else "fail",
+            "status": "pass" if len(decision_records) == 1 else "fail",
             "action_index": decision.action_index,
             "controller_action": decision.controller_action.to_record(),
             "controller_output": {
@@ -138,6 +143,8 @@ def main() -> int:
             "margin": decision.margin,
             "eta_method": rival.last_tactical_metrics.eta_method,
             "telemetry_records": len(records),
+            "telemetry_decision_records": len(decision_records),
+            "telemetry_record_types": [record.get("record_type") for record in records],
             "telemetry_schema_version": (
                 records[0]["schema_version"] if records else None
             ),

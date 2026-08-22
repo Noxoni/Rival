@@ -32,6 +32,7 @@ from obs_builder import CustomObs
 from policy.decision import PolicyDecision
 from policy.inspector import PolicyInspector
 from telemetry.decision_logger import DecisionTelemetryLogger
+from telemetry.packet_snapshot import extract_packet_snapshot
 
 
 class RivalBot(rlbot.managers.Bot):
@@ -72,7 +73,9 @@ class RivalBot(rlbot.managers.Bot):
             config.TELEMETRY_PATH,
             enabled=config.TELEMETRY_ENABLED,
             include_logits=config.TELEMETRY_INCLUDE_LOGITS,
+            session_metadata=config.TELEMETRY_SESSION_METADATA,
         )
+        self._latest_packet_score: dict[str, int | None] | None = None
 
     def initialize(self):
         self.logger.info(f"{self.name} index {self.index} team {self.team}: Initializing...")
@@ -117,6 +120,7 @@ class RivalBot(rlbot.managers.Bot):
         score_diff: int,
         game_time: float | None,
         seconds_remaining: float | None,
+        packet: rlbot.flat.GamePacket | None = None,
     ):
         # Build obs (use torch tensor to avoid np->torch conversion overhead)
         device = config.MODEL_DEVICE
@@ -194,6 +198,13 @@ class RivalBot(rlbot.managers.Bot):
                         "tick_window": self.ticks,
                         "update_action_flag": self.update_action_flag,
                     },
+                    (
+                        None
+                        if packet is None
+                        else extract_packet_snapshot(
+                            packet, self.index, getattr(self, "field_info", None)
+                        )
+                    ),
                 )
             except (OSError, TypeError, ValueError) as exc:
                 self.logger.warning("Disabling Rival telemetry after write failure: %s", exc)
@@ -202,6 +213,15 @@ class RivalBot(rlbot.managers.Bot):
         self.policy_tick += 1
 
     def get_output(self, packet: rlbot.flat.GamePacket) -> rlbot.flat.ControllerState:
+        if len(packet.teams) >= 2:
+            self._latest_packet_score = {
+                "blue": int(packet.teams[0].score),
+                "orange": int(packet.teams[1].score),
+            }
+            self.telemetry.observe_final_score(
+                self._latest_packet_score["blue"],
+                self._latest_packet_score["orange"],
+            )
         # Detect if the game phase is something we don't care about playing in
         is_active_game_phase = packet.match_info.match_phase in [
             rlbot.flat.MatchPhase.Countdown,
@@ -265,6 +285,7 @@ class RivalBot(rlbot.managers.Bot):
                 score_diff,
                 None if seconds_elapsed is None else float(seconds_elapsed),
                 None if seconds_remaining is None else float(seconds_remaining),
+                packet,
             )
 
         # Apply action once we reach the action delay (one earlier due to RLBot delay)
@@ -308,6 +329,14 @@ class RivalBot(rlbot.managers.Bot):
             return ctrls
 
         return None
+
+    def retire(self):
+        self.telemetry.finalize(
+            termination_reason="rlbot_retired",
+            final_score=self._latest_packet_score,
+        )
+        self.telemetry.close(finalize=False)
+        super().retire()
 
 
 def _sha256(path: Path) -> str:

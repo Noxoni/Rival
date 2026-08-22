@@ -71,7 +71,11 @@ def test_disabled_telemetry_creates_no_output(tmp_path) -> None:
 
 def test_enabled_telemetry_writes_one_machine_readable_record(tmp_path) -> None:
     output = tmp_path / "decisions.jsonl"
-    logger = DecisionTelemetryLogger(output, enabled=True)
+    logger = DecisionTelemetryLogger(
+        output,
+        enabled=True,
+        session_metadata={"session_id": "test-session", "source": "synthetic_test"},
+    )
 
     assert logger.log(
         _decision(),
@@ -81,14 +85,21 @@ def test_enabled_telemetry_writes_one_machine_readable_record(tmp_path) -> None:
     )
     logger.close()
 
-    lines = output.read_text(encoding="utf-8").splitlines()
-    assert len(lines) == 1
-    record = json.loads(lines[0])
-    assert record["schema_version"] == 1
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+    assert [record["record_type"] for record in records] == [
+        "rival_session_start",
+        "rival_policy_decision",
+        "rival_session_end",
+    ]
+    record = records[1]
+    assert record["schema_version"] == 2
+    assert record["session_id"] == "test-session"
     assert record["decision"]["action_index"] == 1
     assert record["decision"]["legal_mask"] == [True, True]
     assert "raw_logits" not in record["decision"]
     assert record["runtime"]["strategic_overrides_enabled"] is False
+    assert records[0]["metadata"]["source"] == "synthetic_test"
+    assert records[2]["decision_record_count"] == 1
 
 
 def test_verbose_telemetry_includes_raw_and_masked_logits(tmp_path) -> None:
@@ -97,6 +108,7 @@ def test_verbose_telemetry_includes_raw_and_masked_logits(tmp_path) -> None:
     logger.log(_decision(), _metrics(), {}, {})
     logger.close()
 
-    record = json.loads(output.read_text(encoding="utf-8"))
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+    record = records[1]
     assert record["decision"]["raw_logits"] == [0.5, 1.5]
     assert record["decision"]["masked_logits"] == [0.5, 1.5]

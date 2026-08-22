@@ -1,5 +1,7 @@
 import os
+import json
 from pathlib import Path
+from typing import Any
 
 from backend.model import ActivationType, ModelInfo
 
@@ -47,6 +49,21 @@ TELEMETRY_PATH = Path(
         str(_BASE_DIR.parent / "telemetry" / "rival_decisions.jsonl"),
     )
 ).expanduser()
+
+
+def _load_session_metadata() -> dict[str, Any]:
+    raw_path = os.environ.get("RIVAL_SESSION_METADATA_PATH")
+    if not raw_path:
+        return {}
+    path = Path(raw_path).expanduser()
+    with path.open("r", encoding="utf-8") as stream:
+        value = json.load(stream)
+    if not isinstance(value, dict):
+        raise ValueError("RIVAL_SESSION_METADATA_PATH must contain a JSON object")
+    return value
+
+
+TELEMETRY_SESSION_METADATA = _load_session_metadata()
 
 # Milestone 01 is measurement-only. This is intentionally not environment-toggleable.
 STRATEGIC_OVERRIDES_ENABLED = False
