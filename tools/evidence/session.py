@@ -16,10 +16,16 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def make_session_id(source: str, opponent: str, rival_team: int) -> str:
+def make_session_id(
+    source: str,
+    opponent: str,
+    rival_team: int,
+    *,
+    milestone: str = "v3",
+) -> str:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     side = "blue" if rival_team == 0 else "orange"
-    return f"rival-v3-{source}-{opponent}-{side}-{stamp}-{uuid4().hex[:8]}"
+    return f"rival-{milestone}-{source}-{opponent}-{side}-{stamp}-{uuid4().hex[:8]}"
 
 
 def _package_version(name: str) -> str | None:
@@ -66,6 +72,7 @@ def build_session_metadata(
     match: dict[str, Any],
     telemetry_path: Path,
     probe: dict[str, Any] | None = None,
+    experiment_milestone: str = "m03-challenge-calibration",
 ) -> dict[str, Any]:
     opponent_record = opponent.to_record() if isinstance(opponent, ReferenceBot) else opponent
     return {
@@ -89,7 +96,7 @@ def build_session_metadata(
             "deterministic_policy": True,
             "strategic_overrides_enabled": False,
         },
-        "experiment_milestone": "m03-challenge-calibration",
+        "experiment_milestone": experiment_milestone,
         "start_timestamp_utc": utc_now(),
     }
 

@@ -408,12 +408,31 @@ def run_natural_match(
     lane_id: str = "lane-1",
     execution_regime: str = "sequential",
     smoke_game_seconds: float | None = None,
+    session_version: str = "v3",
+    session_source: str | None = None,
+    experiment_milestone: str = "m03-challenge-calibration",
+    experiment_metadata: dict[str, Any] | None = None,
+    rival_environment_overrides: dict[str, str] | None = None,
     manager: rlbot.managers.MatchManager | None = None,
 ) -> dict[str, Any]:
     reference = discover_reference(opponent_key)
+    rival_environment_overrides = dict(rival_environment_overrides or {})
+    invalid_environment = sorted(
+        key for key in rival_environment_overrides if not key.startswith("RIVAL_")
+    )
+    if invalid_environment:
+        raise ValueError(
+            "Rival environment overrides must use RIVAL_* names: "
+            + ", ".join(invalid_environment)
+        )
     source_key = "speed-smoke" if smoke_game_seconds is not None else "natural"
     source = "speed_integrity_smoke" if smoke_game_seconds is not None else "natural_match"
-    session_id = make_session_id(source_key, reference.key, rival_team)
+    session_id = make_session_id(
+        source_key,
+        reference.key,
+        rival_team,
+        milestone=session_version,
+    )
     session_dir = RAW_EVIDENCE_ROOT / session_id
     telemetry_path = session_dir / "decisions.jsonl"
     metadata_path = session_dir / "session_start.json"
@@ -427,11 +446,12 @@ def run_natural_match(
     )
     metadata = build_session_metadata(
         session_id=session_id,
-        source=source,
+        source=session_source or source,
         opponent=reference,
         rival_team=rival_team,
         match=match_record,
         telemetry_path=telemetry_path,
+        experiment_milestone=experiment_milestone,
     )
     metadata["challenge_calibration"] = {"mode": challenge_mode}
     metadata["execution_request"] = {
@@ -439,6 +459,8 @@ def run_natural_match(
         "requested_game_speed": game_speed,
         "smoke_game_seconds": smoke_game_seconds,
     }
+    if experiment_metadata:
+        metadata["natural_play_experiment"] = dict(experiment_metadata)
     write_json(metadata_path, metadata)
     rival_environment = {
         "RIVAL_TELEMETRY_ENABLED": "1",
@@ -447,6 +469,7 @@ def run_natural_match(
         "RIVAL_SESSION_METADATA_PATH": str(metadata_path),
         "RIVAL_CHALLENGE_CALIBRATION_MODE": challenge_mode,
     }
+    rival_environment.update(rival_environment_overrides)
     config = build_match_configuration(
         rival_team=rival_team,
         opponent_config=reference.config_path,
