@@ -1,0 +1,47 @@
+{
+  "handoff_version": "v5.0",
+  "name": "RLGym Training Foundation",
+  "status": "queued-next-after-v4.1-coherent-boundary",
+  "authored_against_repository_state_at_least": "3c15ff55ba6005777c3ab6457dc3d14e8453a966",
+  "files": [
+    "README.md",
+    "VERSION.md",
+    "ARCHITECTURE.md",
+    "TEACHER_BOOTSTRAP.md",
+    "REWARD_AND_CURRICULUM.md",
+    "MILESTONE_05_SPEC.md",
+    "CODEX_START_PROMPT.md",
+    "PACKAGE_MANIFEST.json"
+  ],
+  "primary_stack": {
+    "environment": "RLGym v2 + RocketSim",
+    "tools": "rlgym-tools",
+    "trainer": "Python rlgym-ppo",
+    "teacher": "frozen Wisp v2-75B TorchScript",
+    "deployment": "existing Rival RLBot v5 runtime"
+  },
+  "teacher_hashes": {
+    "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "action_design": {
+    "teacher_action_count": 90,
+    "teacher_indices_preserved": "0-89 exact",
+    "expanded_candidate": "AdvancedLookupTableAction torque_subdivisions=3 flip_bins=16 include_stalls=true plus exact Wisp rows, deduplicated",
+    "expected_count_is_not_a_contract": true,
+    "student_primary_cadence_physics_ticks": 4,
+    "teacher_reference_cadence_physics_ticks": 8
+  },
+  "research_verified_date": "2026-08-22",
+  "research": [
+    "https://rlgym.org/Getting%20Started/overview/",
+    "https://rlgym.org/Rocket%20League/training_an_agent/",
+    "https://rlgym.org/Rocket%20League/Configuration%20Objects/reward_functions/",
+    "https://rlgym.org/Rocket%20League/Configuration%20Objects/state_mutators/",
+    "https://rlgym.org/Rocket%20League/Configuration%20Objects/action_parsers/",
+    "https://github.com/RLGym/rlgym-tools",
+    "https://github.com/AechPro/rlgym-ppo",
+    "https://github.com/RLGym/rlgym-rlbot",
+    "https://github.com/VirxEC/rlgymppo_rs"
+  ]
+}
