@@ -1,71 +1,67 @@
 # Rival
 
-Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The current deployed gameplay remains the verified Wisp v2-75B-derived baseline while the project pivots to training a new Rival policy with **RLGym + RocketSim**.
+Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The current deployed gameplay remains the verified Wisp v2-75B-derived baseline while a new Rival policy is trained with **RLGym + RocketSim**.
 
 Rival is for offline RLBot play only. It must not be used to cheat or otherwise break Rocket League's terms of service.
 
-## Current verified deployment baseline
+## Current deployment baseline
 
 - RLBot display name: `Rival Dev`
 - Default agent id: `noxoni/rival/dev-v1`
-- Runtime config: `bot/rival.bot.toml`
 - Frozen Wisp-equivalent gameplay baseline: `4f2b21c00e2fcb7108ab1006fd950b066fbd0484`
-- Baseline models: unchanged Wisp v2-75B `POLICY.lt` and `SHARED_HEAD.lt`
-- Challenge calibration default: `off`
-- Natural adjustment default: `off`
-- Completed Milestone 04 / v4.1 boundary: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
+- Wisp `POLICY.lt` / `SHARED_HEAD.lt` unchanged
+- Challenge calibration: `off`
+- Natural adjustment: `off`
+- Completed v4.1 natural benchmark: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
 
-## Milestone 04 result
+The two runtime gameplay-adjustment experiments were rejected and remain disabled. The v4.1 natural benchmark is now used as a deployment reference for trained Rival checkpoints.
 
-v4.1 completed a natural-play optimization cycle using 16 full five-minute Soccar matches against installed Nexto and Wisp v2-75B at approximately 5x effective simulation speed.
+## Milestone 05 — training foundation complete
 
-The tested `m04p1-low-resource-aerial-v1` intervention was **rejected**. It changed Wisp's selected action 17 times but produced unfavorable targeted and aggregate results, so normal Rival remains on the exact frozen Wisp policy. The rejected implementation remains available behind an explicit switch for reproducibility only.
+Completed boundary:
 
-The v4.1 evidence now serves as a real deployment benchmark for future trained Rival checkpoints rather than as a reason to add another heuristic patch.
+`4c9aa6f596b3231856107b3a1e59d9a7c4f663db`
 
-See `docs/MILESTONE_04_RESULTS.md`, `evidence/results/v4.1/milestone_04_decision.json`, and earlier milestone reports under `docs/` and `evidence/results/`.
+Milestone 05 established a reproducible isolated training stack under `training/`:
 
-## Current direction — train Rival
+- RLGym v2 + RocketSim + RLGym Tools + commit-pinned `rlgym-ppo`;
+- CUDA PyTorch training environment separate from production RLBot;
+- natural renderer-free 1v1 self-play;
+- 120 Hz simulation with `mechanics4` 4-tick student cadence;
+- 432-value Wisp-compatible observation path;
+- `RivalExpandedActionV1`: exact Wisp actions 0–89 plus 68 mechanics-capable actions for 158 total;
+- directly reconstructed trainable Wisp actor with exact first-90 logit parity;
+- resumable PPO/checkpoint/export path;
+- measured 24-worker throughput of ~14.5k agent-steps/s on the development machine;
+- deployment inference/TorchScript seam back to RLBot.
 
-The project is no longer centered on accumulating tactical re-ranking rules around Wisp.
+See `docs/MILESTONE_05_RESULTS.md` and `training/` for exact evidence, versions and reproduction commands.
 
-Primary architecture:
+## Current Codex handoff — v6.0
 
-`Wisp teacher -> RLGym/RocketSim natural 1v1 -> trainable Rival student -> RLBot deployment/benchmark`
+Start here:
 
-RLGym/RocketSim becomes the training environment. RLBot/Rocket League remains the deployment, telemetry, and benchmark environment.
+`handoff/v6.0/CODEX_START_PROMPT.md`
 
-The training architecture is intended to support learning advanced mechanics and recovery behavior through reinforcement learning rather than hard-coded macros, including:
+Milestone 06 is Rival's **first serious training campaign**. It stops adding tactical patches around Wisp and spends compute on actual learning.
 
-- flip resets and useful reset follow-ups;
-- ceiling resets/control;
-- controlled aerial possession and opponent outplays;
-- musty/breezi/Meeri-pop-like sequences when useful;
-- wavedash/zap-dash/wall-dash-style recovery and acceleration;
-- sidewall recovery/skimming;
-- use of flips to preserve aerial momentum and conserve boost;
-- rapid defensive recovery after missed offense or possession loss.
+Campaign architecture:
 
-Winning and useful 1v1 outcomes remain the primary objective. Mechanics are valuable only when they improve those outcomes.
+`Wisp warm start -> natural RLGym/RocketSim 1v1 -> staged PPO training -> checkpoint evaluation -> RLBot Nexto/Wisp benchmark -> promotion only if earned`
 
-## Milestone 05 result
+Key rules:
 
-The v5.1 handoff has now produced the first functional training foundation:
+- campaign ceiling: 100M agent-steps, staged and resumable rather than one opaque run;
+- natural 1v1 remains the majority training distribution;
+- broad randomized aerial/wall/recovery state families may be a minority curriculum;
+- actions 90–157 are opened gradually from the conservative Wisp warm start rather than unsuppressed all at once;
+- winning remains dominant while boost efficiency, recovery and mechanics/resource signals stay low-weight and independently logged;
+- checkpoints are evaluated against frozen Wisp throughout and against installed Wisp/Nexto at major healthy boundaries;
+- the production RLBot policy remains frozen Wisp until a trained checkpoint passes the explicit promotion battery.
 
-- isolated RLGym/RocketSim training environment;
-- natural headless 1v1 self-play;
-- exact Wisp 90-action prefix plus an expanded mechanics-capable action space;
-- Wisp teacher bootstrap through verified direct reconstruction;
-- outcome-dominant reward system with modest mechanics/recovery shaping;
-- headless rollout throughput benchmarking;
-- bounded PPO smoke with checkpoint save/reload/resume;
-- inference/export seam back to RLBot.
+The action/training system is intended to allow Rival to learn useful flip/ceiling resets, better aerial possession, momentum-preserving aerial flips, wavedash/zap-dash/wall-dash-like recovery, sidewall recovery, and mechanically creative outplays when those behaviors improve 1v1 outcomes.
 
-The implementation lives under `training/`. Its compact evidence is under `training/results/`, and the complete outcome is recorded in `docs/MILESTONE_05_RESULTS.md`.
-
-Milestone 05 did **not** launch the first long mechanics training campaign. It proved the trainer is correct and resumable so the next milestone can spend compute on actual learning rather than infrastructure debugging. The current live RLBot bot remains the frozen Wisp baseline.
-
-The governing activation prompt remains at `handoff/v5.1/CODEX_START_PROMPT.md`; previous handoffs remain under `handoff/` as recoverable project history.
+Previous handoffs remain under `handoff/` as recoverable project history.
 
 ## Distribution
 
