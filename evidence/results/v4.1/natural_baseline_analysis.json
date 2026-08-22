@@ -1,0 +1,411 @@
+{
+  "aggregate": {
+    "active_decision_count": 37223,
+    "decision_count": 43792,
+    "favorable_eta": {
+      "favorable_count": 23850,
+      "observation_count": 37223,
+      "share": 0.6407328802084733,
+      "threshold_seconds": 0.0
+    },
+    "goal_differential": 5,
+    "goals_against": 30,
+    "goals_conceded_within_window_after_possession_loss": 41,
+    "goals_for": 35,
+    "goals_scored_within_window_after_possession_loss": 21,
+    "losses": 4,
+    "match_count": 8,
+    "natural_adjustment": {
+      "applied_decision_count": 0,
+      "eligible_decision_count": 0,
+      "record_count": 0
+    },
+    "possession_loss_transition_count": 367,
+    "ties": 0,
+    "touches": {
+      "opponent": 955,
+      "self": 2981
+    },
+    "wins": 4
+  },
+  "analysis_parameters": {
+    "favorable_eta_threshold_seconds": 0.0,
+    "goal_consequence_window_seconds": 10.0,
+    "minimum_episode_separation_seconds": 2.0
+  },
+  "analyzer_version": "rival-m04p1-natural-v1",
+  "detector": {
+    "candidate_only": true,
+    "overlap_control": "same-pattern anchors within the configured per-session separation are counted once",
+    "parameters": {
+      "aerial_low_boost_reference": 30.0,
+      "aerial_min_ball_height": 300.0,
+      "aerial_min_distance": 650.0,
+      "boost_pickup_min_gain": 5.0,
+      "challenge_max_opponent_ball_distance": 1900.0,
+      "challenge_max_self_ball_distance": 1000.0,
+      "challenge_min_closing_speed": 250.0,
+      "detour_min_distance_increase": 150.0,
+      "post_window_seconds": 4.0,
+      "pre_window_seconds": 1.5
+    },
+    "raw_event_counts": {
+      "apparent_vs_actual_challenge": 1123,
+      "boost_detour_possession_loss": 388,
+      "resource_stressed_aerial": 350
+    },
+    "version": "rival-m02-events-v1"
+  },
+  "generated_utc": "2026-08-22T21:28:12.315071Z",
+  "highest_priority_pattern": "apparent_pressure_release_after_closing_abort",
+  "interpretation_limits": [
+    "natural trajectories are unpaired and pattern counts are observational",
+    "event detectors are candidate screens rather than ground-truth labels",
+    "scores and goal differential are context, not a standalone skill claim"
+  ],
+  "ranked_patterns": [
+    {
+      "description": "opponent closing threshold crossed, later collapsed, and Rival jumped inside the natural response window",
+      "episodes_per_match": 63.75,
+      "high_consequence_episode_count": 189,
+      "independent_episode_count": 510,
+      "matches_with_episode": 8,
+      "next_goal_within_window": {
+        "conceded": 42,
+        "conceded_rate": 0.08235294117647059,
+        "none": 423,
+        "scored": 45,
+        "window_seconds": 10.0
+      },
+      "next_touch": {
+        "none": 9,
+        "opponent": 173,
+        "opponent_rate": 0.3392156862745098,
+        "self": 328
+      },
+      "pattern": "apparent_pressure_release_after_closing_abort",
+      "priority_components": {
+        "consequence_multiplier": 1.6686274509803922,
+        "frequency_log1p_episodes_per_match": 4.1705337005796475,
+        "goal_conceded_rate": 0.08235294117647059,
+        "opponent_next_touch_rate": 0.3392156862745098
+      },
+      "priority_score": 6.959067018026039,
+      "raw_candidate_count": 695,
+      "source_event_class": "apparent_vs_actual_challenge"
+    },
+    {
+      "description": "aerial-like action transition with an elevated ball and less than the 30-boost detector reference",
+      "episodes_per_match": 13.0,
+      "high_consequence_episode_count": 41,
+      "independent_episode_count": 104,
+      "matches_with_episode": 8,
+      "next_goal_within_window": {
+        "conceded": 13,
+        "conceded_rate": 0.125,
+        "none": 81,
+        "scored": 10,
+        "window_seconds": 10.0
+      },
+      "next_touch": {
+        "none": 12,
+        "opponent": 38,
+        "opponent_rate": 0.36538461538461536,
+        "self": 54
+      },
+      "pattern": "low_resource_aerial_commitment",
+      "priority_components": {
+        "consequence_multiplier": 1.8653846153846154,
+        "frequency_log1p_episodes_per_match": 2.6390573296152584,
+        "goal_conceded_rate": 0.125,
+        "opponent_next_touch_rate": 0.36538461538461536
+      },
+      "priority_score": 4.922856941782309,
+      "raw_candidate_count": 149,
+      "source_event_class": "resource_stressed_aerial"
+    },
+    {
+      "description": "boost pickup window in which the ETA possession proxy changed from favorable to unfavorable",
+      "episodes_per_match": 8.25,
+      "high_consequence_episode_count": 20,
+      "independent_episode_count": 66,
+      "matches_with_episode": 8,
+      "next_goal_within_window": {
+        "conceded": 6,
+        "conceded_rate": 0.09090909090909091,
+        "none": 56,
+        "scored": 4,
+        "window_seconds": 10.0
+      },
+      "next_touch": {
+        "none": 3,
+        "opponent": 15,
+        "opponent_rate": 0.22727272727272727,
+        "self": 48
+      },
+      "pattern": "boost_pickup_with_eta_possession_flip",
+      "priority_components": {
+        "consequence_multiplier": 1.5909090909090908,
+        "frequency_log1p_episodes_per_match": 2.224623551524334,
+        "goal_conceded_rate": 0.09090909090909091,
+        "opponent_next_touch_rate": 0.22727272727272727
+      },
+      "priority_score": 3.539173831970531,
+      "raw_candidate_count": 78,
+      "source_event_class": "boost_detour_possession_loss"
+    }
+  ],
+  "raw_hashes_verified": true,
+  "report_schema_version": 1,
+  "sessions": [
+    {
+      "active_decision_count": 5495,
+      "decision_count": 6604,
+      "eta_observation_count": 5495,
+      "favorable_eta_observation_count": 4265,
+      "final_score": {
+        "blue": 6,
+        "orange": 5
+      },
+      "goal_differential": 1,
+      "goals_conceded_within_window_after_possession_loss": 8,
+      "goals_scored_within_window_after_possession_loss": 2,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "nexto",
+      "opponent_goals": 5,
+      "possession_loss_transition_count": 40,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "9734fa124d23a1e3ee681d41dc80cb102371f484bd0e7368307d291837695591",
+      "rival_goals": 6,
+      "rival_side": "blue",
+      "schedule_index": 1,
+      "session_id": "rival-v4p1-natural-nexto-blue-20260822T210117Z-d4d3859c",
+      "touch_count": {
+        "opponent": 61,
+        "self": 536
+      }
+    },
+    {
+      "active_decision_count": 4494,
+      "decision_count": 5402,
+      "eta_observation_count": 4494,
+      "favorable_eta_observation_count": 2177,
+      "final_score": {
+        "blue": 5,
+        "orange": 4
+      },
+      "goal_differential": -1,
+      "goals_conceded_within_window_after_possession_loss": 8,
+      "goals_scored_within_window_after_possession_loss": 2,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "wisp",
+      "opponent_goals": 5,
+      "possession_loss_transition_count": 43,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "a0b1773ad180eed82da49ae9795fb6e0127a952b11a60fdbcf2ecfa83686bf8b",
+      "rival_goals": 4,
+      "rival_side": "orange",
+      "schedule_index": 2,
+      "session_id": "rival-v4p1-natural-wisp-orange-20260822T210537Z-47055494",
+      "touch_count": {
+        "opponent": 156,
+        "self": 146
+      }
+    },
+    {
+      "active_decision_count": 4541,
+      "decision_count": 5090,
+      "eta_observation_count": 4541,
+      "favorable_eta_observation_count": 3360,
+      "final_score": {
+        "blue": 2,
+        "orange": 3
+      },
+      "goal_differential": 1,
+      "goals_conceded_within_window_after_possession_loss": 4,
+      "goals_scored_within_window_after_possession_loss": 0,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "nexto",
+      "opponent_goals": 2,
+      "possession_loss_transition_count": 37,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "447abba2c2db15c254cb921f35ab375a149e6af5a0906cedb84a5f7309413cab",
+      "rival_goals": 3,
+      "rival_side": "orange",
+      "schedule_index": 3,
+      "session_id": "rival-v4p1-natural-nexto-orange-20260822T210735Z-efd8b7a8",
+      "touch_count": {
+        "opponent": 67,
+        "self": 488
+      }
+    },
+    {
+      "active_decision_count": 4518,
+      "decision_count": 5607,
+      "eta_observation_count": 4518,
+      "favorable_eta_observation_count": 2601,
+      "final_score": {
+        "blue": 8,
+        "orange": 4
+      },
+      "goal_differential": 4,
+      "goals_conceded_within_window_after_possession_loss": 2,
+      "goals_scored_within_window_after_possession_loss": 8,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "wisp",
+      "opponent_goals": 4,
+      "possession_loss_transition_count": 48,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "0a56decd86fcb7fcb8cda01c76c1e9c6d65922ccc0a37849bd48d70dd7e10802",
+      "rival_goals": 8,
+      "rival_side": "blue",
+      "schedule_index": 4,
+      "session_id": "rival-v4p1-natural-wisp-blue-20260822T210907Z-e2595213",
+      "touch_count": {
+        "opponent": 119,
+        "self": 136
+      }
+    },
+    {
+      "active_decision_count": 4541,
+      "decision_count": 5089,
+      "eta_observation_count": 4541,
+      "favorable_eta_observation_count": 3586,
+      "final_score": {
+        "blue": 2,
+        "orange": 3
+      },
+      "goal_differential": -1,
+      "goals_conceded_within_window_after_possession_loss": 3,
+      "goals_scored_within_window_after_possession_loss": 0,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "nexto",
+      "opponent_goals": 3,
+      "possession_loss_transition_count": 38,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "56ccdd6beeca893215c41145009220769ac694231588fe0020f5c0e5a438a89a",
+      "rival_goals": 2,
+      "rival_side": "blue",
+      "schedule_index": 5,
+      "session_id": "rival-v4p1-natural-nexto-blue-20260822T211109Z-7db190f2",
+      "touch_count": {
+        "opponent": 64,
+        "self": 552
+      }
+    },
+    {
+      "active_decision_count": 4650,
+      "decision_count": 5558,
+      "eta_observation_count": 4650,
+      "favorable_eta_observation_count": 2148,
+      "final_score": {
+        "blue": 5,
+        "orange": 4
+      },
+      "goal_differential": -1,
+      "goals_conceded_within_window_after_possession_loss": 7,
+      "goals_scored_within_window_after_possession_loss": 2,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "wisp",
+      "opponent_goals": 5,
+      "possession_loss_transition_count": 41,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "a1b2742bbf835bad9aa77494b5a36dcbe57987203f2aaa33268152d2d8c23a5d",
+      "rival_goals": 4,
+      "rival_side": "orange",
+      "schedule_index": 6,
+      "session_id": "rival-v4p1-natural-wisp-orange-20260822T211241Z-ceb6d19d",
+      "touch_count": {
+        "opponent": 174,
+        "self": 137
+      }
+    },
+    {
+      "active_decision_count": 4489,
+      "decision_count": 5225,
+      "eta_observation_count": 4489,
+      "favorable_eta_observation_count": 3618,
+      "final_score": {
+        "blue": 2,
+        "orange": 5
+      },
+      "goal_differential": 3,
+      "goals_conceded_within_window_after_possession_loss": 3,
+      "goals_scored_within_window_after_possession_loss": 5,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "nexto",
+      "opponent_goals": 2,
+      "possession_loss_transition_count": 42,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "90ba2e821f32f9a13205453c38c2804f80d0f0f439ebab15894cdf2ad22982d9",
+      "rival_goals": 5,
+      "rival_side": "orange",
+      "schedule_index": 7,
+      "session_id": "rival-v4p1-natural-nexto-orange-20260822T211433Z-2c0ac213",
+      "touch_count": {
+        "opponent": 62,
+        "self": 734
+      }
+    },
+    {
+      "active_decision_count": 4495,
+      "decision_count": 5217,
+      "eta_observation_count": 4495,
+      "favorable_eta_observation_count": 2095,
+      "final_score": {
+        "blue": 3,
+        "orange": 4
+      },
+      "goal_differential": -1,
+      "goals_conceded_within_window_after_possession_loss": 6,
+      "goals_scored_within_window_after_possession_loss": 2,
+      "loader_warnings": [],
+      "natural_adjustment_applied_decision_count": 0,
+      "natural_adjustment_eligible_decision_count": 0,
+      "natural_adjustment_record_count": 0,
+      "opponent": "wisp",
+      "opponent_goals": 4,
+      "possession_loss_transition_count": 78,
+      "raw_hash_matches_batch": true,
+      "raw_telemetry_sha256": "7e2c85b7e3e251b11b921551527df519fc1907d2cce33ab9a978a3ac966e5ea3",
+      "rival_goals": 3,
+      "rival_side": "blue",
+      "schedule_index": 8,
+      "session_id": "rival-v4p1-natural-wisp-blue-20260822T211612Z-56b1107f",
+      "touch_count": {
+        "opponent": 252,
+        "self": 252
+      }
+    }
+  ],
+  "source_batch": {
+    "adjustment_mode": "off",
+    "batch_id": "m04p1-baseline-20260822T210117Z",
+    "filename": "natural_baseline_batch.json",
+    "parameter_version": "none",
+    "phase": "baseline",
+    "protocol": "rival-m04p1-natural-batch-v1",
+    "sha256": "c522cfe4e9ea901e615d623d90e47db77268e8c56d9a4e7451a58cd596b31bcd"
+  }
+}

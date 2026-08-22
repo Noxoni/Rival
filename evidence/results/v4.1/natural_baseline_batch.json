@@ -1,0 +1,1346 @@
+{
+  "adjustment_mode": "off",
+  "batch_id": "m04p1-baseline-20260822T210117Z",
+  "complete": true,
+  "generated_utc": "2026-08-22T21:24:41.902907Z",
+  "match_configuration": {
+    "auto_save_replay": false,
+    "debug_rendering": "AlwaysOff",
+    "existing_match_behavior": "Restart",
+    "full_five_minute_soccar": true,
+    "map": "Stadium_P",
+    "natural_state_setting_scope": "desired_match_info.game_speed_only",
+    "normal_boost_gravity_demolition_scoring": true,
+    "normal_kickoff_countdowns": true,
+    "performance_monitor": "NeverShow",
+    "skip_goal_replays": true,
+    "wait_for_agents": true
+  },
+  "packet_game_speed_echo_is_acceptance_oracle": false,
+  "parameter_version": "none",
+  "phase": "baseline",
+  "protocol": "rival-m04p1-natural-batch-v1",
+  "report_schema_version": 1,
+  "requested_game_speed": 5.0,
+  "runner_wall_duration_seconds_this_invocation": 0.0,
+  "schedule": [
+    {
+      "index": 1,
+      "opponent": "nexto",
+      "opponent_repetition": 1,
+      "rival_side": "blue",
+      "rival_team": 0
+    },
+    {
+      "index": 2,
+      "opponent": "wisp",
+      "opponent_repetition": 1,
+      "rival_side": "orange",
+      "rival_team": 1
+    },
+    {
+      "index": 3,
+      "opponent": "nexto",
+      "opponent_repetition": 2,
+      "rival_side": "orange",
+      "rival_team": 1
+    },
+    {
+      "index": 4,
+      "opponent": "wisp",
+      "opponent_repetition": 2,
+      "rival_side": "blue",
+      "rival_team": 0
+    },
+    {
+      "index": 5,
+      "opponent": "nexto",
+      "opponent_repetition": 3,
+      "rival_side": "blue",
+      "rival_team": 0
+    },
+    {
+      "index": 6,
+      "opponent": "wisp",
+      "opponent_repetition": 3,
+      "rival_side": "orange",
+      "rival_team": 1
+    },
+    {
+      "index": 7,
+      "opponent": "nexto",
+      "opponent_repetition": 4,
+      "rival_side": "orange",
+      "rival_team": 1
+    },
+    {
+      "index": 8,
+      "opponent": "wisp",
+      "opponent_repetition": 4,
+      "rival_side": "blue",
+      "rival_team": 0
+    }
+  ],
+  "sessions": [
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 121.95400000002701,
+        "decision_records_per_wall_second": 46.8887563545483,
+        "effective_game_seconds_per_wall_second": 3.8906063108663393,
+        "game_seconds_advanced": 474.4750020354986,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1774
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 4064,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 140.82800000009593,
+        "state_setting_apply_count": 183
+      },
+      "final_score": {
+        "blue": 6,
+        "orange": 5
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 6604,
+        "decisions_per_game_second": 13.918541486208605,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 4.999859210582107,
+        "end_to_end_game_seconds_per_wall_second": 3.8906063108663393,
+        "game_seconds_advanced": 474.4750020354986,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 6604,
+        "opponent_nonzero_input_sample_count": 6604,
+        "schema_record_counts": {
+          "3": 6606
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 5483,
+          "game_seconds": 366.4333896636963,
+          "median_interval_rate": 5.006662368364496,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.649289736411577,
+          "p90_interval_rate": 5.441424609038944,
+          "wall_seconds": 73.28874158859253,
+          "weighted_rate": 4.999859210582107
+        },
+        "top_action_indices": [
+          [
+            18,
+            712
+          ],
+          [
+            16,
+            573
+          ],
+          [
+            20,
+            390
+          ],
+          [
+            22,
+            373
+          ],
+          [
+            12,
+            350
+          ],
+          [
+            8,
+            203
+          ],
+          [
+            17,
+            183
+          ],
+          [
+            6,
+            172
+          ],
+          [
+            42,
+            160
+          ],
+          [
+            7,
+            159
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "bot.toml",
+        "config_sha256": "0e4818a04e2364a6b8c84b38be24db8f6856f7377f7cf3b802fdfac4b526828f",
+        "executable_filename": "nexto.exe",
+        "executable_sha256": "6371a5b9dd740aea858d86532f928e0fdb13bf387d8379f76ccd679c9b33e845",
+        "identity": "Nexto",
+        "key": "nexto"
+      },
+      "opponent_repetition": 1,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 90050479,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 6604,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "9734fa124d23a1e3ee681d41dc80cb102371f484bd0e7368307d291837695591"
+      },
+      "rival_git_commit": "529217f29c915684055c1727101ec2d1b312266a",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 0,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 1,
+      "session_id": "rival-v4p1-natural-nexto-blue-20260822T210117Z-d4d3859c",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "orange",
+        "rival": "blue"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 140.844
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 102.68700000003446,
+        "decision_records_per_wall_second": 45.92561105207226,
+        "effective_game_seconds_per_wall_second": 3.8144232165712766,
+        "game_seconds_advanced": 391.6916768401861,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1454
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 35696,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 117.60900000005495,
+        "state_setting_apply_count": 149
+      },
+      "final_score": {
+        "blue": 5,
+        "orange": 4
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5402,
+        "decisions_per_game_second": 13.791459761357315,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 5.000072379836782,
+        "end_to_end_game_seconds_per_wall_second": 3.8144232165712766,
+        "game_seconds_advanced": 391.6916768401861,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5402,
+        "opponent_nonzero_input_sample_count": 5402,
+        "schema_record_counts": {
+          "3": 5404
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4484,
+          "game_seconds": 299.69169998168945,
+          "median_interval_rate": 4.995348587535738,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.6183394488748535,
+          "p90_interval_rate": 5.493492082296259,
+          "wall_seconds": 59.937472343444824,
+          "weighted_rate": 5.000072379836782
+        },
+        "top_action_indices": [
+          [
+            18,
+            563
+          ],
+          [
+            16,
+            521
+          ],
+          [
+            20,
+            406
+          ],
+          [
+            22,
+            296
+          ],
+          [
+            12,
+            286
+          ],
+          [
+            42,
+            180
+          ],
+          [
+            26,
+            163
+          ],
+          [
+            84,
+            147
+          ],
+          [
+            34,
+            135
+          ],
+          [
+            8,
+            120
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "wisp.bot.toml",
+        "config_sha256": "75a60b870759f855c4d900561553ae7535c379eed4df20dc63a0969bcac18825",
+        "executable_filename": "bot.exe",
+        "executable_sha256": "b9dbe32bdae28c299daffcc0673f5a438d8013a553be3938dafaa112884e7184",
+        "identity": "Wisp v2-75B",
+        "key": "wisp"
+      },
+      "opponent_repetition": 1,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 73766423,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5402,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "a0b1773ad180eed82da49ae9795fb6e0127a952b11a60fdbcf2ecfa83686bf8b"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 1,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 2,
+      "session_id": "rival-v4p1-natural-wisp-orange-20260822T210537Z-47055494",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "blue",
+        "rival": "orange"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 117.625
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 85.14099999994505,
+        "decision_records_per_wall_second": 56.5461312003555,
+        "effective_game_seconds_per_wall_second": 4.210564507927089,
+        "game_seconds_advanced": 358.4916727691889,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1370
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 90.0,
+        "state_setting_apply_count": 140
+      },
+      "final_score": {
+        "blue": 2,
+        "orange": 3
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5090,
+        "decisions_per_game_second": 14.19837721942608,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 5.0000855583309,
+        "end_to_end_game_seconds_per_wall_second": 4.210564507927089,
+        "game_seconds_advanced": 358.4916727691889,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5090,
+        "opponent_nonzero_input_sample_count": 5090,
+        "schema_record_counts": {
+          "3": 5092
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4535,
+          "game_seconds": 303.008339881897,
+          "median_interval_rate": 5.004492330821685,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.658806908410649,
+          "p90_interval_rate": 5.407084459744854,
+          "wall_seconds": 60.60063099861145,
+          "weighted_rate": 5.0000855583309
+        },
+        "top_action_indices": [
+          [
+            18,
+            486
+          ],
+          [
+            16,
+            418
+          ],
+          [
+            20,
+            328
+          ],
+          [
+            12,
+            313
+          ],
+          [
+            17,
+            181
+          ],
+          [
+            22,
+            170
+          ],
+          [
+            8,
+            167
+          ],
+          [
+            7,
+            147
+          ],
+          [
+            14,
+            142
+          ],
+          [
+            6,
+            141
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "bot.toml",
+        "config_sha256": "0e4818a04e2364a6b8c84b38be24db8f6856f7377f7cf3b802fdfac4b526828f",
+        "executable_filename": "nexto.exe",
+        "executable_sha256": "6371a5b9dd740aea858d86532f928e0fdb13bf387d8379f76ccd679c9b33e845",
+        "identity": "Nexto",
+        "key": "nexto"
+      },
+      "opponent_repetition": 2,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 69733290,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5090,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "447abba2c2db15c254cb921f35ab375a149e6af5a0906cedb84a5f7309413cab"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 1,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 3,
+      "session_id": "rival-v4p1-natural-nexto-orange-20260822T210735Z-efd8b7a8",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "blue",
+        "rival": "orange"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 90.015
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 112.15599999995902,
+        "decision_records_per_wall_second": 46.17779315115877,
+        "effective_game_seconds_per_wall_second": 3.6688480431758093,
+        "game_seconds_advanced": 411.4833211302757,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1508
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 121.40700000000652,
+        "state_setting_apply_count": 157
+      },
+      "final_score": {
+        "blue": 8,
+        "orange": 4
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5607,
+        "decisions_per_game_second": 13.626311716835838,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 5.000472721315621,
+        "end_to_end_game_seconds_per_wall_second": 3.6688480431758093,
+        "game_seconds_advanced": 411.4833211302757,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5607,
+        "opponent_nonzero_input_sample_count": 5607,
+        "schema_record_counts": {
+          "3": 5609
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4506,
+          "game_seconds": 301.04166889190674,
+          "median_interval_rate": 5.01680586994953,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.638997361214015,
+          "p90_interval_rate": 5.458819126601567,
+          "wall_seconds": 60.20264196395874,
+          "weighted_rate": 5.000472721315621
+        },
+        "top_action_indices": [
+          [
+            18,
+            686
+          ],
+          [
+            22,
+            399
+          ],
+          [
+            16,
+            395
+          ],
+          [
+            20,
+            339
+          ],
+          [
+            12,
+            305
+          ],
+          [
+            42,
+            203
+          ],
+          [
+            84,
+            164
+          ],
+          [
+            26,
+            139
+          ],
+          [
+            7,
+            129
+          ],
+          [
+            30,
+            128
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "wisp.bot.toml",
+        "config_sha256": "75a60b870759f855c4d900561553ae7535c379eed4df20dc63a0969bcac18825",
+        "executable_filename": "bot.exe",
+        "executable_sha256": "b9dbe32bdae28c299daffcc0673f5a438d8013a553be3938dafaa112884e7184",
+        "identity": "Wisp v2-75B",
+        "key": "wisp"
+      },
+      "opponent_repetition": 2,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 76419877,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5607,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "0a56decd86fcb7fcb8cda01c76c1e9c6d65922ccc0a37849bd48d70dd7e10802"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 0,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 4,
+      "session_id": "rival-v4p1-natural-wisp-blue-20260822T210907Z-e2595213",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "orange",
+        "rival": "blue"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 121.422
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 85.18700000003446,
+        "decision_records_per_wall_second": 56.495481693643285,
+        "effective_game_seconds_per_wall_second": 4.204475500399552,
+        "game_seconds_advanced": 358.16665445268154,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1367
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 90.06200000003446,
+        "state_setting_apply_count": 138
+      },
+      "final_score": {
+        "blue": 2,
+        "orange": 3
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5089,
+        "decisions_per_game_second": 14.20846953990331,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 4.999839814735702,
+        "end_to_end_game_seconds_per_wall_second": 4.204475500399552,
+        "game_seconds_advanced": 358.16665445268154,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5089,
+        "opponent_nonzero_input_sample_count": 5089,
+        "schema_record_counts": {
+          "3": 5091
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4535,
+          "game_seconds": 303.18332290649414,
+          "median_interval_rate": 4.998319688248543,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.650562495710117,
+          "p90_interval_rate": 5.414612469094759,
+          "wall_seconds": 60.63860726356506,
+          "weighted_rate": 4.999839814735702
+        },
+        "top_action_indices": [
+          [
+            18,
+            477
+          ],
+          [
+            16,
+            451
+          ],
+          [
+            20,
+            282
+          ],
+          [
+            12,
+            271
+          ],
+          [
+            17,
+            190
+          ],
+          [
+            22,
+            163
+          ],
+          [
+            8,
+            159
+          ],
+          [
+            84,
+            135
+          ],
+          [
+            6,
+            124
+          ],
+          [
+            7,
+            123
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "bot.toml",
+        "config_sha256": "0e4818a04e2364a6b8c84b38be24db8f6856f7377f7cf3b802fdfac4b526828f",
+        "executable_filename": "nexto.exe",
+        "executable_sha256": "6371a5b9dd740aea858d86532f928e0fdb13bf387d8379f76ccd679c9b33e845",
+        "identity": "Nexto",
+        "key": "nexto"
+      },
+      "opponent_repetition": 3,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 69750590,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5089,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "56ccdd6beeca893215c41145009220769ac694231588fe0020f5c0e5a438a89a"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 0,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 5,
+      "session_id": "rival-v4p1-natural-nexto-blue-20260822T211109Z-7db190f2",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "orange",
+        "rival": "blue"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 90.078
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 101.82800000009593,
+        "decision_records_per_wall_second": 50.19189958007857,
+        "effective_game_seconds_per_wall_second": 3.921727428200507,
+        "game_seconds_advanced": 399.3416605591774,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1497
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 110.71900000004098,
+        "state_setting_apply_count": 153
+      },
+      "final_score": {
+        "blue": 5,
+        "orange": 4
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5558,
+        "decisions_per_game_second": 13.917906767396673,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 4.999858505131593,
+        "end_to_end_game_seconds_per_wall_second": 3.921727428200507,
+        "game_seconds_advanced": 399.3416605591774,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5558,
+        "opponent_nonzero_input_sample_count": 5558,
+        "schema_record_counts": {
+          "3": 5560
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4640,
+          "game_seconds": 310.25833797454834,
+          "median_interval_rate": 5.001001588299424,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.60552266622408,
+          "p90_interval_rate": 5.460940704088846,
+          "wall_seconds": 62.05342364311218,
+          "weighted_rate": 4.999858505131593
+        },
+        "top_action_indices": [
+          [
+            18,
+            596
+          ],
+          [
+            20,
+            496
+          ],
+          [
+            16,
+            451
+          ],
+          [
+            12,
+            384
+          ],
+          [
+            22,
+            350
+          ],
+          [
+            42,
+            207
+          ],
+          [
+            84,
+            164
+          ],
+          [
+            80,
+            120
+          ],
+          [
+            8,
+            118
+          ],
+          [
+            26,
+            117
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "wisp.bot.toml",
+        "config_sha256": "75a60b870759f855c4d900561553ae7535c379eed4df20dc63a0969bcac18825",
+        "executable_filename": "bot.exe",
+        "executable_sha256": "b9dbe32bdae28c299daffcc0673f5a438d8013a553be3938dafaa112884e7184",
+        "identity": "Wisp v2-75B",
+        "key": "wisp"
+      },
+      "opponent_repetition": 3,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 75952795,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5558,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "a1b2742bbf835bad9aa77494b5a36dcbe57987203f2aaa33268152d2d8c23a5d"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 1,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 6,
+      "session_id": "rival-v4p1-natural-wisp-orange-20260822T211241Z-ceb6d19d",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "blue",
+        "rival": "orange"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 110.735
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 93.59400000004098,
+        "decision_records_per_wall_second": 53.1130876747141,
+        "effective_game_seconds_per_wall_second": 3.9854761900279496,
+        "game_seconds_advanced": 373.01665852963924,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1403
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 98.35999999998603,
+        "state_setting_apply_count": 144
+      },
+      "final_score": {
+        "blue": 2,
+        "orange": 5
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5225,
+        "decisions_per_game_second": 14.007417311055105,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 4.999759823448946,
+        "end_to_end_game_seconds_per_wall_second": 3.9854761900279496,
+        "game_seconds_advanced": 373.01665852963924,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5225,
+        "opponent_nonzero_input_sample_count": 5225,
+        "schema_record_counts": {
+          "3": 5227
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4481,
+          "game_seconds": 299.56665802001953,
+          "median_interval_rate": 4.998337177492893,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.649669130207338,
+          "p90_interval_rate": 5.411234104531539,
+          "wall_seconds": 59.91620969772339,
+          "weighted_rate": 4.999759823448946
+        },
+        "top_action_indices": [
+          [
+            18,
+            519
+          ],
+          [
+            16,
+            440
+          ],
+          [
+            12,
+            339
+          ],
+          [
+            20,
+            328
+          ],
+          [
+            22,
+            307
+          ],
+          [
+            17,
+            187
+          ],
+          [
+            8,
+            181
+          ],
+          [
+            7,
+            171
+          ],
+          [
+            84,
+            145
+          ],
+          [
+            14,
+            130
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "bot.toml",
+        "config_sha256": "0e4818a04e2364a6b8c84b38be24db8f6856f7377f7cf3b802fdfac4b526828f",
+        "executable_filename": "nexto.exe",
+        "executable_sha256": "6371a5b9dd740aea858d86532f928e0fdb13bf387d8379f76ccd679c9b33e845",
+        "identity": "Nexto",
+        "key": "nexto"
+      },
+      "opponent_repetition": 4,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 71448573,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5225,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "90ba2e821f32f9a13205453c38c2804f80d0f0f439ebab15894cdf2ad22982d9"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 1,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 7,
+      "session_id": "rival-v4p1-natural-nexto-orange-20260822T211433Z-2c0ac213",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "blue",
+        "rival": "orange"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 98.375
+    },
+    {
+      "adjustment_mode": "off",
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 93.59299999999348,
+        "decision_records_per_wall_second": 52.547289538889224,
+        "effective_game_seconds_per_wall_second": 3.9891694831491487,
+        "game_seconds_advanced": 373.35833943635225,
+        "lane_id": "m04p1-natural-sequential-lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 1405
+        },
+        "observed_game_speed_sustained": {
+          "maximum": null,
+          "median": null,
+          "minimum": null,
+          "samples": 0
+        },
+        "requested_game_speed": 5.0,
+        "requested_speed_reached": false,
+        "rlbot_server_pid": 33396,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 99.26600000006147,
+        "state_setting_apply_count": 145
+      },
+      "final_score": {
+        "blue": 3,
+        "orange": 4
+      },
+      "health": {
+        "accepted": true,
+        "checks": {
+          "action_distribution_non_degenerate": true,
+          "decision_cadence_healthy": true,
+          "effective_5x_progression": true,
+          "full_match_complete": true,
+          "opponent_process_responsive": true,
+          "telemetry_valid": true
+        },
+        "decision_count": 5217,
+        "decisions_per_game_second": 13.973171211003205,
+        "distinct_action_indices": 89,
+        "effective_game_seconds_per_wall_second": 4.999495809250087,
+        "end_to_end_game_seconds_per_wall_second": 3.9891694831491487,
+        "game_seconds_advanced": 373.35833943635225,
+        "invalid_json_lines": 0,
+        "opponent_input_sample_count": 5217,
+        "opponent_nonzero_input_sample_count": 5217,
+        "schema_record_counts": {
+          "3": 5219
+        },
+        "sustained_in_play_speed": {
+          "accepted_interval_count": 4487,
+          "game_seconds": 299.8166551589966,
+          "median_interval_rate": 5.002075134168157,
+          "method": "weighted game-time/wall-time ratio across consecutive Rival decisions inside the same Active score segment; reset/goal/kickoff gaps excluded",
+          "p10_interval_rate": 4.650268609777108,
+          "p90_interval_rate": 5.447095016406317,
+          "wall_seconds": 59.96937823295593,
+          "weighted_rate": 4.999495809250087
+        },
+        "top_action_indices": [
+          [
+            18,
+            524
+          ],
+          [
+            16,
+            517
+          ],
+          [
+            20,
+            448
+          ],
+          [
+            12,
+            349
+          ],
+          [
+            42,
+            174
+          ],
+          [
+            22,
+            167
+          ],
+          [
+            8,
+            156
+          ],
+          [
+            84,
+            148
+          ],
+          [
+            6,
+            138
+          ],
+          [
+            34,
+            116
+          ]
+        ]
+      },
+      "opponent": {
+        "config_filename": "wisp.bot.toml",
+        "config_sha256": "75a60b870759f855c4d900561553ae7535c379eed4df20dc63a0969bcac18825",
+        "executable_filename": "bot.exe",
+        "executable_sha256": "b9dbe32bdae28c299daffcc0673f5a438d8013a553be3938dafaa112884e7184",
+        "identity": "Wisp v2-75B",
+        "key": "wisp"
+      },
+      "opponent_repetition": 4,
+      "parameter_version": "none",
+      "raw_telemetry": {
+        "bytes": 71372244,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 5217,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "7e2c85b7e3e251b11b921551527df519fc1907d2cce33ab9a978a3ac966e5ea3"
+      },
+      "rival_git_commit": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+      "rival_model_sha256": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "rival_team": 0,
+      "runtime_versions": {
+        "python": "3.12.13",
+        "rlbot": "2.0.0b54",
+        "rocketsim": "2.2.1",
+        "torch": "2.13.0"
+      },
+      "runtime_warnings": [],
+      "schedule_index": 8,
+      "session_id": "rival-v4p1-natural-wisp-blue-20260822T211612Z-56b1107f",
+      "status": "complete",
+      "team_assignment": {
+        "opponent": "orange",
+        "rival": "blue"
+      },
+      "termination_reason": "match_phase_ended",
+      "wall_duration_seconds": 99.282
+    }
+  ],
+  "stopped_on_health_failure": false,
+  "summary": {
+    "complete_match_count": 8,
+    "decision_count": 43792,
+    "decisions_per_game_second": {
+      "maximum": 14.20846953990331,
+      "median": 13.945856348605904,
+      "minimum": 13.626311716835838
+    },
+    "effective_speed": {
+      "maximum": 5.000472721315621,
+      "median": 4.99985885785685,
+      "minimum": 4.999495809250087
+    },
+    "health_accepted_match_count": 8,
+    "natural_match_budget_kind": "v4.1 optimization throughput",
+    "opponents": {
+      "nexto": 4,
+      "wisp": 4
+    },
+    "raw_bytes": 598494271,
+    "rival_sides": {
+      "blue": 4,
+      "orange": 4
+    },
+    "scheduled_match_count": 8,
+    "wall_duration_seconds": 868.376
+  }
+}

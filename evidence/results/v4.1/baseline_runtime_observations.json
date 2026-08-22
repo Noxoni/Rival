@@ -1,0 +1,31 @@
+{
+  "report_schema_version": 1,
+  "generated_utc": "2026-08-22T21:31:06.717Z",
+  "scope": "rival-m04p1-natural-baseline",
+  "source_batch": {
+    "filename": "natural_baseline_batch.json",
+    "sha256_before_this_observation_record": "c522cfe4e9ea901e615d623d90e47db77268e8c56d9a4e7451a58cd596b31bcd"
+  },
+  "observations": [
+    {
+      "kind": "native_server_startup_queue_warning",
+      "scope": "batch startup transitions",
+      "levels_observed": [1, 10, 100],
+      "capture_boundary": "RLBotServer native stdout is separate from Python runtime_warnings",
+      "effect": "all eight opponents and Rival processes became responsive and all sessions completed"
+    },
+    {
+      "kind": "recovered_invalid_packet_processing_exception",
+      "session_id": "rival-v4p1-natural-wisp-orange-20260822T211241Z-ceb6d19d",
+      "schedule_index": 6,
+      "match_transition": "regulation tie to overtime",
+      "affected_bots": ["Rival Dev", "Wisp v2-75B"],
+      "runtime_warning": "invalid value encountered in divide",
+      "packet_processing_error": "ValueError: cannot convert float NaN to integer",
+      "recovery": "both managers caught the packet exception, resumed processing, and completed overtime",
+      "automated_health_result": "accepted",
+      "reason_retained": "process responsiveness, valid JSON telemetry, cadence, action diversity, and full-match completion gates still passed",
+      "interpretation_limit": "the session is retained with this explicit caveat and is not represented as error-free"
+    }
+  ]
+}

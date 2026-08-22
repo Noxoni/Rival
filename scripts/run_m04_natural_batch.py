@@ -209,11 +209,31 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
 
 def compact_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
     session_id = str(manifest["session_id"])
+    opponent = manifest.get("opponent") or {}
+    compact_opponent = {
+        key: opponent.get(key)
+        for key in (
+            "key",
+            "identity",
+            "config_sha256",
+            "executable_sha256",
+        )
+        if opponent.get(key) is not None
+    }
+    for source_key, target_key in (
+        ("config_path", "config_filename"),
+        ("executable_path", "executable_filename"),
+    ):
+        raw_path = opponent.get(source_key)
+        if raw_path:
+            compact_opponent[target_key] = Path(str(raw_path)).name
     return {
         "session_id": session_id,
         "status": manifest.get("status"),
         "termination_reason": manifest.get("termination_reason"),
-        "opponent": manifest.get("opponent") or {},
+        # Raw manifests retain resolved installed-reference paths locally. The
+        # committed batch needs identity and hashes, not a workstation path.
+        "opponent": compact_opponent,
         "rival_team": manifest.get("rival_team"),
         "team_assignment": manifest.get("team_assignment") or {},
         "final_score": manifest.get("final_score") or {},
@@ -296,6 +316,52 @@ def _batch_id(phase: str) -> str:
     return f"m04p1-{phase}-{stamp}"
 
 
+def _batch_report(
+    *,
+    batch_id: str,
+    phase: str,
+    adjustment_mode: str,
+    parameter_version: str,
+    requested_game_speed: float,
+    schedule: list[dict[str, Any]],
+    sessions: list[dict[str, Any]],
+    failed: bool,
+    invocation_started: float,
+) -> dict[str, Any]:
+    return {
+        "report_schema_version": 1,
+        "generated_utc": utc_now(),
+        "protocol": PROTOCOL,
+        "batch_id": batch_id,
+        "phase": phase,
+        "adjustment_mode": adjustment_mode,
+        "parameter_version": parameter_version,
+        "requested_game_speed": requested_game_speed,
+        "packet_game_speed_echo_is_acceptance_oracle": False,
+        "match_configuration": {
+            "full_five_minute_soccar": True,
+            "map": "Stadium_P",
+            "normal_boost_gravity_demolition_scoring": True,
+            "normal_kickoff_countdowns": True,
+            "skip_goal_replays": True,
+            "auto_save_replay": False,
+            "debug_rendering": "AlwaysOff",
+            "performance_monitor": "NeverShow",
+            "wait_for_agents": True,
+            "existing_match_behavior": "Restart",
+            "natural_state_setting_scope": "desired_match_info.game_speed_only",
+        },
+        "schedule": schedule,
+        "sessions": sessions,
+        "summary": _summarize(sessions),
+        "complete": len(sessions) == len(schedule) and not failed,
+        "stopped_on_health_failure": failed,
+        "runner_wall_duration_seconds_this_invocation": (
+            time.monotonic() - invocation_started
+        ),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Run a balanced full-match Rival v4.1 natural-play batch"
@@ -351,18 +417,27 @@ def main() -> int:
         for session in sessions:
             session_id = str(session["session_id"])
             session["health"] = telemetry_health(session_id, session)
+            # Normalize reports produced by an earlier checkpoint of this runner.
+            session["opponent"] = compact_manifest(
+                {"session_id": session_id, "opponent": session.get("opponent")}
+            )["opponent"]
     completed_indices = {
         int(session["schedule_index"])
         for session in sessions
         if session.get("schedule_index") is not None
     }
     started = time.monotonic()
-    manager = rlbot.managers.MatchManager()
-    failed = False
+    pending = [item for item in schedule if item["index"] not in completed_indices]
+    manager = rlbot.managers.MatchManager() if pending else None
+    failed = any(
+        not bool((session.get("health") or {}).get("accepted"))
+        for session in sessions
+    )
     try:
         for item in schedule:
             if item["index"] in completed_indices:
                 continue
+            assert manager is not None
             overrides = {}
             if args.adjustment_mode != "off":
                 overrides = {
@@ -401,38 +476,17 @@ def main() -> int:
             }
             sessions.append(compact)
             failed = not compact["health"]["accepted"]
-            report = {
-                "report_schema_version": 1,
-                "generated_utc": utc_now(),
-                "protocol": PROTOCOL,
-                "batch_id": batch_id,
-                "phase": args.phase,
-                "adjustment_mode": args.adjustment_mode,
-                "parameter_version": args.parameter_version,
-                "requested_game_speed": args.game_speed,
-                "packet_game_speed_echo_is_acceptance_oracle": False,
-                "match_configuration": {
-                    "full_five_minute_soccar": True,
-                    "map": "Stadium_P",
-                    "normal_boost_gravity_demolition_scoring": True,
-                    "normal_kickoff_countdowns": True,
-                    "skip_goal_replays": True,
-                    "auto_save_replay": False,
-                    "debug_rendering": "AlwaysOff",
-                    "performance_monitor": "NeverShow",
-                    "wait_for_agents": True,
-                    "existing_match_behavior": "Restart",
-                    "natural_state_setting_scope": "desired_match_info.game_speed_only",
-                },
-                "schedule": schedule,
-                "sessions": sessions,
-                "summary": _summarize(sessions),
-                "complete": len(sessions) == len(schedule) and not failed,
-                "stopped_on_health_failure": failed,
-                "runner_wall_duration_seconds_this_invocation": (
-                    time.monotonic() - started
-                ),
-            }
+            report = _batch_report(
+                batch_id=batch_id,
+                phase=args.phase,
+                adjustment_mode=args.adjustment_mode,
+                parameter_version=args.parameter_version,
+                requested_game_speed=args.game_speed,
+                schedule=schedule,
+                sessions=sessions,
+                failed=failed,
+                invocation_started=started,
+            )
             write_json(output, report)
             print(
                 json.dumps(
@@ -456,7 +510,25 @@ def main() -> int:
             if failed:
                 break
     finally:
-        manager.shut_down()
+        if manager is not None:
+            manager.shut_down()
+
+    # A resume with a complete schedule has no loop iteration. Rewrite it anyway
+    # so health recomputation and evidence-path normalization are persisted.
+    write_json(
+        output,
+        _batch_report(
+            batch_id=batch_id,
+            phase=args.phase,
+            adjustment_mode=args.adjustment_mode,
+            parameter_version=args.parameter_version,
+            requested_game_speed=args.game_speed,
+            schedule=schedule,
+            sessions=sessions,
+            failed=failed,
+            invocation_started=started,
+        ),
+    )
 
     final = json.loads(output.read_text(encoding="utf-8"))
     print(

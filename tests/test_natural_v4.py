@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -89,3 +90,35 @@ def test_v4_natural_health_uses_effective_speed_not_packet_echo(
     assert health["distinct_action_indices"] == 10
     assert health["end_to_end_game_seconds_per_wall_second"] == 3.9
     assert health["sustained_in_play_speed"]["weighted_rate"] == pytest.approx(5.0)
+
+
+def test_compact_manifest_omits_workstation_reference_paths(monkeypatch) -> None:
+    monkeypatch.setattr(
+        natural_batch,
+        "telemetry_health",
+        lambda _session_id, _manifest: {"accepted": True},
+    )
+    manifest = {
+        "session_id": "path-sanitization",
+        "opponent": {
+            "key": "nexto",
+            "identity": "Nexto",
+            "root": "/fixture/installed/Nexto",
+            "config_path": "/fixture/installed/Nexto/bot.toml",
+            "executable_path": "/fixture/installed/Nexto/nexto.exe",
+            "config_sha256": "a" * 64,
+            "executable_sha256": "b" * 64,
+        },
+    }
+
+    compact = natural_batch.compact_manifest(manifest)
+
+    assert compact["opponent"] == {
+        "key": "nexto",
+        "identity": "Nexto",
+        "config_sha256": "a" * 64,
+        "executable_sha256": "b" * 64,
+        "config_filename": Path("bot.toml").name,
+        "executable_filename": Path("nexto.exe").name,
+    }
+    assert "person" not in json.dumps(compact)
