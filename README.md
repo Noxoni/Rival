@@ -15,31 +15,34 @@ Rival is for offline RLBot play only. It must not be used to cheat or otherwise 
 - Baseline models: unchanged Wisp v2-75B `POLICY.lt` and `SHARED_HEAD.lt`
 - Challenge calibration default: `off`
 - Six Milestone 02 natural baseline matches completed: three vs Nexto, three vs Wisp v2-75B
-- Milestone 03 natural acceptance matches consumed: **0 / 6**
 
 See `docs/MILESTONE_03_RESULTS.md`, `docs/MILESTONE_02_RESULTS.md`, and `evidence/results/` for the current evidence.
 
-## Milestone 03 result
+## Current direction
 
-Challenge calibration is technically implemented with explicit `off`, `observe`, and `intervene` modes, but it is **not enabled**. Neither controlled treatment parameter attempt produced an actual intervention, so differences between independently launched baseline/treatment trajectories were not causal. The controlled gate failed and no natural acceptance matches were launched.
+Milestone 03 showed that trying to judge gameplay from independently scripted challenge trajectories was not useful enough: both treatment attempts applied zero interventions while their trajectories still diverged. The project is therefore moving away from scenario-specific tuning as the primary optimization method.
 
-Milestone 03 also demonstrated real accelerated simulation: direct desired match game speed produced approximately 5x/4x/3x/2x simulated-time progression, even though RLBot packets continued reporting `match_info.game_speed=1.0`. That packet field is now treated as stale diagnostic data rather than proof that acceleration failed. The first bounded two-lane concurrency test failed isolation because both RLBotServer instances raced onto the same port.
+Rival should improve from **natural accelerated Rocket League play**:
 
-## Current Codex handoff — v4.0
+`natural matches -> telemetry -> recurring state/outcome pattern -> one live state-conditioned adjustment -> natural matches -> aggregate comparison`
+
+Gameplay logic should use current observable opponent/ball/Rival state and short history, not labels from hand-authored test scenarios.
+
+Milestone 03 also demonstrated genuine accelerated simulation: requested 5x produced approximately 4.92x and 5.00x simulated-game-time progression per wall second against Nexto and Wisp. The packet `match_info.game_speed` echo remained at `1.0`, so that field is treated as stale diagnostic data rather than proof that acceleration failed.
+
+## Current Codex handoff — v4.1
 
 Start here:
 
-`handoff/v4.0/CODEX_START_PROMPT.md`
+`handoff/v4.1/CODEX_START_PROMPT.md`
 
-Codex must read the complete `handoff/v4.0/` package before modifying implementation code.
+Codex must read the complete `handoff/v4.1/` package before modifying implementation code.
 
-Milestone 04 fixes the experiment before revisiting gameplay tuning. The inherited Wisp observation builder randomly shuffles teammate/opponent observation slots on every decision, the model input includes previous controller action, and Rival carries additional runtime history across state-set probe cases. Separately launched `off` and `observe` runs therefore need not receive identical policy inputs even when treatment never acts.
+v4.1 supersedes the unexecuted v4.0 deterministic-pairing direction. The main development environment is now full five-minute natural 1v1 matches at approximately **5x effective simulation speed**, with telemetry aggregated across many unrelated trajectories. Scripted probes may remain as optional regression/smoke checks, but they are not the main training set or acceptance gate.
 
-v4 introduces controlled-test-only seeded observation shuffling, a complete controlled-case runtime reset, exact model-input/legal-mask fingerprints, paired case identities, and a bounded search for a **repeatable refined release-sensitive challenge exposure**. Normal gameplay keeps the inherited Wisp shuffle behavior and challenge calibration remains off unless a later causal treatment gate passes.
+The intended v4.1 run gathers a natural accelerated baseline batch against installed Nexto and Wisp v2-75B, ranks recurring high-impact behavior from telemetry, implements one state-conditioned correction using live observations, then runs another natural accelerated batch and compares aggregate outcomes. The rejected Milestone 03 challenge parameters remain disabled unless a new natural-play result supports a different treatment.
 
-For controlled testing, 1x establishes the initial deterministic reference. The same paired fixture is then tested at 5x; if pairing remains reproducible, 5x becomes the preferred controlled speed. The packet `game_speed` echo is not a rejection criterion. Full five-minute Soccar remains the eventual natural-match format.
-
-v4 also authorizes one new bounded two-lane capability test after the deterministic harness is stable because the first attempt failed specifically from a server-port race that was subsequently addressed. If Rocket League/Steam still supports only one independent game process, parallel live matches are marked unsupported on this machine and the project moves on.
+Parallel Rocket League instances remain optional; do not spend substantial engineering time on them. Sequential 5x matches are already the primary throughput improvement.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
