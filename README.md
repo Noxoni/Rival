@@ -21,15 +21,17 @@ See `docs/MILESTONE_02_RESULTS.md`, `evidence/results/v2/candidate_events.md`, a
 
 For another Windows PC, do not distribute only `bot/`: the development TOML depends on the repository-local `.venv`. Build the self-contained Windows x64 ZIP with `scripts/build_windows_release.ps1`; the complete procedure and verification contract are in `docs/BUILD_WINDOWS_RELEASE.md`.
 
-## Current Codex handoff — v3.0
+## Current Codex handoff — v3.1
 
 Start here:
 
-`handoff/v3.0/CODEX_START_PROMPT.md`
+`handoff/v3.1/CODEX_START_PROMPT.md`
 
-Codex must read the complete `handoff/v3.0/` package before modifying implementation code.
+Codex must read the v3.1 execution overlay and the complete `handoff/v3.0/` gameplay package before modifying implementation code.
 
-Milestone 03 is Rival's **first isolated gameplay correction**: challenge-commitment calibration. The experiment will estimate whether opponent pressure is physically committed, briefly defer marginal possession-releasing jumps while commitment is ambiguous, and re-rank only among Wisp's existing legal actions. It must pass paired controlled fake/true-challenge tests before any bounded natural-match validation.
+Milestone 03 remains Rival's **first isolated gameplay correction**: challenge-commitment calibration. The experiment will estimate whether opponent pressure is physically committed, briefly defer marginal possession-releasing jumps while commitment is ambiguous, and re-rank only among Wisp's existing legal actions. It must pass paired controlled fake/true-challenge tests before bounded natural-match validation.
+
+Handoff v3.1 preserves full five-minute live games but targets **5.0x Rocket League game speed** for automated validation. It also performs one bounded test for two truly isolated concurrent RLBot/Rocket League match lanes; if that is unsupported or unstable, testing continues sequentially at 5x rather than spending time engineering launcher workarounds.
 
 The feature must retain `off`, `observe`, and `intervene` modes so the exact pre-v3 action path remains available. If the experiment fails its evidence gates, it remains disabled rather than being patched with unrelated gameplay rules.
 
