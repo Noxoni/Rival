@@ -1,0 +1,254 @@
+{
+  "report_schema_version": 1,
+  "generated_utc": "2026-08-22T22:00:21.776Z",
+  "milestone": "Rival Milestone 04 natural-play optimization",
+  "authority": "handoff/v4.1/CODEX_START_PROMPT.md",
+  "implementation_commits": {
+    "accelerated_natural_runner": "529217f29c915684055c1727101ec2d1b312266a",
+    "sustained_in_play_speed_metric": "ec2326ab66f3b8417be05833c51d1106f3d40556",
+    "baseline_analysis": "3c15ff55ba6005777c3ab6457dc3d14e8453a966",
+    "low_resource_aerial_treatment": "463e74052b80500e348216a3bdca5676770f2f60"
+  },
+  "source_artifacts": {
+    "natural_baseline_batch": {
+      "filename": "natural_baseline_batch.json",
+      "committed_blob_sha256": "c522cfe4e9ea901e615d623d90e47db77268e8c56d9a4e7451a58cd596b31bcd"
+    },
+    "natural_baseline_analysis": {
+      "filename": "natural_baseline_analysis.json",
+      "committed_blob_sha256": "2f73269058f1771647aa51ae5e3e4f10cb95cc6003bad4bd4113c337d3fd4a27"
+    },
+    "prospective_treatment_definition": {
+      "filename": "treatment_definition.json",
+      "committed_blob_sha256": "5dc85a42e2b00351b25b3cdc1ec45807df220762c7191fced5c2f9f39da4d9b0"
+    },
+    "natural_treatment_batch": {
+      "filename": "natural_treatment_batch.json",
+      "committed_blob_sha256": "f60ab0ad18c24a1c4c4b3daa45c23c0584eedd02e0c1c49f3af76f2fa1ccc677"
+    },
+    "natural_treatment_analysis": {
+      "filename": "natural_treatment_analysis.json",
+      "committed_blob_sha256": "045823786b78543383b79c154fc4d70102440bb78a2f11d9a65b0d99c00592c8"
+    }
+  },
+  "execution": {
+    "requested_game_speed": 5.0,
+    "natural_state_setting_scope": "DesiredMatchInfo.game_speed only",
+    "match_format": "full five-minute Soccar on Stadium_P with normal kickoff countdowns and goal replays skipped",
+    "sequential_or_parallel": "sequential",
+    "baseline": {
+      "matches": 8,
+      "opponents": {
+        "nexto": 4,
+        "wisp_v2_75b": 4
+      },
+      "rival_sides": {
+        "blue": 4,
+        "orange": 4
+      },
+      "effective_speed": {
+        "minimum": 4.99949580925009,
+        "median": 4.99985885785685,
+        "maximum": 5.00047272131562
+      },
+      "decisions_per_simulated_second": {
+        "minimum": 13.6263117168358,
+        "median": 13.9458563486059,
+        "maximum": 14.2084695399033
+      },
+      "policy_decisions": 43792,
+      "raw_telemetry_bytes": 598494271
+    },
+    "treatment": {
+      "matches": 8,
+      "opponents": {
+        "nexto": 4,
+        "wisp_v2_75b": 4
+      },
+      "rival_sides": {
+        "blue": 4,
+        "orange": 4
+      },
+      "effective_speed": {
+        "minimum": 4.98634917240295,
+        "median": 4.99977067520421,
+        "maximum": 5.00024255208822
+      },
+      "decisions_per_simulated_second": {
+        "minimum": 13.6653588926578,
+        "median": 13.9543830501763,
+        "maximum": 14.2432902468459
+      },
+      "policy_decisions": 43158,
+      "raw_telemetry_bytes": 635593247
+    },
+    "combined": {
+      "matches": 16,
+      "policy_decisions": 86950,
+      "raw_telemetry_bytes": 1234087518
+    }
+  },
+  "baseline_pattern_ranking": [
+    {
+      "pattern": "apparent_pressure_release_after_closing_abort",
+      "independent_episodes": 510,
+      "episodes_per_match": 63.75,
+      "opponent_next_touch_rate": 0.33921568627451,
+      "near_term_concession_rate": 0.0823529411764706
+    },
+    {
+      "pattern": "low_resource_aerial_commitment",
+      "independent_episodes": 104,
+      "episodes_per_match": 13.0,
+      "opponent_next_touch_rate": 0.365384615384615,
+      "near_term_concession_rate": 0.125
+    },
+    {
+      "pattern": "boost_pickup_with_eta_possession_flip",
+      "independent_episodes": 66,
+      "episodes_per_match": 8.25,
+      "opponent_next_touch_rate": 0.227272727272727,
+      "near_term_concession_rate": 0.0909090909090909
+    }
+  ],
+  "selected_treatment": {
+    "behavior": "low_resource_losing_race_aerial_commitment",
+    "parameter_version": "m04p1-low-resource-aerial-v1",
+    "default_mode": "off",
+    "treatment_batch_mode": "intervene",
+    "model_weights_changed": false,
+    "challenge_calibration_mode": "off",
+    "state_features": [
+      "self boost",
+      "ball height",
+      "self-to-ball distance",
+      "possession ETA advantage",
+      "self grounded or airborne state",
+      "match phase",
+      "defensive-emergency safety state",
+      "previous baseline aerial-like decision"
+    ],
+    "action_boundary": "graded re-ranking over existing legal Wisp actions only"
+  },
+  "aggregate_comparison": {
+    "baseline": {
+      "wins": 4,
+      "losses": 4,
+      "goals_for": 35,
+      "goals_against": 30,
+      "goal_differential": 5,
+      "favorable_eta_share": 0.640732880208473,
+      "rival_touch_share": 0.757367886178862,
+      "possession_loss_transitions": 367,
+      "goals_conceded_within_10_seconds_after_possession_loss": 41,
+      "concession_per_possession_loss": 0.111716621253406,
+      "low_resource_aerial": {
+        "independent_episodes": 104,
+        "episodes_per_match": 13.0,
+        "opponent_next_touch_rate": 0.365384615384615,
+        "near_term_concession_rate": 0.125,
+        "near_term_scored_rate": 0.0961538461538462
+      }
+    },
+    "treatment": {
+      "wins": 4,
+      "losses": 4,
+      "goals_for": 33,
+      "goals_against": 33,
+      "goal_differential": 0,
+      "favorable_eta_share": 0.624278568680262,
+      "rival_touch_share": 0.71334214002642,
+      "possession_loss_transitions": 365,
+      "goals_conceded_within_10_seconds_after_possession_loss": 36,
+      "concession_per_possession_loss": 0.0986301369863014,
+      "low_resource_aerial": {
+        "independent_episodes": 96,
+        "episodes_per_match": 12.0,
+        "opponent_next_touch_rate": 0.479166666666667,
+        "near_term_concession_rate": 0.125,
+        "near_term_scored_rate": 0.0520833333333333
+      }
+    },
+    "treatment_minus_baseline": {
+      "wins": 0,
+      "goal_differential": -5,
+      "favorable_eta_share": -0.0164543115282116,
+      "rival_touch_share": -0.044025746152442,
+      "possession_loss_transitions": -2,
+      "concession_per_possession_loss": -0.0130864842671046,
+      "low_resource_aerial_episodes": -8,
+      "low_resource_aerial_episodes_per_match": -1.0,
+      "low_resource_aerial_opponent_next_touch_rate": 0.113782051282051,
+      "low_resource_aerial_near_term_concession_rate": 0.0,
+      "low_resource_aerial_near_term_scored_rate": -0.0440705128205129
+    }
+  },
+  "intervention_evidence": {
+    "eligible_decisions": 33,
+    "actions_changed": 17,
+    "action_change_share_of_treatment_decisions": 0.000393901478289077,
+    "next_touch_after_changed_action": {
+      "self": 1,
+      "opponent": 15,
+      "none": 1,
+      "opponent_rate": 0.882352941176471
+    },
+    "next_goal_within_10_seconds_after_changed_action": {
+      "scored": 1,
+      "conceded": 2,
+      "none": 14
+    }
+  },
+  "acceptance": {
+    "treatment_accepted": false,
+    "decision": "rejected",
+    "default_mode_after_milestone": "off",
+    "no_post_freeze_tuning_performed": true,
+    "reasons": [
+      "The targeted low-resource-aerial opponent-next-touch rate worsened by 0.1138 while its near-term concession rate did not improve.",
+      "After the 17 decisions whose action actually changed, the opponent took the next touch 15 times and Rival took it once.",
+      "Favorable ETA share and overall Rival touch share both declined, while goal differential moved from +5 to 0.",
+      "The lower aggregate concession-per-possession-loss rate is directionally favorable but does not outweigh the targeted and broader regressions in these unpaired natural trajectories."
+    ]
+  },
+  "runtime_caveats": [
+    "native RLBotServer startup queue warnings reached 1, 10, and 100 missed messages during startup transitions, but all 16 sessions became responsive and passed the recorded health gates",
+    "one baseline Wisp overtime session had a recovered NaN packet-processing exception in both bots; both resumed and completed, and the retained session is not represented as error-free",
+    "natural trajectories are unpaired and the aggregate deltas are directional evidence rather than a causal skill estimate"
+  ],
+  "verification": {
+    "full_pytest": {
+      "passed": 70,
+      "failed": 0,
+      "warnings": 2,
+      "warning_scope": "known torch.jit.load deprecation warnings"
+    },
+    "focused_pytest": {
+      "passed": 20,
+      "failed": 0
+    },
+    "ruff_modified_rival_python": "pass",
+    "compileall_runtime_tools_scripts_tests": "pass",
+    "policy_freeze_baseline": "4f2b21c00e2fcb7108ab1006fd950b066fbd0484",
+    "policy_freeze": "pass",
+    "model_smoke": "pass: finite 90-value policy output from a 432-value observation",
+    "model_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "installed_reference_hashes": "pass for all recorded Nexto and Wisp files",
+    "default_off_decision_smoke": "pass",
+    "treatment_mode_decision_smoke": "pass",
+    "telemetry_schema_version": 3,
+    "v4_1_json_files_parsed": 8,
+    "baseline_raw_reanalysis": "pass: 8 matches and 43792 decisions",
+    "treatment_raw_reanalysis": "pass: 8 matches and 43158 decisions",
+    "git_diff_check": "pass",
+    "remote_readback": "performed after the final push; exact origin/main SHA is reported in the external completion handoff to avoid a self-referential commit id"
+  },
+  "next_natural_play_target": {
+    "pattern": "apparent_pressure_release_after_closing_abort",
+    "reason": "it remained the highest-frequency pattern in both batches and worsened to a 0.418 opponent-next-touch rate in treatment",
+    "boundary": "first narrow the inference-only detector with observable closing-trend and action-history attribution; do not reuse scripted scenario labels or the rejected Milestone 03 thresholds"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "report_schema_version": 1,
+  "generated_utc": "2026-08-22T22:00:21.776Z",
+  "scope": "rival-m04p1-natural-treatment",
+  "source_batch": {
+    "filename": "natural_treatment_batch.json",
+    "sha256": "f60ab0ad18c24a1c4c4b3daa45c23c0584eedd02e0c1c49f3af76f2fa1ccc677"
+  },
+  "observations": [
+    {
+      "kind": "native_server_startup_queue_warning",
+      "scope": "match startup transitions",
+      "levels_observed": [
+        1,
+        10,
+        100
+      ],
+      "capture_boundary": "RLBotServer native stdout is separate from Python runtime_warnings",
+      "effect": "all eight opponents and Rival processes became responsive and all sessions completed"
+    }
+  ],
+  "batch_health": {
+    "scheduled_sessions": 8,
+    "complete_sessions": 8,
+    "health_accepted_sessions": 8,
+    "session_error_count": 0,
+    "python_captured_runtime_warning_entries": 0,
+    "invalid_json_lines": 0,
+    "raw_hashes_verified_by_analysis": true
+  },
+  "interpretation_limit": "native startup queue warnings are retained as a runtime caveat; passing the health gates is not represented as proof that the native stdout stream was warning-free"
+}
