@@ -31,7 +31,7 @@ def main() -> int:
     discover = subparsers.add_parser("describe", help="validate and describe a match")
     discover.add_argument("--opponent", choices=("nexto", "wisp"), required=True)
     discover.add_argument("--rival-team", choices=("blue", "orange"), default="blue")
-    discover.add_argument("--game-speed", type=float, default=5.0)
+    discover.add_argument("--game-speed", type=float, default=1.0)
 
     natural = subparsers.add_parser("natural", help="run complete natural matches")
     natural.add_argument("--opponent", choices=("nexto", "wisp"), required=True)
@@ -39,7 +39,7 @@ def main() -> int:
     natural.add_argument("--count", type=int, default=1)
     natural.add_argument("--launcher", choices=("steam", "epic", "no-launch"), default="steam")
     natural.add_argument("--timeout", type=float, default=900.0)
-    natural.add_argument("--game-speed", type=float, default=5.0)
+    natural.add_argument("--game-speed", type=float, default=1.0)
     natural.add_argument(
         "--challenge-mode",
         choices=("off", "observe", "intervene"),
@@ -61,7 +61,7 @@ def main() -> int:
     fake.add_argument("--repetitions", type=int, default=5)
     fake.add_argument("--behavior", choices=FAKE_CHALLENGE_BEHAVIORS, action="append")
     fake.add_argument("--launcher", choices=("steam", "epic", "no-launch"), default="steam")
-    fake.add_argument("--game-speed", type=float, default=5.0)
+    fake.add_argument("--game-speed", type=float, default=1.0)
     fake.add_argument(
         "--challenge-mode",
         choices=("off", "observe", "intervene"),
@@ -71,7 +71,7 @@ def main() -> int:
     aerial = subparsers.add_parser("probe-aerial", help="run resource-aerial grid")
     aerial.add_argument("--rival-team", choices=("blue", "orange"), default="blue")
     aerial.add_argument("--launcher", choices=("steam", "epic", "no-launch"), default="steam")
-    aerial.add_argument("--game-speed", type=float, default=5.0)
+    aerial.add_argument("--game-speed", type=float, default=1.0)
 
     args = parser.parse_args()
     if args.command == "describe":

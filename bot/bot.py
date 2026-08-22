@@ -84,6 +84,7 @@ class RivalBot(rlbot.managers.Bot):
             projected_miss_reference=config.CHALLENGE_PROJECTED_MISS_REFERENCE,
         )
         calibration_parameters = ChallengeCalibrationParameters(
+            version=config.CHALLENGE_PARAMETER_VERSION,
             commitment=commitment_parameters,
             control_distance=config.CHALLENGE_CONTROL_DISTANCE,
             maximum_logit_gap=config.CHALLENGE_MAX_LOGIT_GAP,

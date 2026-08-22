@@ -1,0 +1,986 @@
+{
+  "attempt_count": 1,
+  "bounded_timeout_seconds": 75.0,
+  "checks": {
+    "independent_smoke_completion": false,
+    "maximum_simultaneous_rocket_league_processes": 1,
+    "rocket_league_process_isolation": false,
+    "server_process_and_port_isolation": false,
+    "telemetry_session_isolation": false
+  },
+  "cleanup_errors": [
+    "shut_down: ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine",
+    "shut_down: ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine"
+  ],
+  "fallback_execution": "sequential",
+  "gate": "rival-m03-two-lane-capability-v1",
+  "generated_utc": "2026-08-22T19:39:05.801608Z",
+  "harness_revision_note": "The bounded attempt exposed a server-port startup race. The committed harness now waits for listener readiness, but the experiment was not repeated because the handoff permits exactly one concurrency attempt.",
+  "lanes": [
+    {
+      "error": null,
+      "execution": {
+        "active_observation_wall_seconds": 8.047000000020489,
+        "decision_records_per_wall_second": 0.0,
+        "effective_game_seconds_per_wall_second": 0.9993372666257773,
+        "game_seconds_advanced": 8.041666984558105,
+        "lane_id": "lane-1",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "none",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 156
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 156
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 11256,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "parallel",
+        "session_wall_duration_seconds": 22.655999999959022,
+        "state_setting_apply_count": 0
+      },
+      "lane_id": "lane-1",
+      "opponent": "nexto",
+      "rival_team": 0,
+      "server_image": "RLBotServerM03Lane1.exe",
+      "server_image_sha256": "b64dc026d61b9f2b2d5645e80dbc6a9d7391231ff49246d29028018dcb036ab8",
+      "server_pid": 11256,
+      "server_port": 23234,
+      "session_id": "rival-v3-speed-smoke-nexto-blue-20260822T193745Z-f0be1cd9",
+      "status": "complete",
+      "telemetry": {
+        "bytes": 0,
+        "exists": false,
+        "invalid_record_count": 0,
+        "record_counts": {},
+        "sha256": null
+      },
+      "termination_reason": "speed_integrity_window_complete"
+    },
+    {
+      "error": null,
+      "execution": {},
+      "lane_id": "lane-2",
+      "opponent": "wisp",
+      "rival_team": 1,
+      "server_image": "RLBotServerM03Lane2.exe",
+      "server_image_sha256": "b64dc026d61b9f2b2d5645e80dbc6a9d7391231ff49246d29028018dcb036ab8",
+      "server_pid": 28484,
+      "server_port": 23234,
+      "session_id": null,
+      "status": null,
+      "telemetry": {},
+      "termination_reason": null
+    }
+  ],
+  "monitor_sample_count_committed": 17,
+  "monitor_sample_count_raw": 282,
+  "monitor_samples": [
+    {
+      "lanes": [
+        {
+          "children": [],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": true,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [],
+      "wall_offset_seconds": 0.43799999996554106
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": true,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 0.6879999999655411
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 6.797000000020489
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 9.483999999938533
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 9.765999999945052
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33636,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 10.625
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 30536,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33636,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 10.890999999945052
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 30536,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33636,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 34256,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 11.437999999965541
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 30536,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 33332,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33636,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 34256,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 12.280999999959022
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "cmd.exe",
+              "pid": 19028,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 30100,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 33332,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33636,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "python.exe",
+              "pid": 33752,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 34256,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 17.81299999996554
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "cmd.exe",
+              "pid": 13256,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "bot.exe",
+              "pid": 33184,
+              "rlbot_server_port": "23234"
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 33332,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 34256,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 21.67200000002049
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 33332,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 34256,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 21.95299999997951
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 16232,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 33332,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 35452,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36316,
+              "rlbot_server_port": null
+            },
+            {
+              "name": "EOSOverlayRenderer-Win64-Shipping.exe",
+              "pid": 36688,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 27.67200000002049
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "RocketLeague.exe",
+              "pid": 18228,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 34.95299999997951
+    },
+    {
+      "lanes": [
+        {
+          "children": [
+            {
+              "name": "unavailable",
+              "pid": 18228,
+              "rlbot_server_port": null
+            }
+          ],
+          "lane_id": "lane-1",
+          "server_alive": true,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [
+        18228
+      ],
+      "wall_offset_seconds": 36.01599999994505
+    },
+    {
+      "lanes": [
+        {
+          "children": [],
+          "lane_id": "lane-1",
+          "server_alive": false,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [],
+      "wall_offset_seconds": 36.42200000002049
+    },
+    {
+      "lanes": [
+        {
+          "children": [],
+          "lane_id": "lane-1",
+          "server_alive": false,
+          "server_pid": 11256
+        },
+        {
+          "children": [],
+          "lane_id": "lane-2",
+          "server_alive": false,
+          "server_pid": 28484
+        }
+      ],
+      "rocket_league_pids": [],
+      "wall_offset_seconds": 75.25
+    }
+  ],
+  "native_console_observations": [
+    "Lane 2 RLBotServer failed to bind port 23234: SocketException 10048, address already in use.",
+    "Both Python clients connected to the surviving lane-1 server on port 23234; this is explicitly not an isolated parallel match.",
+    "Only one RocketLeague.exe PID (18228) was observed concurrently.",
+    "The shared server reported startup outbound queues at 1 and 10 missed messages for two sessions."
+  ],
+  "natural_match_budget_consumed": 0,
+  "rejection_reasons": [
+    "one or both lanes exceeded the bounded capability-test deadline",
+    "two distinct RLBotServer processes and ports were not verified",
+    "two simultaneous Rocket League processes were not observed",
+    "both smoke windows did not complete independently",
+    "two independent valid telemetry sessions were not verified",
+    "one or more cleanup operations reported an error"
+  ],
+  "report_schema_version": 1,
+  "smoke_game_seconds_per_lane": 8.0,
+  "supported": false,
+  "timed_out": true,
+  "total_wall_duration_seconds": 80.53099999995902
+}

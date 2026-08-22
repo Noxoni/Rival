@@ -34,6 +34,9 @@ selection block in `RivalBot.update_action` against commit
 ```
 
 Steam is the default launcher; use `--launcher epic` or `--launcher no-launch` when appropriate.
+The generic evidence commands default to the Milestone 03 validated **1x** regime. Do not use an
+accelerated result as acceptance evidence unless a new prospective speed-integrity gate validates
+its packet-observed multiplier. `speed-smoke` requires an explicit `--game-speed`.
 Each invocation uses `rlbot.managers.MatchManager`, standard Soccar physics, `Stadium_P`, five
 minutes, Default game speed, normal boost, and a unique session directory.
 
@@ -49,6 +52,16 @@ The fake-challenge suite runs five repetitions of every required behavior by def
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_evidence_suite.py probe-fake --rival-team blue
 ```
+
+The gameplay-calibration mode is explicit:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_evidence_suite.py probe-fake --rival-team blue --challenge-mode off --game-speed 1
+.\.venv\Scripts\python.exe scripts\run_evidence_suite.py probe-fake --rival-team blue --challenge-mode intervene --game-speed 1
+```
+
+Milestone 03 rejected the tested intervention and left the runtime default at `off`. Do not run
+natural acceptance games in `intervene` mode without a new controlled gate and versioned authority.
 
 Behaviors are `true_commit`, `boost_then_brake`, `boost_then_veer`, `jump_fake`, and
 `delayed_challenge`. A single behavior can be selected with `--behavior`.
@@ -68,7 +81,7 @@ labels or detector thresholds into Rival's controller path.
 Each session writes ignored local artifacts beneath `evidence/raw/<session-id>/`:
 
 - `session_start.json`: metadata passed to Rival before launch;
-- `decisions.jsonl`: telemetry schema v2 start/decision/end records;
+- `decisions.jsonl`: telemetry schema v3 start/decision/end records (the loader retains schema-v1/v2 compatibility);
 - `session_manifest.json`: final score/status, schedule, raw hash, replay pointers, and anomalies.
 
 Analyze a file, session directory, or complete raw tree:

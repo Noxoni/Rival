@@ -56,7 +56,7 @@ $env:RIVAL_TELEMETRY_PATH = 'G:\dev\RLBot-Rival\telemetry\rival_decisions.jsonl'
 $env:RIVAL_POLICY_TOP_N = '5'
 ```
 
-The default JSONL record includes the selected discrete/controller action, legal mask, top candidates and probabilities, confidence/margin, model tick, timestamps, raw car/ball/resource state, approximate Wisp ETAs, closing velocities, boost-pad opportunities, prior action, and tick-skip/action-delay state.
+The schema-v3 JSONL record includes baseline and final discrete/controller actions, legal mask, top candidates and probabilities, confidence/margin, model tick, timestamps, raw car/ball/resource state, approximate Wisp ETAs, closing velocities, boost-pad opportunities, prior action, tick-skip/action-delay state, and the complete challenge-calibration explanation. Schema-v1/v2 evidence remains readable by the offline loader.
 
 Full raw and masked logit arrays are retained in the in-process `PolicyDecision` object but omitted from normal JSONL to limit volume. Include them in JSONL only for focused debugging:
 
@@ -65,6 +65,20 @@ $env:RIVAL_TELEMETRY_INCLUDE_LOGITS = '1'
 ```
 
 Unset the variables or set `RIVAL_TELEMETRY_ENABLED=0` to disable telemetry. Restart RLBot after changing process environment variables.
+
+## Experimental challenge-calibration mode
+
+Milestone 03 retained three explicit modes:
+
+```powershell
+$env:RIVAL_CHALLENGE_CALIBRATION_MODE = 'off'       # exact frozen Wisp selection
+$env:RIVAL_CHALLENGE_CALIBRATION_MODE = 'observe'   # log hypothetical treatment; return baseline
+$env:RIVAL_CHALLENGE_CALIBRATION_MODE = 'intervene' # experimental legal-action re-ranking
+```
+
+The verified/default setting is `off`. Milestone 03 rejected both tested treatment parameter sets,
+so `intervene` is for controlled research only and must not be presented as an accepted bot
+improvement. See `docs/MILESTONE_03_RESULTS.md`.
 
 ## Current verification boundary
 

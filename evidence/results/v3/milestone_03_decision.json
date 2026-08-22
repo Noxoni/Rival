@@ -1,0 +1,162 @@
+{
+  "acceptance": {
+    "challenge_calibration_accepted": false,
+    "default_mode": "off",
+    "development_agent_id": "noxoni/rival/dev-v1",
+    "failed_conditions": [
+      "Neither treatment parameter attempt produced an eligible decision or an applied intervention in the controlled suite.",
+      "The default treatment increased refined premature-release-jump cases from 1/20 to 3/20, with zero treatment exposure.",
+      "The coarse candidate's nominal 1/20 to 0/20 reduction was not causal because it also had zero treatment exposure.",
+      "The coarse candidate changed true-commit next-touch outcomes from 5 self / 0 opponent to 4 self / 1 opponent."
+    ],
+    "natural_validation_gate_opened": false,
+    "reason": "Controlled fake-pressure improvement was not demonstrated and the candidate did not fully protect true-commit outcomes."
+  },
+  "controlled_evidence": {
+    "decision_records": 4356,
+    "invalid_json_records": 0,
+    "raw_bytes": 65234977,
+    "runner_wall_duration_seconds": 398.7489999999525,
+    "scheduled_cases": 75,
+    "sessions": 15,
+    "startup_native_queue_warning_pattern": [
+      1,
+      10
+    ]
+  },
+  "generated_utc": "2026-08-22T19:53:40.784Z",
+  "metric": {
+    "definition": "Grounded final jump/dodge initiation while Rival is inside the ground-control distance/height/ETA gate, apparent pressure is present, commitment is below high, and the opponent is outside the unavoidable-intercept boundary.",
+    "offline_m02_refined_baseline_cases_out_of_20": 1,
+    "original_broad_m02_cases_out_of_20": 20,
+    "original_target_invalidated_by_refined_metric": true,
+    "replacement_gate": {
+      "fake_pressure_requirement": "Eliminate the single refined baseline exposure with at least one actually applied, explainable intervention.",
+      "maximum_self_next_touch_loss_cases": 1,
+      "maximum_deferral_policy_ticks": 1,
+      "true_commit_requirement": "No systematic next-touch/control regression and high commitment in all clear true-commit trajectories."
+    }
+  },
+  "milestone": "Rival Milestone 03 challenge-commitment calibration",
+  "natural_validation": {
+    "budget_available": 6,
+    "budget_consumed": 0,
+    "matches_run": 0,
+    "reason_not_run": "The controlled A/B gate failed.",
+    "wall_duration_seconds": 0.0
+  },
+  "parameter_attempts": [
+    {
+      "decision": "rejected",
+      "fake_pressure": {
+        "baseline_mean_ending_eta_advantage": 2.8605869328821565,
+        "baseline_mean_maximum_ball_separation_increase": 552.5097304250958,
+        "baseline_median_maximum_ball_separation_increase": 154.66205381798395,
+        "baseline_premature_cases": 1,
+        "baseline_self_next_touch_cases": 17,
+        "case_count_per_mode": 20,
+        "eligible_treatment_decisions": 0,
+        "interventions_applied": 0,
+        "relative_reduction": -2.0,
+        "treatment_mean_ending_eta_advantage": 2.8480848240556758,
+        "treatment_mean_maximum_ball_separation_increase": 261.03558422831856,
+        "treatment_median_maximum_ball_separation_increase": 105.43878926496944,
+        "treatment_premature_cases": 3,
+        "treatment_self_next_touch_cases": 18
+      },
+      "index": 1,
+      "parameters": {
+        "control_distance": 650.0,
+        "high_commitment_threshold": 0.7,
+        "low_commitment_threshold": 0.34,
+        "maximum_deferral_policy_ticks": 1,
+        "maximum_logit_gap": 0.85,
+        "pressure_distance": 1900.0,
+        "pressure_eta": 1.4,
+        "projected_miss_reference": 450.0,
+        "version": "m03-conservative-v1"
+      },
+      "reason": "No treatment exposure and the refined premature count increased.",
+      "report": "evidence/results/v3/controlled_ab.json",
+      "true_commit": {
+        "baseline_high_commitment_cases": 5,
+        "baseline_next_touch": {
+          "none": 0,
+          "opponent": 0,
+          "self": 5
+        },
+        "case_count_per_mode": 5,
+        "maximum_observed_consecutive_deferrals": 0,
+        "treatment_high_commitment_cases": 5,
+        "treatment_next_touch": {
+          "none": 0,
+          "opponent": 0,
+          "self": 5
+        }
+      }
+    },
+    {
+      "decision": "rejected",
+      "fake_pressure": {
+        "baseline_mean_ending_eta_advantage": 2.8605869328821565,
+        "baseline_mean_maximum_ball_separation_increase": 552.5097304250958,
+        "baseline_median_maximum_ball_separation_increase": 154.66205381798395,
+        "baseline_premature_cases": 1,
+        "baseline_self_next_touch_cases": 17,
+        "case_count_per_mode": 20,
+        "eligible_treatment_decisions": 0,
+        "interventions_applied": 0,
+        "nominal_relative_reduction": 1.0,
+        "treatment_mean_ending_eta_advantage": 3.2994844552697438,
+        "treatment_mean_maximum_ball_separation_increase": 473.73912689111563,
+        "treatment_median_maximum_ball_separation_increase": 235.76072635140534,
+        "treatment_premature_cases": 0,
+        "treatment_self_next_touch_cases": 18
+      },
+      "index": 2,
+      "parameters": {
+        "control_distance": 650.0,
+        "high_commitment_threshold": 0.7,
+        "low_commitment_threshold": 0.0,
+        "maximum_deferral_policy_ticks": 1,
+        "maximum_logit_gap": 1.5,
+        "pressure_distance": 1900.0,
+        "pressure_eta": 1.4,
+        "projected_miss_reference": 450.0,
+        "version": "m03-candidate-low0-gap1p5"
+      },
+      "reason": "The nominal count change had zero causal treatment exposure, and true-commit next touch regressed by one case.",
+      "report": "evidence/results/v3/controlled_candidate_low0_gap1p5.json",
+      "true_commit": {
+        "baseline_high_commitment_cases": 5,
+        "baseline_next_touch": {
+          "none": 0,
+          "opponent": 0,
+          "self": 5
+        },
+        "case_count_per_mode": 5,
+        "maximum_observed_consecutive_deferrals": 0,
+        "treatment_high_commitment_cases": 5,
+        "treatment_next_touch": {
+          "none": 0,
+          "opponent": 1,
+          "self": 4
+        }
+      }
+    }
+  ],
+  "report_schema_version": 1,
+  "runtime_health": {
+    "controlled_sessions_complete": 15,
+    "native_startup_queue_warnings_present": true,
+    "natural_runtime_metrics_available": false,
+    "python_captured_runtime_warnings": 0,
+    "terminal_disconnect_after_intentional_shutdown": "Error connecting to 127.0.0.1:23233.",
+    "treatment_intervention_next_touch_outcomes": {
+      "none": 0,
+      "opponent": 0,
+      "self": 0,
+      "total_interventions": 0
+    }
+  }
+}

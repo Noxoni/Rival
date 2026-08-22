@@ -400,6 +400,11 @@ def analyze_session(
         ),
         "raw_sha256": session.raw_sha256,
         "warnings": session.warnings,
+        "status": session.manifest.get("status"),
+        "termination_reason": session.manifest.get("termination_reason"),
+        "wall_duration_seconds": session.manifest.get("wall_duration_seconds"),
+        "execution": session.manifest.get("execution") or {},
+        "runtime_warnings": session.manifest.get("runtime_warnings") or [],
         "decision_count": len(observations),
         "challenge_candidate_decisions": sum(
             observation.challenge_candidate for observation in observations

@@ -1,0 +1,3810 @@
+{
+  "detector_version": "rival-m03-challenge-v1",
+  "execution_control": {
+    "behaviors": [
+      "true_commit",
+      "boost_then_brake",
+      "boost_then_veer",
+      "jump_fake",
+      "delayed_challenge"
+    ],
+    "evidence_speed_source": "bounded_speed_integrity_and_fallback_gate",
+    "lane_id": "controlled-sequential-lane-1",
+    "natural_match_budget_consumed": 0,
+    "original_repetitions_per_behavior_per_mode": 5,
+    "requested_game_speed": 1.0,
+    "sequential_or_parallel": "sequential",
+    "total_runner_wall_duration_seconds": 261.7179999999935
+  },
+  "generated_utc": "2026-08-22T19:45:41.708495Z",
+  "metric_parameters": {
+    "control_distance": 650.0,
+    "intervention_goal_window_seconds": 3.0,
+    "maximum_control_ball_height": 230.0,
+    "maximum_eta_disadvantage": 0.3,
+    "unavoidable_opponent_distance": 260.0,
+    "unavoidable_opponent_eta": 0.18
+  },
+  "natural_sessions": [],
+  "parameter_attempt": {
+    "attempt_index": 1,
+    "environment": {
+      "RIVAL_CHALLENGE_CONTROL_DISTANCE": "650.0",
+      "RIVAL_CHALLENGE_HIGH_THRESHOLD": "0.70",
+      "RIVAL_CHALLENGE_LOW_THRESHOLD": "0.34",
+      "RIVAL_CHALLENGE_MAX_DEFERRAL_TICKS": "1",
+      "RIVAL_CHALLENGE_MAX_LOGIT_GAP": "0.85",
+      "RIVAL_CHALLENGE_PRESSURE_DISTANCE": "1900.0",
+      "RIVAL_CHALLENGE_PRESSURE_ETA": "1.40",
+      "RIVAL_CHALLENGE_PROJECTED_MISS_REFERENCE": "450.0"
+    },
+    "parameter_version": "m03-conservative-v1"
+  },
+  "paired_controlled": {
+    "by_behavior": {
+      "boost_then_brake": {
+        "intervene": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 5,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 0.7123052840446072,
+          "mean_maximum_ball_separation_increase": 518.471294752745,
+          "median_maximum_ball_separation_increase": 66.48630607323787,
+          "none_next_touch_cases": 0,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 3,
+          "premature_release_jump_count": 3,
+          "self_next_touch_cases": 5
+        },
+        "off": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 4,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 1.4527534777959397,
+          "mean_maximum_ball_separation_increase": 352.9233643301592,
+          "median_maximum_ball_separation_increase": 109.1830434651568,
+          "none_next_touch_cases": 1,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 4
+        }
+      },
+      "boost_then_veer": {
+        "intervene": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 4,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.2833860597570945,
+          "mean_maximum_ball_separation_increase": 38.78858865016705,
+          "median_maximum_ball_separation_increase": 0.0,
+          "none_next_touch_cases": 1,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 4
+        },
+        "off": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 4,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.640194195475574,
+          "mean_maximum_ball_separation_increase": 11.577495448309786,
+          "median_maximum_ball_separation_increase": 0.0,
+          "none_next_touch_cases": 1,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 4
+        }
+      },
+      "delayed_challenge": {
+        "intervene": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 4,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.7372201885041805,
+          "mean_maximum_ball_separation_increase": 233.078407710202,
+          "median_maximum_ball_separation_increase": 272.9558554488855,
+          "none_next_touch_cases": 1,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 4
+        },
+        "off": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 4,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.083539463618423,
+          "mean_maximum_ball_separation_increase": 1018.0562801388419,
+          "median_maximum_ball_separation_increase": 1228.31651362383,
+          "none_next_touch_cases": 1,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 1,
+          "premature_release_jump_count": 1,
+          "self_next_touch_cases": 4
+        }
+      },
+      "jump_fake": {
+        "intervene": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 5,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.6594277639168205,
+          "mean_maximum_ball_separation_increase": 253.8040458001601,
+          "median_maximum_ball_separation_increase": 194.28542059802186,
+          "none_next_touch_cases": 0,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 5
+        },
+        "off": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 5,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 3.26586059463869,
+          "mean_maximum_ball_separation_increase": 827.4817817830724,
+          "median_maximum_ball_separation_increase": 887.5194594803133,
+          "none_next_touch_cases": 0,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 5
+        }
+      },
+      "true_commit": {
+        "intervene": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 5,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 2.961446244552622,
+          "mean_maximum_ball_separation_increase": 1194.1158173114397,
+          "median_maximum_ball_separation_increase": 1270.3321567875344,
+          "none_next_touch_cases": 0,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 5
+        },
+        "off": {
+          "case_count": 5,
+          "eligible_decisions": 0,
+          "high_commitment_cases": 5,
+          "interventions_applied": 0,
+          "maximum_consecutive_deferrals": 0,
+          "mean_ending_eta_advantage": 4.147942041204521,
+          "mean_maximum_ball_separation_increase": 962.1211632379852,
+          "median_maximum_ball_separation_increase": 849.2272545916749,
+          "none_next_touch_cases": 0,
+          "opponent_next_touch_cases": 0,
+          "premature_release_jump_cases": 0,
+          "premature_release_jump_count": 0,
+          "self_next_touch_cases": 5
+        }
+      }
+    },
+    "fake_pressure_aggregate": {
+      "intervene": {
+        "case_count": 20,
+        "eligible_decisions": 0,
+        "high_commitment_cases": 18,
+        "interventions_applied": 0,
+        "maximum_consecutive_deferrals": 0,
+        "mean_ending_eta_advantage": 2.8480848240556758,
+        "mean_maximum_ball_separation_increase": 261.03558422831856,
+        "median_maximum_ball_separation_increase": 105.43878926496944,
+        "none_next_touch_cases": 2,
+        "opponent_next_touch_cases": 0,
+        "premature_release_jump_cases": 3,
+        "premature_release_jump_count": 3,
+        "self_next_touch_cases": 18
+      },
+      "off": {
+        "case_count": 20,
+        "eligible_decisions": 0,
+        "high_commitment_cases": 17,
+        "interventions_applied": 0,
+        "maximum_consecutive_deferrals": 0,
+        "mean_ending_eta_advantage": 2.8605869328821565,
+        "mean_maximum_ball_separation_increase": 552.5097304250958,
+        "median_maximum_ball_separation_increase": 154.66205381798395,
+        "none_next_touch_cases": 3,
+        "opponent_next_touch_cases": 0,
+        "premature_release_jump_cases": 1,
+        "premature_release_jump_count": 1,
+        "self_next_touch_cases": 17
+      }
+    },
+    "paired_gate_inputs": {
+      "baseline_refined_cases_out_of_20": 1,
+      "premature_release_case_relative_reduction": -2.0,
+      "refined_metric_invalidates_original_50_percent_target": true,
+      "treatment_refined_cases_out_of_20": 3,
+      "treatment_self_next_touch_delta": 1
+    },
+    "true_commit_aggregate": {
+      "intervene": {
+        "case_count": 5,
+        "eligible_decisions": 0,
+        "high_commitment_cases": 5,
+        "interventions_applied": 0,
+        "maximum_consecutive_deferrals": 0,
+        "mean_ending_eta_advantage": 2.961446244552622,
+        "mean_maximum_ball_separation_increase": 1194.1158173114397,
+        "median_maximum_ball_separation_increase": 1270.3321567875344,
+        "none_next_touch_cases": 0,
+        "opponent_next_touch_cases": 0,
+        "premature_release_jump_cases": 0,
+        "premature_release_jump_count": 0,
+        "self_next_touch_cases": 5
+      },
+      "off": {
+        "case_count": 5,
+        "eligible_decisions": 0,
+        "high_commitment_cases": 5,
+        "interventions_applied": 0,
+        "maximum_consecutive_deferrals": 0,
+        "mean_ending_eta_advantage": 4.147942041204521,
+        "mean_maximum_ball_separation_increase": 962.1211632379852,
+        "median_maximum_ball_separation_increase": 849.2272545916749,
+        "none_next_touch_cases": 0,
+        "opponent_next_touch_cases": 0,
+        "premature_release_jump_cases": 0,
+        "premature_release_jump_count": 0,
+        "self_next_touch_cases": 5
+      }
+    }
+  },
+  "premature_release_jump_definition": "grounded final jump/dodge initiation while Rival is within the ground-control distance/height/ETA gate, apparent pressure is present, commitment is below the high threshold, and the opponent is outside the unavoidable-intercept boundary",
+  "report_schema_version": 1,
+  "session_status": [
+    {
+      "raw_telemetry": {
+        "bytes": 4282853,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 311,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "889cdd4013ffe78a6e8e494ab3ef0498522ffa07dbf452ffa345800492044c60"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-true_commit-blue-20260822T194120Z-18fc0890",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 33.921
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 3627784,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 266,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "d00b4deaec99c3d53905cc3a690fbab498f540f8d1465c741fbb6d80745ed8d2"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_brake-blue-20260822T194154Z-be324c09",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.094
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 3620300,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 268,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "f391014d8cadd758cb9bf9f38d6d2c37a2d143e74cac80a1e4fb55e37516678c"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_veer-blue-20260822T194219Z-0acf29f0",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.984
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 4302075,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 313,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "bdc7834ec7068e749c714082303778c4557c0117fe9dcac97c9ca9f3c8952cf3"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-jump_fake-blue-20260822T194244Z-bc2a011b",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.109
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 3629059,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 266,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "83d4d3ebaf5139133e1c23b99533099ccc08ac4312e6fbcfe941beca703c823f"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-delayed_challenge-blue-20260822T194309Z-8d46d378",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.922
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 4904428,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 312,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "d8968b1b185b303718da7f8c28a03b82906451f230022340fd4627ffe4c8c567"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-true_commit-blue-20260822T194334Z-379b1e1c",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.75
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 4900456,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 313,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "92bee422094804cde028f80e495ffc5ad61fbc0491f4a81d8a2f5cd176f906c3"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_brake-blue-20260822T194359Z-55c61994",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.797
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 4126870,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 267,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "1e3c8a3d0142c0d9665d649e5b5111c9cae3a35b4b844151a9379ebe775699c9"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_veer-blue-20260822T194424Z-7f277335",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.016
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 4917344,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 313,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "7a380667fd0f8ce94b1adfb45a4c94d795b7bb49a247fd580eec1de46b4fb1af"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-jump_fake-blue-20260822T194449Z-dacfe9e9",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.735
+    },
+    {
+      "raw_telemetry": {
+        "bytes": 3969119,
+        "exists": true,
+        "invalid_record_count": 0,
+        "record_counts": {
+          "rival_policy_decision": 257,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "9fca7c3e57887e8e95f66346b49e45d842a67a76691cc4272ffadf4cb4cd741f"
+      },
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-delayed_challenge-blue-20260822T194514Z-c9cee969",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.375
+    }
+  ],
+  "sessions": [
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 3,
+        "16": 12,
+        "17": 2,
+        "18": 13,
+        "20": 4,
+        "23": 2,
+        "3": 2,
+        "57": 1,
+        "6": 1,
+        "8": 1,
+        "82": 1,
+        "83": 2
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 0.7916666865348816,
+              "premature": false,
+              "score": 0.8942384955705704,
+              "state": "high"
+            },
+            {
+              "game_time": 2.4583332538604736,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 58,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1075.8060681291936,
+          "eta_advantage_end": 1.482718534794719,
+          "eta_advantage_start": -0.04333360563829869,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1075.8060681291936,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.4666664600372314,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6916666626930237,
+            "time_to_next_self_touch": 0.5333333611488342,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 4.925000190734863,
+              "premature": false,
+              "score": 0.8982743856248785,
+              "state": "high"
+            },
+            {
+              "game_time": 8.191666603088379,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -179.82775956558544,
+          "eta_advantage_end": 1.2823836772620059,
+          "eta_advantage_start": 0.42724402887486373,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.733333110809326,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.41666650772094727,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 17,
+          "commitment_at_release": [
+            {
+              "game_time": 9.125,
+              "premature": false,
+              "score": 0.8938476761210258,
+              "state": "high"
+            },
+            {
+              "game_time": 11.524999618530273,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 56,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 109.1830434651568,
+          "eta_advantage_end": 0.930938447160325,
+          "eta_advantage_start": 0.4366202207540673,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 109.1830434651568,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.3999996185302734,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.34166622161865234,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 16.058332443237305,
+              "premature": false,
+              "score": 0.5264326743511398,
+              "state": "low"
+            }
+          ],
+          "decision_count": 21,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -1845.5469353927679,
+          "eta_advantage_end": 2.295864912669533,
+          "eta_advantage_start": 2.563984621595239e-05,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": false,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 1.199997901916504,
+          "touch_outcome": {
+            "next_touch": "none",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": null,
+            "touch_sequence": []
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 7,
+          "commitment_at_release": [
+            {
+              "game_time": 17.45833396911621,
+              "premature": false,
+              "score": 0.8907508894092476,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -186.627412926141,
+          "eta_advantage_end": 1.2718618170931153,
+          "eta_advantage_start": 0.38746997706520087,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 579.6277100564455,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.333333969116211,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6916656494140625,
+            "time_to_next_self_touch": 0.3916664123535156,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 44,
+      "challenge_candidates_per_1000_decisions": 165.41353383458647,
+      "decision_count": 266,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.266000000061467,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 10.600143460588187,
+        "effective_game_seconds_per_wall_second": 0.9870998968462511,
+        "game_seconds_advanced": 20.99166640639305,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 576
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 576
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 25.078000000095926,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "off",
+      "opponent": "Controlled probe (boost_then_brake)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "d00b4deaec99c3d53905cc3a690fbab498f540f8d1465c741fbb6d80745ed8d2",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_brake-blue-20260822T194154Z-be324c09",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.094,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "0": 1,
+        "12": 20,
+        "14": 2,
+        "15": 1,
+        "16": 24,
+        "17": 1,
+        "18": 20,
+        "20": 11,
+        "21": 1,
+        "22": 4,
+        "3": 1,
+        "4": 1,
+        "57": 1,
+        "6": 2,
+        "61": 1,
+        "7": 1,
+        "82": 2,
+        "83": 3
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 0.8416666388511658,
+              "premature": true,
+              "score": 0.5851450624944734,
+              "state": "ambiguous"
+            },
+            {
+              "game_time": 2.0416667461395264,
+              "premature": false,
+              "score": 0.27966011263085944,
+              "state": "low"
+            }
+          ],
+          "decision_count": 59,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 19.17812833410619,
+          "eta_advantage_end": 0.5674422053467065,
+          "eta_advantage_start": -0.014362953452455973,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 19.17812833410619,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": true,
+          "premature_release_jump_count": 1,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {
+            "unavoidable_intercept": 22
+          },
+          "self_likely_next_toucher_seconds": 2.866666615009308,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0000000596046448,
+            "time_to_next_self_touch": 0.7249999642372131,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "opponent",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 13,
+          "commitment_at_release": [
+            {
+              "game_time": 4.974999904632568,
+              "premature": false,
+              "score": 0.9172427288405546,
+              "state": "high"
+            },
+            {
+              "game_time": 7.9083333015441895,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -181.39361674397844,
+          "eta_advantage_end": 1.1445533845872178,
+          "eta_advantage_start": 0.412017107391685,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 6.512924218448916,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {
+            "unavoidable_intercept": 7
+          },
+          "self_likely_next_toucher_seconds": 3.2666664123535156,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.3916664123535156,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 9.175000190734863,
+              "premature": false,
+              "score": 0.9021031624295381,
+              "state": "high"
+            },
+            {
+              "game_time": 10.508333206176758,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1754.1321098371968,
+          "eta_advantage_end": 0.31957198999913117,
+          "eta_advantage_start": 0.36262692705012656,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 2233.888798783973,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.266667366027832,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.7333335876464844,
+            "time_to_next_self_touch": 0.4833335876464844,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 26,
+          "commitment_at_release": [
+            {
+              "game_time": 13.308333396911621,
+              "premature": false,
+              "score": 0.9093172945377173,
+              "state": "high"
+            },
+            {
+              "game_time": 15.908333778381348,
+              "premature": true,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 46.86367425783834,
+          "eta_advantage_end": 0.6855248087435919,
+          "eta_advantage_start": 0.4445219207034796,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 66.48630607323787,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": true,
+          "premature_release_jump_count": 1,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {
+            "unavoidable_intercept": 5
+          },
+          "self_likely_next_toucher_seconds": 3.5333337783813477,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.35833263397216797,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_brake",
+          "challenge_candidate_decisions": 33,
+          "commitment_at_release": [
+            {
+              "game_time": 17.575000762939453,
+              "premature": false,
+              "score": 0.9007328555694282,
+              "state": "high"
+            },
+            {
+              "game_time": 20.774999618530273,
+              "premature": true,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -166.8593817307078,
+          "eta_advantage_end": 0.8444340315463886,
+          "eta_advantage_start": 0.42939575951431513,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 266.29031635395944,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_brake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": true,
+          "premature_release_jump_count": 1,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {
+            "unavoidable_intercept": 5
+          },
+          "self_likely_next_toucher_seconds": 3.6000003814697266,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.39999961853027344,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 97,
+      "challenge_candidates_per_1000_decisions": 309.90415335463257,
+      "decision_count": 313,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.07799999997951,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 12.622494656611687,
+        "effective_game_seconds_per_wall_second": 0.99985768932203,
+        "game_seconds_advanced": 21.075000375509262,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 673
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 673
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 24.780999999959022,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "intervene",
+      "opponent": "Controlled probe (boost_then_brake)",
+      "premature_release_jump_count": 3,
+      "premature_release_jumps_per_1000_decisions": 9.584664536741213,
+      "raw_sha256": "92bee422094804cde028f80e495ffc5ad61fbc0491f4a81d8a2f5cd176f906c3",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_brake-blue-20260822T194359Z-55c61994",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.797,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 6,
+        "14": 2,
+        "16": 12,
+        "18": 5,
+        "20": 6,
+        "22": 1,
+        "74": 1,
+        "79": 1,
+        "83": 2
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 0.8333333134651184,
+              "premature": false,
+              "score": 0.8752397029149739,
+              "state": "high"
+            }
+          ],
+          "decision_count": 58,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -224.95813423594544,
+          "eta_advantage_end": 5.888137513559445,
+          "eta_advantage_start": -0.04564541897324437,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.6537504052937493,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.2000001668930054,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.6083332896232605,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 8,
+          "commitment_at_release": [
+            {
+              "game_time": 5.0333333015441895,
+              "premature": false,
+              "score": 0.8930599955100681,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -165.5721900605379,
+          "eta_advantage_end": 4.8892567792266695,
+          "eta_advantage_start": 0.45280269515403293,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.6666665077209473,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.41666650772094727,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 9.100000381469727,
+              "premature": false,
+              "score": 0.8922332863242612,
+              "state": "high"
+            },
+            {
+              "game_time": 12.100000381469727,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 57.23372683625519,
+          "eta_advantage_end": 4.026829451104836,
+          "eta_advantage_start": 0.45280269515403293,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 57.23372683625519,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.7333335876464844,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.40833377838134766,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 16.450000762939453,
+              "premature": false,
+              "score": 0.5500989897463413,
+              "state": "low"
+            }
+          ],
+          "decision_count": 18,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -1007.2076255135034,
+          "eta_advantage_end": 0.24844469262933844,
+          "eta_advantage_start": 2.164347272870515e-05,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": false,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 0.5333318710327148,
+          "touch_outcome": {
+            "next_touch": "none",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": null,
+            "touch_sequence": []
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 17.516666412353516,
+              "premature": false,
+              "score": 0.902131933732573,
+              "state": "high"
+            },
+            {
+              "game_time": 20.850000381469727,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -182.43767551027608,
+          "eta_advantage_end": 3.1483025408575815,
+          "eta_advantage_start": 0.4367573072219503,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.7333335876464844,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.375,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 36,
+      "challenge_candidates_per_1000_decisions": 134.32835820895522,
+      "decision_count": 268,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.265999999945052,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 10.726865193723983,
+        "effective_game_seconds_per_wall_second": 0.9890591942425175,
+        "game_seconds_advanced": 21.03333282470703,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 577
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 577
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 24.968999999924563,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "off",
+      "opponent": "Controlled probe (boost_then_veer)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "f391014d8cadd758cb9bf9f38d6d2c37a2d143e74cac80a1e4fb55e37516678c",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_veer-blue-20260822T194219Z-0acf29f0",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.984,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 3,
+        "16": 9,
+        "18": 5,
+        "20": 2,
+        "57": 1,
+        "82": 1,
+        "83": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 0.7583333253860474,
+              "premature": false,
+              "score": 0.885573887697853,
+              "state": "high"
+            },
+            {
+              "game_time": 4.358333110809326,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 59,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -221.52087801318996,
+          "eta_advantage_end": 3.89730259339438,
+          "eta_advantage_start": 0.005185424313579046,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 49.551670794134225,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {
+            "unavoidable_intercept": 2
+          },
+          "self_likely_next_toucher_seconds": 3.808333098888397,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.5166667103767395,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 7.291666507720947,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 58,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 144.39127245670102,
+          "eta_advantage_end": 4.268837947237992,
+          "eta_advantage_start": 0.46220755215989295,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 144.39127245670102,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.5333337783813477,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.35833311080932617,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 12.533333778381348,
+              "premature": false,
+              "score": 0.40706443085640726,
+              "state": "low"
+            }
+          ],
+          "decision_count": 20,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -987.3434225514293,
+          "eta_advantage_end": 0.21037314143866648,
+          "eta_advantage_start": 2.563984621595239e-05,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": false,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 0.20000076293945312,
+          "touch_outcome": {
+            "next_touch": "none",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": null,
+            "touch_sequence": []
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 13.266666412353516,
+              "premature": false,
+              "score": 0.8959422137954121,
+              "state": "high"
+            },
+            {
+              "game_time": 15.399999618530273,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -15.827270963140109,
+          "eta_advantage_end": 3.3300119323764155,
+          "eta_advantage_start": 0.443660742122855,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.7999982833862305,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.41666698455810547,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "boost_then_veer",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 17.53333282470703,
+              "premature": false,
+              "score": 0.9111867290680056,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -165.17795645590897,
+          "eta_advantage_end": 4.71040468433802,
+          "eta_advantage_start": 0.3790673774789802,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "boost_then_veer",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.666666030883789,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.41666603088378906,
+            "touch_sequence": [
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 22,
+      "challenge_candidates_per_1000_decisions": 82.39700374531836,
+      "decision_count": 267,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.29700000002049,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 10.673169171730093,
+        "effective_game_seconds_per_wall_second": 0.9856630702151878,
+        "game_seconds_advanced": 20.99166640639305,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 576
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 576
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 25.0,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "intervene",
+      "opponent": "Controlled probe (boost_then_veer)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "1e3c8a3d0142c0d9665d649e5b5111c9cae3a35b4b844151a9379ebe775699c9",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-boost_then_veer-blue-20260822T194424Z-7f277335",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.016,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 2,
+        "14": 1,
+        "16": 16,
+        "17": 2,
+        "18": 20,
+        "20": 3,
+        "22": 1,
+        "23": 1,
+        "41": 1,
+        "57": 1,
+        "83": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 13,
+          "commitment_at_release": [
+            {
+              "game_time": 1.2916666269302368,
+              "premature": false,
+              "score": 0.8909360927512471,
+              "state": "high"
+            },
+            {
+              "game_time": 3.0916666984558105,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 56,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 25.69362007612608,
+          "eta_advantage_end": 3.8079899888054536,
+          "eta_advantage_start": 0.2891240858652707,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 63.760644324657164,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.541666567325592,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.6166666150093079,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 7.5916666984558105,
+              "premature": false,
+              "score": 0.17800151367456182,
+              "state": "low"
+            }
+          ],
+          "decision_count": 20,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -1479.1018255116585,
+          "eta_advantage_end": 1.086442885677368,
+          "eta_advantage_start": 2.9807231153533564e-05,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": false,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 1.1999993324279785,
+          "touch_outcome": {
+            "next_touch": "none",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": null,
+            "touch_sequence": []
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 9,
+          "commitment_at_release": [
+            {
+              "game_time": 9.258333206176758,
+              "premature": false,
+              "score": 0.8410908557023605,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 917.5716528044313,
+          "eta_advantage_end": 3.1161886379567174,
+          "eta_advantage_start": 0.5643273148363288,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1738.2176926835066,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.8000001907348633,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.041666030883789,
+            "time_to_next_self_touch": 0.375,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 8,
+          "commitment_at_release": [
+            {
+              "game_time": 13.458333015441895,
+              "premature": true,
+              "score": 0.42064493870318476,
+              "state": "ambiguous"
+            },
+            {
+              "game_time": 15.324999809265137,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1629.7803649367197,
+          "eta_advantage_end": 2.9299952970284213,
+          "eta_advantage_start": 0.5778678041122645,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 2059.986550062216,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": true,
+          "premature_release_jump_count": 1,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.733332633972168,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.058333396911621,
+            "time_to_next_self_touch": 0.375,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 10,
+          "commitment_at_release": [
+            {
+              "game_time": 17.858333587646484,
+              "premature": false,
+              "score": 0.9484612697452345,
+              "state": "high"
+            },
+            {
+              "game_time": 19.65833282470703,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1228.31651362383,
+          "eta_advantage_end": 4.477080508624153,
+          "eta_advantage_start": 0.5491070318508817,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1228.31651362383,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.666666030883789,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.1000003814697266,
+            "time_to_next_self_touch": 0.41666603088378906,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 49,
+      "challenge_candidates_per_1000_decisions": 184.21052631578948,
+      "decision_count": 266,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.186999999918044,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 10.673300698178316,
+        "effective_game_seconds_per_wall_second": 0.9888139193704041,
+        "game_seconds_advanced": 20.950000509619713,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 574
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 574
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 24.905999999959022,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "off",
+      "opponent": "Controlled probe (delayed_challenge)",
+      "premature_release_jump_count": 1,
+      "premature_release_jumps_per_1000_decisions": 3.7593984962406015,
+      "raw_sha256": "83d4d3ebaf5139133e1c23b99533099ccc08ac4312e6fbcfe941beca703c823f",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-delayed_challenge-blue-20260822T194309Z-8d46d378",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.922,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 2,
+        "14": 1,
+        "15": 1,
+        "16": 20,
+        "18": 19,
+        "20": 3,
+        "22": 3,
+        "41": 1,
+        "57": 1,
+        "83": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 12,
+          "commitment_at_release": [
+            {
+              "game_time": 1.225000023841858,
+              "premature": false,
+              "score": 0.8878767390056752,
+              "state": "high"
+            },
+            {
+              "game_time": 3.9583332538604736,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 58,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -161.31649090580848,
+          "eta_advantage_end": 4.088962472832616,
+          "eta_advantage_start": 0.28561055140167935,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.6042096443570131,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {
+            "unavoidable_intercept": 2
+          },
+          "self_likely_next_toucher_seconds": 3.4749998450279236,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.6083332896232605,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 14,
+          "commitment_at_release": [],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -185.44769692336254,
+          "eta_advantage_end": 5.357034728428767,
+          "eta_advantage_start": 0.569188475628541,
+          "grounded_release_jump_count": 0,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 272.9558554488855,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.799999713897705,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0916666984558105,
+            "time_to_next_self_touch": 0.3916664123535156,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 9,
+          "commitment_at_release": [
+            {
+              "game_time": 9.291666984558105,
+              "premature": false,
+              "score": 0.7856974164515301,
+              "state": "high"
+            },
+            {
+              "game_time": 10.891666412353516,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 51,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 362.92218702411503,
+          "eta_advantage_end": 4.068052012499986,
+          "eta_advantage_start": 0.573670875504991,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 362.92218702411503,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {
+            "unavoidable_intercept": 1
+          },
+          "self_likely_next_toucher_seconds": 3.2666664123535156,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.3916664123535156,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 15.591666221618652,
+              "premature": false,
+              "score": 0.20432515709630725,
+              "state": "low"
+            }
+          ],
+          "decision_count": 28,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -2691.6284855187614,
+          "eta_advantage_end": 0.5295556656798288,
+          "eta_advantage_start": 2.9807231158862635e-05,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": false,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 0.0,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 1.5999994277954102,
+          "touch_outcome": {
+            "next_touch": "none",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": null,
+            "touch_sequence": []
+          }
+        },
+        {
+          "behavior": "delayed_challenge",
+          "challenge_candidate_decisions": 8,
+          "commitment_at_release": [
+            {
+              "game_time": 17.65833282470703,
+              "premature": false,
+              "score": 0.8230500734594748,
+              "state": "high"
+            },
+            {
+              "game_time": 19.258333206176758,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 50,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 197.03796292418076,
+          "eta_advantage_end": 4.642496063079705,
+          "eta_advantage_start": 0.6392661502359801,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 528.9097864336525,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "delayed_challenge",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {
+            "unavoidable_intercept": 2
+          },
+          "self_likely_next_toucher_seconds": 3.133333206176758,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.28333282470703125,
+            "touch_sequence": [
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 52,
+      "challenge_candidates_per_1000_decisions": 202.33463035019454,
+      "decision_count": 257,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 20.65700000000652,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 10.12807881773399,
+        "effective_game_seconds_per_wall_second": 0.9843314050926728,
+        "game_seconds_advanced": 20.33333383500576,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 554
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 554
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 25.35999999998603,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "intervene",
+      "opponent": "Controlled probe (delayed_challenge)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "9fca7c3e57887e8e95f66346b49e45d842a67a76691cc4272ffadf4cb4cd741f",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-delayed_challenge-blue-20260822T194514Z-c9cee969",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.375,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "0": 2,
+        "12": 6,
+        "14": 1,
+        "16": 35,
+        "17": 4,
+        "18": 6,
+        "2": 1,
+        "20": 16,
+        "22": 2,
+        "4": 1,
+        "74": 1,
+        "79": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 16,
+          "commitment_at_release": [],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -228.99183440568868,
+          "eta_advantage_end": 2.460240651883467,
+          "eta_advantage_start": 0.21614871976545913,
+          "grounded_release_jump_count": 0,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 389.96990125361634,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.741666615009308,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.9166666865348816,
+            "time_to_next_self_touch": 0.574999988079071,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 13,
+          "commitment_at_release": [],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -194.62669519963873,
+          "eta_advantage_end": 4.223680136536317,
+          "eta_advantage_start": 0.4960574482268334,
+          "grounded_release_jump_count": 0,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 200.1410641708111,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.59999942779541,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0333333015441895,
+            "time_to_next_self_touch": 0.5083332061767578,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 10,
+          "commitment_at_release": [
+            {
+              "game_time": 9.508333206176758,
+              "premature": false,
+              "score": 0.884788217817729,
+              "state": "high"
+            },
+            {
+              "game_time": 10.975000381469727,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1067.4794579879833,
+          "eta_advantage_end": 3.6981832918239723,
+          "eta_advantage_start": 0.5033306929721397,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1536.8683499397068,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.666666030883789,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.9416666030883789,
+            "time_to_next_self_touch": 0.4499998092651367,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 12,
+          "commitment_at_release": [
+            {
+              "game_time": 13.841666221618652,
+              "premature": false,
+              "score": 0.8785812195223369,
+              "state": "high"
+            },
+            {
+              "game_time": 15.175000190734863,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 122.18001281288406,
+          "eta_advantage_end": 2.4272702480559154,
+          "eta_advantage_start": 0.4999938847698635,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 887.5194594803133,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.3333330154418945,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.48333263397216797,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 14,
+          "commitment_at_release": [
+            {
+              "game_time": 18.641666412353516,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            },
+            {
+              "game_time": 20.04166603088379,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 861.2926904865338,
+          "eta_advantage_end": 3.519928644893777,
+          "eta_advantage_start": 0.46008278991210183,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1122.9101340709144,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.8000011444091797,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.033334732055664,
+            "time_to_next_self_touch": 0.5416679382324219,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 76,
+      "challenge_candidates_per_1000_decisions": 242.81150159744408,
+      "decision_count": 313,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.07799999997951,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 12.46564976701581,
+        "effective_game_seconds_per_wall_second": 0.9998576476117866,
+        "game_seconds_advanced": 21.07499949634075,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 673
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 673
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 25.093999999924563,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "off",
+      "opponent": "Controlled probe (jump_fake)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "bdc7834ec7068e749c714082303778c4557c0117fe9dcac97c9ca9f3c8952cf3",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-jump_fake-blue-20260822T194244Z-bc2a011b",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 25.109,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "0": 1,
+        "12": 9,
+        "13": 1,
+        "14": 4,
+        "16": 45,
+        "17": 2,
+        "18": 1,
+        "2": 1,
+        "20": 12,
+        "22": 2,
+        "4": 2,
+        "75": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 13,
+          "commitment_at_release": [
+            {
+              "game_time": 1.25,
+              "premature": false,
+              "score": 0.7949456993611527,
+              "state": "high"
+            }
+          ],
+          "decision_count": 59,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -228.18987755339913,
+          "eta_advantage_end": 4.383173622490355,
+          "eta_advantage_start": 0.2796479407811352,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 325.36532661380056,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.6833332180976868,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0833333134651184,
+            "time_to_next_self_touch": 0.800000011920929,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 14,
+          "commitment_at_release": [
+            {
+              "game_time": 6.316666603088379,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            },
+            {
+              "game_time": 8.449999809265137,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 21.036861818269983,
+          "eta_advantage_end": 1.3014153677537954,
+          "eta_advantage_start": 0.43917632171408505,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 525.6292706869638,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.1999993324279785,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0999999046325684,
+            "time_to_next_self_touch": 0.5999999046325684,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 16,
+          "commitment_at_release": [],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -196.06824433305255,
+          "eta_advantage_end": 4.145245253231845,
+          "eta_advantage_start": 0.4921190144454623,
+          "grounded_release_jump_count": 0,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 62.77389100510095,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {
+            "unavoidable_intercept": 5
+          },
+          "self_likely_next_toucher_seconds": 3.5999984741210938,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.5,
+            "touch_sequence": [
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 15,
+          "commitment_at_release": [
+            {
+              "game_time": 14.449999809265137,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -184.80532259423262,
+          "eta_advantage_end": 4.172995704108875,
+          "eta_advantage_start": 0.4911836972012701,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 160.96632009691336,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {
+            "unavoidable_intercept": 5
+          },
+          "self_likely_next_toucher_seconds": 3.4666662216186523,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0749998092651367,
+            "time_to_next_self_touch": 0.5416660308837891,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "jump_fake",
+          "challenge_candidate_decisions": 13,
+          "commitment_at_release": [
+            {
+              "game_time": 18.450000762939453,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 61,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -187.42576311887447,
+          "eta_advantage_end": 4.294308871999232,
+          "eta_advantage_start": 0.49810825710583306,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 194.28542059802186,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "jump_fake",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.533334732055664,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 1.0166683197021484,
+            "time_to_next_self_touch": 0.5,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 81,
+      "challenge_candidates_per_1000_decisions": 258.7859424920128,
+      "decision_count": 313,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.01500000001397,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 12.654133818475843,
+        "effective_game_seconds_per_wall_second": 1.0000792658381925,
+        "game_seconds_advanced": 21.016665771603584,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 671
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 671
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 24.719000000040978,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "intervene",
+      "opponent": "Controlled probe (jump_fake)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "7a380667fd0f8ce94b1adfb45a4c94d795b7bb49a247fd580eec1de46b4fb1af",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-jump_fake-blue-20260822T194449Z-dacfe9e9",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.735,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "16": 17,
+        "17": 2,
+        "18": 5,
+        "20": 4,
+        "22": 1,
+        "57": 2,
+        "82": 3
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 0.8166666626930237,
+              "premature": false,
+              "score": 0.9005189953462378,
+              "state": "high"
+            }
+          ],
+          "decision_count": 58,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -53.23398306796031,
+          "eta_advantage_end": 5.186263387933208,
+          "eta_advantage_start": -0.10040140103321049,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 849.2272545916749,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.1999999284744263,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.5249999761581421,
+            "touch_sequence": [
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 4,
+          "commitment_at_release": [
+            {
+              "game_time": 4.816666603088379,
+              "premature": false,
+              "score": 0.8989891378770101,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -129.19925279502397,
+          "eta_advantage_end": 2.7930809677941846,
+          "eta_advantage_start": 0.42439893437846193,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 128.7087626706786,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.5999999046325684,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.3249998092651367,
+            "touch_sequence": [
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 9.083333015441895,
+              "premature": false,
+              "score": 0.9145661098426942,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -161.56703544571494,
+          "eta_advantage_end": 3.175490243564773,
+          "eta_advantage_start": 0.4324192235579553,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 166.13680473858807,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.733332633972168,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.34166717529296875,
+            "touch_sequence": [
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 13.350000381469727,
+              "premature": false,
+              "score": 0.9118744570215149,
+              "state": "high"
+            },
+            {
+              "game_time": 15.016666412353516,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1167.1357068900775,
+          "eta_advantage_end": 2.701512003287424,
+          "eta_advantage_start": 0.3190563864521566,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 2114.891870165228,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.8000011444091797,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6916666030883789,
+            "time_to_next_self_touch": 0.5333337783813477,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 17.483333587646484,
+              "premature": false,
+              "score": 0.9145661098426942,
+              "state": "high"
+            },
+            {
+              "game_time": 18.950000762939453,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1087.143917923736,
+          "eta_advantage_end": 6.8833636034430175,
+          "eta_advantage_start": 0.3596227738875668,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1551.6411240237567,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {},
+          "self_likely_next_toucher_seconds": 3.7333316802978516,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6583328247070312,
+            "time_to_next_self_touch": 0.4416656494140625,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 37,
+      "challenge_candidates_per_1000_decisions": 118.97106109324758,
+      "decision_count": 311,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.030999999959022,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 9.168361781787093,
+        "effective_game_seconds_per_wall_second": 1.0001109047272039,
+        "game_seconds_advanced": 21.03333243727684,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 672
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 672
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 32104,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 33.90599999995902,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "off",
+      "opponent": "Controlled probe (true_commit)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "889cdd4013ffe78a6e8e494ab3ef0498522ffa07dbf452ffa345800492044c60",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-true_commit-blue-20260822T194120Z-18fc0890",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 33.921,
+      "warnings": []
+    },
+    {
+      "action_distribution_in_challenge_windows": {
+        "12": 1,
+        "13": 1,
+        "16": 12,
+        "17": 3,
+        "18": 6,
+        "2": 1,
+        "20": 3,
+        "23": 1,
+        "57": 1,
+        "82": 2,
+        "83": 1
+      },
+      "baseline_origin": "m03_runtime",
+      "cases": [
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 0.7749999761581421,
+              "premature": false,
+              "score": 0.9228884208364474,
+              "state": "high"
+            },
+            {
+              "game_time": 2.441666603088379,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            },
+            {
+              "game_time": 4.308333396911621,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 59,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1727.2330351038672,
+          "eta_advantage_end": 3.161739617668578,
+          "eta_advantage_start": 0.15086147616249057,
+          "grounded_release_jump_count": 3,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1773.5363170194628,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 1,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 1,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.541666805744171,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6916666626930237,
+            "time_to_next_self_touch": 0.6666666865348816,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 0,
+          "commitment_at_release": [
+            {
+              "game_time": 6.308333396911621,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 447.6558772053148,
+          "eta_advantage_end": 0.39373927292736177,
+          "eta_advantage_start": 0.36434262262132117,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1270.3321567875344,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 2,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 2,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.4666666984558105,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6916670799255371,
+            "time_to_next_self_touch": 0.5166668891906738,
+            "touch_sequence": [
+              "self",
+              "opponent"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 9.108333587646484,
+              "premature": false,
+              "score": 0.900706948407981,
+              "state": "high"
+            },
+            {
+              "game_time": 10.375,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            },
+            {
+              "game_time": 11.641666412353516,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 881.0042181599994,
+          "eta_advantage_end": 5.818187056311399,
+          "eta_advantage_start": 0.35260684537580206,
+          "grounded_release_jump_count": 3,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 893.1442330267517,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 3,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 3,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.6666669845581055,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6833333969116211,
+            "time_to_next_self_touch": 0.46666717529296875,
+            "touch_sequence": [
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 5,
+          "commitment_at_release": [
+            {
+              "game_time": 13.241666793823242,
+              "premature": false,
+              "score": 0.9069838196790221,
+              "state": "high"
+            },
+            {
+              "game_time": 14.574999809265137,
+              "premature": false,
+              "score": 0.0,
+              "state": "low"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": 1168.2049418909037,
+          "eta_advantage_end": 2.8136071784432817,
+          "eta_advantage_start": 0.38600630360416377,
+          "grounded_release_jump_count": 2,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 1662.3718324437496,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 4,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 4,
+          "safety_exclusions": {
+            "unavoidable_intercept": 3
+          },
+          "self_likely_next_toucher_seconds": 3.799999237060547,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": 0.6583328247070312,
+            "time_to_next_self_touch": 0.4249992370605469,
+            "touch_sequence": [
+              "self",
+              "self",
+              "opponent",
+              "self"
+            ]
+          }
+        },
+        {
+          "behavior": "true_commit",
+          "challenge_candidate_decisions": 6,
+          "commitment_at_release": [
+            {
+              "game_time": 17.508333206176758,
+              "premature": false,
+              "score": 0.9076963653504165,
+              "state": "high"
+            }
+          ],
+          "decision_count": 60,
+          "eligible_decisions": 0,
+          "ending_ball_separation_change": -79.7729253380918,
+          "eta_advantage_end": 2.6199580974124905,
+          "eta_advantage_start": 0.4575116945060736,
+          "grounded_release_jump_count": 1,
+          "high_commitment_observed": true,
+          "interventions_applied": 0,
+          "maximum_ball_separation_increase": 371.1945472797005,
+          "maximum_consecutive_deferrals": 0,
+          "parameters": {
+            "abort_time": 0.65,
+            "behavior": "true_commit",
+            "challenger_speed": 650.0,
+            "lateral_offset": 100.0,
+            "opponent_boost": 55.0,
+            "repetition": 5,
+            "rival_boost": 45.0,
+            "separation": 1750.0,
+            "window_seconds": 4.0
+          },
+          "premature_release_jump_case": false,
+          "premature_release_jump_count": 0,
+          "release_delay_ms": [],
+          "repetition": 5,
+          "safety_exclusions": {
+            "unavoidable_intercept": 4
+          },
+          "self_likely_next_toucher_seconds": 3.666667938232422,
+          "touch_outcome": {
+            "next_touch": "self",
+            "time_to_next_opponent_touch": null,
+            "time_to_next_self_touch": 0.39166831970214844,
+            "touch_sequence": [
+              "self"
+            ]
+          }
+        }
+      ],
+      "challenge_candidate_decisions": 32,
+      "challenge_candidates_per_1000_decisions": 102.56410256410257,
+      "decision_count": 312,
+      "eligible_decisions": 0,
+      "execution": {
+        "active_observation_wall_seconds": 21.01500000001397,
+        "controlled_state_setting": true,
+        "decision_records_per_wall_second": 12.606060606060606,
+        "effective_game_seconds_per_wall_second": 1.0000792842740807,
+        "game_seconds_advanced": 21.016666159033775,
+        "lane_id": "controlled-sequential-lane-1",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 671
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 671
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 36084,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential",
+        "session_wall_duration_seconds": 24.734000000054948,
+        "state_setting_apply_count": 0
+      },
+      "interventions_applied": 0,
+      "interventions_per_1000_decisions": 0.0,
+      "mode": "intervene",
+      "opponent": "Controlled probe (true_commit)",
+      "premature_release_jump_count": 0,
+      "premature_release_jumps_per_1000_decisions": 0.0,
+      "raw_sha256": "d8968b1b185b303718da7f8c28a03b82906451f230022340fd4627ffe4c8c567",
+      "runtime_warnings": [],
+      "session_id": "rival-v3-probe-fake_challenge-true_commit-blue-20260822T194334Z-379b1e1c",
+      "source": "controlled_probe",
+      "status": "complete",
+      "termination_reason": "controlled_probe_schedule_complete",
+      "wall_duration_seconds": 24.75,
+      "warnings": []
+    }
+  ]
+}

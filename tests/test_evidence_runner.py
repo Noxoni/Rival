@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 import rlbot.flat as flat
+import tools.evidence.runner as evidence_runner
 
 from tools.evidence.probes import (
     FakeChallengeParameters,
@@ -117,6 +118,30 @@ def test_speed_monitor_uses_only_desired_match_info_game_speed() -> None:
     assert set(calls[0]) == {"match_info"}
     assert calls[0]["match_info"].game_speed == 5.0
     assert monitor.apply_count == 1
+
+
+def test_speed_monitor_throttles_reapplication(monkeypatch) -> None:
+    calls: list[dict] = []
+    manager = SimpleNamespace(set_game_state=lambda **kwargs: calls.append(kwargs))
+    packet = SimpleNamespace(
+        match_info=SimpleNamespace(
+            match_phase=flat.MatchPhase.Active,
+            seconds_elapsed=10.0,
+            game_speed=1.0,
+        )
+    )
+    now = [0.0]
+    monkeypatch.setattr(evidence_runner.time, "monotonic", lambda: now[0])
+    monitor = GameSpeedMonitor(5.0, minimum_reapply_wall_seconds=0.5)
+
+    monitor.observe(manager, packet, allow_state_setting=True)
+    now[0] = 0.25
+    monitor.observe(manager, packet, allow_state_setting=True)
+    now[0] = 0.50
+    monitor.observe(manager, packet, allow_state_setting=True)
+
+    assert len(calls) == 2
+    assert monitor.apply_count == 2
 
 
 def test_controlled_probe_state_generation_is_parameterized_and_serializable() -> None:

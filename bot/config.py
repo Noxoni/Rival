@@ -97,6 +97,11 @@ if CHALLENGE_CALIBRATION_MODE not in {"off", "observe", "intervene"}:
 
 # The environment surface is intentionally small and named so every controlled
 # parameter attempt can be reconstructed without changing the frozen Wisp policy.
+CHALLENGE_PARAMETER_VERSION = os.environ.get(
+    "RIVAL_CHALLENGE_PARAMETER_VERSION", "m03-conservative-v1"
+).strip()
+if not CHALLENGE_PARAMETER_VERSION:
+    raise ValueError("RIVAL_CHALLENGE_PARAMETER_VERSION cannot be empty")
 CHALLENGE_LOW_THRESHOLD = _environment_float("RIVAL_CHALLENGE_LOW_THRESHOLD", 0.34)
 CHALLENGE_HIGH_THRESHOLD = _environment_float("RIVAL_CHALLENGE_HIGH_THRESHOLD", 0.70)
 CHALLENGE_PRESSURE_DISTANCE = _environment_float(

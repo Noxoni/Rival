@@ -39,12 +39,16 @@ PROBE_CONFIG = REPOSITORY_ROOT / "probes" / "controlled_opponent" / "probe.bot.t
 class GameSpeedMonitor:
     requested: float
     tolerance: float = 0.15
+    minimum_reapply_wall_seconds: float = 0.50
     observed_all: list[float] = field(default_factory=list)
     observed_sustained: list[float] = field(default_factory=list)
     first_game_time: float | None = None
     last_game_time: float | None = None
+    first_observed_wall: float | None = None
+    last_observed_wall: float | None = None
     apply_count: int = 0
     reached_requested_speed: bool = False
+    _last_apply_wall: float | None = None
 
     def __post_init__(self) -> None:
         if not math.isfinite(self.requested) or self.requested <= 0.0:
@@ -70,15 +74,23 @@ class GameSpeedMonitor:
                 self.observed_sustained.append(observed)
         if self.first_game_time is None:
             self.first_game_time = game_time
+            self.first_observed_wall = time.monotonic()
         self.last_game_time = game_time
+        self.last_observed_wall = time.monotonic()
+        now = time.monotonic()
         if (
             allow_state_setting
             and abs(observed - self.requested) > self.tolerance
+            and (
+                self._last_apply_wall is None
+                or now - self._last_apply_wall >= self.minimum_reapply_wall_seconds
+            )
         ):
             manager.set_game_state(
                 match_info=flat.DesiredMatchInfo(game_speed=self.requested)
             )
             self.apply_count += 1
+            self._last_apply_wall = now
 
     def to_record(self, wall_duration_seconds: float) -> dict[str, Any]:
         def stats(values: list[float]) -> dict[str, float | int | None]:
@@ -96,6 +108,11 @@ class GameSpeedMonitor:
             if self.first_game_time is None or self.last_game_time is None
             else max(0.0, self.last_game_time - self.first_game_time)
         )
+        active_wall = (
+            0.0
+            if self.first_observed_wall is None or self.last_observed_wall is None
+            else max(0.0, self.last_observed_wall - self.first_observed_wall)
+        )
         return {
             "requested_game_speed": self.requested,
             "requested_speed_reached": self.reached_requested_speed,
@@ -103,9 +120,10 @@ class GameSpeedMonitor:
             "observed_game_speed_all_active": stats(self.observed_all),
             "observed_game_speed_sustained": stats(self.observed_sustained),
             "game_seconds_advanced": advanced,
-            "wall_duration_seconds": wall_duration_seconds,
+            "session_wall_duration_seconds": wall_duration_seconds,
+            "active_observation_wall_seconds": active_wall,
             "effective_game_seconds_per_wall_second": (
-                advanced / wall_duration_seconds if wall_duration_seconds > 0.0 else None
+                advanced / active_wall if active_wall > 0.0 else None
             ),
         }
 
@@ -385,9 +403,10 @@ def run_natural_match(
     rival_team: int,
     launcher: str = "steam",
     timeout: float = 900.0,
-    game_speed: float = 5.0,
+    game_speed: float = 1.0,
     challenge_mode: str = "off",
     lane_id: str = "lane-1",
+    execution_regime: str = "sequential",
     smoke_game_seconds: float | None = None,
     manager: rlbot.managers.MatchManager | None = None,
 ) -> dict[str, Any]:
@@ -514,7 +533,7 @@ def run_natural_match(
                 "lane_id": lane_id,
                 "rlbot_server_port": getattr(manager, "rlbot_server_port", None),
                 "rlbot_server_pid": getattr(server_process, "pid", None),
-                "sequential_or_parallel": "sequential",
+                "sequential_or_parallel": execution_regime,
                 "natural_match_clock": "FiveMinutes",
                 "natural_state_setting_scope": (
                     "desired_match_info.game_speed_only" if accelerated else "none"
@@ -550,6 +569,7 @@ def _run_probe_session(
     game_speed: float,
     challenge_mode: str,
     lane_id: str = "lane-1",
+    challenge_environment: dict[str, str] | None = None,
     manager: rlbot.managers.MatchManager | None = None,
 ) -> dict[str, Any]:
     cases = list(cases)
@@ -593,7 +613,19 @@ def _run_probe_session(
         telemetry_path=telemetry_path,
         probe={"family": family, "behavior": behavior, "cases": case_records},
     )
-    metadata["challenge_calibration"] = {"mode": challenge_mode}
+    challenge_environment = challenge_environment or {}
+    invalid_environment = sorted(
+        key for key in challenge_environment if not key.startswith("RIVAL_CHALLENGE_")
+    )
+    if invalid_environment:
+        raise ValueError(
+            "controlled challenge overrides must use RIVAL_CHALLENGE_* names: "
+            + ", ".join(invalid_environment)
+        )
+    metadata["challenge_calibration"] = {
+        "mode": challenge_mode,
+        "environment_overrides": dict(sorted(challenge_environment.items())),
+    }
     metadata["execution_request"] = {
         "lane_id": lane_id,
         "requested_game_speed": game_speed,
@@ -606,6 +638,7 @@ def _run_probe_session(
         "RIVAL_SESSION_METADATA_PATH": str(metadata_path),
         "RIVAL_CHALLENGE_CALIBRATION_MODE": challenge_mode,
     }
+    rival_environment.update(challenge_environment)
     opponent_environment = {
         "RIVAL_PROBE_BEHAVIOR": behavior,
         "RIVAL_PROBE_ABORT_TIME": str(
@@ -718,11 +751,15 @@ def run_fake_challenge_probes(
     rival_team: int = 0,
     launcher: str = "steam",
     behaviors: Iterable[str] = FAKE_CHALLENGE_BEHAVIORS,
-    game_speed: float = 5.0,
+    game_speed: float = 1.0,
     challenge_mode: str = "off",
+    lane_id: str = "lane-1",
+    challenge_environment: dict[str, str] | None = None,
+    manager: rlbot.managers.MatchManager | None = None,
 ) -> list[dict[str, Any]]:
     results = []
-    manager = rlbot.managers.MatchManager()
+    owned_manager = manager is None
+    manager = manager or rlbot.managers.MatchManager()
     try:
         for behavior in behaviors:
             cases = [
@@ -738,11 +775,14 @@ def run_fake_challenge_probes(
                     launcher=launcher,
                     game_speed=game_speed,
                     challenge_mode=challenge_mode,
+                    lane_id=lane_id,
+                    challenge_environment=challenge_environment,
                     manager=manager,
                 )
             )
     finally:
-        manager.shut_down()
+        if owned_manager:
+            manager.shut_down()
     return results
 
 
@@ -751,7 +791,7 @@ def run_resource_aerial_probes(
     rival_team: int = 0,
     launcher: str = "steam",
     cases: Iterable[ResourceAerialParameters] | None = None,
-    game_speed: float = 5.0,
+    game_speed: float = 1.0,
     challenge_mode: str = "off",
 ) -> dict[str, Any]:
     grid = list(cases or default_resource_aerial_grid())
