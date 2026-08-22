@@ -76,6 +76,7 @@ Analyze a file, session directory, or complete raw tree:
 ```powershell
 .\.venv\Scripts\python.exe -m tools.evidence.analyze evidence\raw --output-dir evidence\reports\current --format both
 .\.venv\Scripts\python.exe -m tools.evidence.analyze evidence\raw --output-dir evidence\reports\current --curate fixtures\evidence
+.\.venv\Scripts\python.exe -m tools.evidence.analyze evidence\raw --output-dir evidence\results\v2 --curate fixtures\evidence --max-events-per-class 10
 ```
 
 The analyzer supports legacy schema v1 input where practical, splits sequences at score/reset/time
@@ -86,4 +87,6 @@ rewind boundaries, persists all detector parameters, and ranks these candidate c
 - `apparent_vs_actual_challenge`
 
 A detector hit is explicitly a candidate for review, never a confirmed defect by itself. Curated
-fixtures are created only for event classes actually observed in live evidence.
+fixtures are created only for event classes actually observed in live evidence. Controlled
+state-setting sessions are routed only to their matching probe-backed detector; discontinuous
+state resets are not treated as boost pickups or unrelated challenge events.

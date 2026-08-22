@@ -220,6 +220,9 @@ def detect_resource_stressed_aerials(
     session: EvidenceSession,
     params: DetectorParameters,
 ) -> list[dict[str, Any]]:
+    probe_family = _value(session.manifest, "probe", "family")
+    if session.source == "controlled_probe" and probe_family != "resource_aerial":
+        return []
     events: list[dict[str, Any]] = []
     for segment in segment_records(session.decisions):
         previous_aerial = False
@@ -314,6 +317,11 @@ def detect_boost_detours(
     session: EvidenceSession,
     params: DetectorParameters,
 ) -> list[dict[str, Any]]:
+    probe_family = _value(session.manifest, "probe", "family")
+    if session.source == "controlled_probe" and probe_family != "boost_detour":
+        # State-setting changes boost and geometry discontinuously. Treating those
+        # transitions as live pad pickups would create cross-probe artifacts.
+        return []
     events: list[dict[str, Any]] = []
     for segment in segment_records(session.decisions):
         for index in range(1, len(segment)):
@@ -458,7 +466,14 @@ def detect_apparent_challenges(
 ) -> list[dict[str, Any]]:
     events: list[dict[str, Any]] = []
     schedule = session.manifest.get("schedule", [])
-    controlled = session.source == "controlled_probe" and schedule
+    probe_family = _value(session.manifest, "probe", "family")
+    if session.source == "controlled_probe" and probe_family != "fake_challenge":
+        return events
+    controlled = (
+        session.source == "controlled_probe"
+        and probe_family == "fake_challenge"
+        and schedule
+    )
     if controlled:
         for entry in schedule:
             start = _float(entry.get("start_game_time"))

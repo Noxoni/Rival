@@ -7,7 +7,9 @@ from .io import EvidenceSession
 
 
 def markdown_report(report: dict[str, Any], sessions: list[EvidenceSession]) -> str:
-    counts = Counter(event["class"] for event in report["events"])
+    persisted_counts = Counter(event["class"] for event in report["events"])
+    counts = report.get("event_counts", persisted_counts)
+    total_count = report.get("total_candidate_event_count", len(report["events"]))
     lines = [
         "# Rival Milestone 02 Candidate Evidence Report",
         "",
@@ -16,7 +18,8 @@ def markdown_report(report: dict[str, Any], sessions: list[EvidenceSession]) -> 
         f"- Detector: `{report['detector_version']}`",
         f"- Sessions: {report['session_count']}",
         f"- Decision records: {report['decision_record_count']}",
-        f"- Candidate events: {len(report['events'])}",
+        f"- Candidate events detected: {total_count}",
+        f"- Candidate events persisted: {len(report['events'])}",
         "",
         "## Candidate counts",
         "",
@@ -37,21 +40,33 @@ def markdown_report(report: dict[str, Any], sessions: list[EvidenceSession]) -> 
             f"{len(session.decisions)} | {len(session.warnings)} |"
         )
 
-    lines.extend(["", "## Highest-ranked candidates", ""])
-    for event in report["events"][:10]:
-        explanation = "; ".join(event["ranking_explanation"])
-        lines.extend(
-            [
-                f"### {event['event_id']} — `{event['class']}`",
-                "",
-                f"- Session/time: `{event['session_id']}` at {event['anchor_game_time']:.3f}s",
-                f"- Opponent/source: {event['opponent']} / {event['source']}",
-                f"- Ranking score: {event['ranking_score']:.3f}",
-                f"- Outcome: `{event['outcome'].get('next_touch', 'unknown')}` next touch",
-                f"- Why ranked: {explanation}",
-                "",
-            ]
-        )
+    lines.extend(["", "## Highest-ranked candidates by class", ""])
+    for event_class in (
+        "resource_stressed_aerial",
+        "boost_detour_possession_loss",
+        "apparent_vs_actual_challenge",
+    ):
+        lines.extend([f"### `{event_class}`", ""])
+        class_events = [
+            event for event in report["events"] if event["class"] == event_class
+        ][:5]
+        if not class_events:
+            lines.extend(["No candidates detected.", ""])
+            continue
+        for event in class_events:
+            explanation = "; ".join(event["ranking_explanation"])
+            lines.extend(
+                [
+                    f"#### {event['event_id']}",
+                    "",
+                    f"- Session/time: `{event['session_id']}` at {event['anchor_game_time']:.3f}s",
+                    f"- Opponent/source: {event['opponent']} / {event['source']}",
+                    f"- Ranking score: {event['ranking_score']:.3f}",
+                    f"- Outcome: `{event['outcome'].get('next_touch', 'unknown')}` next touch",
+                    f"- Why ranked: {explanation}",
+                    "",
+                ]
+            )
     if not report["events"]:
         lines.append("No candidate events were detected with the recorded parameters.")
         lines.append("")

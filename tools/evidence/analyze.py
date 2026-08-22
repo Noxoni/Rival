@@ -56,12 +56,36 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, default=Path("evidence/reports/current"))
     parser.add_argument("--format", choices=("json", "markdown", "both"), default="both")
     parser.add_argument("--curate", type=Path)
+    parser.add_argument(
+        "--max-events-per-class",
+        type=int,
+        help="limit persisted output while retaining full detector counts",
+    )
     args = parser.parse_args(argv)
+    if args.max_events_per_class is not None and args.max_events_per_class < 1:
+        parser.error("--max-events-per-class must be positive")
 
     report, sessions = build_report(args.inputs)
     if args.curate:
         fixture_paths = curate_top_fixtures(report["events"], sessions, args.curate)
         report["curated_fixtures"] = [str(path) for path in fixture_paths]
+    full_event_count = len(report["events"])
+    if args.max_events_per_class is not None:
+        report["events"] = [
+            event
+            for event_class in (
+                "resource_stressed_aerial",
+                "boost_detour_possession_loss",
+                "apparent_vs_actual_challenge",
+            )
+            for event in [
+                candidate
+                for candidate in report["events"]
+                if candidate["class"] == event_class
+            ][: args.max_events_per_class]
+        ]
+        report["persisted_event_limit_per_class"] = args.max_events_per_class
+    report["total_candidate_event_count"] = full_event_count
     args.output_dir.mkdir(parents=True, exist_ok=True)
     if args.format in {"json", "both"}:
         write_json(args.output_dir / "candidate_events.json", report)
@@ -73,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
         )
     print(
         f"Analyzed {report['session_count']} sessions, {report['decision_record_count']} decisions, "
-        f"{len(report['events'])} candidate events"
+        f"{full_event_count} candidate events"
     )
     return 0
 

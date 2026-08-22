@@ -97,6 +97,7 @@ def _session() -> EvidenceSession:
             "opponent": {"identity": "Controlled probe (boost_then_brake)"},
         },
         manifest={
+            "probe": {"family": "fake_challenge"},
             "schedule": [
                 {
                     "start_game_time": 10.0,
@@ -117,8 +118,12 @@ def test_event_segmentation_stops_at_score_boundary() -> None:
 
 def test_event_detection_covers_required_classes_and_ranks_deterministically() -> None:
     params = DetectorParameters()
-    first = detect_events([_session()], params)
-    second = detect_events([_session()], params)
+    natural = _session()
+    natural.session_id = "synthetic-natural"
+    natural.metadata["source"] = "natural_match"
+    natural.manifest = {}
+    first = detect_events([natural, _session()], params)
+    second = detect_events([natural, _session()], params)
 
     assert {event["class"] for event in first} == {
         "resource_stressed_aerial",
@@ -133,7 +138,22 @@ def test_event_detection_covers_required_classes_and_ranks_deterministically() -
     )
     assert all(event["candidate_only"] is True for event in first)
     controlled = next(
-        event for event in first if event["class"] == "apparent_vs_actual_challenge"
+        event
+        for event in first
+        if event["class"] == "apparent_vs_actual_challenge"
+        and event["source"] == "controlled_probe"
     )
     assert controlled["raw_features"]["ground_truth_behavior"] == "boost_then_brake"
     assert controlled["derived_features"]["ground_truth_committed"] is False
+
+
+def test_non_challenge_probe_does_not_emit_challenge_candidates() -> None:
+    session = _session()
+    session.manifest["probe"] = {"family": "resource_aerial"}
+
+    events = detect_events([session], DetectorParameters())
+
+    assert all(
+        event["class"] != "apparent_vs_actual_challenge" for event in events
+    )
+    assert all(event["class"] != "boost_detour_possession_loss" for event in events)

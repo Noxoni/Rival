@@ -13,9 +13,23 @@ def curate_top_fixtures(
     output_dir: Path,
 ) -> list[Path]:
     session_map = {session.session_id: session for session in sessions}
-    selected: dict[str, dict[str, Any]] = {}
+    grouped: dict[str, list[dict[str, Any]]] = {}
     for event in events:
-        selected.setdefault(str(event["class"]), event)
+        grouped.setdefault(str(event["class"]), []).append(event)
+    selected: dict[str, dict[str, Any]] = {}
+    for event_class, candidates in grouped.items():
+        # Controlled ground truth is the strongest and most replayable source for
+        # the two probe-backed classes. Boost detours have no dedicated probe.
+        if event_class in {
+            "resource_stressed_aerial",
+            "apparent_vs_actual_challenge",
+        }:
+            controlled = [
+                event for event in candidates if event.get("source") == "controlled_probe"
+            ]
+            if controlled:
+                candidates = controlled
+        selected[event_class] = candidates[0]
 
     paths: list[Path] = []
     for event_class, event in sorted(selected.items()):
