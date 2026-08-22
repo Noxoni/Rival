@@ -65,6 +65,23 @@ The launch was bounded rather than treated as a performance benchmark. A later p
 
 The live launch was performed with telemetry at its default disabled setting, so it intentionally produced no live JSONL file. The end-to-end telemetry path was instead verified by the deterministic full decision-tick smoke test.
 
+## Portable Windows package validation
+
+The Windows x64 release builder produced a PyInstaller one-directory package with a release-specific `rival.bot.toml` that launches `RivalDev.exe`, not the repository `.venv`. Before the final clean-commit rebuild, the generated package was subjected to the following bounded checks:
+
+- the frozen `RivalDev.exe --self-test` passed from the generated release directory;
+- the ZIP was extracted into a clean directory and all 2,461 distributed files were accounted for by `MANIFEST.sha256` with matching hashes;
+- the frozen self-test passed again from that clean extraction, loading both exact Wisp model hashes and all 16 RocketSim soccar collision meshes;
+- RLBot v5 launched `G:\dev\RLBot-Rival\dist\Rival-Dev-Windows-x64\RivalDev.exe` directly through `cmd.exe /c RivalDev.exe`; there was no Python interpreter in Rival's process chain;
+- the process remained responsive, accumulated CPU time, and held an established localhost connection to RLBot on port 23234;
+- Rocket League entered an active Rival Dev versus Nexto match, the RLBot overlay reported both agents at 100%, and the spectator view visibly followed Rival Dev controlling its car.
+
+The first match-start attempt was blocked before either bot launched because the already-open RLBotGUI could not reconnect to its stopped `RLBotServer`. Restarting the **RLBot v5 Launcher** created a fresh server and the packaged launch then passed. This is recorded as an RLBot application lifecycle issue, not as a Rival runtime failure. The validation remains a launch/functionality check, not a strength or performance benchmark.
+
+The final pre-commit source gates passed with 19 pytest tests and the same two TorchScript deprecation warnings, source-runtime self-test, model smoke, full decision-tick smoke, reference-snapshot verification, Wisp-model verification, targeted Ruff, compileall, PowerShell parser checks for both release scripts, and `git diff --check`.
+
+The final archive hash is intentionally reported outside this tracked record after rebuilding from the pushed clean commit, because embedding an archive hash in the source commit that the archive itself records would create a circular provenance dependency.
+
 ## Acceptance boundary
 
 Verified:

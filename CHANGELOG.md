@@ -15,3 +15,4 @@ All notable changes to Rival are documented in this file.
 - Pure measurement-only tactical/resource metrics and toggleable JSONL decision telemetry.
 - Python/model/unit verification scripts and local RLBot launch documentation.
 - Recorded 2026-08-22 verification evidence, including a live RLBot v5 Rival Dev versus installed Nexto match.
+- Reproducible PyInstaller/Bob packaging for a self-contained Windows x64 ZIP, including frozen-runtime self-test, clean-extraction verification, complete file-hash manifest, build provenance, and friend-facing launch instructions.

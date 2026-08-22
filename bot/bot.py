@@ -1,9 +1,12 @@
+import hashlib
+import json
+from pathlib import Path
+import sys
 from time import sleep
 
 try:
     import torch
 except ImportError:
-    import sys
     print(__file__)
     sys.path.insert(0, "../../torch-archive")
     import torch
@@ -307,10 +310,86 @@ class RivalBot(rlbot.managers.Bot):
         return None
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def run_self_test() -> int:
+    """Verify a source or frozen runtime without connecting to RLBot."""
+    expected_hashes = {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    }
+
+    # Initializing the adapter proves the packaged RocketSim module and collision
+    # meshes are both loadable. ModelSet then exercises the real Wisp artifacts.
+    RocketSimStateAdapter(config.ROCKETSIM_COLLISION_DIR)
+    models = ModelSet(
+        config.MODEL_INFO_POLICY,
+        config.MODEL_INFO_SHARED_HEAD,
+        device="cpu",
+    )
+    observation = torch.linspace(-1.0, 1.0, 432, dtype=torch.float32)
+    legal_mask = torch.ones(90, dtype=torch.bool)
+    inference = models.infer_policy(observation, legal_mask)
+    selected = inference.select_action(deterministic=True)
+    compatibility_selected = models.get_action(
+        observation, legal_mask, deterministic=True
+    )
+
+    model_paths = {
+        "POLICY.lt": config.MODEL_INFO_POLICY.path,
+        "SHARED_HEAD.lt": config.MODEL_INFO_SHARED_HEAD.path,
+    }
+    model_hashes = {name: _sha256(path) for name, path in model_paths.items()}
+    collision_mesh_count = len(
+        list(config.ROCKETSIM_COLLISION_DIR.glob("soccar/*.cmf"))
+    )
+    passed = all(
+        (
+            tuple(observation.shape) == (432,),
+            tuple(inference.raw_logits.shape) == (90,),
+            bool(torch.isfinite(inference.raw_logits).all().item()),
+            selected == compatibility_selected,
+            model_hashes == expected_hashes,
+            collision_mesh_count == 16,
+        )
+    )
+    result = {
+        "status": "pass" if passed else "fail",
+        "frozen": bool(getattr(sys, "frozen", False)),
+        "python": sys.version.split()[0],
+        "executable": sys.executable,
+        "model_base": str(config.MODEL_INFO_POLICY.path.parent),
+        "collision_mesh_count": collision_mesh_count,
+        "observation_shape": list(observation.shape),
+        "policy_output_shape": list(inference.raw_logits.shape),
+        "finite_logits": bool(torch.isfinite(inference.raw_logits).all().item()),
+        "selected_action_index": selected,
+        "compatibility_action_index": compatibility_selected,
+        "models": model_hashes,
+    }
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 0 if passed else 1
+
+
 if __name__ == "__main__":
+    if "--self-test" in sys.argv[1:]:
+        raise SystemExit(run_self_test())
+
     try:
         RivalBot().run()
-    except Exception as e:
-        print(e)
+    except Exception:
+        # A frozen release must exit with a useful traceback so RLBotGUI can show
+        # the actual failure. Preserve Wisp's keep-open behavior for source runs.
+        if getattr(sys, "frozen", False):
+            raise
+        import traceback
+
+        traceback.print_exc()
         while True:
             sleep(1)

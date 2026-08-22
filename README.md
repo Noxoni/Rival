@@ -18,6 +18,8 @@ Rival is for offline RLBot play only. It must not be used to cheat or otherwise 
 
 See `docs/RUN_LOCAL.md` for environment setup and the completed Milestone 01 verification record in `docs/VERIFICATION_2026-08-22.md`.
 
+For another Windows PC, do not distribute only `bot/`: the development TOML depends on the repository-local `.venv`. Build the self-contained Windows x64 ZIP with `scripts/build_windows_release.ps1`; the complete procedure and verification contract are in `docs/BUILD_WINDOWS_RELEASE.md`.
+
 ## Current Codex handoff — v2.0
 
 Start here:
