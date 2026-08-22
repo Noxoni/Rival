@@ -21,21 +21,21 @@ See `docs/MILESTONE_02_RESULTS.md`, `evidence/results/v2/candidate_events.md`, a
 
 For another Windows PC, do not distribute only `bot/`: the development TOML depends on the repository-local `.venv`. Build the self-contained Windows x64 ZIP with `scripts/build_windows_release.ps1`; the complete procedure and verification contract are in `docs/BUILD_WINDOWS_RELEASE.md`.
 
-## Current Codex handoff — v3.2
+## Current Codex handoff — v3.3
 
 Start here:
 
-`handoff/v3.2/CODEX_START_PROMPT.md`
+`handoff/v3.3/CODEX_START_PROMPT.md`
 
-Codex must read v3.2 first, then the complete v3.1 acceleration overlay and v3.0 gameplay package before modifying implementation code.
+Codex must read v3.3 first because Milestone 03 was paused with uncommitted local work in `bot/strategy/__init__.py` and `bot/strategy/challenge_commitment.py`. v3.3 preserves and restores that paused work before syncing newer remote handoff commits, then layers the v3.2 config optimizations and v3.1 acceleration rules over the original v3.0 gameplay experiment.
 
-Milestone 03 remains Rival's **first isolated gameplay correction**: challenge-commitment calibration. The experiment will estimate whether opponent pressure is physically committed, briefly defer marginal possession-releasing jumps while commitment is ambiguous, and re-rank only among Wisp's existing legal actions. It must pass paired controlled fake/true-challenge tests before bounded natural-match validation.
+Milestone 03 remains Rival's **first isolated gameplay correction**: challenge-commitment calibration. The experiment estimates whether opponent pressure is physically committed, briefly defers marginal possession-releasing jumps while commitment is ambiguous, and re-ranks only among Wisp's existing legal actions. It must pass paired controlled fake/true-challenge tests before bounded natural-match validation.
 
-Handoff v3.1 preserves full five-minute live games but targets **5.0x Rocket League game speed** for automated validation and performs one bounded test for two truly isolated concurrent RLBot/Rocket League match lanes.
+Automated live validation preserves full five-minute Soccar games but targets **5.0x Rocket League game speed** after an integrity check. Goal replays stay skipped, automated replay saving is disabled, debug rendering is forced off, the performance overlay is hidden, readiness waiting remains enabled, natural kickoff countdowns are preserved, and evidence matches restart cleanly with normal gameplay settings.
 
-Handoff v3.2 applies RLBot v5 automated-test configuration cleanup: goal replays remain skipped, replay auto-save is disabled, debug rendering is forced off, the performance overlay is hidden, readiness waiting remains enabled, natural kickoff countdowns are preserved, and evidence matches restart cleanly with normal Soccar gameplay settings.
+Codex may attempt one bounded two-lane concurrency smoke using genuinely isolated RLBotServer endpoints and Rocket League processes. If true parallel matches are unsupported or unstable, it must fall back immediately to sequential 5x execution rather than spending time on launcher workarounds.
 
-The feature must retain `off`, `observe`, and `intervene` modes so the exact pre-v3 action path remains available. If the experiment fails its evidence gates, it remains disabled rather than being patched with unrelated gameplay rules.
+No Milestone 03 natural-match budget had been consumed when work was paused. The feature must retain `off`, `observe`, and `intervene` modes so the exact pre-v3 action path remains available. If the experiment fails its evidence gates, it remains disabled rather than being patched with unrelated gameplay rules.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
