@@ -67,6 +67,10 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
     decision_count = 0
     invalid_lines = 0
     schema_versions: Counter[int] = Counter()
+    previous_decision_sample: tuple[float, float, str | None, tuple[Any, ...]] | None = None
+    in_play_game_seconds = 0.0
+    in_play_wall_seconds = 0.0
+    in_play_interval_rates: list[float] = []
     if telemetry_path.is_file():
         for line in telemetry_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
@@ -83,10 +87,38 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
                 continue
             decision_count += 1
             decision = record.get("decision") or {}
+            packet = record.get("packet") or {}
+            match = packet.get("match") or {}
+            phase = (match.get("phase") or {}).get("name")
+            scores = tuple(
+                item.get("score")
+                for item in match.get("scores") or []
+                if isinstance(item, dict)
+            )
+            game_time = decision.get("game_time")
+            timestamp_ns = decision.get("timestamp_unix_ns")
+            if isinstance(game_time, (int, float)) and isinstance(timestamp_ns, int):
+                sample = (float(game_time), timestamp_ns / 1e9, phase, scores)
+                if previous_decision_sample is not None:
+                    game_delta = sample[0] - previous_decision_sample[0]
+                    wall_delta = sample[1] - previous_decision_sample[1]
+                    same_active_segment = (
+                        previous_decision_sample[2] == "Active"
+                        and sample[2] == "Active"
+                        and previous_decision_sample[3] == sample[3]
+                    )
+                    if (
+                        same_active_segment
+                        and 0.0 < game_delta <= 0.25
+                        and 0.0 < wall_delta <= 0.25
+                    ):
+                        in_play_game_seconds += game_delta
+                        in_play_wall_seconds += wall_delta
+                        in_play_interval_rates.append(game_delta / wall_delta)
+                previous_decision_sample = sample
             action_index = decision.get("final_action_index", decision.get("action_index"))
             if isinstance(action_index, int):
                 actions[action_index] += 1
-            packet = record.get("packet") or {}
             players = packet.get("players") or []
             for index in packet.get("opponent_indices") or []:
                 if isinstance(index, int) and 0 <= index < len(players):
@@ -96,7 +128,12 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
     zero_signature = _input_signature({})
     execution = manifest.get("execution") or {}
     game_seconds = float(execution.get("game_seconds_advanced") or 0.0)
-    effective_speed = execution.get("effective_game_seconds_per_wall_second")
+    end_to_end_speed = execution.get("effective_game_seconds_per_wall_second")
+    effective_speed = (
+        in_play_game_seconds / in_play_wall_seconds
+        if in_play_wall_seconds > 0.0
+        else None
+    )
     decisions_per_game_second = (
         decision_count / game_seconds if game_seconds > 0.0 else None
     )
@@ -108,6 +145,7 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
         "effective_5x_progression": (
             isinstance(effective_speed, (int, float))
             and 4.5 <= float(effective_speed) <= 5.5
+            and len(in_play_interval_rates) >= 100
         ),
         "decision_cadence_healthy": (
             isinstance(decisions_per_game_second, (int, float))
@@ -130,6 +168,32 @@ def telemetry_health(session_id: str, manifest: Mapping[str, Any]) -> dict[str, 
         "game_seconds_advanced": game_seconds,
         "decisions_per_game_second": decisions_per_game_second,
         "effective_game_seconds_per_wall_second": effective_speed,
+        "sustained_in_play_speed": {
+            "method": (
+                "weighted game-time/wall-time ratio across consecutive Rival decisions "
+                "inside the same Active score segment; reset/goal/kickoff gaps excluded"
+            ),
+            "accepted_interval_count": len(in_play_interval_rates),
+            "game_seconds": in_play_game_seconds,
+            "wall_seconds": in_play_wall_seconds,
+            "weighted_rate": effective_speed,
+            "median_interval_rate": (
+                statistics.median(in_play_interval_rates)
+                if in_play_interval_rates
+                else None
+            ),
+            "p10_interval_rate": (
+                statistics.quantiles(in_play_interval_rates, n=10)[0]
+                if len(in_play_interval_rates) >= 10
+                else None
+            ),
+            "p90_interval_rate": (
+                statistics.quantiles(in_play_interval_rates, n=10)[-1]
+                if len(in_play_interval_rates) >= 10
+                else None
+            ),
+        },
+        "end_to_end_game_seconds_per_wall_second": end_to_end_speed,
         "distinct_action_indices": len(actions),
         "top_action_indices": actions.most_common(10),
         "opponent_input_sample_count": sum(opponent_inputs.values()),
@@ -284,6 +348,9 @@ def main() -> int:
         if existing.get("batch_id") != batch_id:
             parser.error("--batch-id must match the existing report when resuming")
         sessions = list(existing.get("sessions") or [])
+        for session in sessions:
+            session_id = str(session["session_id"])
+            session["health"] = telemetry_health(session_id, session)
     completed_indices = {
         int(session["schedule_index"])
         for session in sessions

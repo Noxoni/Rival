@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
 import scripts.run_m04_natural_batch as natural_batch
 
 
@@ -26,13 +28,24 @@ def test_v4_natural_health_uses_effective_speed_not_packet_echo(
     session_root = raw_root / session_id
     session_root.mkdir(parents=True)
     records = []
-    for index in range(20):
+    for index in range(120):
         records.append(
             {
                 "schema_version": 3,
                 "record_type": "rival_policy_decision",
-                "decision": {"final_action_index": index % 10},
+                "decision": {
+                    "final_action_index": index % 10,
+                    "game_time": index / 15.0,
+                    "timestamp_unix_ns": 1_000_000_000 + index * 13_333_333,
+                },
                 "packet": {
+                    "match": {
+                        "phase": {"name": "Active"},
+                        "scores": [
+                            {"team": 0, "score": 0},
+                            {"team": 1, "score": 0},
+                        ],
+                    },
                     "opponent_indices": [1],
                     "players": [
                         {},
@@ -62,8 +75,8 @@ def test_v4_natural_health_uses_effective_speed_not_packet_echo(
         "termination_reason": "match_phase_ended",
         "raw_telemetry": {"invalid_record_count": 0},
         "execution": {
-            "game_seconds_advanced": 2.0,
-            "effective_game_seconds_per_wall_second": 5.0,
+            "game_seconds_advanced": 8.0,
+            "effective_game_seconds_per_wall_second": 3.9,
             "observed_game_speed_all_active": {"median": 1.0},
         },
     }
@@ -72,5 +85,7 @@ def test_v4_natural_health_uses_effective_speed_not_packet_echo(
 
     assert health["accepted"] is True
     assert health["checks"]["effective_5x_progression"] is True
-    assert health["decisions_per_game_second"] == 10.0
+    assert health["decisions_per_game_second"] == 15.0
     assert health["distinct_action_indices"] == 10
+    assert health["end_to_end_game_seconds_per_wall_second"] == 3.9
+    assert health["sustained_in_play_speed"]["weighted_rate"] == pytest.approx(5.0)
