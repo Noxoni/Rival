@@ -360,7 +360,7 @@ def main() -> int:
     sessions = [
         _session_gate(
             game,
-            raw_root=args.raw_root,
+            raw_root=args.raw_root.resolve(),
             expected_model=model_path,
             expected_runtime_label=args.runtime_label,
         )

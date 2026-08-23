@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "status": "completed_with_irrecoverable_ignored_artifacts",
+  "purpose": "Record and bound an accidental final-verification rerun of the legacy M08 prior calibration script.",
+  "recorded_utc": "2026-08-23T08:32:19.3196580Z",
+  "trigger": {
+    "requested_operation": "inspect the script's command-line help",
+    "invocation": "training/.venv/Scripts/python.exe training/scripts/calibrate_m08_mechanics_prior.py --help",
+    "cause": "The legacy script did not parse command-line arguments. It ignored --help, immediately recollected the corpus, and overwrote its fixed output paths.",
+    "detected_before_final_commit": true
+  },
+  "tracked_evidence": {
+    "path": "training/results/milestone08/mechanics_prior_calibration.json",
+    "restored_from": "the existing HEAD blob at commit 0642742c17e5abc8476d3487185b264e2446cb68",
+    "restored_lf_normalized_sha256": "224b6728a84b69f94a7d73ad8fd2799db23b45d967178dd9ad98d662bb9337a8",
+    "matches_head_exactly": true
+  },
+  "initial_actor_checkpoint": {
+    "path": "training/artifacts/milestone08/mechanics_initial_v1.pt",
+    "expected_size_bytes": 786965,
+    "expected_sha256": "0485c8d2fca5a78b0be084bb9dd9ce181df1e55f8a4f31b79d3ac1bc367ef6de",
+    "expected_state_sha256": "633c8b5b9e421ece8c33806fc172205a32d5c597f7516be03b702fe4d0afc6e2",
+    "recovery_method": "Reconstructed the deterministic actor from seed 20260823, restored the recorded PASS bias and metadata, and required the complete checkpoint SHA-256 to match.",
+    "actual_sha256": "0485c8d2fca5a78b0be084bb9dd9ce181df1e55f8a4f31b79d3ac1bc367ef6de",
+    "actual_state_sha256": "633c8b5b9e421ece8c33806fc172205a32d5c597f7516be03b702fe4d0afc6e2",
+    "byte_exact_recovery": true
+  },
+  "natural_observation_corpus": {
+    "original_path": "training/datasets/milestone08/natural_prior_observations.npy",
+    "original_size_bytes": 17280128,
+    "original_sha256": "489eabe3f05995097d0eea28dc747b0a1f7d954b8fd327cf5c3db6d730fb42ff",
+    "original_bytes_available_locally": false,
+    "reason_not_reconstructed": "The collector seeded its curriculum and observation RNGs but not process-level ordering. Controlled reruns from the exact 7e2e119 boundary produced different trajectories and hashes. The original process hash seed was neither fixed nor recorded, so no rerun is represented as the original corpus.",
+    "accidental_rerun_preserved_as": "training/datasets/milestone08/natural_prior_observations_accidental_rerun_20260823.npy",
+    "accidental_rerun_size_bytes": 17280128,
+    "accidental_rerun_sha256": "1bf0b35afd5db165451356b626d9c717cba148863bc606086e912ce94524d720",
+    "canonical_original_path_intentionally_absent": true
+  },
+  "initial_torchscript": {
+    "original_path": "training/artifacts/milestone08/mechanics_initial_v1.ts",
+    "original_size_bytes": 797588,
+    "original_sha256": "4570d168923f3eb079753110b1511db481e5ff5e85c17c0c5d632b3cfb1607f0",
+    "original_bytes_available_locally": false,
+    "regenerated_from_byte_exact_checkpoint": true,
+    "regenerated_state_sha256": "633c8b5b9e421ece8c33806fc172205a32d5c597f7516be03b702fe4d0afc6e2",
+    "regenerated_fresh_reload_exact_logits": true,
+    "regenerated_preserved_as": "training/artifacts/milestone08/mechanics_initial_v1_regenerated_from_exact_state_20260823.ts",
+    "regenerated_size_bytes": 797460,
+    "regenerated_sha256": "c1335c7fdc58db46b9bd511abe6d310cccdf7c27df76e3953546f7d9fa73d09a",
+    "canonical_original_path_intentionally_absent": true,
+    "note": "The regenerated export is state/logit exact but is not represented as byte-identical to the original TorchScript archive."
+  },
+  "bounded_recovery_attempts": {
+    "exact_source_boundary": "7e2e1197b3df8dfdb1aad719e66d6001d2af177b",
+    "controlled_python_hash_seed_results": [
+      {
+        "python_hash_seed": 0,
+        "completed_episodes": 6,
+        "npy_sha256": "ded4a48caa7347bd34b8673f4b92c4e39f59e16f8c1a348b7c43f973efd6da05"
+      },
+      {
+        "python_hash_seed": 1,
+        "completed_episodes": 5,
+        "npy_sha256": "00cfe3998421134aa17935ec48b3b1e8f4051e9184eae48f957fbbafd06aa609"
+      },
+      {
+        "python_hash_seed": 2,
+        "completed_episodes": 6,
+        "npy_sha256": "f715020b777ac111716fcf57c0feac04857b52e5cda9ceb"
+      },
+      {
+        "python_hash_seed": 3,
+        "completed_episodes": 6,
+        "npy_sha256": "5b254080af4ce7430baa3ef44eb69cf5b3b9fdb18cc590aeb4c748403a565a77"
+      }
+    ],
+    "original_hash_matched": false,
+    "unbounded_seed_search_attempted": false
+  },
+  "unaffected_artifacts": {
+    "production_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "production_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "m07_zero_step_actor_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+    "two_million_checkpoint_policy_sha256": "dab585482628abd941f423a7debcef068612d1e481fd5f0b8855e2d8114db6bb",
+    "five_million_checkpoint_policy_sha256": "7f462f4378a5bc71103919209da69a30826dc33eed36d3996556f14703624e9c",
+    "five_million_torchscript_sha256": "43065e434f30f3e0cf8a868777b01970f8bd1d581b5bade6e89f90f38adc2cce",
+    "two_million_and_five_million_checkpoints_revalidated": true,
+    "rlbot_raw_telemetry_modified": false,
+    "production_modified_or_promoted": false
+  },
+  "impact": {
+    "campaign_training_or_evaluation_changed": false,
+    "committed_historical_measurements_changed": false,
+    "final_checkpoint_or_export_changed": false,
+    "exact_local_replay_of_original_prior_corpus_available": false,
+    "exact_original_initial_torchscript_archive_available": false,
+    "initial_actor_source_checkpoint_available_byte_exact": true,
+    "milestone_verdict_effect": "The existing partial architecture pass remains, with an additional explicit local artifact-preservation limitation."
+  },
+  "mitigation": {
+    "legacy_script_now_parses_help": true,
+    "existing_outputs_protected_by_default": true,
+    "explicit_overwrite_flag_required": "--overwrite",
+    "replacement_files_quarantined_under_unambiguous_names": true
+  },
+  "production_promoted": false
+}

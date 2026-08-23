@@ -1,0 +1,2399 @@
+{
+  "schema_version": 1,
+  "status": "completed_boundary",
+  "requested_boundary_agent_steps": 5000000,
+  "cumulative_agent_steps": 4999790,
+  "within_authorized_ceiling": true,
+  "cumulative_model_updates": 288,
+  "iterations_this_invocation": 60,
+  "worker_count": 56,
+  "worker_transition": null,
+  "worker_transition_history": [
+    {
+      "evidence_path": "training/results/milestone08/worker_fallback_000500000.json",
+      "evidence_sha256": "ae1bc136a4301759a575c8e6efc068be7965b03d6838683ab09d8333210c8b6c",
+      "from_worker_count": 64,
+      "to_worker_count": 56,
+      "source_checkpoint_agent_steps": 499748,
+      "checks": {
+        "status_authorized": true,
+        "source_steps_match": true,
+        "from_workers_match": true,
+        "to_workers_match": true,
+        "no_steps_collected_during_failed_launch": true
+      }
+    }
+  ],
+  "mechanics_usage_adjustment": {
+    "evidence_path": "training/results/milestone08/mechanics_usage_adjustment_002m.json",
+    "evidence_sha256": "a3fc704c420a7b70e365366689a6d0e72a8007c7647cd6922f39afacc89b8f01",
+    "source_checkpoint_agent_steps": 1999776,
+    "source_bias": 7.719589710235596,
+    "pass_bias_delta": -1.4103919863700867,
+    "adjusted_bias": 6.309197425842285,
+    "target_mean_override_probability": 0.1,
+    "measured_before_mean_override_probability": 0.026404667645692825,
+    "measured_after_mean_override_probability": 0.10000002384185791,
+    "sampled_audit_override_rate": 0.09849999845027924,
+    "optimizer_state_preserved": true,
+    "checks": {
+      "status_authorized": true,
+      "source_steps_match": true,
+      "source_directory_match": true,
+      "source_files_match": true,
+      "config_hash_match": true,
+      "current_bias_match": true,
+      "finite_negative_delta": true,
+      "adjusted_bias_consistent": true,
+      "before_probability_consistent": true,
+      "after_probability_bounded": true,
+      "sampled_rate_bounded": true,
+      "source_not_previously_adjusted": true
+    }
+  },
+  "mechanics_usage_adjustment_history": [
+    {
+      "evidence_path": "training/results/milestone08/mechanics_usage_adjustment_002m.json",
+      "evidence_sha256": "a3fc704c420a7b70e365366689a6d0e72a8007c7647cd6922f39afacc89b8f01",
+      "source_checkpoint_agent_steps": 1999776,
+      "source_bias": 7.719589710235596,
+      "pass_bias_delta": -1.4103919863700867,
+      "adjusted_bias": 6.309197425842285,
+      "target_mean_override_probability": 0.1,
+      "measured_before_mean_override_probability": 0.026404667645692825,
+      "measured_after_mean_override_probability": 0.10000002384185791,
+      "sampled_audit_override_rate": 0.09849999845027924,
+      "optimizer_state_preserved": true,
+      "checks": {
+        "status_authorized": true,
+        "source_steps_match": true,
+        "source_directory_match": true,
+        "source_files_match": true,
+        "config_hash_match": true,
+        "current_bias_match": true,
+        "finite_negative_delta": true,
+        "adjusted_bias_consistent": true,
+        "before_probability_consistent": true,
+        "after_probability_bounded": true,
+        "sampled_rate_bounded": true,
+        "source_not_previously_adjusted": true
+      }
+    }
+  ],
+  "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+  "optimizer_ownership": {
+    "policy_parameter_names": [
+      "actor.policy.0.weight",
+      "actor.policy.0.bias",
+      "actor.policy.1.weight",
+      "actor.policy.1.bias",
+      "actor.policy.3.weight",
+      "actor.policy.3.bias",
+      "actor.policy.4.weight",
+      "actor.policy.4.bias",
+      "actor.policy.6.weight",
+      "actor.policy.6.bias"
+    ],
+    "policy_parameter_count": 195397,
+    "optimizer_exactly_matches_policy_parameters": true,
+    "strategic_named_parameter_present": false
+  },
+  "strategic_branch_before": {
+    "artifacts": {
+      "wisp_policy": {
+        "path": "bot/models/POLICY.lt",
+        "sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "unchanged": true
+      },
+      "wisp_shared_head": {
+        "path": "bot/models/SHARED_HEAD.lt",
+        "sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "unchanged": true
+      },
+      "zero_step_torchscript": {
+        "path": "training/artifacts/milestone07/zero_step_actor.ts",
+        "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "expected_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true,
+    "optimizer_contains_strategic_parameters": false,
+    "architecture_reason": "The strategic actor is instantiated only inside environment workers; the central PPO policy contains MechanicsActor parameters exclusively."
+  },
+  "strategic_branch_after": {
+    "artifacts": {
+      "wisp_policy": {
+        "path": "bot/models/POLICY.lt",
+        "sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "unchanged": true
+      },
+      "wisp_shared_head": {
+        "path": "bot/models/SHARED_HEAD.lt",
+        "sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "unchanged": true
+      },
+      "zero_step_torchscript": {
+        "path": "training/artifacts/milestone07/zero_step_actor.ts",
+        "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "expected_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true,
+    "optimizer_contains_strategic_parameters": false,
+    "architecture_reason": "The strategic actor is instantiated only inside environment workers; the central PPO policy contains MechanicsActor parameters exclusively."
+  },
+  "strategic_unchanged": true,
+  "aggregate_actions": {
+    "sampled_action_count": 2994350,
+    "pass_count": 2813178,
+    "override_count": 181172,
+    "sampled_override_rate": 0.060504617028737454,
+    "full_mechanics_action_counts": [
+      2813178,
+      2537,
+      2844,
+      2802,
+      2901,
+      2898,
+      3000,
+      2812,
+      2670,
+      3111,
+      2682,
+      2746,
+      2844,
+      2811,
+      2593,
+      2752,
+      2679,
+      2417,
+      2713,
+      2836,
+      2995,
+      2540,
+      2579,
+      2718,
+      2531,
+      2781,
+      2802,
+      2921,
+      2640,
+      2682,
+      2916,
+      2543,
+      3292,
+      2784,
+      2863,
+      2846,
+      2978,
+      2875,
+      2938,
+      2986,
+      3109,
+      2843,
+      2943,
+      2485,
+      2993,
+      2807,
+      2585,
+      2913,
+      2805,
+      2326,
+      2419,
+      2199,
+      2258,
+      2431,
+      2079,
+      2142,
+      2015,
+      2350,
+      2598,
+      2610,
+      2428,
+      2339,
+      2549,
+      2604,
+      2180,
+      2343,
+      2245,
+      2417,
+      2299
+    ]
+  },
+  "action_probability_history": [
+    {
+      "cumulative_agent_steps": 2049782,
+      "mean_pass_probability": 0.8986785487213638,
+      "sampled_override_rate": 0.0996480422349318,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2099796,
+      "mean_pass_probability": 0.8994912354537519,
+      "sampled_override_rate": 0.10138627348852118,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2149796,
+      "mean_pass_probability": 0.9005593080073595,
+      "sampled_override_rate": 0.09822859890990703,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2199804,
+      "mean_pass_probability": 0.9029028111690423,
+      "sampled_override_rate": 0.09683042154191376,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2249804,
+      "mean_pass_probability": 0.9055178862327011,
+      "sampled_override_rate": 0.09317890349470984,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2299806,
+      "mean_pass_probability": 0.9076002191723092,
+      "sampled_override_rate": 0.08998917965775659,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2349820,
+      "mean_pass_probability": 0.9097099543723743,
+      "sampled_override_rate": 0.08666212588645378,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2399824,
+      "mean_pass_probability": 0.9119936371716904,
+      "sampled_override_rate": 0.08796184980363869,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2449828,
+      "mean_pass_probability": 0.913174071785761,
+      "sampled_override_rate": 0.08655926905506131,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2499838,
+      "mean_pass_probability": 0.9154423139698338,
+      "sampled_override_rate": 0.08554714108266218,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2549844,
+      "mean_pass_probability": 0.9173627973650582,
+      "sampled_override_rate": 0.08322981366459627,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2599852,
+      "mean_pass_probability": 0.9202035732596414,
+      "sampled_override_rate": 0.08042154191376823,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2649860,
+      "mean_pass_probability": 0.9216523157956544,
+      "sampled_override_rate": 0.07803734572848213,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2699866,
+      "mean_pass_probability": 0.924007289329893,
+      "sampled_override_rate": 0.07872169905830495,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2749878,
+      "mean_pass_probability": 0.9260764003702207,
+      "sampled_override_rate": 0.0762881641157144,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2799890,
+      "mean_pass_probability": 0.9278018498443998,
+      "sampled_override_rate": 0.07174052408045517,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2849900,
+      "mean_pass_probability": 0.9292508095531957,
+      "sampled_override_rate": 0.07130264054173178,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2899914,
+      "mean_pass_probability": 0.9304777433426352,
+      "sampled_override_rate": 0.06863255739412637,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2949914,
+      "mean_pass_probability": 0.932166312893969,
+      "sampled_override_rate": 0.07039515870471305,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 2999922,
+      "mean_pass_probability": 0.933009061627672,
+      "sampled_override_rate": 0.06569562429876583,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3049926,
+      "mean_pass_probability": 0.9338715522899292,
+      "sampled_override_rate": 0.0667628436322834,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3099928,
+      "mean_pass_probability": 0.9346424796240171,
+      "sampled_override_rate": 0.06375986855287942,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3149938,
+      "mean_pass_probability": 0.9356043014558963,
+      "sampled_override_rate": 0.06278799535200545,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3199948,
+      "mean_pass_probability": 0.9366291972255567,
+      "sampled_override_rate": 0.06340906358937372,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3249956,
+      "mean_pass_probability": 0.9377626164496178,
+      "sampled_override_rate": 0.061608430838275365,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3299962,
+      "mean_pass_probability": 0.9381474487745436,
+      "sampled_override_rate": 0.06201162091765177,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3349966,
+      "mean_pass_probability": 0.9394516989850672,
+      "sampled_override_rate": 0.06073174641340066,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3399974,
+      "mean_pass_probability": 0.9408675221202429,
+      "sampled_override_rate": 0.060105786183683285,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3449988,
+      "mean_pass_probability": 0.9416540254460415,
+      "sampled_override_rate": 0.05893665611603029,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3499994,
+      "mean_pass_probability": 0.9424659872311167,
+      "sampled_override_rate": 0.05598076537767983,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3550006,
+      "mean_pass_probability": 0.9430885535548441,
+      "sampled_override_rate": 0.05793733472233352,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3600020,
+      "mean_pass_probability": 0.9437512387230527,
+      "sampled_override_rate": 0.052646339997596055,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3650032,
+      "mean_pass_probability": 0.9446809964138083,
+      "sampled_override_rate": 0.053049122525843415,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3700044,
+      "mean_pass_probability": 0.9460848202288616,
+      "sampled_override_rate": 0.052227742607580736,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3750058,
+      "mean_pass_probability": 0.9471898445190163,
+      "sampled_override_rate": 0.05230578148162987,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3800060,
+      "mean_pass_probability": 0.9477471232530661,
+      "sampled_override_rate": 0.05123632428966457,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3850068,
+      "mean_pass_probability": 0.9484603545424761,
+      "sampled_override_rate": 0.05104984773200833,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3900082,
+      "mean_pass_probability": 0.9493431984301424,
+      "sampled_override_rate": 0.05014223326255058,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 3950094,
+      "mean_pass_probability": 0.9509026292944327,
+      "sampled_override_rate": 0.04856158346021316,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4000094,
+      "mean_pass_probability": 0.95128293641028,
+      "sampled_override_rate": 0.04919445335043283,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4050100,
+      "mean_pass_probability": 0.9518564070167486,
+      "sampled_override_rate": 0.04622320176317371,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4100110,
+      "mean_pass_probability": 0.9530420797818806,
+      "sampled_override_rate": 0.04744159955122811,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4150118,
+      "mean_pass_probability": 0.9529041200003121,
+      "sampled_override_rate": 0.04546000961692579,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4200130,
+      "mean_pass_probability": 0.9541820270387689,
+      "sampled_override_rate": 0.04425434730346983,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4250136,
+      "mean_pass_probability": 0.9554764459899161,
+      "sampled_override_rate": 0.04466038869965939,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4300136,
+      "mean_pass_probability": 0.9553599183709593,
+      "sampled_override_rate": 0.04288233408143636,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4350140,
+      "mean_pass_probability": 0.9567807904386427,
+      "sampled_override_rate": 0.04394085116614571,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4400146,
+      "mean_pass_probability": 0.9570062447310193,
+      "sampled_override_rate": 0.04205570026046884,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4450146,
+      "mean_pass_probability": 0.9575110793084605,
+      "sampled_override_rate": 0.04101875601154216,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4500158,
+      "mean_pass_probability": 0.9580975927237887,
+      "sampled_override_rate": 0.04128936613510698,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4550170,
+      "mean_pass_probability": 0.9586231741996016,
+      "sampled_override_rate": 0.04183027486176777,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4600180,
+      "mean_pass_probability": 0.9585838382190559,
+      "sampled_override_rate": 0.04060984894017711,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4650182,
+      "mean_pass_probability": 0.9592746279231505,
+      "sampled_override_rate": 0.039574399871758904,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4700196,
+      "mean_pass_probability": 0.9600246160407551,
+      "sampled_override_rate": 0.04074682479265996,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4750196,
+      "mean_pass_probability": 0.9605178899219027,
+      "sampled_override_rate": 0.04003687079192049,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4800196,
+      "mean_pass_probability": 0.9610233371786308,
+      "sampled_override_rate": 0.038513946777813404,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4850202,
+      "mean_pass_probability": 0.961711290787207,
+      "sampled_override_rate": 0.036806251252254056,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4900206,
+      "mean_pass_probability": 0.9623592666757759,
+      "sampled_override_rate": 0.03674761561272742,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4950220,
+      "mean_pass_probability": 0.9632826177257812,
+      "sampled_override_rate": 0.035638447053167197,
+      "deterministic_override_rate": 0.0
+    },
+    {
+      "cumulative_agent_steps": 4999790,
+      "mean_pass_probability": 0.9640333712886786,
+      "sampled_override_rate": 0.03535190200913611,
+      "deterministic_override_rate": 0.0
+    }
+  ],
+  "ppo_history": [
+    {
+      "cumulative_agent_steps": 2049782,
+      "policy_entropy": 0.7504063546657562,
+      "mean_kl_divergence": -5.6965897493946316e-11,
+      "value_function_loss": 0.7149683386087418,
+      "policy_update_magnitude": 0.005745284259319305,
+      "collection_seconds": 44.007284899940714,
+      "iteration_wall_seconds": 45.05601719999686,
+      "agent_steps_per_second": 1136.3118654945097
+    },
+    {
+      "cumulative_agent_steps": 2099796,
+      "policy_entropy": 0.7444142699241638,
+      "mean_kl_divergence": 2.752203890565852e-06,
+      "value_function_loss": 0.8055378496646881,
+      "policy_update_magnitude": 0.01326393149793148,
+      "collection_seconds": 43.463359700050205,
+      "iteration_wall_seconds": 44.16730880003888,
+      "agent_steps_per_second": 1150.716381456867
+    },
+    {
+      "cumulative_agent_steps": 2149796,
+      "policy_entropy": 0.7339698523283005,
+      "mean_kl_divergence": 2.0402815152920084e-05,
+      "value_function_loss": 0.8028926203648249,
+      "policy_update_magnitude": 0.022764824330806732,
+      "collection_seconds": 43.94748760003131,
+      "iteration_wall_seconds": 44.911406800034456,
+      "agent_steps_per_second": 1137.7214655602834
+    },
+    {
+      "cumulative_agent_steps": 2199804,
+      "policy_entropy": 0.7195018082857132,
+      "mean_kl_divergence": 5.10187930255294e-05,
+      "value_function_loss": 0.8395386387904485,
+      "policy_update_magnitude": 0.025465941056609154,
+      "collection_seconds": 45.45490029989742,
+      "iteration_wall_seconds": 46.25391029997263,
+      "agent_steps_per_second": 1100.1674114355687
+    },
+    {
+      "cumulative_agent_steps": 2249804,
+      "policy_entropy": 0.7044809609651566,
+      "mean_kl_divergence": 7.33036740712123e-05,
+      "value_function_loss": 0.8406451145807902,
+      "policy_update_magnitude": 0.02558840624988079,
+      "collection_seconds": 44.65540100005455,
+      "iteration_wall_seconds": 45.634146100026555,
+      "agent_steps_per_second": 1119.6853881110353
+    },
+    {
+      "cumulative_agent_steps": 2299806,
+      "policy_entropy": 0.6898113687833151,
+      "mean_kl_divergence": 7.679185788826241e-05,
+      "value_function_loss": 0.8331964959700903,
+      "policy_update_magnitude": 0.025368761271238327,
+      "collection_seconds": 45.663984399987385,
+      "iteration_wall_seconds": 46.6029124999186,
+      "agent_steps_per_second": 1094.9986221529502
+    },
+    {
+      "cumulative_agent_steps": 2349820,
+      "policy_entropy": 0.6766707946856817,
+      "mean_kl_divergence": 6.89611085059975e-05,
+      "value_function_loss": 0.8272438595692316,
+      "policy_update_magnitude": 0.025063414126634598,
+      "collection_seconds": 44.873609100002795,
+      "iteration_wall_seconds": 45.63004900002852,
+      "agent_steps_per_second": 1114.5526513934196
+    },
+    {
+      "cumulative_agent_steps": 2399824,
+      "policy_entropy": 0.6638743678728739,
+      "mean_kl_divergence": 6.322143265909592e-05,
+      "value_function_loss": 0.7973984827597936,
+      "policy_update_magnitude": 0.02460859902203083,
+      "collection_seconds": 43.080424300045706,
+      "iteration_wall_seconds": 43.9422409000108,
+      "agent_steps_per_second": 1160.7128019847974
+    },
+    {
+      "cumulative_agent_steps": 2449828,
+      "policy_entropy": 0.6519562204678854,
+      "mean_kl_divergence": 5.983830851619132e-05,
+      "value_function_loss": 0.8277667562166849,
+      "policy_update_magnitude": 0.024816157296299934,
+      "collection_seconds": 42.837006799993105,
+      "iteration_wall_seconds": 43.5294753999915,
+      "agent_steps_per_second": 1167.3084497586337
+    },
+    {
+      "cumulative_agent_steps": 2499838,
+      "policy_entropy": 0.6388617952664694,
+      "mean_kl_divergence": 6.448429333734869e-05,
+      "value_function_loss": 0.8419060359398524,
+      "policy_update_magnitude": 0.025666164234280586,
+      "collection_seconds": 43.82935140002519,
+      "iteration_wall_seconds": 44.797943499987014,
+      "agent_steps_per_second": 1141.0162003896608
+    },
+    {
+      "cumulative_agent_steps": 2549844,
+      "policy_entropy": 0.6256793141365051,
+      "mean_kl_divergence": 7.115522688157701e-05,
+      "value_function_loss": 0.8229197859764099,
+      "policy_update_magnitude": 0.026850810274481773,
+      "collection_seconds": 44.39911120000761,
+      "iteration_wall_seconds": 45.16878409998026,
+      "agent_steps_per_second": 1126.2838072306147
+    },
+    {
+      "cumulative_agent_steps": 2599852,
+      "policy_entropy": 0.6109006603558859,
+      "mean_kl_divergence": 7.908231570278683e-05,
+      "value_function_loss": 0.7947774181763331,
+      "policy_update_magnitude": 0.026807840913534164,
+      "collection_seconds": 44.76850420003757,
+      "iteration_wall_seconds": 45.67711390007753,
+      "agent_steps_per_second": 1117.03531072986
+    },
+    {
+      "cumulative_agent_steps": 2649860,
+      "policy_entropy": 0.5969385753075281,
+      "mean_kl_divergence": 8.197532588383183e-05,
+      "value_function_loss": 0.7397960871458054,
+      "policy_update_magnitude": 0.026931704953312874,
+      "collection_seconds": 45.12395669997204,
+      "iteration_wall_seconds": 46.12745410006028,
+      "agent_steps_per_second": 1108.2361489818331
+    },
+    {
+      "cumulative_agent_steps": 2699866,
+      "policy_entropy": 0.5831434031327566,
+      "mean_kl_divergence": 8.075432075808446e-05,
+      "value_function_loss": 0.7505525151888529,
+      "policy_update_magnitude": 0.026198675855994225,
+      "collection_seconds": 43.81099620007444,
+      "iteration_wall_seconds": 44.63508020003792,
+      "agent_steps_per_second": 1141.4029430336266
+    },
+    {
+      "cumulative_agent_steps": 2749878,
+      "policy_entropy": 0.5709872096776962,
+      "mean_kl_divergence": 7.414373825061678e-05,
+      "value_function_loss": 0.8313280244668325,
+      "policy_update_magnitude": 0.024707278236746788,
+      "collection_seconds": 43.99726009997539,
+      "iteration_wall_seconds": 44.922880799975246,
+      "agent_steps_per_second": 1136.7071469077223
+    },
+    {
+      "cumulative_agent_steps": 2799890,
+      "policy_entropy": 0.5590503563483556,
+      "mean_kl_divergence": 6.50307359440679e-05,
+      "value_function_loss": 0.8921327193578085,
+      "policy_update_magnitude": 0.023528115823864937,
+      "collection_seconds": 44.1666477000108,
+      "iteration_wall_seconds": 44.85179240000434,
+      "agent_steps_per_second": 1132.3476560795846
+    },
+    {
+      "cumulative_agent_steps": 2849900,
+      "policy_entropy": 0.5483715732892355,
+      "mean_kl_divergence": 5.3365616925778646e-05,
+      "value_function_loss": 0.9372392694155375,
+      "policy_update_magnitude": 0.023088792338967323,
+      "collection_seconds": 43.72034629993141,
+      "iteration_wall_seconds": 44.536805699928664,
+      "agent_steps_per_second": 1143.8610219809366
+    },
+    {
+      "cumulative_agent_steps": 2899914,
+      "policy_entropy": 0.5387657930453619,
+      "mean_kl_divergence": 4.469073140474696e-05,
+      "value_function_loss": 0.9008302440245947,
+      "policy_update_magnitude": 0.02130858600139618,
+      "collection_seconds": 42.749211699934676,
+      "iteration_wall_seconds": 43.5870481999591,
+      "agent_steps_per_second": 1169.9397020711945
+    },
+    {
+      "cumulative_agent_steps": 2949914,
+      "policy_entropy": 0.5305288334687551,
+      "mean_kl_divergence": 3.426239042407057e-05,
+      "value_function_loss": 0.8760721683502197,
+      "policy_update_magnitude": 0.01994042843580246,
+      "collection_seconds": 43.119717800058424,
+      "iteration_wall_seconds": 43.75358590006363,
+      "agent_steps_per_second": 1159.5623197685272
+    },
+    {
+      "cumulative_agent_steps": 2999922,
+      "policy_entropy": 0.5233393659194311,
+      "mean_kl_divergence": 2.4832032219516503e-05,
+      "value_function_loss": 0.8186001231273016,
+      "policy_update_magnitude": 0.018477337434887886,
+      "collection_seconds": 42.90183339989744,
+      "iteration_wall_seconds": 43.73939549992792,
+      "agent_steps_per_second": 1165.637830296538
+    },
+    {
+      "cumulative_agent_steps": 3049926,
+      "policy_entropy": 0.5167013853788376,
+      "mean_kl_divergence": 1.994948873592269e-05,
+      "value_function_loss": 0.7814188152551651,
+      "policy_update_magnitude": 0.018282881006598473,
+      "collection_seconds": 43.07972959999461,
+      "iteration_wall_seconds": 43.763079799944535,
+      "agent_steps_per_second": 1160.7315195406022
+    },
+    {
+      "cumulative_agent_steps": 3099928,
+      "policy_entropy": 0.5117457509040833,
+      "mean_kl_divergence": 1.643254313421494e-05,
+      "value_function_loss": 0.7996544738610586,
+      "policy_update_magnitude": 0.017970005050301552,
+      "collection_seconds": 42.514048099983484,
+      "iteration_wall_seconds": 43.317353799939156,
+      "agent_steps_per_second": 1176.1288852665016
+    },
+    {
+      "cumulative_agent_steps": 3149938,
+      "policy_entropy": 0.5059149364630381,
+      "mean_kl_divergence": 1.7296610394623713e-05,
+      "value_function_loss": 0.8471065759658813,
+      "policy_update_magnitude": 0.01876726932823658,
+      "collection_seconds": 43.09829960006755,
+      "iteration_wall_seconds": 43.78596549993381,
+      "agent_steps_per_second": 1160.3706054315335
+    },
+    {
+      "cumulative_agent_steps": 3199948,
+      "policy_entropy": 0.4994149332245191,
+      "mean_kl_divergence": 1.879657853957421e-05,
+      "value_function_loss": 0.8212277442216873,
+      "policy_update_magnitude": 0.018983853980898857,
+      "collection_seconds": 42.65275829995517,
+      "iteration_wall_seconds": 43.46150889992714,
+      "agent_steps_per_second": 1172.4915806922754
+    },
+    {
+      "cumulative_agent_steps": 3249956,
+      "policy_entropy": 0.4921248182654381,
+      "mean_kl_divergence": 2.1533202698265086e-05,
+      "value_function_loss": 0.8211527417103449,
+      "policy_update_magnitude": 0.019368348643183708,
+      "collection_seconds": 42.79568770003971,
+      "iteration_wall_seconds": 43.539336399990134,
+      "agent_steps_per_second": 1168.5289497042852
+    },
+    {
+      "cumulative_agent_steps": 3299962,
+      "policy_entropy": 0.4845529794692993,
+      "mean_kl_divergence": 2.393884824414272e-05,
+      "value_function_loss": 0.7868021527926127,
+      "policy_update_magnitude": 0.019034691154956818,
+      "collection_seconds": 43.45708520000335,
+      "iteration_wall_seconds": 44.623990799998865,
+      "agent_steps_per_second": 1150.6984366267654
+    },
+    {
+      "cumulative_agent_steps": 3349966,
+      "policy_entropy": 0.4780831014116605,
+      "mean_kl_divergence": 2.4888503655044285e-05,
+      "value_function_loss": 0.8366958200931549,
+      "policy_update_magnitude": 0.01917944848537445,
+      "collection_seconds": 43.52168999996502,
+      "iteration_wall_seconds": 44.40964769991115,
+      "agent_steps_per_second": 1148.9443539540903
+    },
+    {
+      "cumulative_agent_steps": 3399974,
+      "policy_entropy": 0.4708620806535085,
+      "mean_kl_divergence": 2.534549351670042e-05,
+      "value_function_loss": 0.8349421819051107,
+      "policy_update_magnitude": 0.01887625642120838,
+      "collection_seconds": 43.434815499931574,
+      "iteration_wall_seconds": 44.129674199968576,
+      "agent_steps_per_second": 1151.334463480771
+    },
+    {
+      "cumulative_agent_steps": 3449988,
+      "policy_entropy": 0.4641219476858775,
+      "mean_kl_divergence": 2.4051636804263882e-05,
+      "value_function_loss": 0.8234674682219824,
+      "policy_update_magnitude": 0.018879298120737076,
+      "collection_seconds": 42.719811099930666,
+      "iteration_wall_seconds": 43.52929720003158,
+      "agent_steps_per_second": 1170.744877195423
+    },
+    {
+      "cumulative_agent_steps": 3499994,
+      "policy_entropy": 0.45687560985485715,
+      "mean_kl_divergence": 2.333792766269956e-05,
+      "value_function_loss": 0.7995326966047287,
+      "policy_update_magnitude": 0.018345577642321587,
+      "collection_seconds": 43.91963889996987,
+      "iteration_wall_seconds": 44.73528589995112,
+      "agent_steps_per_second": 1138.5794886404294
+    },
+    {
+      "cumulative_agent_steps": 3550006,
+      "policy_entropy": 0.4506256928046544,
+      "mean_kl_divergence": 2.1542603008128935e-05,
+      "value_function_loss": 0.8179867813984553,
+      "policy_update_magnitude": 0.018339604139328003,
+      "collection_seconds": 42.59023250010796,
+      "iteration_wall_seconds": 43.28984409989789,
+      "agent_steps_per_second": 1174.259849365068
+    },
+    {
+      "cumulative_agent_steps": 3600020,
+      "policy_entropy": 0.4440424342950185,
+      "mean_kl_divergence": 2.089660286704505e-05,
+      "value_function_loss": 0.8445506344238917,
+      "policy_update_magnitude": 0.018640834838151932,
+      "collection_seconds": 43.01200890005566,
+      "iteration_wall_seconds": 43.82424870005343,
+      "agent_steps_per_second": 1162.7915384332416
+    },
+    {
+      "cumulative_agent_steps": 3650032,
+      "policy_entropy": 0.4377461224794388,
+      "mean_kl_divergence": 2.1961962829664117e-05,
+      "value_function_loss": 0.860127588113149,
+      "policy_update_magnitude": 0.01883898489177227,
+      "collection_seconds": 42.75982889998704,
+      "iteration_wall_seconds": 43.395043800002895,
+      "agent_steps_per_second": 1169.6024349623895
+    },
+    {
+      "cumulative_agent_steps": 3700044,
+      "policy_entropy": 0.4308309033513069,
+      "mean_kl_divergence": 2.2285499350497655e-05,
+      "value_function_loss": 0.7929694900910059,
+      "policy_update_magnitude": 0.018811194226145744,
+      "collection_seconds": 42.710283800028265,
+      "iteration_wall_seconds": 43.51338979997672,
+      "agent_steps_per_second": 1170.959205847443
+    },
+    {
+      "cumulative_agent_steps": 3750058,
+      "policy_entropy": 0.42431601881980896,
+      "mean_kl_divergence": 2.1423292537292582e-05,
+      "value_function_loss": 0.7652473598718643,
+      "policy_update_magnitude": 0.0182795450091362,
+      "collection_seconds": 42.6538757000817,
+      "iteration_wall_seconds": 43.37191260000691,
+      "agent_steps_per_second": 1172.5546431388932
+    },
+    {
+      "cumulative_agent_steps": 3800060,
+      "policy_entropy": 0.4173961157600085,
+      "mean_kl_divergence": 2.036349944016062e-05,
+      "value_function_loss": 0.7741413315137228,
+      "policy_update_magnitude": 0.01795950159430504,
+      "collection_seconds": 42.46257350000087,
+      "iteration_wall_seconds": 43.29508660000283,
+      "agent_steps_per_second": 1177.5546293725927
+    },
+    {
+      "cumulative_agent_steps": 3850068,
+      "policy_entropy": 0.4112036849061648,
+      "mean_kl_divergence": 2.0462214327684098e-05,
+      "value_function_loss": 0.8120795786380768,
+      "policy_update_magnitude": 0.01795249991118908,
+      "collection_seconds": 43.895178099977784,
+      "iteration_wall_seconds": 44.70745770004578,
+      "agent_steps_per_second": 1139.2595306504818
+    },
+    {
+      "cumulative_agent_steps": 3900082,
+      "policy_entropy": 0.4050820618867874,
+      "mean_kl_divergence": 2.1320763304781092e-05,
+      "value_function_loss": 0.8447914073864619,
+      "policy_update_magnitude": 0.018106676638126373,
+      "collection_seconds": 43.06767310004216,
+      "iteration_wall_seconds": 43.74151270010043,
+      "agent_steps_per_second": 1161.2886510915548
+    },
+    {
+      "cumulative_agent_steps": 3950094,
+      "policy_entropy": 0.3986998920639356,
+      "mean_kl_divergence": 2.2566199352998712e-05,
+      "value_function_loss": 0.7955870727698008,
+      "policy_update_magnitude": 0.01825881376862526,
+      "collection_seconds": 43.91764669993427,
+      "iteration_wall_seconds": 44.79345389991067,
+      "agent_steps_per_second": 1138.7677564261396
+    },
+    {
+      "cumulative_agent_steps": 4000094,
+      "policy_entropy": 0.39263025174538296,
+      "mean_kl_divergence": 2.158947540920053e-05,
+      "value_function_loss": 0.785386860370636,
+      "policy_update_magnitude": 0.017048673704266548,
+      "collection_seconds": 42.987155500100926,
+      "iteration_wall_seconds": 43.65295590006281,
+      "agent_steps_per_second": 1163.1381378533551
+    },
+    {
+      "cumulative_agent_steps": 4050100,
+      "policy_entropy": 0.38737719506025314,
+      "mean_kl_divergence": 1.876275913067123e-05,
+      "value_function_loss": 0.7758428901433945,
+      "policy_update_magnitude": 0.016798269003629684,
+      "collection_seconds": 42.405095800058916,
+      "iteration_wall_seconds": 43.30228379997425,
+      "agent_steps_per_second": 1179.2450661066664
+    },
+    {
+      "cumulative_agent_steps": 4100110,
+      "policy_entropy": 0.382230244576931,
+      "mean_kl_divergence": 1.6014777656891965e-05,
+      "value_function_loss": 0.795142317811648,
+      "policy_update_magnitude": 0.015687746927142143,
+      "collection_seconds": 43.10593889991287,
+      "iteration_wall_seconds": 44.10328669997398,
+      "agent_steps_per_second": 1160.1649627935858
+    },
+    {
+      "cumulative_agent_steps": 4150118,
+      "policy_entropy": 0.37781790892283124,
+      "mean_kl_divergence": 1.2775578322058815e-05,
+      "value_function_loss": 0.7919296075900396,
+      "policy_update_magnitude": 0.015425075776875019,
+      "collection_seconds": 43.96913919993676,
+      "iteration_wall_seconds": 44.77334509999491,
+      "agent_steps_per_second": 1137.3431663650108
+    },
+    {
+      "cumulative_agent_steps": 4200130,
+      "policy_entropy": 0.37318625301122665,
+      "mean_kl_divergence": 1.1315202300465899e-05,
+      "value_function_loss": 0.7809832443793615,
+      "policy_update_magnitude": 0.014967663213610649,
+      "collection_seconds": 42.928791699931026,
+      "iteration_wall_seconds": 43.67084299994167,
+      "agent_steps_per_second": 1164.9990139387119
+    },
+    {
+      "cumulative_agent_steps": 4250136,
+      "policy_entropy": 0.36856915056705475,
+      "mean_kl_divergence": 1.1486704352137167e-05,
+      "value_function_loss": 0.7779749979575475,
+      "policy_update_magnitude": 0.016192303970456123,
+      "collection_seconds": 43.00810979993548,
+      "iteration_wall_seconds": 43.62852159992326,
+      "agent_steps_per_second": 1162.7109452756051
+    },
+    {
+      "cumulative_agent_steps": 4300136,
+      "policy_entropy": 0.3635343685746193,
+      "mean_kl_divergence": 1.3384646914952706e-05,
+      "value_function_loss": 0.7668104320764542,
+      "policy_update_magnitude": 0.016568835824728012,
+      "collection_seconds": 43.22781670000404,
+      "iteration_wall_seconds": 44.11499929998536,
+      "agent_steps_per_second": 1156.6626264517154
+    },
+    {
+      "cumulative_agent_steps": 4350140,
+      "policy_entropy": 0.35842180003722507,
+      "mean_kl_divergence": 1.585431596140552e-05,
+      "value_function_loss": 0.7489546040693918,
+      "policy_update_magnitude": 0.016417929902672768,
+      "collection_seconds": 43.88273259997368,
+      "iteration_wall_seconds": 44.52671110001393,
+      "agent_steps_per_second": 1139.4914818962297
+    },
+    {
+      "cumulative_agent_steps": 4400146,
+      "policy_entropy": 0.35348563889662427,
+      "mean_kl_divergence": 1.5203564544208348e-05,
+      "value_function_loss": 0.7408451437950134,
+      "policy_update_magnitude": 0.015262944623827934,
+      "collection_seconds": 42.6804196999874,
+      "iteration_wall_seconds": 43.50186429999303,
+      "agent_steps_per_second": 1171.6379630637691
+    },
+    {
+      "cumulative_agent_steps": 4450146,
+      "policy_entropy": 0.3492665911714236,
+      "mean_kl_divergence": 1.2370797094263253e-05,
+      "value_function_loss": 0.7915563384691874,
+      "policy_update_magnitude": 0.014453331008553505,
+      "collection_seconds": 42.602399199968204,
+      "iteration_wall_seconds": 43.311962499981746,
+      "agent_steps_per_second": 1173.6428215065719
+    },
+    {
+      "cumulative_agent_steps": 4500158,
+      "policy_entropy": 0.3456002250313759,
+      "mean_kl_divergence": 9.284921172062846e-06,
+      "value_function_loss": 0.7929632018009821,
+      "policy_update_magnitude": 0.014378979802131653,
+      "collection_seconds": 42.9311021999456,
+      "iteration_wall_seconds": 43.72777430003043,
+      "agent_steps_per_second": 1164.936315100323
+    },
+    {
+      "cumulative_agent_steps": 4550170,
+      "policy_entropy": 0.3420847877860069,
+      "mean_kl_divergence": 7.820618975529214e-06,
+      "value_function_loss": 0.7817071080207825,
+      "policy_update_magnitude": 0.014730582013726234,
+      "collection_seconds": 42.79321849998087,
+      "iteration_wall_seconds": 43.63337880000472,
+      "agent_steps_per_second": 1168.6898474351108
+    },
+    {
+      "cumulative_agent_steps": 4600180,
+      "policy_entropy": 0.3383785163362821,
+      "mean_kl_divergence": 8.573927326930667e-06,
+      "value_function_loss": 0.768003930648168,
+      "policy_update_magnitude": 0.01546050887554884,
+      "collection_seconds": 42.51691399991978,
+      "iteration_wall_seconds": 43.2403468999546,
+      "agent_steps_per_second": 1176.237767399919
+    },
+    {
+      "cumulative_agent_steps": 4650182,
+      "policy_entropy": 0.3344256530205409,
+      "mean_kl_divergence": 1.0069776446168058e-05,
+      "value_function_loss": 0.7851845721403757,
+      "policy_update_magnitude": 0.015678666532039642,
+      "collection_seconds": 42.18884610000532,
+      "iteration_wall_seconds": 43.018476200057194,
+      "agent_steps_per_second": 1185.1947759242862
+    },
+    {
+      "cumulative_agent_steps": 4700196,
+      "policy_entropy": 0.33089840908845264,
+      "mean_kl_divergence": 1.0902743800518996e-05,
+      "value_function_loss": 0.7776421556870142,
+      "policy_update_magnitude": 0.015566808171570301,
+      "collection_seconds": 43.265147599973716,
+      "iteration_wall_seconds": 43.957060000044294,
+      "agent_steps_per_second": 1155.9881977619875
+    },
+    {
+      "cumulative_agent_steps": 4750196,
+      "policy_entropy": 0.326860174536705,
+      "mean_kl_divergence": 1.1039670918459402e-05,
+      "value_function_loss": 0.7936368882656097,
+      "policy_update_magnitude": 0.01558286976069212,
+      "collection_seconds": 43.411527000018395,
+      "iteration_wall_seconds": 44.31420230004005,
+      "agent_steps_per_second": 1151.7678242458232
+    },
+    {
+      "cumulative_agent_steps": 4800196,
+      "policy_entropy": 0.32216453552246094,
+      "mean_kl_divergence": 1.241555408644975e-05,
+      "value_function_loss": 0.8130327214797338,
+      "policy_update_magnitude": 0.01632782630622387,
+      "collection_seconds": 43.83611929998733,
+      "iteration_wall_seconds": 44.61805649998132,
+      "agent_steps_per_second": 1140.6119154350977
+    },
+    {
+      "cumulative_agent_steps": 4850202,
+      "policy_entropy": 0.31657009323438007,
+      "mean_kl_divergence": 1.5106611044757301e-05,
+      "value_function_loss": 0.7965505321820577,
+      "policy_update_magnitude": 0.017410196363925934,
+      "collection_seconds": 43.857454099925235,
+      "iteration_wall_seconds": 44.551035000011325,
+      "agent_steps_per_second": 1140.193862736899
+    },
+    {
+      "cumulative_agent_steps": 4900206,
+      "policy_entropy": 0.3111785476406415,
+      "mean_kl_divergence": 1.7401288459950592e-05,
+      "value_function_loss": 0.7932168841362,
+      "policy_update_magnitude": 0.017355915158987045,
+      "collection_seconds": 43.54861370008439,
+      "iteration_wall_seconds": 44.39807429991197,
+      "agent_steps_per_second": 1148.2340251832884
+    },
+    {
+      "cumulative_agent_steps": 4950220,
+      "policy_entropy": 0.3056016017993291,
+      "mean_kl_divergence": 1.8698512197564316e-05,
+      "value_function_loss": 0.7765445758899053,
+      "policy_update_magnitude": 0.01748240739107132,
+      "collection_seconds": 42.70170909992885,
+      "iteration_wall_seconds": 43.34723940002732,
+      "agent_steps_per_second": 1171.241176388496
+    },
+    {
+      "cumulative_agent_steps": 4999790,
+      "policy_entropy": 0.3006739517052968,
+      "mean_kl_divergence": 1.905706866030717e-05,
+      "value_function_loss": 0.7962505370378494,
+      "policy_update_magnitude": 0.017119022086262703,
+      "collection_seconds": 42.33883869997226,
+      "iteration_wall_seconds": 43.13914750004187,
+      "agent_steps_per_second": 1170.7926226146699
+    }
+  ],
+  "latest_rollout_metrics": {
+    "schema_version": 1,
+    "metric_vector_count": 24785,
+    "reward_components": {
+      "outcome": {
+        "count": 49570,
+        "mean": 0.0,
+        "absolute_mean": 0.011700625378252975,
+        "minimum": -10.0,
+        "maximum": 10.0,
+        "cumulative_signed": 0.0,
+        "cumulative_absolute": 580.0,
+        "share_of_total_absolute_shaping": 0.0
+      },
+      "possession": {
+        "count": 49570,
+        "mean": 0.002530755144719614,
+        "absolute_mean": 0.002530755144719614,
+        "minimum": 0.0,
+        "maximum": 0.15840205550193787,
+        "cumulative_signed": 125.44953252375126,
+        "cumulative_absolute": 125.44953252375126,
+        "share_of_total_absolute_shaping": 0.7283365962748767
+      },
+      "progress": {
+        "count": 49570,
+        "mean": 0.0,
+        "absolute_mean": 0.0006590253845595919,
+        "minimum": -0.0022436645813286304,
+        "maximum": 0.0022436645813286304,
+        "cumulative_signed": 0.0,
+        "cumulative_absolute": 32.66788831261897,
+        "share_of_total_absolute_shaping": 0.1896636687473983
+      },
+      "boost_efficiency": {
+        "count": 49570,
+        "mean": -6.919430624632336e-06,
+        "absolute_mean": 6.919430624632336e-06,
+        "minimum": -0.003038229653611779,
+        "maximum": 0.0,
+        "cumulative_signed": -0.3429961760630249,
+        "cumulative_absolute": 0.3429961760630249,
+        "share_of_total_absolute_shaping": 0.001991371847971967
+      },
+      "recovery": {
+        "count": 49570,
+        "mean": 0.00024879427917191935,
+        "absolute_mean": 0.00024879427917191935,
+        "minimum": 0.0,
+        "maximum": 0.029921337962150574,
+        "cumulative_signed": 12.332732418552041,
+        "cumulative_absolute": 12.332732418552041,
+        "share_of_total_absolute_shaping": 0.07160154503402709
+      },
+      "mechanics_resource": {
+        "count": 49570,
+        "mean": 2.9211216702958087e-05,
+        "absolute_mean": 2.9211216702958087e-05,
+        "minimum": 0.0,
+        "maximum": 0.004999999888241291,
+        "cumulative_signed": 1.4480000119656324,
+        "cumulative_absolute": 1.4480000119656324,
+        "share_of_total_absolute_shaping": 0.00840681809572592
+      }
+    },
+    "mechanics_recovery": {
+      "airborne_dodge_uses": {
+        "count": 49570,
+        "mean": 0.013516239661085333,
+        "absolute_mean": 0.013516239661085333,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 670.0,
+        "cumulative_absolute": 670.0
+      },
+      "dodge_resource_acquisitions": {
+        "count": 49570,
+        "mean": 8.06939681258826e-05,
+        "absolute_mean": 8.06939681258826e-05,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 4.0,
+        "cumulative_absolute": 4.0
+      },
+      "productive_resource_followups": {
+        "count": 49570,
+        "mean": 0.0,
+        "absolute_mean": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0,
+        "cumulative_signed": 0.0,
+        "cumulative_absolute": 0.0
+      },
+      "wavedash_like_events": {
+        "count": 49570,
+        "mean": 0.0005245107928182368,
+        "absolute_mean": 0.0005245107928182368,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 26.0,
+        "cumulative_absolute": 26.0
+      },
+      "wall_speed_recovery_events": {
+        "count": 49570,
+        "mean": 0.0001613879362517652,
+        "absolute_mean": 0.0001613879362517652,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 8.0,
+        "cumulative_absolute": 8.0
+      },
+      "aerial_boost_spent": {
+        "count": 49570,
+        "mean": 0.0016741531245200816,
+        "absolute_mean": 0.0016741531245200816,
+        "minimum": 0.0,
+        "maximum": 0.30382296442985535,
+        "cumulative_signed": 82.98777038246044,
+        "cumulative_absolute": 82.98777038246044
+      },
+      "aerial_useful_distance": {
+        "count": 49570,
+        "mean": 9.443232561288063,
+        "absolute_mean": 9.443232561288063,
+        "minimum": 0.0,
+        "maximum": 831.1572265625,
+        "cumulative_signed": 468101.0380630493,
+        "cumulative_absolute": 468101.0380630493
+      },
+      "aerial_useful_touches": {
+        "count": 49570,
+        "mean": 0.009078071414161792,
+        "absolute_mean": 0.009078071414161792,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 450.0,
+        "cumulative_absolute": 450.0
+      },
+      "aerial_commitment_ends": {
+        "count": 49570,
+        "mean": 0.014545087754690336,
+        "absolute_mean": 0.014545087754690336,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 721.0,
+        "cumulative_absolute": 721.0
+      },
+      "aerial_end_boost": {
+        "count": 49570,
+        "mean": 0.48818855768121105,
+        "absolute_mean": 0.48818855768121105,
+        "minimum": 0.0,
+        "maximum": 100.0,
+        "cumulative_signed": 24199.50680425763,
+        "cumulative_absolute": 24199.50680425763
+      },
+      "recovery_window_starts": {
+        "count": 49570,
+        "mean": 0.010409521888238854,
+        "absolute_mean": 0.010409521888238854,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 516.0,
+        "cumulative_absolute": 516.0
+      },
+      "recovery_completions": {
+        "count": 49570,
+        "mean": 0.009844664111357676,
+        "absolute_mean": 0.009844664111357676,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 488.0,
+        "cumulative_absolute": 488.0
+      },
+      "recovery_time_seconds": {
+        "count": 49570,
+        "mean": 0.010143904225847787,
+        "absolute_mean": 0.010143904225847787,
+        "minimum": 0.0,
+        "maximum": 6.433333396911621,
+        "cumulative_signed": 502.8333324752748,
+        "cumulative_absolute": 502.8333324752748
+      },
+      "recovery_concessions": {
+        "count": 49570,
+        "mean": 0.0005245107928182368,
+        "absolute_mean": 0.0005245107928182368,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 26.0,
+        "cumulative_absolute": 26.0
+      }
+    },
+    "curriculum_reset_counts": {
+      "natural": 28,
+      "aerial_wall_possession": 1,
+      "recovery": 0,
+      "low_resource_aerial": 0
+    },
+    "curriculum_reset_shares": {
+      "natural": 0.9655172413793104,
+      "aerial_wall_possession": 0.034482758620689655,
+      "recovery": 0.0,
+      "low_resource_aerial": 0.0
+    },
+    "goals": {
+      "blue": 13,
+      "orange": 16
+    },
+    "dual_rate": {
+      "decision_agent_records": 49570,
+      "requested_pass": 47818,
+      "requested_override": 1752,
+      "applied_override": 1752,
+      "strategic_boundaries": 24796,
+      "override_window_agent_records": 31951,
+      "useful_touches_after_override": 288,
+      "goals_for_after_override": 21,
+      "goals_against_after_override": 17,
+      "requested_pass_share": 0.9646560419608634,
+      "requested_override_share": 0.03534395803913658,
+      "applied_override_share": 0.03534395803913658,
+      "override_context_counts": {
+        "ground_near_ball": 300,
+        "airborne": 341,
+        "wall_or_ceiling": 145,
+        "awkward_recovery": 640,
+        "other": 326
+      },
+      "override_context_shares": {
+        "ground_near_ball": 0.17123287671232876,
+        "airborne": 0.19463470319634704,
+        "wall_or_ceiling": 0.08276255707762557,
+        "awkward_recovery": 0.365296803652968,
+        "other": 0.1860730593607306
+      },
+      "short_window_definition": "most-recent applied override, through 30 subsequent mechanics decisions or until replaced/reset"
+    }
+  },
+  "latest_iteration": {
+    "iteration": 100,
+    "cumulative_agent_steps": 4999790,
+    "collected_agent_steps": 49570,
+    "experience_records": 49474,
+    "experience_buffer_records": 150000,
+    "mean_reward": 0.0027990678925482386,
+    "minimum_reward": -10.001880645751953,
+    "maximum_reward": 10.001880645751953,
+    "collection_seconds": 42.33883869997226,
+    "agent_steps_per_second": 1170.7926226146699,
+    "iteration_wall_seconds": 43.13914750004187,
+    "actions": {
+      "sampled_action_count": 49474,
+      "pass_count": 47725,
+      "override_count": 1749,
+      "sampled_pass_rate": 0.9646480979908639,
+      "sampled_override_rate": 0.03535190200913611,
+      "mean_pass_probability": 0.9640333712886786,
+      "mean_override_probability": 0.03596662871132139,
+      "deterministic_pass_rate": 1.0,
+      "deterministic_override_rate": 0.0,
+      "full_mechanics_action_counts": [
+        47725,
+        25,
+        33,
+        32,
+        22,
+        41,
+        27,
+        31,
+        36,
+        29,
+        26,
+        28,
+        27,
+        42,
+        35,
+        25,
+        44,
+        22,
+        13,
+        33,
+        21,
+        29,
+        21,
+        23,
+        30,
+        28,
+        31,
+        34,
+        27,
+        27,
+        40,
+        25,
+        30,
+        26,
+        35,
+        21,
+        26,
+        23,
+        25,
+        25,
+        34,
+        29,
+        31,
+        19,
+        34,
+        21,
+        19,
+        23,
+        27,
+        8,
+        21,
+        20,
+        14,
+        16,
+        13,
+        20,
+        21,
+        23,
+        20,
+        25,
+        21,
+        22,
+        32,
+        19,
+        27,
+        20,
+        16,
+        20,
+        16
+      ],
+      "appended_action_distribution": [
+        {
+          "mechanics_choice": 1,
+          "global_action_index": 90,
+          "family": "appended_unboosted_air_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 2,
+          "global_action_index": 91,
+          "family": "appended_boosted_air_control",
+          "count": 33
+        },
+        {
+          "mechanics_choice": 3,
+          "global_action_index": 92,
+          "family": "appended_unboosted_air_control",
+          "count": 32
+        },
+        {
+          "mechanics_choice": 4,
+          "global_action_index": 93,
+          "family": "appended_boosted_air_control",
+          "count": 22
+        },
+        {
+          "mechanics_choice": 5,
+          "global_action_index": 94,
+          "family": "appended_unboosted_air_control",
+          "count": 41
+        },
+        {
+          "mechanics_choice": 6,
+          "global_action_index": 95,
+          "family": "appended_boosted_air_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 7,
+          "global_action_index": 96,
+          "family": "appended_unboosted_air_control",
+          "count": 31
+        },
+        {
+          "mechanics_choice": 8,
+          "global_action_index": 97,
+          "family": "appended_boosted_air_control",
+          "count": 36
+        },
+        {
+          "mechanics_choice": 9,
+          "global_action_index": 98,
+          "family": "appended_unboosted_air_control",
+          "count": 29
+        },
+        {
+          "mechanics_choice": 10,
+          "global_action_index": 99,
+          "family": "appended_boosted_air_control",
+          "count": 26
+        },
+        {
+          "mechanics_choice": 11,
+          "global_action_index": 100,
+          "family": "appended_unboosted_air_control",
+          "count": 28
+        },
+        {
+          "mechanics_choice": 12,
+          "global_action_index": 101,
+          "family": "appended_boosted_air_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 13,
+          "global_action_index": 102,
+          "family": "appended_unboosted_air_control",
+          "count": 42
+        },
+        {
+          "mechanics_choice": 14,
+          "global_action_index": 103,
+          "family": "appended_boosted_air_control",
+          "count": 35
+        },
+        {
+          "mechanics_choice": 15,
+          "global_action_index": 104,
+          "family": "appended_unboosted_air_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 16,
+          "global_action_index": 105,
+          "family": "appended_boosted_air_control",
+          "count": 44
+        },
+        {
+          "mechanics_choice": 17,
+          "global_action_index": 106,
+          "family": "appended_unboosted_air_control",
+          "count": 22
+        },
+        {
+          "mechanics_choice": 18,
+          "global_action_index": 107,
+          "family": "appended_boosted_air_control",
+          "count": 13
+        },
+        {
+          "mechanics_choice": 19,
+          "global_action_index": 108,
+          "family": "appended_unboosted_air_control",
+          "count": 33
+        },
+        {
+          "mechanics_choice": 20,
+          "global_action_index": 109,
+          "family": "appended_boosted_air_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 21,
+          "global_action_index": 110,
+          "family": "appended_unboosted_air_control",
+          "count": 29
+        },
+        {
+          "mechanics_choice": 22,
+          "global_action_index": 111,
+          "family": "appended_boosted_air_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 23,
+          "global_action_index": 112,
+          "family": "appended_unboosted_air_control",
+          "count": 23
+        },
+        {
+          "mechanics_choice": 24,
+          "global_action_index": 113,
+          "family": "appended_boosted_air_control",
+          "count": 30
+        },
+        {
+          "mechanics_choice": 25,
+          "global_action_index": 114,
+          "family": "appended_unboosted_air_control",
+          "count": 28
+        },
+        {
+          "mechanics_choice": 26,
+          "global_action_index": 115,
+          "family": "appended_boosted_air_control",
+          "count": 31
+        },
+        {
+          "mechanics_choice": 27,
+          "global_action_index": 116,
+          "family": "appended_unboosted_air_control",
+          "count": 34
+        },
+        {
+          "mechanics_choice": 28,
+          "global_action_index": 117,
+          "family": "appended_boosted_air_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 29,
+          "global_action_index": 118,
+          "family": "appended_unboosted_air_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 30,
+          "global_action_index": 119,
+          "family": "appended_boosted_air_control",
+          "count": 40
+        },
+        {
+          "mechanics_choice": 31,
+          "global_action_index": 120,
+          "family": "appended_unboosted_air_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 32,
+          "global_action_index": 121,
+          "family": "appended_boosted_air_control",
+          "count": 30
+        },
+        {
+          "mechanics_choice": 33,
+          "global_action_index": 122,
+          "family": "appended_unboosted_air_control",
+          "count": 26
+        },
+        {
+          "mechanics_choice": 34,
+          "global_action_index": 123,
+          "family": "appended_boosted_air_control",
+          "count": 35
+        },
+        {
+          "mechanics_choice": 35,
+          "global_action_index": 124,
+          "family": "appended_unboosted_air_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 36,
+          "global_action_index": 125,
+          "family": "appended_boosted_air_control",
+          "count": 26
+        },
+        {
+          "mechanics_choice": 37,
+          "global_action_index": 126,
+          "family": "appended_unboosted_air_control",
+          "count": 23
+        },
+        {
+          "mechanics_choice": 38,
+          "global_action_index": 127,
+          "family": "appended_boosted_air_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 39,
+          "global_action_index": 128,
+          "family": "appended_unboosted_air_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 40,
+          "global_action_index": 129,
+          "family": "appended_boosted_air_control",
+          "count": 34
+        },
+        {
+          "mechanics_choice": 41,
+          "global_action_index": 130,
+          "family": "appended_unboosted_air_control",
+          "count": 29
+        },
+        {
+          "mechanics_choice": 42,
+          "global_action_index": 131,
+          "family": "appended_boosted_air_control",
+          "count": 31
+        },
+        {
+          "mechanics_choice": 43,
+          "global_action_index": 132,
+          "family": "appended_unboosted_air_control",
+          "count": 19
+        },
+        {
+          "mechanics_choice": 44,
+          "global_action_index": 133,
+          "family": "appended_boosted_air_control",
+          "count": 34
+        },
+        {
+          "mechanics_choice": 45,
+          "global_action_index": 134,
+          "family": "appended_unboosted_air_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 46,
+          "global_action_index": 135,
+          "family": "appended_boosted_air_control",
+          "count": 19
+        },
+        {
+          "mechanics_choice": 47,
+          "global_action_index": 136,
+          "family": "appended_unboosted_air_control",
+          "count": 23
+        },
+        {
+          "mechanics_choice": 48,
+          "global_action_index": 137,
+          "family": "appended_boosted_air_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 49,
+          "global_action_index": 138,
+          "family": "appended_jump_dodge_control",
+          "count": 8
+        },
+        {
+          "mechanics_choice": 50,
+          "global_action_index": 139,
+          "family": "appended_jump_dodge_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 51,
+          "global_action_index": 140,
+          "family": "appended_jump_dodge_control",
+          "count": 20
+        },
+        {
+          "mechanics_choice": 52,
+          "global_action_index": 141,
+          "family": "appended_jump_dodge_control",
+          "count": 14
+        },
+        {
+          "mechanics_choice": 53,
+          "global_action_index": 142,
+          "family": "appended_jump_dodge_control",
+          "count": 16
+        },
+        {
+          "mechanics_choice": 54,
+          "global_action_index": 143,
+          "family": "appended_jump_dodge_control",
+          "count": 13
+        },
+        {
+          "mechanics_choice": 55,
+          "global_action_index": 144,
+          "family": "appended_jump_dodge_control",
+          "count": 20
+        },
+        {
+          "mechanics_choice": 56,
+          "global_action_index": 145,
+          "family": "appended_jump_dodge_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 57,
+          "global_action_index": 146,
+          "family": "appended_jump_dodge_control",
+          "count": 23
+        },
+        {
+          "mechanics_choice": 58,
+          "global_action_index": 147,
+          "family": "appended_jump_dodge_control",
+          "count": 20
+        },
+        {
+          "mechanics_choice": 59,
+          "global_action_index": 148,
+          "family": "appended_jump_dodge_control",
+          "count": 25
+        },
+        {
+          "mechanics_choice": 60,
+          "global_action_index": 149,
+          "family": "appended_jump_dodge_control",
+          "count": 21
+        },
+        {
+          "mechanics_choice": 61,
+          "global_action_index": 150,
+          "family": "appended_jump_dodge_control",
+          "count": 22
+        },
+        {
+          "mechanics_choice": 62,
+          "global_action_index": 151,
+          "family": "appended_jump_dodge_control",
+          "count": 32
+        },
+        {
+          "mechanics_choice": 63,
+          "global_action_index": 152,
+          "family": "appended_jump_dodge_control",
+          "count": 19
+        },
+        {
+          "mechanics_choice": 64,
+          "global_action_index": 153,
+          "family": "appended_jump_dodge_control",
+          "count": 27
+        },
+        {
+          "mechanics_choice": 65,
+          "global_action_index": 154,
+          "family": "appended_jump_dodge_control",
+          "count": 20
+        },
+        {
+          "mechanics_choice": 66,
+          "global_action_index": 155,
+          "family": "appended_jump_dodge_control",
+          "count": 16
+        },
+        {
+          "mechanics_choice": 67,
+          "global_action_index": 156,
+          "family": "appended_jump_dodge_control",
+          "count": 20
+        },
+        {
+          "mechanics_choice": 68,
+          "global_action_index": 157,
+          "family": "appended_jump_dodge_control",
+          "count": 16
+        }
+      ]
+    },
+    "rollout_metrics": {
+      "schema_version": 1,
+      "metric_vector_count": 24785,
+      "reward_components": {
+        "outcome": {
+          "count": 49570,
+          "mean": 0.0,
+          "absolute_mean": 0.011700625378252975,
+          "minimum": -10.0,
+          "maximum": 10.0,
+          "cumulative_signed": 0.0,
+          "cumulative_absolute": 580.0,
+          "share_of_total_absolute_shaping": 0.0
+        },
+        "possession": {
+          "count": 49570,
+          "mean": 0.002530755144719614,
+          "absolute_mean": 0.002530755144719614,
+          "minimum": 0.0,
+          "maximum": 0.15840205550193787,
+          "cumulative_signed": 125.44953252375126,
+          "cumulative_absolute": 125.44953252375126,
+          "share_of_total_absolute_shaping": 0.7283365962748767
+        },
+        "progress": {
+          "count": 49570,
+          "mean": 0.0,
+          "absolute_mean": 0.0006590253845595919,
+          "minimum": -0.0022436645813286304,
+          "maximum": 0.0022436645813286304,
+          "cumulative_signed": 0.0,
+          "cumulative_absolute": 32.66788831261897,
+          "share_of_total_absolute_shaping": 0.1896636687473983
+        },
+        "boost_efficiency": {
+          "count": 49570,
+          "mean": -6.919430624632336e-06,
+          "absolute_mean": 6.919430624632336e-06,
+          "minimum": -0.003038229653611779,
+          "maximum": 0.0,
+          "cumulative_signed": -0.3429961760630249,
+          "cumulative_absolute": 0.3429961760630249,
+          "share_of_total_absolute_shaping": 0.001991371847971967
+        },
+        "recovery": {
+          "count": 49570,
+          "mean": 0.00024879427917191935,
+          "absolute_mean": 0.00024879427917191935,
+          "minimum": 0.0,
+          "maximum": 0.029921337962150574,
+          "cumulative_signed": 12.332732418552041,
+          "cumulative_absolute": 12.332732418552041,
+          "share_of_total_absolute_shaping": 0.07160154503402709
+        },
+        "mechanics_resource": {
+          "count": 49570,
+          "mean": 2.9211216702958087e-05,
+          "absolute_mean": 2.9211216702958087e-05,
+          "minimum": 0.0,
+          "maximum": 0.004999999888241291,
+          "cumulative_signed": 1.4480000119656324,
+          "cumulative_absolute": 1.4480000119656324,
+          "share_of_total_absolute_shaping": 0.00840681809572592
+        }
+      },
+      "mechanics_recovery": {
+        "airborne_dodge_uses": {
+          "count": 49570,
+          "mean": 0.013516239661085333,
+          "absolute_mean": 0.013516239661085333,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 670.0,
+          "cumulative_absolute": 670.0
+        },
+        "dodge_resource_acquisitions": {
+          "count": 49570,
+          "mean": 8.06939681258826e-05,
+          "absolute_mean": 8.06939681258826e-05,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 4.0,
+          "cumulative_absolute": 4.0
+        },
+        "productive_resource_followups": {
+          "count": 49570,
+          "mean": 0.0,
+          "absolute_mean": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0,
+          "cumulative_signed": 0.0,
+          "cumulative_absolute": 0.0
+        },
+        "wavedash_like_events": {
+          "count": 49570,
+          "mean": 0.0005245107928182368,
+          "absolute_mean": 0.0005245107928182368,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 26.0,
+          "cumulative_absolute": 26.0
+        },
+        "wall_speed_recovery_events": {
+          "count": 49570,
+          "mean": 0.0001613879362517652,
+          "absolute_mean": 0.0001613879362517652,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 8.0,
+          "cumulative_absolute": 8.0
+        },
+        "aerial_boost_spent": {
+          "count": 49570,
+          "mean": 0.0016741531245200816,
+          "absolute_mean": 0.0016741531245200816,
+          "minimum": 0.0,
+          "maximum": 0.30382296442985535,
+          "cumulative_signed": 82.98777038246044,
+          "cumulative_absolute": 82.98777038246044
+        },
+        "aerial_useful_distance": {
+          "count": 49570,
+          "mean": 9.443232561288063,
+          "absolute_mean": 9.443232561288063,
+          "minimum": 0.0,
+          "maximum": 831.1572265625,
+          "cumulative_signed": 468101.0380630493,
+          "cumulative_absolute": 468101.0380630493
+        },
+        "aerial_useful_touches": {
+          "count": 49570,
+          "mean": 0.009078071414161792,
+          "absolute_mean": 0.009078071414161792,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 450.0,
+          "cumulative_absolute": 450.0
+        },
+        "aerial_commitment_ends": {
+          "count": 49570,
+          "mean": 0.014545087754690336,
+          "absolute_mean": 0.014545087754690336,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 721.0,
+          "cumulative_absolute": 721.0
+        },
+        "aerial_end_boost": {
+          "count": 49570,
+          "mean": 0.48818855768121105,
+          "absolute_mean": 0.48818855768121105,
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "cumulative_signed": 24199.50680425763,
+          "cumulative_absolute": 24199.50680425763
+        },
+        "recovery_window_starts": {
+          "count": 49570,
+          "mean": 0.010409521888238854,
+          "absolute_mean": 0.010409521888238854,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 516.0,
+          "cumulative_absolute": 516.0
+        },
+        "recovery_completions": {
+          "count": 49570,
+          "mean": 0.009844664111357676,
+          "absolute_mean": 0.009844664111357676,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 488.0,
+          "cumulative_absolute": 488.0
+        },
+        "recovery_time_seconds": {
+          "count": 49570,
+          "mean": 0.010143904225847787,
+          "absolute_mean": 0.010143904225847787,
+          "minimum": 0.0,
+          "maximum": 6.433333396911621,
+          "cumulative_signed": 502.8333324752748,
+          "cumulative_absolute": 502.8333324752748
+        },
+        "recovery_concessions": {
+          "count": 49570,
+          "mean": 0.0005245107928182368,
+          "absolute_mean": 0.0005245107928182368,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "cumulative_signed": 26.0,
+          "cumulative_absolute": 26.0
+        }
+      },
+      "curriculum_reset_counts": {
+        "natural": 28,
+        "aerial_wall_possession": 1,
+        "recovery": 0,
+        "low_resource_aerial": 0
+      },
+      "curriculum_reset_shares": {
+        "natural": 0.9655172413793104,
+        "aerial_wall_possession": 0.034482758620689655,
+        "recovery": 0.0,
+        "low_resource_aerial": 0.0
+      },
+      "goals": {
+        "blue": 13,
+        "orange": 16
+      },
+      "dual_rate": {
+        "decision_agent_records": 49570,
+        "requested_pass": 47818,
+        "requested_override": 1752,
+        "applied_override": 1752,
+        "strategic_boundaries": 24796,
+        "override_window_agent_records": 31951,
+        "useful_touches_after_override": 288,
+        "goals_for_after_override": 21,
+        "goals_against_after_override": 17,
+        "requested_pass_share": 0.9646560419608634,
+        "requested_override_share": 0.03534395803913658,
+        "applied_override_share": 0.03534395803913658,
+        "override_context_counts": {
+          "ground_near_ball": 300,
+          "airborne": 341,
+          "wall_or_ceiling": 145,
+          "awkward_recovery": 640,
+          "other": 326
+        },
+        "override_context_shares": {
+          "ground_near_ball": 0.17123287671232876,
+          "airborne": 0.19463470319634704,
+          "wall_or_ceiling": 0.08276255707762557,
+          "awkward_recovery": 0.365296803652968,
+          "other": 0.1860730593607306
+        },
+        "short_window_definition": "most-recent applied override, through 30 subsequent mechanics decisions or until replaced/reset"
+      }
+    },
+    "ppo": {
+      "PPO Batch Consumption Time": 0.025505542755126953,
+      "Cumulative Model Updates": 288,
+      "Policy Entropy": 0.3006739517052968,
+      "Mean KL Divergence": 1.905706866030717e-05,
+      "Value Function Loss": 0.7962505370378494,
+      "SB3 Clip Fraction": 0.0,
+      "Policy Update Magnitude": 0.017119022086262703,
+      "Value Function Update Magnitude": 0.06899625808000565
+    },
+    "health": {
+      "all_metrics_finite": true,
+      "policy_updated": true,
+      "sampled_override_bounded": true,
+      "passed": true
+    }
+  },
+  "checkpoint_manifests": [
+    {
+      "directory": "training/checkpoints/milestone08/004999790",
+      "files": {
+        "PPO_POLICY.pt": {
+          "size_bytes": 786037,
+          "sha256": "7f462f4378a5bc71103919209da69a30826dc33eed36d3996556f14703624e9c"
+        },
+        "PPO_POLICY_OPTIMIZER.pt": {
+          "size_bytes": 1572829,
+          "sha256": "bb9a8055a1d19a39784bbf0a8b995f1779155b0b5a6b7e33e49cbd7c39b10c7c"
+        },
+        "PPO_VALUE_NET.pt": {
+          "size_bytes": 710813,
+          "sha256": "acfdb6689543acbd0af8f1d56f38888501a185a0d0a6665798a2c258116932ef"
+        },
+        "PPO_VALUE_NET_OPTIMIZER.pt": {
+          "size_bytes": 1421805,
+          "sha256": "eced7ac256908d7ec2d2126975b5185fbbf51c89091104dfa8372aed8afb8c1c"
+        },
+        "RIVAL_M08_STATE.json": {
+          "size_bytes": 2497,
+          "sha256": "060984a31b0f495ea08b1cdd66b96fd102a35b68a47d676e3012c2d815bbe675"
+        }
+      },
+      "trainer_state": {
+        "format": "rival-milestone08-full-ppo-v1",
+        "schema_version": 1,
+        "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+        "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+        "completed_iterations": 100,
+        "cumulative_agent_steps": 4999790,
+        "requested_boundary_agent_steps": 5000000,
+        "cumulative_model_updates": 288,
+        "worker_count": 56,
+        "policy_average_reward": 0.0027990678925482386,
+        "source_checkpoint": "training/checkpoints/milestone08/001999776",
+        "mechanics_prior": {
+          "version": "RivalMechanicsPolicyV1",
+          "action_count": 69,
+          "pass_index": 0,
+          "pass_output_bias": 6.315311431884766
+        },
+        "worker_transition_history": [
+          {
+            "evidence_path": "training/results/milestone08/worker_fallback_000500000.json",
+            "evidence_sha256": "ae1bc136a4301759a575c8e6efc068be7965b03d6838683ab09d8333210c8b6c",
+            "from_worker_count": 64,
+            "to_worker_count": 56,
+            "source_checkpoint_agent_steps": 499748,
+            "checks": {
+              "status_authorized": true,
+              "source_steps_match": true,
+              "from_workers_match": true,
+              "to_workers_match": true,
+              "no_steps_collected_during_failed_launch": true
+            }
+          }
+        ],
+        "mechanics_usage_adjustment_history": [
+          {
+            "evidence_path": "training/results/milestone08/mechanics_usage_adjustment_002m.json",
+            "evidence_sha256": "a3fc704c420a7b70e365366689a6d0e72a8007c7647cd6922f39afacc89b8f01",
+            "source_checkpoint_agent_steps": 1999776,
+            "source_bias": 7.719589710235596,
+            "pass_bias_delta": -1.4103919863700867,
+            "adjusted_bias": 6.309197425842285,
+            "target_mean_override_probability": 0.1,
+            "measured_before_mean_override_probability": 0.026404667645692825,
+            "measured_after_mean_override_probability": 0.10000002384185791,
+            "sampled_audit_override_rate": 0.09849999845027924,
+            "optimizer_state_preserved": true,
+            "checks": {
+              "status_authorized": true,
+              "source_steps_match": true,
+              "source_directory_match": true,
+              "source_files_match": true,
+              "config_hash_match": true,
+              "current_bias_match": true,
+              "finite_negative_delta": true,
+              "adjusted_bias_consistent": true,
+              "before_probability_consistent": true,
+              "after_probability_bounded": true,
+              "sampled_rate_bounded": true,
+              "source_not_previously_adjusted": true
+            }
+          }
+        ]
+      },
+      "fresh_reload_proof": {
+        "fresh_instance": true,
+        "exact_logits": true,
+        "max_abs_logit_error": 0.0,
+        "policy_optimizer_state_loaded": true,
+        "critic_optimizer_state_loaded": true,
+        "state_file_parse_passed": true,
+        "mechanics_state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c"
+      }
+    }
+  ],
+  "latest_checkpoint": {
+    "directory": "training/checkpoints/milestone08/004999790",
+    "files": {
+      "PPO_POLICY.pt": {
+        "size_bytes": 786037,
+        "sha256": "7f462f4378a5bc71103919209da69a30826dc33eed36d3996556f14703624e9c"
+      },
+      "PPO_POLICY_OPTIMIZER.pt": {
+        "size_bytes": 1572829,
+        "sha256": "bb9a8055a1d19a39784bbf0a8b995f1779155b0b5a6b7e33e49cbd7c39b10c7c"
+      },
+      "PPO_VALUE_NET.pt": {
+        "size_bytes": 710813,
+        "sha256": "acfdb6689543acbd0af8f1d56f38888501a185a0d0a6665798a2c258116932ef"
+      },
+      "PPO_VALUE_NET_OPTIMIZER.pt": {
+        "size_bytes": 1421805,
+        "sha256": "eced7ac256908d7ec2d2126975b5185fbbf51c89091104dfa8372aed8afb8c1c"
+      },
+      "RIVAL_M08_STATE.json": {
+        "size_bytes": 2497,
+        "sha256": "060984a31b0f495ea08b1cdd66b96fd102a35b68a47d676e3012c2d815bbe675"
+      }
+    },
+    "trainer_state": {
+      "format": "rival-milestone08-full-ppo-v1",
+      "schema_version": 1,
+      "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+      "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+      "completed_iterations": 100,
+      "cumulative_agent_steps": 4999790,
+      "requested_boundary_agent_steps": 5000000,
+      "cumulative_model_updates": 288,
+      "worker_count": 56,
+      "policy_average_reward": 0.0027990678925482386,
+      "source_checkpoint": "training/checkpoints/milestone08/001999776",
+      "mechanics_prior": {
+        "version": "RivalMechanicsPolicyV1",
+        "action_count": 69,
+        "pass_index": 0,
+        "pass_output_bias": 6.315311431884766
+      },
+      "worker_transition_history": [
+        {
+          "evidence_path": "training/results/milestone08/worker_fallback_000500000.json",
+          "evidence_sha256": "ae1bc136a4301759a575c8e6efc068be7965b03d6838683ab09d8333210c8b6c",
+          "from_worker_count": 64,
+          "to_worker_count": 56,
+          "source_checkpoint_agent_steps": 499748,
+          "checks": {
+            "status_authorized": true,
+            "source_steps_match": true,
+            "from_workers_match": true,
+            "to_workers_match": true,
+            "no_steps_collected_during_failed_launch": true
+          }
+        }
+      ],
+      "mechanics_usage_adjustment_history": [
+        {
+          "evidence_path": "training/results/milestone08/mechanics_usage_adjustment_002m.json",
+          "evidence_sha256": "a3fc704c420a7b70e365366689a6d0e72a8007c7647cd6922f39afacc89b8f01",
+          "source_checkpoint_agent_steps": 1999776,
+          "source_bias": 7.719589710235596,
+          "pass_bias_delta": -1.4103919863700867,
+          "adjusted_bias": 6.309197425842285,
+          "target_mean_override_probability": 0.1,
+          "measured_before_mean_override_probability": 0.026404667645692825,
+          "measured_after_mean_override_probability": 0.10000002384185791,
+          "sampled_audit_override_rate": 0.09849999845027924,
+          "optimizer_state_preserved": true,
+          "checks": {
+            "status_authorized": true,
+            "source_steps_match": true,
+            "source_directory_match": true,
+            "source_files_match": true,
+            "config_hash_match": true,
+            "current_bias_match": true,
+            "finite_negative_delta": true,
+            "adjusted_bias_consistent": true,
+            "before_probability_consistent": true,
+            "after_probability_bounded": true,
+            "sampled_rate_bounded": true,
+            "source_not_previously_adjusted": true
+          }
+        }
+      ]
+    },
+    "fresh_reload_proof": {
+      "fresh_instance": true,
+      "exact_logits": true,
+      "max_abs_logit_error": 0.0,
+      "policy_optimizer_state_loaded": true,
+      "critic_optimizer_state_loaded": true,
+      "state_file_parse_passed": true,
+      "mechanics_state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c"
+    }
+  },
+  "raw_iteration_log": "training/results/raw/milestone08/iterations.jsonl",
+  "wall_seconds": 2651.5012922000606,
+  "production_promoted": false,
+  "health": {
+    "all_iterations_passed": true,
+    "strategic_unchanged": true,
+    "checkpoint_reload_exact": true,
+    "passed": true
+  }
+}

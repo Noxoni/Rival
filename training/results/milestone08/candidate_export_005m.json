@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "purpose": "milestone08_opt_in_dual_rate_rlbot_candidate",
+  "label": "005m",
+  "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+  "source_checkpoint": "training/checkpoints/milestone08/004999790",
+  "source_state": {
+    "format": "rival-milestone08-full-ppo-v1",
+    "schema_version": 1,
+    "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+    "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+    "completed_iterations": 100,
+    "cumulative_agent_steps": 4999790,
+    "requested_boundary_agent_steps": 5000000,
+    "cumulative_model_updates": 288,
+    "worker_count": 56,
+    "policy_average_reward": 0.0027990678925482386,
+    "source_checkpoint": "training/checkpoints/milestone08/001999776",
+    "mechanics_prior": {
+      "version": "RivalMechanicsPolicyV1",
+      "action_count": 69,
+      "pass_index": 0,
+      "pass_output_bias": 6.315311431884766
+    },
+    "worker_transition_history": [
+      {
+        "evidence_path": "training/results/milestone08/worker_fallback_000500000.json",
+        "evidence_sha256": "ae1bc136a4301759a575c8e6efc068be7965b03d6838683ab09d8333210c8b6c",
+        "from_worker_count": 64,
+        "to_worker_count": 56,
+        "source_checkpoint_agent_steps": 499748,
+        "checks": {
+          "status_authorized": true,
+          "source_steps_match": true,
+          "from_workers_match": true,
+          "to_workers_match": true,
+          "no_steps_collected_during_failed_launch": true
+        }
+      }
+    ],
+    "mechanics_usage_adjustment_history": [
+      {
+        "evidence_path": "training/results/milestone08/mechanics_usage_adjustment_002m.json",
+        "evidence_sha256": "a3fc704c420a7b70e365366689a6d0e72a8007c7647cd6922f39afacc89b8f01",
+        "source_checkpoint_agent_steps": 1999776,
+        "source_bias": 7.719589710235596,
+        "pass_bias_delta": -1.4103919863700867,
+        "adjusted_bias": 6.309197425842285,
+        "target_mean_override_probability": 0.1,
+        "measured_before_mean_override_probability": 0.026404667645692825,
+        "measured_after_mean_override_probability": 0.10000002384185791,
+        "sampled_audit_override_rate": 0.09849999845027924,
+        "optimizer_state_preserved": true,
+        "checks": {
+          "status_authorized": true,
+          "source_steps_match": true,
+          "source_directory_match": true,
+          "source_files_match": true,
+          "config_hash_match": true,
+          "current_bias_match": true,
+          "finite_negative_delta": true,
+          "adjusted_bias_consistent": true,
+          "before_probability_consistent": true,
+          "after_probability_bounded": true,
+          "sampled_rate_bounded": true,
+          "source_not_previously_adjusted": true
+        }
+      }
+    ]
+  },
+  "source_files": {
+    "PPO_POLICY.pt": {
+      "size_bytes": 786037,
+      "sha256": "7f462f4378a5bc71103919209da69a30826dc33eed36d3996556f14703624e9c"
+    },
+    "PPO_POLICY_OPTIMIZER.pt": {
+      "size_bytes": 1572829,
+      "sha256": "bb9a8055a1d19a39784bbf0a8b995f1779155b0b5a6b7e33e49cbd7c39b10c7c"
+    },
+    "PPO_VALUE_NET.pt": {
+      "size_bytes": 710813,
+      "sha256": "acfdb6689543acbd0af8f1d56f38888501a185a0d0a6665798a2c258116932ef"
+    },
+    "PPO_VALUE_NET_OPTIMIZER.pt": {
+      "size_bytes": 1421805,
+      "sha256": "eced7ac256908d7ec2d2126975b5185fbbf51c89091104dfa8372aed8afb8c1c"
+    },
+    "RIVAL_M08_STATE.json": {
+      "size_bytes": 2497,
+      "sha256": "060984a31b0f495ea08b1cdd66b96fd102a35b68a47d676e3012c2d815bbe675"
+    }
+  },
+  "mechanics_actor_state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c",
+  "torchscript_export": {
+    "path": "training/artifacts/milestone08/005m/mechanics_actor.ts",
+    "size_bytes": 797733,
+    "sha256": "43065e434f30f3e0cf8a868777b01970f8bd1d581b5bade6e89f90f38adc2cce",
+    "state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c",
+    "fresh_reload_exact_logits": true,
+    "output_shape": [
+      4,
+      69
+    ]
+  },
+  "randomized_logit_parity": {
+    "sample_count": 256,
+    "input_shape": [
+      256,
+      432
+    ],
+    "output_shape": [
+      256,
+      69
+    ],
+    "checkpoint_policy_to_actor_exact": true,
+    "actor_to_torchscript_exact": true,
+    "actor_to_torchscript_max_abs_error": 0.0,
+    "all_logits_finite": true,
+    "passed": true
+  },
+  "action_contract": {
+    "schema_version": 1,
+    "action_table_version": "RivalExpandedActionV1",
+    "controller_fields": [
+      "throttle",
+      "steer",
+      "pitch",
+      "yaw",
+      "roll",
+      "jump",
+      "boost",
+      "handbrake"
+    ],
+    "serialization": "row-major little-endian float32 bytes",
+    "wisp_prefix_count": 90,
+    "advanced_candidate_count": 156,
+    "appended_unique_count": 68,
+    "expanded_action_count": 158,
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "advanced_parameters": {
+      "torque_subdivisions": 3,
+      "flip_bins": 16,
+      "include_stalls": true
+    },
+    "cadence_modes": {
+      "legacy8": 8,
+      "mechanics4": 4
+    }
+  },
+  "action_table": {
+    "path": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "size_bytes": 5184,
+    "file_sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "shape": [
+      158,
+      8
+    ],
+    "exact_generated_reload": true,
+    "wisp_prefix_exact": true,
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "expected_wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expected_expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "mechanics_mapping": {
+      "pass_choice": 0,
+      "choice_1_global_action": 90,
+      "choice_68_global_action": 157
+    },
+    "passed": true
+  },
+  "strategic_branch": {
+    "artifacts": {
+      "wisp_policy": {
+        "path": "bot/models/POLICY.lt",
+        "sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "unchanged": true
+      },
+      "wisp_shared_head": {
+        "path": "bot/models/SHARED_HEAD.lt",
+        "sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "unchanged": true
+      },
+      "zero_step_torchscript": {
+        "path": "training/artifacts/milestone07/zero_step_actor.ts",
+        "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "expected_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true,
+    "optimizer_contains_strategic_parameters": false,
+    "architecture_reason": "The strategic actor is instantiated only inside environment workers; the central PPO policy contains MechanicsActor parameters exclusively."
+  },
+  "cadence_contract": {
+    "strategic_ticks": 8,
+    "mechanics_ticks": 4,
+    "strategic_schedule": [
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "new",
+      "new",
+      "new"
+    ],
+    "mechanics_schedule": [
+      "previous",
+      "new",
+      "new",
+      "new"
+    ]
+  },
+  "runtime_mode": "opt_in_candidate_only",
+  "rlbot_environment": {
+    "RIVAL_M08_DUAL_RATE_ENABLED": "1",
+    "RIVAL_M08_MECHANICS_FORCE_PASS": "0",
+    "RIVAL_M08_MECHANICS_MODEL_PATH": "training/artifacts/milestone08/005m/mechanics_actor.ts",
+    "RIVAL_M08_ACTION_TABLE_PATH": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "RIVAL_M08_MECHANICS_DETERMINISTIC": "1",
+    "RIVAL_TICK_SKIP": "8"
+  },
+  "gates": {
+    "source_checkpoint_config_exact": true,
+    "mechanics_output_count_exact": true,
+    "randomized_export_reload_exact": true,
+    "action_table_and_prefix_exact": true,
+    "strategic_branch_unchanged": true,
+    "production_promotion_forbidden": true
+  },
+  "production_default": "frozen_wisp_unchanged",
+  "production_promoted": false
+}

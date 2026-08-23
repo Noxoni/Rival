@@ -53,8 +53,8 @@ versus override controller-source counts when it exits:
 
 ```powershell
 training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py `
-  --checkpoint training/artifacts/milestone08/001m/mechanics_actor.ts `
-  --opponent frozen-wisp --tick-skip 4
+  --checkpoint training/artifacts/milestone08/005m/mechanics_actor.ts `
+  --opponent frozen-wisp --tick-skip auto
 ```
 
 Rendering remains optional and disabled by default; this command launches exactly one

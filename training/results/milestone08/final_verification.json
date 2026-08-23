@@ -1,0 +1,380 @@
+{
+  "architecture_gates": {
+    "forced_pass_exact": true,
+    "held_first_90_exact_samples": 1276,
+    "mechanics_mapping": "PASS plus global action indices 90 through 157",
+    "mechanics_outputs": 69,
+    "mechanics_schedule": [
+      "previous_emitted",
+      "selected",
+      "selected",
+      "selected"
+    ],
+    "observation_contract": {
+      "directly_representable_max_abs_error": 4.76837158203125e-07,
+      "hard_minimum": 0.97,
+      "held_live_samples": 1276,
+      "masked_top1_agreement": 0.9866771159874608,
+      "maximum_single_group_top1_materiality": 0.007836990595611285,
+      "mean_js_divergence_nats": 0.00031416436094917834,
+      "passed": true,
+      "target": 0.99,
+      "target_reached": false
+    },
+    "randomized_first_90_exact_samples": 4096,
+    "strategic_optimizer_parameters": 0,
+    "strategic_schedule": [
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "selected",
+      "selected",
+      "selected"
+    ]
+  },
+  "deployment": {
+    "candidate_runtime": "opt_in_candidate_only",
+    "production_policy": "frozen_wisp_unchanged",
+    "production_promoted": false,
+    "rlviser_optional_separate_process_smoke": {
+      "action_count": 69,
+      "control_mode": "dual_rate_pass_or_override",
+      "headless_environment_modified": false,
+      "physics_tick_rate_hz": 120,
+      "policy": {
+        "kind": "torchscript_actor",
+        "path": "training/artifacts/milestone08/005m/mechanics_actor.ts",
+        "sha256": "43065e434f30f3e0cf8a868777b01970f8bd1d581b5bade6e89f90f38adc2cce"
+      },
+      "renderer": "rlgym.rocket_league.rlviser.rlviser_renderer.RLViserRenderer",
+      "reset_agent_count": 2,
+      "rlviser_binary": {
+        "path": "training/tools/rlviser/rlviser.exe",
+        "sha256": "518a04f711c68de81008a51cb90a61808847d11a0ce8a102a87017cf6f94f8ad",
+        "size_bytes": 48323072,
+        "version": "0.8.2"
+      },
+      "rlviser_py": "0.6.13",
+      "schema_version": 1,
+      "separate_process": true,
+      "single_environment": true,
+      "spectator_version": "RivalRLViserSpectatorV2",
+      "status": "passed",
+      "step_observation_shapes": {
+        "blue-0": [
+          432
+        ],
+        "orange-0": [
+          432
+        ]
+      },
+      "tick_skip": 4
+    },
+    "torchscript_export": {
+      "fresh_reload_exact_logits": true,
+      "output_shape": [
+        4,
+        69
+      ],
+      "path": "training/artifacts/milestone08/005m/mechanics_actor.ts",
+      "sha256": "43065e434f30f3e0cf8a868777b01970f8bd1d581b5bade6e89f90f38adc2cce",
+      "size_bytes": 797733,
+      "state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c"
+    }
+  },
+  "mechanics_usage": {
+    "adjustment_after_mean_override_probability": 0.10000002384185791,
+    "adjustment_before_mean_override_probability": 0.026404667645692825,
+    "adjustment_sampled_audit_override_rate": 0.09849999845027924,
+    "adjustment_source_steps": 1999776,
+    "adjustment_target_mean_override_probability": 0.1,
+    "conclusion": "Sampled mechanics exposure was measurable, but deterministic use remained zero and the learned policy moved back toward PASS.",
+    "final_headless_deterministic_override_rate": 0.0,
+    "final_headless_mean_override_probability": 0.03453282946800451,
+    "final_iteration_sampled_override_rate": 0.03535190200913611,
+    "final_rlbot_deterministic_overrides": 0,
+    "final_rlbot_mechanics_decisions": 43704,
+    "first_post_adjustment_iteration_sampled_override_rate": 0.0996480422349318,
+    "initial_calibrated_mean_override_probability": 0.030000003054738045,
+    "initial_sampled_override_rate": 0.030400000512599945,
+    "original_prior_corpus_bytes_available_locally": false,
+    "post_adjustment_leg_sampled_override_rate": 0.060504617028737454
+  },
+  "preservation": {
+    "artifact_incident_report": "training/results/milestone08/artifact_preservation_incident.json",
+    "campaign_checkpoints_exports_and_telemetry_unaffected": true,
+    "initial_actor_checkpoint_recovered_byte_exact": true,
+    "large_checkpoints_exports_datasets_and_raw_telemetry_ignored": true,
+    "m06_20m_actor_role": "rejected_diagnostic_only",
+    "original_initial_torchscript_archive_available_locally": false,
+    "original_prior_corpus_available_locally": false,
+    "paused_strategy_stash": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "two_million_pre_adjustment_checkpoint_preserved": true
+  },
+  "repository_sync": {
+    "branch": "main",
+    "merge_base": "0642742c17e5abc8476d3487185b264e2446cb68",
+    "origin": "https://github.com/Noxoni/Rival.git",
+    "origin_main_before_final_commit": "0642742c17e5abc8476d3487185b264e2446cb68",
+    "post_push_remote_readback": "reported after the final push to avoid a self-referential commit"
+  },
+  "rlbot_transfer": {
+    "accelerated_001m_stress_result": "failed strict host-scheduling cadence at game speed 5; retained, not used to overwrite the prospective native-rate result",
+    "cadence_decision_is_score_independent": true,
+    "candidate_001m_native_rate": {
+      "complete": 4,
+      "completed_match_results": 4,
+      "games": 4,
+      "goal_differential": -4,
+      "goals_against": 16,
+      "goals_for": 12,
+      "losses": 4,
+      "runtime_clean": 4,
+      "ties": 0,
+      "wins": 0
+    },
+    "candidate_005m_native_rate": {
+      "complete": 4,
+      "completed_match_results": 4,
+      "games": 4,
+      "goal_differential": -4,
+      "goals_against": 14,
+      "goals_for": 10,
+      "losses": 3,
+      "runtime_clean": 4,
+      "ties": 0,
+      "wins": 1
+    },
+    "final_native_rate_cadence": {
+      "all_sessions_passed": true,
+      "mechanics_decisions": 43704,
+      "mechanics_modal_interval_ticks": 4,
+      "minimum_mechanics_within_one_tick_rate": 0.9994650976196844,
+      "minimum_strategic_within_one_tick_rate": 0.9995841995841996,
+      "minimum_two_to_one_clock_ratio": 0.9995845450768591,
+      "strategic_modal_interval_ticks": 8
+    },
+    "forced_pass_zero_step": {
+      "complete": 4,
+      "completed_match_results": 4,
+      "games": 4,
+      "goal_differential": -4,
+      "goals_against": 22,
+      "goals_for": 18,
+      "losses": 3,
+      "runtime_clean": 4,
+      "ties": 0,
+      "wins": 1
+    },
+    "mechanics_learning_demonstrated": false,
+    "score_role": "bounded severe-regression context only",
+    "severe_regression_gate_passed": true
+  },
+  "schema_version": 1,
+  "source_head_before_final_commit": "0642742c17e5abc8476d3487185b264e2446cb68",
+  "static_verification": {
+    "action_prefix_rows_exact": 90,
+    "calibration_help_side_effect_free": "passed",
+    "calibration_overwrite_guard": "enabled",
+    "compileall_production_tests_training_scripts": "passed",
+    "frozen_hash_checks": "passed",
+    "git_diff_check": "passed",
+    "milestone08_json_reports_parsed_before_manifest": 30,
+    "repository_wide_ruff": "passed"
+  },
+  "status": "completed_with_artifact_preservation_limitation",
+  "tests": {
+    "root_full_pytest": {
+      "command": ".venv/Scripts/python.exe -m pytest tests -q --basetemp .tmp/pytest-m08-final-production-3",
+      "failed": 0,
+      "passed": 87,
+      "warnings": 2
+    },
+    "training_full_pytest": {
+      "command": "training/.venv/Scripts/python.exe -m pytest training/tests -q --basetemp .tmp/pytest-m08-final-training-3",
+      "failed": 0,
+      "passed": 43,
+      "warnings": 43
+    }
+  },
+  "throughput_and_worker_selection": {
+    "effective_campaign_worker_count": 56,
+    "fallback_reason": {
+      "summary": "Windows commit/paging capacity was exhausted while worker processes concurrently loaded Torch CUDA DLLs during the 1M resume launch. The learner did not initialize and no PPO iteration began.",
+      "type": "OSError",
+      "windows_error": 1455
+    },
+    "m06_reference_agent_steps_per_second": 12039.091910850184,
+    "m06_reference_worker_count": 56,
+    "m08_short_sanity": [
+      {
+        "agent_steps_per_second": 1185.1850174524507,
+        "rate_cv": 0.043121781245489516,
+        "stable": true,
+        "worker_rss_mib": 26912.899140625,
+        "workers": 48
+      },
+      {
+        "agent_steps_per_second": 1197.2951988617824,
+        "rate_cv": 0.05491631600840871,
+        "stable": true,
+        "worker_rss_mib": 31389.207540760868,
+        "workers": 56
+      },
+      {
+        "agent_steps_per_second": 1208.196974479411,
+        "rate_cv": 0.052126117178100694,
+        "stable": true,
+        "worker_rss_mib": 35888.88332201087,
+        "workers": 64
+      }
+    ],
+    "post_adjustment_iteration_agent_steps_per_second": {
+      "count": 60,
+      "maximum": 1185.1947759242862,
+      "mean": 1152.8786840019295,
+      "minimum": 1094.9986221529502
+    },
+    "short_sanity_winner": 64
+  },
+  "training": {
+    "actual_final_agent_steps": 4999790,
+    "all_iterations_healthy": true,
+    "authorized_ceiling_agent_steps": 5000000,
+    "boundaries": [
+      {
+        "cumulative_agent_steps": 0,
+        "cumulative_model_updates": 0,
+        "deterministic_override_rate": 0.0,
+        "headless": {
+          "deterministic_override_rate": 0.0,
+          "games": 40,
+          "goal_differential": 0,
+          "goals_against": 20,
+          "goals_for": 20,
+          "health_passed": true,
+          "losses": 20,
+          "mean_override_probability": 0.029945178048959353,
+          "ties": 0,
+          "win_rate": 0.5,
+          "wins": 20
+        },
+        "label": "0",
+        "sampled_override_rate": 0.030400000512599945,
+        "sampled_override_rate_scope": "calibrated_natural_prior",
+        "strategic_unchanged": true
+      },
+      {
+        "cumulative_agent_steps": 499748,
+        "cumulative_model_updates": 27,
+        "deterministic_override_rate": 0.0,
+        "headless": {
+          "deterministic_override_rate": 0.0,
+          "games": 40,
+          "goal_differential": 4,
+          "goals_against": 18,
+          "goals_for": 22,
+          "health_passed": true,
+          "losses": 18,
+          "mean_override_probability": 0.029647603206574336,
+          "ties": 0,
+          "win_rate": 0.55,
+          "wins": 22
+        },
+        "label": "500k",
+        "sampled_override_rate": 0.029293820427477243,
+        "sampled_override_rate_scope": "training_invocation_aggregate",
+        "strategic_unchanged": true
+      },
+      {
+        "cumulative_agent_steps": 999822,
+        "cumulative_model_updates": 54,
+        "deterministic_override_rate": 0.0,
+        "headless": {
+          "deterministic_override_rate": 0.0,
+          "games": 40,
+          "goal_differential": -6,
+          "goals_against": 23,
+          "goals_for": 17,
+          "health_passed": true,
+          "losses": 23,
+          "mean_override_probability": 0.029634342378195844,
+          "ties": 0,
+          "win_rate": 0.425,
+          "wins": 17
+        },
+        "label": "1M",
+        "sampled_override_rate": 0.029310310290258608,
+        "sampled_override_rate_scope": "training_invocation_aggregate",
+        "strategic_unchanged": true
+      },
+      {
+        "cumulative_agent_steps": 1999776,
+        "cumulative_model_updates": 111,
+        "deterministic_override_rate": 0.0,
+        "headless": {
+          "deterministic_override_rate": 0.0,
+          "games": 40,
+          "goal_differential": 8,
+          "goals_against": 16,
+          "goals_for": 24,
+          "health_passed": true,
+          "losses": 16,
+          "mean_override_probability": 0.02638540594988914,
+          "ties": 0,
+          "win_rate": 0.6,
+          "wins": 24
+        },
+        "label": "2M",
+        "sampled_override_rate": 0.02902778556945591,
+        "sampled_override_rate_scope": "training_invocation_aggregate",
+        "strategic_unchanged": true
+      },
+      {
+        "cumulative_agent_steps": 4999790,
+        "cumulative_model_updates": 288,
+        "deterministic_override_rate": 0.0,
+        "headless": {
+          "deterministic_override_rate": 0.0,
+          "games": 40,
+          "goal_differential": 2,
+          "goals_against": 19,
+          "goals_for": 21,
+          "health_passed": true,
+          "losses": 19,
+          "mean_override_probability": 0.03453282946800451,
+          "ties": 0,
+          "win_rate": 0.525,
+          "wins": 21
+        },
+        "label": "5M",
+        "sampled_override_rate": 0.060504617028737454,
+        "sampled_override_rate_scope": "post_adjustment_2m_to_5m_invocation_aggregate",
+        "strategic_unchanged": true
+      }
+    ],
+    "cumulative_model_updates": 288,
+    "fresh_checkpoint_reload": {
+      "critic_optimizer_state_loaded": true,
+      "exact_logits": true,
+      "fresh_instance": true,
+      "max_abs_logit_error": 0.0,
+      "mechanics_state_sha256": "323e3bc09f9cdccb10c59f623610f73954302021cdcdb7927b80a61a47e5b66c",
+      "policy_optimizer_state_loaded": true,
+      "state_file_parse_passed": true
+    },
+    "strategic_branch_unchanged": true
+  },
+  "verdict": "partial_architecture_pass_learning_inconclusive",
+  "verdict_basis": {
+    "architecture_and_transfer_gates_passed": true,
+    "deterministic_mechanics_use_observed": false,
+    "exact_local_artifact_preservation_complete": false,
+    "meaningful_mechanics_skill_gain_demonstrated": false,
+    "production_promotion_authorized": false,
+    "sampled_mechanics_use_measurable": true
+  },
+  "verified_utc": "2026-08-23T08:35:55.721932+00:00"
+}

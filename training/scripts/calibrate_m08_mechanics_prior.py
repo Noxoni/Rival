@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 from pathlib import Path
@@ -69,15 +70,48 @@ def collect_natural_observations(count: int, seed: int) -> tuple[np.ndarray, dic
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Calibrate the M08 mechanics prior. Existing evidence is protected "
+            "unless --overwrite is supplied explicitly."
+        )
+    )
+    parser.add_argument(
+        "--overwrite",
+        action="store_true",
+        help="replace an existing corpus, actor, export, and compact report",
+    )
+    args = parser.parse_args()
+
+    dataset_path = (
+        REPOSITORY_ROOT
+        / "training/datasets/milestone08/natural_prior_observations.npy"
+    )
+    checkpoint_path = (
+        REPOSITORY_ROOT
+        / "training/artifacts/milestone08/mechanics_initial_v1.pt"
+    )
+    export_path = (
+        REPOSITORY_ROOT
+        / "training/artifacts/milestone08/mechanics_initial_v1.ts"
+    )
+    output = (
+        REPOSITORY_ROOT
+        / "training/results/milestone08/mechanics_prior_calibration.json"
+    )
+    protected_paths = (dataset_path, checkpoint_path, export_path, output)
+    existing = [path for path in protected_paths if path.exists()]
+    if existing and not args.overwrite:
+        parser.error(
+            "refusing to replace existing M08 calibration evidence; pass "
+            f"--overwrite only for an explicitly authorized rerun: {existing}"
+        )
+
     config = load_milestone08_config()
     prior = config["mechanics_prior"]
     observations, corpus = collect_natural_observations(
         int(prior["natural_observations"]),
         int(config["seeds"]["prior_corpus"]),
-    )
-    dataset_path = (
-        REPOSITORY_ROOT
-        / "training/datasets/milestone08/natural_prior_observations.npy"
     )
     dataset_path.parent.mkdir(parents=True, exist_ok=True)
     np.save(dataset_path, observations, allow_pickle=False)
@@ -115,15 +149,13 @@ def main() -> int:
         "global_mapping": {"mechanics_1": 90, "mechanics_68": 157},
     }
     checkpoint = save_mechanics_actor(
-        REPOSITORY_ROOT
-        / "training/artifacts/milestone08/mechanics_initial_v1.pt",
+        checkpoint_path,
         actor,
         artifact_metadata,
     )
     export = export_mechanics_torchscript(
         actor,
-        REPOSITORY_ROOT
-        / "training/artifacts/milestone08/mechanics_initial_v1.ts",
+        export_path,
     )
     minimum = float(prior["minimum_sampled_override_probability"])
     maximum = float(prior["maximum_sampled_override_probability"])
@@ -171,10 +203,6 @@ def main() -> int:
         "gates": gates,
         "production_promoted": False,
     }
-    output = (
-        REPOSITORY_ROOT
-        / "training/results/milestone08/mechanics_prior_calibration.json"
-    )
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
