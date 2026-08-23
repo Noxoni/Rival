@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+  "campaign_ceiling_agent_steps": 5000000,
+  "boundaries_agent_steps": [500000, 1000000, 2000000, 5000000],
+  "environment": {
+    "version": "RivalDualRate1v1RocketSimV1",
+    "workers": 56,
+    "sanity_worker_candidates": [48, 56, 64],
+    "cadence_ticks": 4,
+    "physics_tick_rate_hz": 120,
+    "renderer": null,
+    "rlbot_action_delay": false,
+    "goal_terminates_episode": true,
+    "no_touch_timeout_seconds": 30.0,
+    "episode_timeout_seconds": 300.0,
+    "curriculum_weights": {
+      "natural": 0.90,
+      "aerial_wall_possession": 0.04,
+      "recovery": 0.03,
+      "low_resource_aerial": 0.03
+    }
+  },
+  "ppo": {
+    "agent_steps_per_iteration": 50000,
+    "experience_buffer_size": 150000,
+    "batch_size": 48000,
+    "minibatch_size": 12000,
+    "epochs": 1,
+    "policy_learning_rate": 0.00003,
+    "critic_learning_rate": 0.0001,
+    "clip_range": 0.2,
+    "entropy_coefficient": 0.001,
+    "gamma": 0.99498743710662,
+    "gae_lambda": 0.95,
+    "standardize_observations": false,
+    "standardize_returns": false
+  },
+  "mechanics_prior": {
+    "version": "RivalMechanicsPolicyV1",
+    "natural_observations": 10000,
+    "target_sampled_override_probability": 0.03,
+    "minimum_sampled_override_probability": 0.01,
+    "maximum_sampled_override_probability": 0.08,
+    "minimum_deterministic_pass_rate": 0.995,
+    "pass_always_legal": true,
+    "eligibility_mode": "all_contexts_v1"
+  },
+  "evaluation": {
+    "headless_games_per_boundary": 40,
+    "balanced_sides": true,
+    "rlbot_games_per_required_boundary": 4,
+    "rlbot_game_speed": 5.0,
+    "maximum_sampled_override_share": 0.35,
+    "severe_rlbot_goal_differential_drop": 10
+  },
+  "seeds": {
+    "actor_initialization": 20260823,
+    "prior_corpus": 20260830,
+    "training": 20260831,
+    "evaluation": 20260902,
+    "audit": 20260903
+  },
+  "frozen_fingerprints": {
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "wisp_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "wisp_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "zero_step_torchscript_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7"
+  },
+  "production_promotion_authorized": false
+}

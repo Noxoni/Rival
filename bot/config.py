@@ -84,6 +84,67 @@ TRANSFER_DIAGNOSTIC_MODE = _environment_flag(
     "RIVAL_TRANSFER_DIAGNOSTIC_MODE", False
 )
 CANDIDATE_LEGACY_ONLY = _environment_flag("RIVAL_CANDIDATE_LEGACY_ONLY", False)
+M08_DUAL_RATE_ENABLED = _environment_flag("RIVAL_M08_DUAL_RATE_ENABLED", False)
+M08_MECHANICS_FORCE_PASS = _environment_flag("RIVAL_M08_MECHANICS_FORCE_PASS", False)
+_m08_mechanics_model_raw = os.environ.get(
+    "RIVAL_M08_MECHANICS_MODEL_PATH", ""
+).strip()
+M08_MECHANICS_MODEL_PATH = (
+    Path(_m08_mechanics_model_raw).expanduser().resolve()
+    if _m08_mechanics_model_raw
+    else None
+)
+M08_MECHANICS_MODEL_INFO = (
+    ModelInfo(M08_MECHANICS_MODEL_PATH, ActivationType.RELU)
+    if M08_MECHANICS_MODEL_PATH is not None
+    else None
+)
+M08_ACTION_TABLE_PATH = (
+    Path(
+        os.environ.get(
+            "RIVAL_M08_ACTION_TABLE_PATH",
+            str(_MODELS_DIR / "RIVAL_ACTIONS_V1.npy"),
+        )
+    )
+    .expanduser()
+    .resolve()
+    if M08_DUAL_RATE_ENABLED
+    else None
+)
+_m08_runtime_label_raw = os.environ.get(
+    "RIVAL_M08_RUNTIME_LABEL", ""
+).strip()
+M08_MECHANICS_DETERMINISTIC = _environment_flag(
+    "RIVAL_M08_MECHANICS_DETERMINISTIC", True
+)
+if M08_DUAL_RATE_ENABLED:
+    if not TRANSFER_DIAGNOSTIC_MODE:
+        raise ValueError(
+            "Milestone 08 dual-rate runtime requires explicit "
+            "RIVAL_TRANSFER_DIAGNOSTIC_MODE"
+        )
+    if CANDIDATE_POLICY_ENABLED:
+        raise ValueError(
+            "Milestone 08 dual-rate runtime cannot be combined with the rejected "
+            "monolithic candidate path"
+        )
+    if not M08_MECHANICS_FORCE_PASS and M08_MECHANICS_MODEL_PATH is None:
+        raise ValueError(
+            "Milestone 08 dual-rate runtime needs a mechanics model unless forced PASS"
+        )
+    if _m08_runtime_label_raw and any(
+        character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+        for character in _m08_runtime_label_raw
+    ):
+        raise ValueError(
+            "RIVAL_M08_RUNTIME_LABEL must use lowercase letters, digits, dash, "
+            "or underscore"
+        )
+    POLICY_RUNTIME_MODE = _m08_runtime_label_raw or (
+        "m08_dual_rate_force_pass"
+        if M08_MECHANICS_FORCE_PASS
+        else "m08_dual_rate_candidate"
+    )
 if _candidate_runtime_label_raw and not (
     CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE
 ):
@@ -101,8 +162,13 @@ if _candidate_runtime_label_raw and any(
     )
 
 TICK_SKIP = int(
-    os.environ.get("RIVAL_TICK_SKIP", "4" if CANDIDATE_POLICY_ENABLED else "8")
+    os.environ.get(
+        "RIVAL_TICK_SKIP",
+        "8" if M08_DUAL_RATE_ENABLED else "4" if CANDIDATE_POLICY_ENABLED else "8",
+    )
 )
+if M08_DUAL_RATE_ENABLED and TICK_SKIP != 8:
+    raise ValueError("Milestone 08 dual-rate strategic clock must remain tick skip 8")
 if CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE:
     if TICK_SKIP not in {4, 8}:
         raise ValueError(

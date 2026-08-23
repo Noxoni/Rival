@@ -189,6 +189,32 @@ class DecisionTelemetryLogger:
     def observe_final_score(self, blue: int | None, orange: int | None) -> None:
         self._last_score = {"blue": blue, "orange": orange}
 
+    def log_mechanics(self, record: Mapping[str, Any]) -> bool:
+        """Append one compact opt-in M08 mechanics-clock decision record."""
+        if not self.enabled:
+            return False
+        payload = {
+            "schema_version": self.SCHEMA_VERSION,
+            "record_type": "rival_mechanics_decision",
+            "session_id": self.session_id,
+            **dict(record),
+        }
+        with self._lock:
+            if not self._started:
+                self._write_record(
+                    {
+                        "schema_version": self.SCHEMA_VERSION,
+                        "record_type": "rival_session_start",
+                        "session_id": self.session_id,
+                        "timestamp_utc": self._utc_now(),
+                        "metadata": self.session_metadata,
+                        "telemetry": {"include_logits": self.include_logits},
+                    }
+                )
+                self._started = True
+            self._write_record(payload)
+        return True
+
     def finalize(
         self,
         *,

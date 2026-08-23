@@ -206,9 +206,10 @@ def benchmark_worker_count_sustained(
     measured_agent_steps_per_window: int = 25000,
     measured_windows: int = 3,
     device: str = "cuda:0",
+    policy_factory: Callable[..., Any] = make_student_policy,
 ) -> dict[str, Any]:
     """Measure sustained rollout throughput and resource health at one count."""
-    policy = make_student_policy(device=device)
+    policy = policy_factory(device=device)
     manager = BatchedAgentManager(
         policy,
         min_inference_size=min(worker_count, 16),

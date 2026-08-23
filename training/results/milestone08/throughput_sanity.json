@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "purpose": "milestone08_short_dual_rate_worker_sanity",
+  "selection_rule": "highest mean sustained stable agent-steps/sec",
+  "authorized_candidates": [
+    48,
+    56,
+    64
+  ],
+  "measurement": {
+    "warmup_agent_steps": 2048,
+    "agent_steps_per_window": 10000,
+    "windows_per_candidate": 2,
+    "environment": "M08 dual-rate Reward V2 majority-natural curriculum",
+    "policy": "calibrated independent 69-output mechanics actor",
+    "includes_frozen_strategic_inference_in_workers": true,
+    "includes_ppo_update": false
+  },
+  "machine": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "physical_cpu_cores": 8,
+    "logical_cpu_cores": 16,
+    "memory_gib": 61.65510559082031,
+    "gpu": "NVIDIA GeForce RTX 5090"
+  },
+  "results": [
+    {
+      "workers": 48,
+      "status": "stable",
+      "cadence_ticks": 4,
+      "warmup_agent_steps_target": 2048,
+      "measured_agent_steps_per_window_target": 10000,
+      "measured_windows": 2,
+      "min_inference_processes": 16,
+      "errors_or_stalls": [],
+      "windows": [
+        {
+          "window": 1,
+          "collected_agent_steps": 10012,
+          "package_collection_seconds": 8.098408400081098,
+          "wall_seconds": 8.163654399919324,
+          "agent_steps_per_second": 1236.292306510467,
+          "aggregate_simulated_game_seconds_per_second": 20.60487177517445,
+          "mean_environment_decision_latency_ms": 77.65153879422547,
+          "gpu_peak_torch_allocated_mib": 32.97705078125
+        },
+        {
+          "window": 2,
+          "collected_agent_steps": 10002,
+          "package_collection_seconds": 8.81950130010955,
+          "wall_seconds": 8.94021409994457,
+          "agent_steps_per_second": 1134.0777283944344,
+          "aggregate_simulated_game_seconds_per_second": 18.901295473240573,
+          "mean_environment_decision_latency_ms": 84.65028242456677,
+          "gpu_peak_torch_allocated_mib": 33.03466796875
+        }
+      ],
+      "sustained_agent_steps_per_second_mean": 1185.1850174524507,
+      "sustained_agent_steps_per_second_median": 1185.1850174524507,
+      "sustained_agent_steps_per_second_minimum": 1134.0777283944344,
+      "sustained_agent_steps_per_second_maximum": 1236.292306510467,
+      "window_rate_coefficient_of_variation": 0.043121781245489516,
+      "aggregate_simulated_game_seconds_per_second_mean": 19.753083624207513,
+      "rollout_inference_latency": {
+        "interpretation": "mean wall latency for one environment decision, including central policy inference and RocketSim stepping",
+        "mean_environment_decision_latency_ms": 81.15091060939612
+      },
+      "resources": {
+        "cpu_percent": {
+          "samples": 50,
+          "mean": 100.0,
+          "minimum": 100.0,
+          "maximum": 100.0
+        },
+        "gpu_utilization_percent": {
+          "samples": 50,
+          "mean": 6.04,
+          "minimum": 5.0,
+          "maximum": 8.0
+        },
+        "gpu_memory_used_mib": {
+          "samples": 50,
+          "mean": 2668.82,
+          "minimum": 2661.0,
+          "maximum": 2678.0
+        },
+        "system_memory_used_mib": {
+          "samples": 50,
+          "mean": 44342.37921875,
+          "minimum": 44299.75,
+          "maximum": 44401.19921875
+        },
+        "system_memory_available_mib": {
+          "samples": 50,
+          "mean": 18792.44890625,
+          "minimum": 18733.62890625,
+          "maximum": 18835.078125
+        },
+        "worker_rss_mib": {
+          "samples": 50,
+          "mean": 26912.899140625,
+          "minimum": 26910.734375,
+          "maximum": 26913.54296875
+        }
+      },
+      "worker_process_health": {
+        "worker_count": 48,
+        "alive_after_measurement": 48,
+        "crashed_or_stalled": 0,
+        "exit_code_counts": {
+          "None": 48
+        }
+      },
+      "finite": true,
+      "stable": true
+    },
+    {
+      "workers": 56,
+      "status": "stable",
+      "cadence_ticks": 4,
+      "warmup_agent_steps_target": 2048,
+      "measured_agent_steps_per_window_target": 10000,
+      "measured_windows": 2,
+      "min_inference_processes": 16,
+      "errors_or_stalls": [],
+      "windows": [
+        {
+          "window": 1,
+          "collected_agent_steps": 10008,
+          "package_collection_seconds": 7.923700400046073,
+          "wall_seconds": 7.999843399971724,
+          "agent_steps_per_second": 1263.0462403578267,
+          "aggregate_simulated_game_seconds_per_second": 21.050770672630446,
+          "mean_environment_decision_latency_ms": 88.67450487661472,
+          "gpu_peak_torch_allocated_mib": 32.84033203125
+        },
+        {
+          "window": 2,
+          "collected_agent_steps": 10004,
+          "package_collection_seconds": 8.841016000020318,
+          "wall_seconds": 8.92558729997836,
+          "agent_steps_per_second": 1131.5441573657383,
+          "aggregate_simulated_game_seconds_per_second": 18.85906928942897,
+          "mean_environment_decision_latency_ms": 98.97978728531344,
+          "gpu_peak_torch_allocated_mib": 33.1142578125
+        }
+      ],
+      "sustained_agent_steps_per_second_mean": 1197.2951988617824,
+      "sustained_agent_steps_per_second_median": 1197.2951988617824,
+      "sustained_agent_steps_per_second_minimum": 1131.5441573657383,
+      "sustained_agent_steps_per_second_maximum": 1263.0462403578267,
+      "window_rate_coefficient_of_variation": 0.05491631600840871,
+      "aggregate_simulated_game_seconds_per_second_mean": 19.954919981029708,
+      "rollout_inference_latency": {
+        "interpretation": "mean wall latency for one environment decision, including central policy inference and RocketSim stepping",
+        "mean_environment_decision_latency_ms": 93.82714608096407
+      },
+      "resources": {
+        "cpu_percent": {
+          "samples": 46,
+          "mean": 100.0,
+          "minimum": 100.0,
+          "maximum": 100.0
+        },
+        "gpu_utilization_percent": {
+          "samples": 46,
+          "mean": 6.043478260869565,
+          "minimum": 5.0,
+          "maximum": 8.0
+        },
+        "gpu_memory_used_mib": {
+          "samples": 46,
+          "mean": 2666.021739130435,
+          "minimum": 2655.0,
+          "maximum": 2677.0
+        },
+        "system_memory_used_mib": {
+          "samples": 46,
+          "mean": 47388.542119565216,
+          "minimum": 47376.41015625,
+          "maximum": 47405.8125
+        },
+        "system_memory_available_mib": {
+          "samples": 46,
+          "mean": 15746.286005434782,
+          "minimum": 15729.015625,
+          "maximum": 15758.41796875
+        },
+        "worker_rss_mib": {
+          "samples": 46,
+          "mean": 31389.207540760868,
+          "minimum": 31386.85546875,
+          "maximum": 31390.1875
+        }
+      },
+      "worker_process_health": {
+        "worker_count": 56,
+        "alive_after_measurement": 56,
+        "crashed_or_stalled": 0,
+        "exit_code_counts": {
+          "None": 56
+        }
+      },
+      "finite": true,
+      "stable": true
+    },
+    {
+      "workers": 64,
+      "status": "stable",
+      "cadence_ticks": 4,
+      "warmup_agent_steps_target": 2048,
+      "measured_agent_steps_per_window_target": 10000,
+      "measured_windows": 2,
+      "min_inference_processes": 16,
+      "errors_or_stalls": [],
+      "windows": [
+        {
+          "window": 1,
+          "collected_agent_steps": 10004,
+          "package_collection_seconds": 7.869880500016734,
+          "wall_seconds": 7.956479100044817,
+          "agent_steps_per_second": 1271.1755915453516,
+          "aggregate_simulated_game_seconds_per_second": 21.186259859089194,
+          "mean_environment_decision_latency_ms": 100.69419272312494,
+          "gpu_peak_torch_allocated_mib": 33.1572265625
+        },
+        {
+          "window": 2,
+          "collected_agent_steps": 10006,
+          "package_collection_seconds": 8.737198399961926,
+          "wall_seconds": 8.820493399980478,
+          "agent_steps_per_second": 1145.2183574134706,
+          "aggregate_simulated_game_seconds_per_second": 19.086972623557845,
+          "mean_environment_decision_latency_ms": 111.76907807266905,
+          "gpu_peak_torch_allocated_mib": 33.171875
+        }
+      ],
+      "sustained_agent_steps_per_second_mean": 1208.196974479411,
+      "sustained_agent_steps_per_second_median": 1208.196974479411,
+      "sustained_agent_steps_per_second_minimum": 1145.2183574134706,
+      "sustained_agent_steps_per_second_maximum": 1271.1755915453516,
+      "window_rate_coefficient_of_variation": 0.052126117178100694,
+      "aggregate_simulated_game_seconds_per_second_mean": 20.13661624132352,
+      "rollout_inference_latency": {
+        "interpretation": "mean wall latency for one environment decision, including central policy inference and RocketSim stepping",
+        "mean_environment_decision_latency_ms": 106.231635397897
+      },
+      "resources": {
+        "cpu_percent": {
+          "samples": 46,
+          "mean": 100.0,
+          "minimum": 100.0,
+          "maximum": 100.0
+        },
+        "gpu_utilization_percent": {
+          "samples": 46,
+          "mean": 6.0,
+          "minimum": 5.0,
+          "maximum": 8.0
+        },
+        "gpu_memory_used_mib": {
+          "samples": 46,
+          "mean": 2672.4565217391305,
+          "minimum": 2665.0,
+          "maximum": 2677.0
+        },
+        "system_memory_used_mib": {
+          "samples": 46,
+          "mean": 50165.418902853264,
+          "minimum": 50125.40234375,
+          "maximum": 50233.6328125
+        },
+        "system_memory_available_mib": {
+          "samples": 46,
+          "mean": 12969.40922214674,
+          "minimum": 12901.1953125,
+          "maximum": 13009.42578125
+        },
+        "worker_rss_mib": {
+          "samples": 46,
+          "mean": 35888.88332201087,
+          "minimum": 35886.44921875,
+          "maximum": 35890.05859375
+        }
+      },
+      "worker_process_health": {
+        "worker_count": 64,
+        "alive_after_measurement": 64,
+        "crashed_or_stalled": 0,
+        "exit_code_counts": {
+          "None": 64
+        }
+      },
+      "finite": true,
+      "stable": true
+    }
+  ],
+  "selected_worker_count": 64,
+  "configured_start_worker_count": 56,
+  "selected_sustained_agent_steps_per_second": 1208.196974479411,
+  "selected_aggregate_simulated_game_seconds_per_second": 20.13661624132352,
+  "material_change_from_m06": true,
+  "m06_selected_agent_steps_per_second": 12039.091910850184,
+  "wall_seconds": 154.44416670000646
+}

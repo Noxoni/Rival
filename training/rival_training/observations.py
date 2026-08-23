@@ -731,7 +731,7 @@ def observation_metadata() -> dict[str, Any]:
         "contract_semantics": [
             "RocketSim BallPredictor replaces RLBot ball-prediction flatbuffer slices at the same tick horizons.",
             "A deterministic box-surface landing normal approximates Wisp's live arena-SDF query.",
-            "The production two-pass 120-Hz cached rough_eta kernel is reset explicitly per episode.",
+            "The production two-pass 120-Hz cached rough_eta kernel persists across ordinary episode resets and is cleared only at an explicit process-session boundary.",
             "The episodic training scoreboard is zero unless a curriculum wrapper supplies score_diff.",
             "Previous controls, touch-step, and analog handbrake values refer to applied controller state at the decision boundary.",
         ],

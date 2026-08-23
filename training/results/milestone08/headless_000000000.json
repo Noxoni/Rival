@@ -1,0 +1,681 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "evaluation": "m08_deterministic_dual_rate_vs_forced_pass_frozen_wisp",
+  "episode_definition": "natural kickoff until first goal or truncation",
+  "games": 40,
+  "balanced_sides": true,
+  "strategic_cadence_ticks": 8,
+  "mechanics_cadence_ticks": 4,
+  "deterministic": true,
+  "seed": 20260902,
+  "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+  "candidate_source": {
+    "kind": "calibrated_zero_step_mechanics_actor",
+    "path": "training/artifacts/milestone08/mechanics_initial_v1.pt",
+    "size_bytes": 786965,
+    "sha256": "0485c8d2fca5a78b0be084bb9dd9ce181df1e55f8a4f31b79d3ac1bc367ef6de",
+    "metadata": {
+      "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+      "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+      "prior_calibration": {
+        "observation_count": 10000,
+        "mean_pass_probability": 0.9700000286102295,
+        "minimum_pass_probability": 0.9653883576393127,
+        "maximum_pass_probability": 0.9731735587120056,
+        "mean_override_probability": 0.030000003054738045,
+        "deterministic_pass_rate": 1.0,
+        "deterministic_override_rate": 0.0,
+        "conditional_override_entropy": 4.218122482299805,
+        "finite": true,
+        "target_override_probability": 0.03,
+        "calibrated_pass_output_bias": 7.718778848648071,
+        "absolute_target_error": 3.0547380458489926e-09
+      },
+      "architecture": "432-256-LayerNorm-ReLU-256-LayerNorm-ReLU-69",
+      "pass_index": 0,
+      "global_mapping": {
+        "mechanics_1": 90,
+        "mechanics_68": 157
+      }
+    }
+  },
+  "mechanics_prior": {
+    "version": "RivalMechanicsPolicyV1",
+    "action_count": 69,
+    "pass_index": 0,
+    "pass_output_bias": 7.718778610229492
+  },
+  "strategic_branch": {
+    "artifacts": {
+      "wisp_policy": {
+        "path": "bot/models/POLICY.lt",
+        "sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "unchanged": true
+      },
+      "wisp_shared_head": {
+        "path": "bot/models/SHARED_HEAD.lt",
+        "sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "unchanged": true
+      },
+      "zero_step_torchscript": {
+        "path": "training/artifacts/milestone07/zero_step_actor.ts",
+        "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "expected_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true,
+    "optimizer_contains_strategic_parameters": false,
+    "architecture_reason": "The strategic actor is instantiated only inside environment workers; the central PPO policy contains MechanicsActor parameters exclusively."
+  },
+  "outcomes": {
+    "wins": 20,
+    "losses": 20,
+    "ties": 0,
+    "win_rate": 0.5,
+    "goals_for": 20,
+    "goals_against": 20,
+    "goal_differential": 0
+  },
+  "actions": {
+    "decision_count": 44499,
+    "pass_count": 44499,
+    "override_count": 0,
+    "deterministic_pass_rate": 1.0,
+    "deterministic_override_rate": 0.0,
+    "mean_pass_probability": 0.9700548219510406,
+    "mean_override_probability": 0.029945178048959353,
+    "mean_policy_entropy": 0.26084803051727695,
+    "full_mechanics_action_counts": [
+      44499,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "appended_action_family_counts": {}
+  },
+  "override_contexts": {
+    "counts": {
+      "ground_near_ball": 0,
+      "airborne": 0,
+      "wall_or_ceiling": 0,
+      "awkward_recovery": 0,
+      "other": 0
+    },
+    "shares": {
+      "ground_near_ball": 0.0,
+      "airborne": 0.0,
+      "wall_or_ceiling": 0.0,
+      "awkward_recovery": 0.0,
+      "other": 0.0
+    }
+  },
+  "short_window_after_override": {
+    "window_mechanics_decisions": 30,
+    "override_windows_started": 0,
+    "useful_touch_records": 0,
+    "goals_for": 0,
+    "goals_against": 0
+  },
+  "possession_touch": {
+    "candidate_touch_proxy_count": 1344
+  },
+  "reward_contribution_audit": {
+    "outcome": {
+      "count": 44499,
+      "mean": 0.0,
+      "absolute_mean": 0.008988966044180768,
+      "minimum": -10.0,
+      "maximum": 10.0,
+      "cumulative_signed": 0.0,
+      "cumulative_absolute": 400.0,
+      "share_of_total_absolute_shaping": 0.0
+    },
+    "possession": {
+      "count": 44499,
+      "mean": 0.0028474218017721597,
+      "absolute_mean": 0.0028474218017721597,
+      "minimum": 0.0,
+      "maximum": 0.15762668457031254,
+      "cumulative_signed": 126.70742275705933,
+      "cumulative_absolute": 126.70742275705933,
+      "share_of_total_absolute_shaping": 0.7588800975587557
+    },
+    "progress": {
+      "count": 44499,
+      "mean": 1.1977753362431608e-08,
+      "absolute_mean": 0.0006238950473457383,
+      "minimum": -0.001964296875,
+      "maximum": 0.0020649267578125,
+      "cumulative_signed": 0.0005329980468748441,
+      "cumulative_absolute": 27.76270571183801,
+      "share_of_total_absolute_shaping": 0.16627727374338727
+    },
+    "boost_efficiency": {
+      "count": 44499,
+      "mean": -5.668420384992614e-06,
+      "absolute_mean": 5.668420384992614e-06,
+      "minimum": -0.003585768508911133,
+      "maximum": 0.0,
+      "cumulative_signed": -0.2522390387117863,
+      "cumulative_absolute": 0.2522390387117863,
+      "share_of_total_absolute_shaping": 0.0015107180158872144
+    },
+    "recovery": {
+      "count": 44499,
+      "mean": 0.0002411056383536418,
+      "absolute_mean": 0.0002411056383536418,
+      "minimum": 0.0,
+      "maximum": 0.029731528108016304,
+      "cumulative_signed": 10.728959801098705,
+      "cumulative_absolute": 10.728959801098705,
+      "share_of_total_absolute_shaping": 0.06425822484111834
+    },
+    "mechanics_resource": {
+      "count": 44499,
+      "mean": 3.404570889233466e-05,
+      "absolute_mean": 3.404570889233466e-05,
+      "minimum": 0.0,
+      "maximum": 0.005,
+      "cumulative_signed": 1.5150000000000001,
+      "cumulative_absolute": 1.5150000000000001,
+      "share_of_total_absolute_shaping": 0.009073685840851504
+    }
+  },
+  "mechanics_recovery_resource": {
+    "airborne_dodge_uses": 499.0,
+    "dodge_resource_acquisitions": 3.0,
+    "productive_resource_followups": 0.0,
+    "wavedash_like_events": 15.0,
+    "wall_speed_recovery_events": 5.0,
+    "aerial_boost_spent": 63.99683668851966,
+    "aerial_useful_distance": 305124.7174987793,
+    "aerial_useful_touches": 485.0,
+    "aerial_commitment_ends": 536.0,
+    "aerial_end_boost": 21296.25880807638,
+    "recovery_window_starts": 443.0,
+    "recovery_completions": 419.0,
+    "recovery_time_seconds": 350.7666666666668,
+    "recovery_concessions": 17.0
+  },
+  "game_records": [
+    {
+      "game": 1,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 219,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 2,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 195,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 3,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 3426,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 4,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 410,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 5,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 254,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 6,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 1512,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 7,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 187,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 8,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 864,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 9,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 200,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 10,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 1021,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 11,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 551,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 12,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 474,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 13,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 2468,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 14,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 458,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 15,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 757,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 16,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 2813,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 17,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 2780,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 18,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 267,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 19,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 999,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 20,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 808,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 21,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 197,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 22,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 4090,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 23,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 331,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 24,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 2008,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 25,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 217,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 26,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 1550,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 27,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 768,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 28,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 1371,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 29,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 259,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 30,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 758,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 31,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 494,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 32,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 1310,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 33,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 187,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 34,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 5565,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 35,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "loss",
+      "decisions": 749,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 36,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 506,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 37,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 231,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 38,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "win",
+      "decisions": 203,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 39,
+      "candidate_team": 0,
+      "candidate_side": "blue",
+      "outcome": "win",
+      "decisions": 883,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    },
+    {
+      "game": 40,
+      "candidate_team": 1,
+      "candidate_side": "orange",
+      "outcome": "loss",
+      "decisions": 2159,
+      "terminated_by_goal": true,
+      "deterministic_override_count": 0,
+      "touches_after_override": 0
+    }
+  ],
+  "baseline_comparison": null,
+  "health": {
+    "all_metrics_finite": true,
+    "balanced_sides": true,
+    "override_rate_bounded": true,
+    "strategic_branch_unchanged": true,
+    "passed": true
+  },
+  "wall_seconds": 241.2509851999348,
+  "production_promoted": false
+}

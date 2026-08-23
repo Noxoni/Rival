@@ -24,9 +24,10 @@ from rlgym.rocket_league.state_mutators import (
 from rlgym_ppo.util import RLGymV2GymWrapper
 
 from .actions import CADENCE_TICKS, DualRateActionParser, RivalActionParser
-from .config import load_milestone06_config, stage_config
+from .config import load_milestone06_config, load_milestone08_config, stage_config
 from .curriculum import CURRICULUM_FAMILIES, RivalCurriculumMutator
 from .metrics import build_campaign_metric_vector
+from .m08_metrics import build_m08_metric_vector
 from .observations import WispCompatibleObs
 from .rewards import RivalRewardV1, RivalRewardV2, reward_v2_metadata
 
@@ -152,6 +153,60 @@ class CampaignGymWrapper(RLGymV2GymWrapper):
         return observations, rewards, done, truncated, info
 
 
+class M08GymWrapper(CampaignGymWrapper):
+    """Transport override-context and bounded follow-up diagnostics to PPO."""
+
+    def __init__(self, rlgym_env: RLGym) -> None:
+        self._override_windows: dict[Any, dict[str, float]] = {}
+        super().__init__(rlgym_env)
+
+    def reset(self):
+        self._override_windows = {}
+        return super().reset()
+
+    def step(self, actions):
+        # Call the base rlgym-ppo wrapper directly so the M06 vector is not built
+        # and its one-shot reset marker is not consumed twice.
+        observations, rewards, done, truncated, info = RLGymV2GymWrapper.step(
+            self, actions
+        )
+        decisions = self.rlgym_env.shared_info.get("dual_rate_last_decisions", {})
+        mechanics = self.rlgym_env.shared_info.get("mechanics_metrics", {})
+        for agent, decision in decisions.items():
+            if bool(decision.get("override_selected", False)):
+                self._override_windows[agent] = {
+                    "remaining": 30.0,
+                    "active": 1.0,
+                    "useful_touch": 0.0,
+                    "goal_for": 0.0,
+                    "goal_against": 0.0,
+                }
+        for agent, window in list(self._override_windows.items()):
+            window["active"] = 1.0
+            metrics = mechanics.get(agent, {})
+            if float(metrics.get("aerial_useful_touches", 0.0)) > 0.0:
+                window["useful_touch"] = 1.0
+            car = self.rlgym_env.state.cars.get(agent)
+            if self.rlgym_env.state.goal_scored and car is not None:
+                if self.rlgym_env.state.scoring_team == car.team_num:
+                    window["goal_for"] = 1.0
+                else:
+                    window["goal_against"] = 1.0
+            window["remaining"] -= 1.0
+        info["state"] = build_m08_metric_vector(
+            self.rlgym_env.state,
+            self.rlgym_env.shared_info,
+            self._override_windows,
+        )
+        for agent, window in list(self._override_windows.items()):
+            window["useful_touch"] = 0.0
+            window["goal_for"] = 0.0
+            window["goal_against"] = 0.0
+            if window["remaining"] <= 0.0:
+                del self._override_windows[agent]
+        return observations, rewards, done, truncated, info
+
+
 def make_campaign_gym_env(stage_name: str) -> CampaignGymWrapper:
     return CampaignGymWrapper(build_campaign_env(stage_name))
 
@@ -169,8 +224,8 @@ def build_dual_rate_env(
     anchor_team: int | None = None,
 ) -> RLGym:
     """Build the explicit 8-tick strategic/4-tick mechanics environment."""
-    config = load_milestone06_config()
-    weights = dict(stage_config(config, "stage_a")["curriculum_weights"])
+    config = load_milestone08_config()
+    weights = dict(config["environment"]["curriculum_weights"])
     if natural_only:
         weights = {name: float(name == "natural") for name in CURRICULUM_FAMILIES}
     # Controller rows already encode both temporal delays; the transition engine
@@ -203,11 +258,39 @@ def build_dual_rate_env(
 
 
 def make_dual_rate_gym_env() -> CampaignGymWrapper:
-    return CampaignGymWrapper(build_dual_rate_env())
+    return M08GymWrapper(build_dual_rate_env())
 
 
 def make_dual_rate_pass_gym_env() -> CampaignGymWrapper:
-    return CampaignGymWrapper(build_dual_rate_env(force_pass=True))
+    return M08GymWrapper(build_dual_rate_env(force_pass=True))
+
+
+def make_dual_rate_anchor_blue_gym_env() -> CampaignGymWrapper:
+    return M08GymWrapper(build_dual_rate_env(anchor_team=0))
+
+
+def make_dual_rate_anchor_orange_gym_env() -> CampaignGymWrapper:
+    return M08GymWrapper(build_dual_rate_env(anchor_team=1))
+
+
+def dual_rate_environment_metadata() -> dict[str, Any]:
+    config = load_milestone08_config()
+    return {
+        "schema_version": 1,
+        "environment_version": DUAL_RATE_ENVIRONMENT_VERSION,
+        "distribution": "majority-natural dual-rate 1v1 self-play",
+        "curriculum_weights": config["environment"]["curriculum_weights"],
+        "transition_engine": "rlgym.rocket_league.sim.RocketSimEngine",
+        "rlbot_action_delay": False,
+        "renderer": None,
+        "physics_tick_rate_hz": 120,
+        "strategic_cadence_ticks": 8,
+        "mechanics_cadence_ticks": 4,
+        "mechanics_action_count": 69,
+        "pass_index": 0,
+        "anchor_modes": ["self_play", "frozen_wisp_blue", "frozen_wisp_orange"],
+        "reward": reward_v2_metadata(),
+    }
 
 
 def campaign_environment_factory(stage_name: str):

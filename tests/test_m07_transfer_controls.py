@@ -117,3 +117,35 @@ def test_observation_capture_requires_explicit_diagnostic_telemetry() -> None:
         }
     )
     assert accepted.returncode == 0, accepted.stderr
+
+
+def test_m08_dual_rate_runtime_is_opt_in_and_forced_pass_needs_no_model() -> None:
+    rejected = _config_probe(
+        {
+            "RIVAL_M08_DUAL_RATE_ENABLED": "1",
+            "RIVAL_M08_MECHANICS_FORCE_PASS": "1",
+        }
+    )
+    assert rejected.returncode != 0
+    assert "RIVAL_TRANSFER_DIAGNOSTIC_MODE" in rejected.stderr
+
+    accepted = _config_probe(
+        {
+            "RIVAL_TRANSFER_DIAGNOSTIC_MODE": "1",
+            "RIVAL_M08_DUAL_RATE_ENABLED": "1",
+            "RIVAL_M08_MECHANICS_FORCE_PASS": "1",
+        }
+    )
+    assert accepted.returncode == 0, accepted.stderr
+    assert accepted.stdout.strip() == "8 7 False False True"
+
+
+def test_m08_candidate_requires_a_separate_mechanics_model() -> None:
+    result = _config_probe(
+        {
+            "RIVAL_TRANSFER_DIAGNOSTIC_MODE": "1",
+            "RIVAL_M08_DUAL_RATE_ENABLED": "1",
+        }
+    )
+    assert result.returncode != 0
+    assert "needs a mechanics model unless forced PASS" in result.stderr

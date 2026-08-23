@@ -14,6 +14,7 @@ except ImportError:
 import math
 from typing import Optional
 
+import numpy as np
 from RocketSim import Angle
 
 from analysis.tactical_metrics import build_state_snapshot, compute_tactical_metrics
@@ -27,6 +28,7 @@ from backend.gamestate.action import Action
 from backend.model import ModelSet
 from backend.rocketsim_adapter import RocketSimStateAdapter
 from action_parser import XMirroredActionParser
+from dual_rate_runtime import LIVE_DUAL_RATE_VERSION, LiveMechanicsWindow
 from eta import rough_eta
 from obs_builder import CustomObs
 from policy.decision import PolicyDecision
@@ -68,17 +70,35 @@ class RivalBot(rlbot.managers.Bot):
         """ Action chosen this step, applied AFTER the action delay """
 
         self.obs_builder = CustomObs()
-        self.action_parser = XMirroredActionParser(
-            config.CANDIDATE_ACTION_TABLE_PATH,
-            allow_all_actions=(
-                config.CANDIDATE_POLICY_ENABLED
-                and not config.CANDIDATE_LEGACY_ONLY
-            ),
-            legacy_only=config.CANDIDATE_LEGACY_ONLY,
-        )
+        if config.M08_DUAL_RATE_ENABLED:
+            # The strategic parser remains the exact 90-row production parser.
+            # A separate parser owns only the expanded rows used by mechanics.
+            self.action_parser = XMirroredActionParser()
+            self.mechanics_action_parser = XMirroredActionParser(
+                config.M08_ACTION_TABLE_PATH,
+                allow_all_actions=True,
+            )
+            self.mechanics_obs_builder = CustomObs()
+        else:
+            self.action_parser = XMirroredActionParser(
+                config.CANDIDATE_ACTION_TABLE_PATH,
+                allow_all_actions=(
+                    config.CANDIDATE_POLICY_ENABLED
+                    and not config.CANDIDATE_LEGACY_ONLY
+                ),
+                legacy_only=config.CANDIDATE_LEGACY_ONLY,
+            )
+            self.mechanics_action_parser = None
+            self.mechanics_obs_builder = None
 
         self.models: ModelSet | None = None
         """ Model storage"""
+        self.mechanics_models: ModelSet | None = None
+        self.mechanics_window = LiveMechanicsWindow()
+        self.mechanics_second_half_started = False
+        self.mechanics_decision_count = 0
+        self.last_mechanics_record: dict | None = None
+        self.last_controller_source = "strategic"
 
         self.state_adapter: RocketSimStateAdapter | None = None
         self.prev_actions: list[Action] = []
@@ -127,6 +147,19 @@ class RivalBot(rlbot.managers.Bot):
                 "action_count": len(self.action_parser.actions),
                 "observation_capture": config.DIAGNOSTIC_CAPTURE_OBSERVATIONS,
                 "observation_capture_stride": config.DIAGNOSTIC_OBSERVATION_STRIDE,
+                "dual_rate_enabled": config.M08_DUAL_RATE_ENABLED,
+                "dual_rate_version": (
+                    LIVE_DUAL_RATE_VERSION if config.M08_DUAL_RATE_ENABLED else None
+                ),
+                "strategic_tick_skip": config.TICK_SKIP,
+                "mechanics_tick_skip": 4 if config.M08_DUAL_RATE_ENABLED else None,
+                "mechanics_action_count": 69 if config.M08_DUAL_RATE_ENABLED else None,
+                "mechanics_force_pass": config.M08_MECHANICS_FORCE_PASS,
+                "mechanics_model_path": (
+                    None
+                    if config.M08_MECHANICS_MODEL_PATH is None
+                    else str(config.M08_MECHANICS_MODEL_PATH)
+                ),
             },
             "challenge_calibration": {
                 "mode": self.challenge_calibration.mode.value,
@@ -179,6 +212,21 @@ class RivalBot(rlbot.managers.Bot):
                 f"Failed to load model artifacts: {exc}. Ensure TorchScript exports are in '{config.MODEL_INFO_POLICY.path.parent}'."
             ) from exc
 
+        if config.M08_DUAL_RATE_ENABLED and not config.M08_MECHANICS_FORCE_PASS:
+            mechanics_info = config.M08_MECHANICS_MODEL_INFO
+            if mechanics_info is None:
+                raise RuntimeError("M08 candidate mode is missing its mechanics model")
+            try:
+                self.mechanics_models = ModelSet(
+                    mechanics_info,
+                    None,
+                    device=config.MODEL_DEVICE,
+                )
+            except FileNotFoundError as exc:
+                raise RuntimeError(
+                    f"Failed to load M08 mechanics artifact: {exc}"
+                ) from exc
+
         self.state_adapter = RocketSimStateAdapter(config.ROCKETSIM_COLLISION_DIR)
 
         self.logger.info(
@@ -191,7 +239,87 @@ class RivalBot(rlbot.managers.Bot):
             config.TELEMETRY_ENABLED,
             config.TELEMETRY_INCLUDE_LOGITS,
         )
+        if config.M08_DUAL_RATE_ENABLED:
+            self.logger.info(
+                "M08 dual-rate overlay ready (force_pass=%s, mechanics_model=%s)",
+                config.M08_MECHANICS_FORCE_PASS,
+                config.M08_MECHANICS_MODEL_PATH,
+            )
         print("Rival initialization complete!")
+
+    def update_mechanics(
+        self,
+        state,
+        player,
+        score_diff: int,
+        game_time: float | None,
+        seconds_remaining: float | None,
+    ) -> None:
+        """Select one PASS/appended choice without perturbing strategic ETA state."""
+        if not config.M08_DUAL_RATE_ENABLED:
+            return
+        if config.M08_MECHANICS_FORCE_PASS:
+            choice = 0
+            probabilities = np.zeros(69, dtype=np.float32)
+            probabilities[0] = 1.0
+        else:
+            if self.mechanics_models is None or self.mechanics_obs_builder is None:
+                raise RuntimeError("M08 mechanics runtime was not initialized")
+            # production rough_eta uses a process-global cache.  A four-tick
+            # mechanics observation must not advance the protected eight-tick
+            # strategic cache, so snapshot/restore it around this branch only.
+            strategic_eta_cache = dict(rough_eta.cache)
+            try:
+                observation = self.mechanics_obs_builder.build_obs(
+                    player,
+                    state,
+                    self.ball_prediction,
+                    score_diff,
+                ).get_tensor(device=config.MODEL_DEVICE)
+            finally:
+                rough_eta.cache.clear()
+                rough_eta.cache.update(strategic_eta_cache)
+            inference = self.mechanics_models.infer_policy(
+                observation,
+                torch.ones(69, dtype=torch.bool),
+            )
+            choice = inference.select_action(config.M08_MECHANICS_DETERMINISTIC)
+            probabilities = torch.softmax(inference.masked_logits, dim=-1).cpu().numpy()
+
+        global_index = None if choice == 0 else 89 + int(choice)
+        selected = None
+        if global_index is not None:
+            if self.mechanics_action_parser is None:
+                raise RuntimeError("M08 mechanics action parser is unavailable")
+            selected = self.mechanics_action_parser.get_action(
+                global_index,
+                player,
+                state,
+            )
+        decision = self.mechanics_window.begin(choice, selected)
+        record = {
+            "mechanics_decision": self.mechanics_decision_count,
+            "strategic_policy_tick": self.policy_tick,
+            "game_time": game_time,
+            "seconds_remaining": seconds_remaining,
+            "choice": int(choice),
+            "pass": bool(choice == 0),
+            "override_selected": bool(choice != 0),
+            "global_action_index": decision.global_action_index,
+            "force_pass": config.M08_MECHANICS_FORCE_PASS,
+            "mean_pass_probability": float(probabilities[0]),
+            "top_mechanics_choices": [
+                {
+                    "choice": int(index),
+                    "probability": float(probabilities[index]),
+                }
+                for index in np.argsort(probabilities)[-5:][::-1]
+            ],
+            "scheduler": "[previous,new,new,new]",
+        }
+        self.last_mechanics_record = record
+        self.telemetry.log_mechanics(record)
+        self.mechanics_decision_count += 1
 
     def update_action(
         self,
@@ -353,6 +481,14 @@ class RivalBot(rlbot.managers.Bot):
                         "action_delay": config.ACTION_DELAY,
                         "tick_window": self.ticks,
                         "update_action_flag": self.update_action_flag,
+                        "dual_rate_enabled": config.M08_DUAL_RATE_ENABLED,
+                        "mechanics_decision_count": self.mechanics_decision_count,
+                        "last_mechanics_choice": (
+                            None
+                            if self.last_mechanics_record is None
+                            else self.last_mechanics_record["choice"]
+                        ),
+                        "last_controller_source": self.last_controller_source,
                     },
                     (
                         None
@@ -413,6 +549,11 @@ class RivalBot(rlbot.managers.Bot):
                 self.last_decision = None
                 self.last_challenge_decision = None
                 self.last_natural_decision = None
+                self.mechanics_window.reset()
+                self.mechanics_second_half_started = False
+                self.mechanics_decision_count = 0
+                self.last_mechanics_record = None
+                self.last_controller_source = "strategic"
                 self.challenge_calibration.reset("timer_rewind")
                 self.natural_adjustment.reset("timer_rewind")
 
@@ -438,8 +579,10 @@ class RivalBot(rlbot.managers.Bot):
         player_state = state.players[self.index]
 
         # Determine if we should update/apply action using the same logic as C++
+        strategic_updated = False
         if self.update_action_flag:
             self.update_action_flag = False
+            strategic_updated = True
             score_diff = packet.teams[self.team].score - packet.teams[1 - self.team].score
             seconds_remaining = getattr(packet.match_info, "game_time_remaining", None)
             self.update_action(
@@ -450,13 +593,46 @@ class RivalBot(rlbot.managers.Bot):
                 None if seconds_remaining is None else float(seconds_remaining),
                 packet,
             )
+            if config.M08_DUAL_RATE_ENABLED:
+                self.mechanics_second_half_started = False
+                self.update_mechanics(
+                    state,
+                    player_state,
+                    score_diff,
+                    None if seconds_elapsed is None else float(seconds_elapsed),
+                    None if seconds_remaining is None else float(seconds_remaining),
+                )
 
         # Apply action once we reach the action delay (one earlier due to RLBot delay)
         apply_new_action = (self.ticks >= (config.ACTION_DELAY - 1)) or (
             self.ticks == -1
         )
 
-        action_for_rlbot = self.new_action if apply_new_action else self.old_action
+        strategic_action = self.new_action if apply_new_action else self.old_action
+        if (
+            config.M08_DUAL_RATE_ENABLED
+            and not strategic_updated
+            and not self.mechanics_second_half_started
+            and self.ticks >= 5
+        ):
+            score_diff = packet.teams[self.team].score - packet.teams[1 - self.team].score
+            seconds_remaining = getattr(packet.match_info, "game_time_remaining", None)
+            self.update_mechanics(
+                state,
+                player_state,
+                score_diff,
+                None if seconds_elapsed is None else float(seconds_elapsed),
+                None if seconds_remaining is None else float(seconds_remaining),
+            )
+            self.mechanics_second_half_started = True
+
+        if config.M08_DUAL_RATE_ENABLED:
+            action_for_rlbot, self.last_controller_source = self.mechanics_window.emit(
+                strategic_action
+            )
+        else:
+            action_for_rlbot = strategic_action
+            self.last_controller_source = "strategic"
         controller_state = rlbot_conversion.convert_action_to_controller_state(
             action_for_rlbot
         )
