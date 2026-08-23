@@ -31,23 +31,29 @@ V9_SPECTATOR_VERSION = "RivalScratchRLViserSpectatorV1"
 
 
 def find_current_v9_checkpoint() -> Path:
-    root = REPOSITORY_ROOT / "training/checkpoints/milestone09"
     candidates: list[tuple[int, Path]] = []
-    for manifest_path in root.rglob(MANIFEST_NAME):
-        try:
-            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-            if (
-                manifest.get("contract", {}).get("environment_version")
-                != V9_PILOT_ENVIRONMENT_VERSION
-            ):
-                continue
-            steps = int(manifest["trainer_state"]["cumulative_agent_steps"])
-            candidates.append((steps, manifest_path.parent))
-        except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+    roots = (
+        REPOSITORY_ROOT / "training/checkpoints/milestone09",
+        REPOSITORY_ROOT / "training/checkpoints/milestone10",
+    )
+    for root in roots:
+        if not root.is_dir():
             continue
+        for manifest_path in root.rglob(MANIFEST_NAME):
+            try:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                if (
+                    manifest.get("contract", {}).get("environment_version")
+                    != V9_PILOT_ENVIRONMENT_VERSION
+                ):
+                    continue
+                steps = int(manifest["trainer_state"]["cumulative_agent_steps"])
+                candidates.append((steps, manifest_path.parent))
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+                continue
     if not candidates:
         raise FileNotFoundError(
-            "No Gate 13 scratch checkpoint was found; pass --checkpoint explicitly"
+            "No compatible scratch checkpoint was found; pass --checkpoint explicitly"
         )
     return max(candidates, key=lambda item: (item[0], str(item[1])))[1]
 

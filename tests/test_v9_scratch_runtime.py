@@ -83,3 +83,26 @@ def test_v9_scratch_mode_is_native_tick_and_does_not_replace_wisp_default_model(
         "m08": False,
         "policy": "POLICY.lt",
     }
+
+
+def test_scratch_runtime_accepts_frozen_m10_training_config_identity() -> None:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import json,v9_scratch_runtime as runtime; "
+                "print(json.dumps(runtime.validate_runtime_constants()))"
+            ),
+        ],
+        cwd=REPOSITORY_ROOT / "bot",
+        env=_clean_environment(),
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    constants = json.loads(completed.stdout)
+    assert "RivalM10TrainingConfigV1" in constants[
+        "accepted_training_config_versions"
+    ]

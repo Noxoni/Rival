@@ -452,6 +452,14 @@ class RivalV9PPOTrainer:
         mixed_log_ratio_maxima: list[float] = []
         actor_gradient_norms: list[float] = []
         critic_gradient_norms: list[float] = []
+        approximate_kls: list[float] = []
+        clip_fractions: list[float] = []
+        return_variance = float(np.var(returns))
+        explained_variance = (
+            1.0 - float(np.var(returns - values)) / return_variance
+            if return_variance > 1e-12
+            else 0.0
+        )
         update_started = time.perf_counter()
         for _epoch in range(int(ppo["epochs"])):
             for start in range(0, batch_size, minibatch_size):
@@ -510,6 +518,19 @@ class RivalV9PPOTrainer:
                 analog_entropies.append(float(entropy.analog_monte_carlo.detach().cpu()))
                 button_entropies.append(float(entropy.button_exact.detach().cpu()))
                 mixed_log_ratio_maxima.append(float((logp - old_logp).detach().abs().max().cpu()))
+                log_ratio = logp - old_logp
+                approximate_kls.append(
+                    float(((ratio - 1.0) - log_ratio).detach().mean().cpu())
+                )
+                clip_fractions.append(
+                    float(
+                        (torch.abs(ratio - 1.0) > float(ppo["clip_range"]))
+                        .to(torch.float32)
+                        .detach()
+                        .mean()
+                        .cpu()
+                    )
+                )
                 actor_gradient_norms.append(float(actor_norm.detach().cpu()))
                 critic_gradient_norms.append(float(critic_norm.detach().cpu()))
         if torch.cuda.is_available():
@@ -551,6 +572,9 @@ class RivalV9PPOTrainer:
             np.asarray(button_entropies),
             np.asarray(actor_gradient_norms),
             np.asarray(critic_gradient_norms),
+            np.asarray(approximate_kls),
+            np.asarray(clip_fractions),
+            np.asarray([explained_variance]),
             final_log_std,
         )
         all_update_metrics_finite = all(np.isfinite(item).all() for item in numeric_groups)
@@ -614,6 +638,10 @@ class RivalV9PPOTrainer:
                 "analog_entropy": _stats(np.asarray(analog_entropies)),
                 "button_entropy": _stats(np.asarray(button_entropies)),
                 "maximum_absolute_log_ratio_per_minibatch": mixed_log_ratio_maxima,
+                "approximate_kl": _stats(np.asarray(approximate_kls)),
+                "clip_fraction": _stats(np.asarray(clip_fractions)),
+                "explained_variance_before_update": float(explained_variance),
+                "value_prediction_before_update": _stats(values),
                 "actor_gradient_norm": _stats(np.asarray(actor_gradient_norms)),
                 "critic_gradient_norm": _stats(np.asarray(critic_gradient_norms)),
                 "actor_update_magnitude": actor_update,

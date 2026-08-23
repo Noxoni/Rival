@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "config_version": "RivalM10TrainingConfigV1",
+  "campaign_id": "rival-v10-first-serious-scratch-training",
+  "policy_version": "RivalPolicyV1",
+  "critic_version": "RivalCriticV1",
+  "observation_version": "RivalObsV1",
+  "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+  "action_version": "RivalActionV1",
+  "action_schema_sha256": "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163",
+  "canonical_state_version": "RivalCanonicalStateV1",
+  "canonical_adapter_version": "RivalCanonicalAdapterV1",
+  "reward_version": "RivalScratchRewardV1",
+  "reward_schedule_version": "RivalScratchRewardScheduleV1",
+  "environment_version": "RivalScratch1v1RocketSimV4OneTickDelayEpisodeSymmetryPilotCurriculum",
+  "backend": {
+    "name": "rlgym-ppo",
+    "version": "1.3.13",
+    "source_commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea",
+    "worker_count": 56,
+    "minimum_inference_size": 16,
+    "standardize_observations": false
+  },
+  "time_base": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "agents_per_environment": 2,
+    "agent_steps_per_simulated_game_second": 240,
+    "agent_steps_per_simulated_game_hour": 864000,
+    "repeat_action": false
+  },
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 192000,
+    "experience_buffer_capacity_agent_steps": 600000,
+    "ppo_batch_agent_steps": 192000,
+    "minibatch_agent_steps": 48000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0,
+    "advantage_epsilon": 0.000001
+  },
+  "gate11": {
+    "iterations_before_fresh_reload": 2,
+    "iterations_after_fresh_reload": 1,
+    "held_reload_observation_count": 32,
+    "seed": 20260911
+  },
+  "curriculum": {
+    "version": "RivalScratchResetCurriculumV1",
+    "seed_base": 20260913,
+    "weights": {
+      "natural": 0.7,
+      "ground_possession_challenge": 0.1,
+      "wall_aerial_ceiling_possession": 0.08,
+      "awkward_recovery_landing": 0.08,
+      "low_resource": 0.04
+    },
+    "natural_is_majority": true,
+    "metrics_version": "RivalScratchPilotMetricsV1"
+  },
+  "campaign": {
+    "starting_cumulative_agent_steps": 1680214,
+    "starting_simulated_game_hours": 1.9446921296,
+    "additional_agent_step_budget": 86400000,
+    "additional_simulated_game_hour_budget": 100.0,
+    "nominal_cumulative_agent_step_target": 88080214,
+    "nominal_cumulative_simulated_game_hour_target": 101.9446921296,
+    "evaluation_boundaries_added_simulated_hours": [
+      5,
+      10,
+      25,
+      50,
+      100
+    ],
+    "native_rlbot_boundaries_added_simulated_hours": [
+      25,
+      100
+    ],
+    "rolling_recovery_checkpoints_to_keep": 2,
+    "production_promotion_authorized": false
+  }
+}

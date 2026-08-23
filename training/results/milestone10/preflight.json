@@ -1,0 +1,1283 @@
+{
+  "checks": {
+    "all_56_workers_alive_after_rollout": true,
+    "all_56_workers_alive_after_start": true,
+    "exact_m09_checkpoint_verified_before_smoke": true,
+    "frozen_wisp_hashes_unchanged": true,
+    "m10_config_campaign_only_migration": true,
+    "passed": true,
+    "production_default_remains_frozen_wisp": true,
+    "production_promotion_authorized": false,
+    "short_rollout_and_update_finite": true,
+    "smoke_did_not_mutate_source_checkpoint": true,
+    "worker_cleanup_passed": true,
+    "worker_count_exactly_56": true
+  },
+  "config": {
+    "canonical_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+    "file_sha256": "b1141aa17525c4437e7b6710950ac20276116ac9b54f2275402397cb799843f3",
+    "migration": {
+      "allowed_changed_top_level_keys": [
+        "campaign",
+        "campaign_id",
+        "config_version",
+        "pilot"
+      ],
+      "changed_top_level_keys": [
+        "campaign",
+        "campaign_id",
+        "config_version",
+        "pilot"
+      ],
+      "checks": {
+        "all_learning_semantics_exact": true,
+        "changed_keys_are_campaign_metadata_only": true,
+        "m09_pilot_ceiling_removed": true,
+        "m10_campaign_present": true,
+        "source_is_final_m09_or_same_m10": true,
+        "target_is_m10": true
+      },
+      "frozen_top_level_keys": [
+        "action_schema_sha256",
+        "action_version",
+        "backend",
+        "canonical_adapter_version",
+        "canonical_state_version",
+        "critic_version",
+        "curriculum",
+        "environment_version",
+        "gate11",
+        "observation_schema_sha256",
+        "observation_version",
+        "policy_version",
+        "ppo",
+        "reward_schedule_version",
+        "reward_version",
+        "schema_version",
+        "time_base"
+      ],
+      "passed": true,
+      "source_config_sha256": "4b52940774fc7c273c781b27373ff7a2ec3972160b5edb0e58de5c377ef4474f",
+      "source_config_version": "RivalM09TrainingConfigV2PilotCurriculum",
+      "target_config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+      "target_config_version": "RivalM10TrainingConfigV1"
+    },
+    "path": "training/configs/milestone10.json",
+    "version": "RivalM10TrainingConfigV1"
+  },
+  "exact_start_checkpoint": {
+    "authority": "final_m09_gate13_checkpoint",
+    "checkpoint": {
+      "actor_sha256": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5",
+      "actor_size_bytes": 7877740,
+      "clean_boundary": true,
+      "completed_iterations": 9,
+      "config_sha256": "4b52940774fc7c273c781b27373ff7a2ec3972160b5edb0e58de5c377ef4474f",
+      "config_version": "RivalM09TrainingConfigV2PilotCurriculum",
+      "cumulative_agent_steps": 1680214,
+      "cumulative_model_updates": 35,
+      "directory": "training/checkpoints/milestone09/gate13-20260823T200008Z/phase2/1680214",
+      "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+      "manifest_sha256": "9b08b454f587248ed184a194aac9b57d904fe1c5ba5b8efe8e5b9e84c9ae469e",
+      "simulated_game_hours": 1.9446921296296296
+    },
+    "checks": {
+      "actor_sha256_exact": true,
+      "cumulative_agent_steps_exact": true,
+      "fresh_reload_exact": true,
+      "full_state_files_present": true,
+      "manifest_sha256_exact": true,
+      "passed": true,
+      "simulated_game_hours_exact_within_1e_9": true
+    },
+    "fresh_reload": {
+      "checkpoint": {
+        "actor_sha256": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5",
+        "actor_size_bytes": 7877740,
+        "clean_boundary": true,
+        "completed_iterations": 9,
+        "config_sha256": "4b52940774fc7c273c781b27373ff7a2ec3972160b5edb0e58de5c377ef4474f",
+        "config_version": "RivalM09TrainingConfigV2PilotCurriculum",
+        "cumulative_agent_steps": 1680214,
+        "cumulative_model_updates": 35,
+        "directory": "training/checkpoints/milestone09/gate13-20260823T200008Z/phase2/1680214",
+        "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+        "manifest_sha256": "9b08b454f587248ed184a194aac9b57d904fe1c5ba5b8efe8e5b9e84c9ae469e",
+        "simulated_game_hours": 1.9446921296296296
+      },
+      "checks": {
+        "actor_optimizer_state_exact": true,
+        "actor_state_exact": true,
+        "all_model_optimizer_and_held_state_finite": true,
+        "critic_optimizer_state_exact": true,
+        "critic_state_exact": true,
+        "held_actor_outputs_exact": true,
+        "held_critic_outputs_exact": true,
+        "partial_experience_buffer_empty": true,
+        "passed": true,
+        "reload_observations_exact": true,
+        "trainer_clean_boundary": true
+      },
+      "maximum_absolute_error": {
+        "actor_optimizer_state": 0.0,
+        "actor_state": 0.0,
+        "critic_optimizer_state": 0.0,
+        "critic_state": 0.0,
+        "held_actor_outputs": 0.0,
+        "held_critic_outputs": 0.0,
+        "reload_observations": 0.0
+      },
+      "schema_version": 1
+    },
+    "schema_version": 1
+  },
+  "preflight_version": "RivalM10FocusedPreflightV1",
+  "production": {
+    "expected": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "expected_wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "probe": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    }
+  },
+  "schema_version": 1,
+  "smoke": {
+    "checkpoint_written": false,
+    "cleanup": {
+      "attempted": true,
+      "lingering_worker_pids": [],
+      "passed": true,
+      "worker_pids": [
+        36168,
+        14684,
+        40296,
+        32664,
+        37048,
+        33716,
+        35532,
+        9644,
+        19976,
+        17424,
+        40944,
+        35508,
+        12260,
+        14240,
+        36244,
+        35668,
+        20656,
+        21480,
+        11312,
+        24060,
+        37076,
+        5592,
+        36684,
+        24736,
+        41652,
+        31780,
+        26236,
+        40664,
+        18124,
+        41964,
+        12564,
+        41596,
+        40032,
+        35700,
+        24096,
+        16208,
+        23960,
+        22900,
+        30264,
+        39776,
+        7756,
+        23004,
+        8024,
+        17924,
+        13008,
+        30180,
+        34768,
+        34360,
+        41844,
+        13940,
+        28060,
+        21984,
+        25184,
+        39752,
+        37464,
+        23180
+      ]
+    },
+    "environment_shapes": [
+      714,
+      8,
+      2
+    ],
+    "experience_counted_toward_m10_campaign": false,
+    "health_after_rollout": [
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36168
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 14684
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40296
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 32664
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 33716
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35532
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9644
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 19976
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17424
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40944
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35508
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12260
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 14240
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36244
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35668
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 20656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21480
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11312
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24060
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37076
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 5592
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36684
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24736
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41652
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31780
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26236
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40664
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 18124
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41964
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12564
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41596
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40032
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35700
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24096
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 16208
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23960
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 22900
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30264
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39776
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 7756
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23004
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8024
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17924
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 13008
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30180
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34768
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34360
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41844
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 13940
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 28060
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21984
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25184
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39752
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37464
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23180
+      }
+    ],
+    "health_after_start": [
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36168
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 14684
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40296
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 32664
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 33716
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35532
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9644
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 19976
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17424
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40944
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35508
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12260
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 14240
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36244
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35668
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 20656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21480
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11312
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24060
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37076
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 5592
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36684
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24736
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41652
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31780
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26236
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40664
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 18124
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41964
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12564
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41596
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40032
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35700
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 24096
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 16208
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23960
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 22900
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30264
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39776
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 7756
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23004
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8024
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17924
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 13008
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30180
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34768
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34360
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41844
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 13940
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 28060
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21984
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25184
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39752
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37464
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 23180
+      }
+    ],
+    "iteration": {
+      "actions": {
+        "all_actions_finite": true,
+        "all_eight_button_combos_sampled": true,
+        "analog": [
+          {
+            "absolute_over_0_95_share": 0.0028325071854042572,
+            "field": "throttle",
+            "maximum": 0.9875226616859436,
+            "mean": 0.0058472220657295034,
+            "minimum": -0.9838957190513611,
+            "nontrivial_range": true,
+            "p01": -0.8871870046854019,
+            "p50": 0.006135151023045182,
+            "p95": 0.7626534968614578,
+            "p99": 0.8891592663526536,
+            "samples": 48014,
+            "standard_deviation": 0.47555784658633293
+          },
+          {
+            "absolute_over_0_95_share": 0.003186570583579789,
+            "field": "steer",
+            "maximum": 0.9897092580795288,
+            "mean": -0.005910578181263332,
+            "minimum": -0.9906976222991943,
+            "nontrivial_range": true,
+            "p01": -0.8892854499816895,
+            "p50": -0.008897486608475447,
+            "p95": 0.7598648607730866,
+            "p99": 0.8906643569469453,
+            "samples": 48014,
+            "standard_deviation": 0.4761412291292847
+          },
+          {
+            "absolute_over_0_95_share": 0.0032698796184446204,
+            "field": "pitch",
+            "maximum": 0.9903069734573364,
+            "mean": -0.07257462829994464,
+            "minimum": -0.9860518574714661,
+            "nontrivial_range": true,
+            "p01": -0.9080424672365188,
+            "p50": -0.09609265252947807,
+            "p95": 0.7212384819984436,
+            "p99": 0.867152845859528,
+            "samples": 48014,
+            "standard_deviation": 0.47561370451640955
+          },
+          {
+            "absolute_over_0_95_share": 0.007143749739659266,
+            "field": "yaw",
+            "maximum": 0.9962383508682251,
+            "mean": 0.233017018223371,
+            "minimum": -0.9924184083938599,
+            "nontrivial_range": true,
+            "p01": -0.8051939451694489,
+            "p50": 0.2962180972099304,
+            "p95": 0.8665260344743728,
+            "p99": 0.941196347475052,
+            "samples": 48014,
+            "standard_deviation": 0.45796177079516215
+          },
+          {
+            "absolute_over_0_95_share": 0.003561461240471529,
+            "field": "roll",
+            "maximum": 0.9842902421951294,
+            "mean": -0.12890838754242542,
+            "minimum": -0.9911851286888123,
+            "nontrivial_range": true,
+            "p01": -0.9163382863998413,
+            "p50": -0.16392847150564194,
+            "p95": 0.6807743012905121,
+            "p99": 0.84745201587677,
+            "samples": 48014,
+            "standard_deviation": 0.47059551109445014
+          }
+        ],
+        "button_combo_counts": [
+          9390,
+          4524,
+          6309,
+          5874,
+          4314,
+          6901,
+          5115,
+          5587
+        ],
+        "button_combo_shares": [
+          0.19556795934519097,
+          0.09422251843212397,
+          0.13139917524055483,
+          0.12233931769900445,
+          0.08984879410172034,
+          0.14372891240054983,
+          0.10653142833340276,
+          0.11636189444745283
+        ],
+        "marginal_button_shares": {
+          "boost": 0.47663181572041485,
+          "handbrake": 0.4564710292831258,
+          "jump": 0.47665264297913107
+        },
+        "sample_count": 48014
+      },
+      "agent_steps_per_second": 3710.256407033867,
+      "collected_agent_steps": 48014,
+      "collection_seconds": 12.940884600044228,
+      "cuda_peak_allocated_mib": 4583.29150390625,
+      "cumulative_agent_steps": 1728228,
+      "event_counts": {
+        "blue.aerial_possession_like_tick": 920,
+        "blue.aerial_touch_event": 7,
+        "blue.air_roll_active_tick": 16945,
+        "blue.airborne_tick": 22780,
+        "blue.ceiling_contact_retained_dodge_like_event": 0,
+        "blue.directional_dodge_event": 169,
+        "blue.dodge_or_double_jump_event": 172,
+        "blue.dodge_resource_acquired_like_event": 0,
+        "blue.first_jump_event": 139,
+        "blue.flip_cancel_like_event": 547,
+        "blue.recovery_landing_like_event": 193,
+        "blue.stall_like_event": 120,
+        "blue.touch_after_resource_like_event": 0,
+        "blue.touch_event": 8,
+        "blue.wall_dash_like_event": 3,
+        "blue.wall_or_ceiling_recovery_like_event": 80,
+        "blue.wavedash_like_event": 0,
+        "blue.zap_dash_like_event": 1,
+        "orange.aerial_possession_like_tick": 511,
+        "orange.aerial_touch_event": 3,
+        "orange.air_roll_active_tick": 17059,
+        "orange.airborne_tick": 22799,
+        "orange.ceiling_contact_retained_dodge_like_event": 0,
+        "orange.directional_dodge_event": 161,
+        "orange.dodge_or_double_jump_event": 168,
+        "orange.dodge_resource_acquired_like_event": 0,
+        "orange.first_jump_event": 136,
+        "orange.flip_cancel_like_event": 505,
+        "orange.recovery_landing_like_event": 179,
+        "orange.stall_like_event": 142,
+        "orange.touch_after_resource_like_event": 0,
+        "orange.touch_event": 3,
+        "orange.wall_dash_like_event": 4,
+        "orange.wall_or_ceiling_recovery_like_event": 69,
+        "orange.wavedash_like_event": 0,
+        "orange.zap_dash_like_event": 0
+      },
+      "health": {
+        "actor_updated": true,
+        "all_analog_axes_explored": true,
+        "all_button_combos_sampled": true,
+        "all_hybrid_head_gradient_rows_nonzero": true,
+        "all_update_metrics_finite": true,
+        "analog_stds_finite_and_positive": true,
+        "authorized_agent_step_ceiling_respected": true,
+        "button_entropy_finite_and_positive": true,
+        "critic_updated": true,
+        "gae_finite": true,
+        "passed": true,
+        "pilot_metrics_finite": true,
+        "rollout_log_probabilities_reproduced": true,
+        "rollout_workers_alive": true
+      },
+      "iteration": 10,
+      "iteration_wall_seconds": 14.836253899964504,
+      "ppo": {
+        "actor_gradient_norm": {
+          "maximum": 0.27534615993499756,
+          "mean": 0.27534615993499756,
+          "minimum": 0.27534615993499756,
+          "p01": 0.27534615993499756,
+          "p50": 0.27534615993499756,
+          "p95": 0.27534615993499756,
+          "p99": 0.27534615993499756,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "actor_loss": {
+          "maximum": -0.0025890986435115337,
+          "mean": -0.0025890986435115337,
+          "minimum": -0.0025890986435115337,
+          "p01": -0.0025890986435115337,
+          "p50": -0.0025890986435115337,
+          "p95": -0.0025890986435115337,
+          "p99": -0.0025890986435115337,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "actor_update_magnitude": 0.026294758543372154,
+        "analog_entropy": {
+          "maximum": 2.8869693279266357,
+          "mean": 2.8869693279266357,
+          "minimum": 2.8869693279266357,
+          "p01": 2.8869693279266357,
+          "p50": 2.8869693279266357,
+          "p95": 2.8869693279266357,
+          "p99": 2.8869693279266357,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "analog_log_std": [
+          -0.5002551674842834,
+          -0.500565230846405,
+          -0.5007064938545227,
+          -0.5004144906997681,
+          -0.500627875328064
+        ],
+        "analog_std": [
+          0.6063759326934814,
+          0.6061878800392151,
+          0.6061022877693176,
+          0.6062793135643005,
+          0.6061499714851379
+        ],
+        "approximate_kl": {
+          "maximum": -2.409021038207726e-10,
+          "mean": -2.409021038207726e-10,
+          "minimum": -2.409021038207726e-10,
+          "p01": -2.409021038207726e-10,
+          "p50": -2.409021038207726e-10,
+          "p95": -2.409021038207726e-10,
+          "p99": -2.409021038207726e-10,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "button_entropy": {
+          "maximum": 2.0495107173919678,
+          "mean": 2.0495107173919678,
+          "minimum": 2.0495107173919678,
+          "p01": 2.0495107173919678,
+          "p50": 2.0495107173919678,
+          "p95": 2.0495107173919678,
+          "p99": 2.0495107173919678,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "clip_fraction": {
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p01": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "critic_gradient_norm": {
+          "maximum": 0.14295519888401031,
+          "mean": 0.14295519888401031,
+          "minimum": 0.14295519888401031,
+          "p01": 0.14295519888401031,
+          "p50": 0.14295519888401031,
+          "p95": 0.14295519888401031,
+          "p99": 0.14295519888401031,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "critic_loss": {
+          "maximum": 0.002004045993089676,
+          "mean": 0.002004045993089676,
+          "minimum": 0.002004045993089676,
+          "p01": 0.002004045993089676,
+          "p50": 0.002004045993089676,
+          "p95": 0.002004045993089676,
+          "p99": 0.002004045993089676,
+          "samples": 1,
+          "standard_deviation": 0.0
+        },
+        "critic_update_magnitude": 0.049495235085487366,
+        "explained_variance_before_update": 0.887430740744728
+      },
+      "reset_counts": {
+        "awkward_recovery_landing": 4,
+        "ground_possession_challenge": 5,
+        "low_resource": 1,
+        "natural": 43,
+        "wall_aerial_ceiling_possession": 3
+      },
+      "reward": {
+        "maximum": 0.056593578308820724,
+        "mean": -4.244663324010473e-05,
+        "minimum": -0.021979477256536484,
+        "p01": -0.0016786969674285502,
+        "p50": 5.251564232366945e-07,
+        "p95": 0.0009119069611188025,
+        "p99": 0.0026539424434304237,
+        "samples": 48014,
+        "standard_deviation": 0.001472685583476181
+      },
+      "reward_components": {
+        "blue.approach_control_potential": {
+          "cumulative": -0.4748768166440387,
+          "cumulative_absolute": 3.339481567985314,
+          "maximum": 0.011318798176944256,
+          "mean": -1.978076463714911e-05,
+          "minimum": -0.004559709690511227,
+          "p50": -2.712279410843621e-06,
+          "p95": 0.00024448733602184803,
+          "samples": 24007,
+          "standard_deviation": 0.0002757591985017289
+        },
+        "blue.ball_progress_potential": {
+          "cumulative": -0.12120037691676311,
+          "cumulative_absolute": 0.3185843161034989,
+          "maximum": 0.006318967789411545,
+          "mean": -5.048543213094643e-06,
+          "minimum": -0.009864484891295433,
+          "p50": 0.0,
+          "p95": 5.558576685871248e-06,
+          "samples": 24007,
+          "standard_deviation": 0.0001077581018026703
+        },
+        "blue.boost_waste_rate": {
+          "cumulative": -0.0013750000653089955,
+          "cumulative_absolute": 0.0013750000653089955,
+          "maximum": 0.0,
+          "mean": -5.7274964189986066e-08,
+          "minimum": -0.0001250000059371814,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 2.6750869971418032e-06
+        },
+        "blue.dodge_resource_event": {
+          "cumulative": 0.6949999844655395,
+          "cumulative_absolute": 0.6949999844655395,
+          "maximum": 0.004999999888241291,
+          "mean": 2.8949888968448347e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0003793564887220911
+        },
+        "blue.outcome": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0
+        },
+        "blue.recovery_potential": {
+          "cumulative": -1.2311002561804494,
+          "cumulative_absolute": 13.766847056987322,
+          "maximum": 0.016719579696655273,
+          "mean": -5.128088708211977e-05,
+          "minimum": -0.018056312575936317,
+          "p50": 1.4796581126574893e-05,
+          "p95": 0.0008073148899711671,
+          "samples": 24007,
+          "standard_deviation": 0.0014881252221106219
+        },
+        "blue.touch_quality_event": {
+          "cumulative": 0.10162306041456759,
+          "cumulative_absolute": 0.13341444707475603,
+          "maximum": 0.033404551446437836,
+          "mean": 4.233059541574024e-06,
+          "minimum": -0.012719136662781239,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0003719706331514197
+        },
+        "orange.approach_control_potential": {
+          "cumulative": -0.6816920513358209,
+          "cumulative_absolute": 3.3513047695787765,
+          "maximum": 0.005626223050057888,
+          "mean": -2.8395553435907066e-05,
+          "minimum": -0.004881814122200012,
+          "p50": -4.699524197349092e-06,
+          "p95": 0.00023254201078088955,
+          "samples": 24007,
+          "standard_deviation": 0.00026497996483342294
+        },
+        "orange.ball_progress_potential": {
+          "cumulative": 0.12120037691676311,
+          "cumulative_absolute": 0.3185843161034989,
+          "maximum": 0.009864484891295433,
+          "mean": 5.048543213094643e-06,
+          "minimum": -0.006318967789411545,
+          "p50": 0.0,
+          "p95": 6.39777630567551e-05,
+          "samples": 24007,
+          "standard_deviation": 0.0001077581018026703
+        },
+        "orange.boost_waste_rate": {
+          "cumulative": -0.037500001781154424,
+          "cumulative_absolute": 0.037500001781154424,
+          "maximum": 0.0,
+          "mean": -1.562044477908711e-06,
+          "minimum": -0.0001250000059371814,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 1.3885805200339127e-05
+        },
+        "orange.dodge_resource_event": {
+          "cumulative": 0.6549999853596091,
+          "cumulative_absolute": 0.6549999853596091,
+          "maximum": 0.004999999888241291,
+          "mean": 2.7283708308393766e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0003683397042863005
+        },
+        "orange.outcome": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0
+        },
+        "orange.recovery_potential": {
+          "cumulative": -1.155335799757859,
+          "cumulative_absolute": 13.112437904101347,
+          "maximum": 0.016738878563046455,
+          "mean": -4.8124955211307494e-05,
+          "minimum": -0.01856311969459057,
+          "p50": 2.0338218746474013e-05,
+          "p95": 0.0007840566220693291,
+          "samples": 24007,
+          "standard_deviation": 0.001445151540591366
+        },
+        "orange.touch_quality_event": {
+          "cumulative": 0.09222421608865261,
+          "cumulative_absolute": 0.09222421608865261,
+          "maximum": 0.050071462988853455,
+          "mean": 3.841555216755638e-06,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 24007,
+          "standard_deviation": 0.0003889961187535684
+        }
+      },
+      "rollout_inference": {
+        "batch_size": {
+          "maximum": 112.0,
+          "mean": 29.22235722964763,
+          "minimum": 16.0,
+          "p01": 16.0,
+          "p50": 22.0,
+          "p95": 74.0,
+          "p99": 90.0,
+          "samples": 1646,
+          "standard_deviation": 18.153333299281904
+        },
+        "batches": 1646,
+        "per_agent_microseconds": {
+          "maximum": 4797.690907831897,
+          "mean": 254.30803944547236,
+          "minimum": 40.818181746131316,
+          "p01": 50.82223278198702,
+          "p50": 222.8021894552512,
+          "p95": 597.7109376544831,
+          "p99": 999.5328113291177,
+          "samples": 1646,
+          "standard_deviation": 221.9947548695004
+        }
+      },
+      "rollout_wall_seconds": 13.46946170006413,
+      "scores_recorded_for_diagnostics_only": {
+        "blue": 0,
+        "orange": 0
+      },
+      "simulated_game_hours": 2.000263888888889,
+      "update_wall_seconds": 1.1833035999443382
+    },
+    "purpose": "discarded_in_memory_finite_56_worker_rollout_preflight",
+    "rollout_agent_steps_requested": 48000,
+    "source_actor_sha256_after": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5",
+    "source_actor_sha256_before": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5"
+  },
+  "status": "passed"
+}

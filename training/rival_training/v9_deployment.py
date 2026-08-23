@@ -32,6 +32,11 @@ EXPORT_FORMAT = "rival-v9-torchscript-deterministic-controller-v1"
 EXPORT_SCHEMA_VERSION = 1
 DEPLOYMENT_WRAPPER_VERSION = "RivalV9DeterministicControllerV1"
 TRAINING_CONFIG_VERSION = "RivalM09TrainingConfigV1"
+DEPLOYABLE_TRAINING_CONFIG_VERSIONS = (
+    "RivalM09TrainingConfigV1",
+    "RivalM09TrainingConfigV2PilotCurriculum",
+    "RivalM10TrainingConfigV1",
+)
 CONTROLLER_FIELDS = (
     "throttle",
     "steer",
@@ -156,8 +161,11 @@ def export_v9_deployment(
         )
 
     config = loaded["config"]
-    if config.get("config_version") != TRAINING_CONFIG_VERSION:
-        raise RuntimeError("Checkpoint training-config version is not deployable v9")
+    if config.get("config_version") not in DEPLOYABLE_TRAINING_CONFIG_VERSIONS:
+        raise RuntimeError(
+            "Checkpoint training-config version is not deployable through the "
+            f"frozen scratch runtime: {config.get('config_version')}"
+        )
     manifest_path = checkpoint_path / "checkpoint_manifest.json"
     model_record = {
         "path": portable_path(selected_path),
@@ -219,7 +227,7 @@ def export_v9_deployment(
             "size_bytes": reference_path.stat().st_size,
             "observations": int(observations.shape[0]),
             "observation_size": int(observations.shape[1]),
-            "source": "Gate 11 clean-boundary reload corpus",
+            "source": "clean-boundary checkpoint reload corpus",
         },
         "selection": {
             "selected_format": "TorchScript frozen optimize_for_inference",

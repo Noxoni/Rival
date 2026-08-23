@@ -50,6 +50,11 @@ ACTION_SCHEMA_SHA256 = (
     "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163"
 )
 TRAINING_CONFIG_VERSION = "RivalM09TrainingConfigV1"
+ACCEPTED_TRAINING_CONFIG_VERSIONS = (
+    "RivalM09TrainingConfigV1",
+    "RivalM09TrainingConfigV2PilotCurriculum",
+    "RivalM10TrainingConfigV1",
+)
 REWARD_VERSION = "RivalScratchRewardV1"
 REWARD_SCHEDULE_VERSION = "RivalScratchRewardScheduleV1"
 PREDICTION_REFRESH_TICKS = 1
@@ -189,7 +194,6 @@ class RivalV9ScratchRuntime:
             "action_schema_sha256": ACTION_SCHEMA_SHA256,
             "canonical_state_version": CANONICAL_STATE_VERSION,
             "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
-            "training_config_version": TRAINING_CONFIG_VERSION,
             "reward_version": REWARD_VERSION,
             "reward_schedule_version": REWARD_SCHEDULE_VERSION,
             "physics_hz": 120,
@@ -202,6 +206,11 @@ class RivalV9ScratchRuntime:
             for key, value in expected.items()
             if contract.get(key) != value
         }
+        if contract.get("training_config_version") not in ACCEPTED_TRAINING_CONFIG_VERSIONS:
+            mismatches["training_config_version"] = {
+                "metadata": contract.get("training_config_version"),
+                "runtime_accepted": list(ACCEPTED_TRAINING_CONFIG_VERSIONS),
+            }
         if mismatches:
             raise RuntimeError(f"Rival v9 export contract mismatch: {mismatches}")
         actual_artifact = {
@@ -418,6 +427,7 @@ def validate_runtime_constants() -> dict[str, Any]:
         "canonical_state_version": CANONICAL_STATE_VERSION,
         "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
         "training_config_version": TRAINING_CONFIG_VERSION,
+        "accepted_training_config_versions": list(ACCEPTED_TRAINING_CONFIG_VERSIONS),
         "reward_version": REWARD_VERSION,
         "reward_schedule_version": REWARD_SCHEDULE_VERSION,
         "prediction_refresh_ticks": PREDICTION_REFRESH_TICKS,

@@ -60,11 +60,11 @@ training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py 
 Rendering remains optional and disabled by default; this command launches exactly one
 spectator-owned environment and never attaches a renderer to PPO workers.
 
-Milestone 09 scratch checkpoints use a separate native-120-Hz viewer entry point. It
-loads `RivalObsV1`, `RivalActionV1`, and the selected hybrid checkpoint directly; both
-cars run the same scratch actor in self-play. `current` selects the highest-step local
-Gate 13 checkpoint. Check the exact seam headlessly, or launch the one-environment
-viewer at approximately real time:
+Milestone 09 and Milestone 10 scratch checkpoints use a separate native-120-Hz viewer
+entry point. It loads `RivalObsV1`, `RivalActionV1`, and the selected hybrid checkpoint
+directly; both cars run the same scratch actor in self-play. `current` selects the
+highest-step compatible local M09 or M10 checkpoint. Check the exact seam headlessly,
+or launch the one-environment viewer at approximately real time:
 
 ```powershell
 training/.venv/Scripts/python.exe training/scripts/run_m09_rlviser_spectator.py `
@@ -78,6 +78,36 @@ The scratch viewer is opt-in and independent. It uses one policy decision per 12
 physics tick and never enables rendering in a rollout worker. The once-per-second
 console status shows checkpoint game-hours and the current physical controller row;
 use Ctrl+C to stop an unbounded viewer.
+
+## Milestone 10 sustained scratch campaign
+
+M10 resumes only the exact final M09 Gate 13 checkpoint. Its focused preflight runs a
+discarded 48k in-memory rollout and proves that the source checkpoint is unchanged:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m10_preflight.py
+```
+
+Each campaign invocation advances from a supplied clean checkpoint to one immutable
+added-hour boundary. The runner writes an atomic recovery checkpoint after every PPO
+iteration, retains the newest two rolling states, and preserves the final boundary
+checkpoint separately. For example, the first boundary is:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m10_campaign_boundary.py `
+  --source-checkpoint training/checkpoints/milestone09/gate13-20260823T200008Z/phase2/1680214 `
+  --boundary-added-hours 5
+```
+
+Subsequent invocations pass the previous immutable M10 boundary as
+`--source-checkpoint` and select `10`, `25`, `50`, or `100`. Large checkpoints and raw
+iteration/evaluation reports remain ignored; compact boundary evidence is committed
+under `training/results/milestone10/`. The +25h and +100h boundaries use
+`run_m10_native_boundary.py` for the bounded RLBot v5 native-1x transfer check.
+
+The policy, critic, observation, action, reward, PPO values, 56-worker selection,
+native 120-Hz cadence, one-tick transport, and 70/10/8/8/4 reset curriculum are frozen.
+M10 does not authorize production promotion.
 
 `rlviser-py==0.6.13` is pinned intentionally: 0.6.14 requires NumPy 2.x, while the
 RLGym 2.0.1 Rocket League package requires NumPy below 2. The optional installer uses
