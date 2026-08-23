@@ -33,6 +33,7 @@ from .v9_observations import (
     RivalObsV1Builder,
     observation_schema_manifest,
 )
+from .v9_rewards import RivalScratchRewardV1
 
 
 V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV2OneTickDelay"
@@ -160,6 +161,42 @@ def build_v9_diagnostic_env(
         ),
         action_parser=RivalActionV1Parser(),
         reward_fn=RivalV9ZeroReward(),
+        transition_engine=transition_engine,
+        termination_cond=GoalCondition(),
+        truncation_cond=AnyCondition(
+            NoTouchTimeoutCondition(no_touch_timeout_seconds),
+            TimeoutCondition(episode_timeout_seconds),
+        ),
+        shared_info_provider=None,
+        renderer=None,
+    )
+
+
+def build_v9_training_env(
+    *,
+    prediction_refresh_ticks: int = 1,
+    no_touch_timeout_seconds: float = 30.0,
+    episode_timeout_seconds: float = 300.0,
+    rlbot_delay: bool = True,
+) -> RLGym:
+    """Build the complete one-tick scratch path including Reward V1.
+
+    This is separate from :func:`build_v9_diagnostic_env` so Gates 1--6 keep
+    their explicit zero-reward isolation.  Gate 8 and later training use this
+    complete environment.
+    """
+
+    transition_engine = RocketSimEngine(rlbot_delay=rlbot_delay)
+    return RLGym(
+        state_mutator=MutatorSequence(
+            FixedTeamSizeMutator(blue_size=1, orange_size=1),
+            RivalV9DeterministicKickoffMutator(),
+        ),
+        obs_builder=RivalObsV1RLGymBuilder(
+            prediction_refresh_ticks=prediction_refresh_ticks
+        ),
+        action_parser=RivalActionV1Parser(),
+        reward_fn=RivalScratchRewardV1(),
         transition_engine=transition_engine,
         termination_cond=GoalCondition(),
         truncation_cond=AnyCondition(

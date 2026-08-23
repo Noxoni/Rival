@@ -1,0 +1,898 @@
+{
+  "checks": {
+    "combined_declared_shaping_budget_below_goal": true,
+    "every_component_finite_and_logged": true,
+    "mirrored_inverted_reward_exactly_symmetric": true,
+    "named_mechanic_identity_rewards_disabled": true,
+    "native_source_hash_matches_gate3": true,
+    "native_source_version_matches": true,
+    "natural_goal_events_exact_at_1_2_4_ticks": true,
+    "natural_potential_terms_cadence_comparable": true,
+    "natural_trace_has_4096_contiguous_transitions": true,
+    "no_4x_dense_reward_amplification": true,
+    "observed_shaping_spend_respects_declared_budgets": true,
+    "synthetic_goal_event_exact_at_1_2_4_ticks": true,
+    "synthetic_potential_terms_cadence_comparable": true
+  },
+  "commands": {
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_reward_cadence_gate.py",
+    "unit_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_rewards.py -q"
+  },
+  "gate": 7,
+  "gate_name": "reward_cadence_audit",
+  "gate_semantics": {
+    "goal_event_used_only_as_reward_contract_fixture": true,
+    "policy_checkpoint_used": false,
+    "score_used_as_policy_skill_measure": false,
+    "training_budget_used": false,
+    "win_loss_used": false
+  },
+  "generated_at_utc": "2026-08-23T17:56:15.399187+00:00",
+  "interpretation": "Gate 7 is a numerical reward-contract gate. It does not evaluate wins, losses, policy quality, or whether a trained policy exists.",
+  "milestone": 9,
+  "natural_rlbot_v5_audit": {
+    "comparisons_by_team": {
+      "0": {
+        "2": {
+          "component_differences_from_period1": {
+            "approach_control_potential": {
+              "discounted_abs_difference": 6.765421556309548e-17,
+              "signed_abs_difference": 4.248330587709043e-05
+            },
+            "ball_progress_potential": {
+              "discounted_abs_difference": 2.788432462361157e-17,
+              "signed_abs_difference": 3.88096246243478e-06
+            },
+            "boost_waste_rate": {
+              "discounted_abs_difference": 4.217004199182908e-05,
+              "signed_abs_difference": 0.0002500000000000002
+            },
+            "dodge_resource_event": {
+              "discounted_abs_difference": 6.678685382510707e-17,
+              "signed_abs_difference": 0.0
+            },
+            "outcome": {
+              "discounted_abs_difference": 0.0,
+              "signed_abs_difference": 0.0
+            },
+            "recovery_potential": {
+              "discounted_abs_difference": 2.7755575615628914e-16,
+              "signed_abs_difference": 3.014043632788843e-05
+            },
+            "touch_quality_event": {
+              "discounted_abs_difference": 6.229065727128558e-06,
+              "signed_abs_difference": 0.0
+            }
+          },
+          "outcome_exact": true,
+          "shaping_absolute_rate_ratio_to_period1": 0.960892244561762,
+          "shaping_signed_abs_difference": 0.00023377616798836431
+        },
+        "4": {
+          "component_differences_from_period1": {
+            "approach_control_potential": {
+              "discounted_abs_difference": 1.8214596497756474e-17,
+              "signed_abs_difference": 8.870325410014618e-05
+            },
+            "ball_progress_potential": {
+              "discounted_abs_difference": 1.4243706041028315e-17,
+              "signed_abs_difference": 1.4177828190706319e-05
+            },
+            "boost_waste_rate": {
+              "discounted_abs_difference": 4.8119489723778787e-05,
+              "signed_abs_difference": 0.0002500000000000002
+            },
+            "dodge_resource_event": {
+              "discounted_abs_difference": 1.291672316489946e-05,
+              "signed_abs_difference": 0.0
+            },
+            "outcome": {
+              "discounted_abs_difference": 0.0,
+              "signed_abs_difference": 0.0
+            },
+            "recovery_potential": {
+              "discounted_abs_difference": 2.949029909160572e-16,
+              "signed_abs_difference": 0.00022029356254966992
+            },
+            "touch_quality_event": {
+              "discounted_abs_difference": 5.304728087996563e-05,
+              "signed_abs_difference": 0.0
+            }
+          },
+          "outcome_exact": true,
+          "shaping_absolute_rate_ratio_to_period1": 0.9477544866875851,
+          "shaping_signed_abs_difference": 7.31746448405235e-05
+        }
+      },
+      "1": {
+        "2": {
+          "component_differences_from_period1": {
+            "approach_control_potential": {
+              "discounted_abs_difference": 9.280770596475918e-17,
+              "signed_abs_difference": 3.234521164164478e-05
+            },
+            "ball_progress_potential": {
+              "discounted_abs_difference": 2.788432462361157e-17,
+              "signed_abs_difference": 3.88096246243478e-06
+            },
+            "boost_waste_rate": {
+              "discounted_abs_difference": 4.1429721988163535e-05,
+              "signed_abs_difference": 0.00012499999999999924
+            },
+            "dodge_resource_event": {
+              "discounted_abs_difference": 7.45931094670027e-17,
+              "signed_abs_difference": 0.0
+            },
+            "outcome": {
+              "discounted_abs_difference": 0.0,
+              "signed_abs_difference": 0.0
+            },
+            "recovery_potential": {
+              "discounted_abs_difference": 3.920475055707584e-16,
+              "signed_abs_difference": 3.3953983746073946e-05
+            },
+            "touch_quality_event": {
+              "discounted_abs_difference": 3.719943920355365e-05,
+              "signed_abs_difference": 0.0
+            }
+          },
+          "outcome_exact": true,
+          "shaping_absolute_rate_ratio_to_period1": 0.9603010029047437,
+          "shaping_signed_abs_difference": 6.25817670747153e-05
+        },
+        "4": {
+          "component_differences_from_period1": {
+            "approach_control_potential": {
+              "discounted_abs_difference": 5.377642775528102e-17,
+              "signed_abs_difference": 4.043979251332208e-05
+            },
+            "ball_progress_potential": {
+              "discounted_abs_difference": 1.4243706041028315e-17,
+              "signed_abs_difference": 1.4177828190706319e-05
+            },
+            "boost_waste_rate": {
+              "discounted_abs_difference": 3.8017582817666956e-05,
+              "signed_abs_difference": 0.0001250000000000014
+            },
+            "dodge_resource_event": {
+              "discounted_abs_difference": 1.3632090340685854e-05,
+              "signed_abs_difference": 0.0
+            },
+            "outcome": {
+              "discounted_abs_difference": 0.0,
+              "signed_abs_difference": 0.0
+            },
+            "recovery_potential": {
+              "discounted_abs_difference": 2.463307335887066e-16,
+              "signed_abs_difference": 0.0003788331612917528
+            },
+            "touch_quality_event": {
+              "discounted_abs_difference": 4.976414051165862e-05,
+              "signed_abs_difference": 0.0
+            }
+          },
+          "outcome_exact": true,
+          "shaping_absolute_rate_ratio_to_period1": 0.9471799120978537,
+          "shaping_signed_abs_difference": 0.0005300951256143882
+        }
+      }
+    },
+    "coverage": {
+      "airborne_states_by_team": {
+        "0": 2061,
+        "1": 1891
+      },
+      "boosting_states_by_team": {
+        "0": 1736,
+        "1": 1358
+      },
+      "goal_events_by_team": {
+        "0": 0,
+        "1": 0
+      },
+      "touch_events_by_team": {
+        "0": 11,
+        "1": 5
+      }
+    },
+    "results_by_team": {
+      "0": {
+        "1": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.48512243132151045,
+            "ball_progress_potential": 0.4992356223682251,
+            "boost_waste_rate": 0.020750000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": 1.0113792035945213,
+            "touch_quality_event": 0.3863723791503906
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.004985869027111362,
+            "ball_progress_potential": -4.6640271775921294e-05,
+            "boost_waste_rate": -0.0011659740896550073,
+            "dodge_resource_event": 0.005134356890175048,
+            "outcome": 0.0,
+            "recovery_potential": -0.019925589939670654,
+            "touch_quality_event": 0.038851411978795436
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.05256405721847736,
+            "ball_progress_potential": 0.003828378657413047,
+            "boost_waste_rate": -0.020750000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.0919800256282049,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "component_signed": {
+            "approach_control_potential": -0.05256405721847736,
+            "ball_progress_potential": 0.003828378657413047,
+            "boost_waste_rate": -0.020750000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.0919800256282049,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 9.0,
+            "self_touch": 11.0,
+            "touch_velocity_gain": 2.468946441650391,
+            "wasteful_boost": 166.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 1,
+          "sampled_transitions": 4096,
+          "shaping_absolute": 2.4478596364346474,
+          "shaping_absolute_per_simulated_second": 0.0717146377861713,
+          "shaping_signed": 0.1587000587501839,
+          "shaping_signed_per_simulated_second": 0.004649415783696794,
+          "simulated_seconds": 34.13333333333333
+        },
+        "2": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.4832392348357342,
+            "ball_progress_potential": 0.4119583160134393,
+            "boost_waste_rate": 0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": 1.0045594104262625,
+            "touch_quality_event": 0.3863723791503906
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.00498586902711143,
+            "ball_progress_potential": -4.664027177594918e-05,
+            "boost_waste_rate": -0.0012081441316468364,
+            "dodge_resource_event": 0.005134356890175115,
+            "outcome": 0.0,
+            "recovery_potential": -0.019925589939670932,
+            "touch_quality_event": 0.038857641044522565
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.05252157391260027,
+            "ball_progress_potential": 0.003832259619875482,
+            "boost_waste_rate": -0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.09201016606453279,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "component_signed": {
+            "approach_control_potential": -0.05252157391260027,
+            "ball_progress_potential": 0.003832259619875482,
+            "boost_waste_rate": -0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.09201016606453279,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 9.0,
+            "self_touch": 11.0,
+            "touch_velocity_gain": 2.468946441650391,
+            "wasteful_boost": 84.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 2,
+          "sampled_transitions": 2048,
+          "shaping_absolute": 2.3521293404258268,
+          "shaping_absolute_per_simulated_second": 0.0689100392702879,
+          "shaping_signed": 0.15846628258219553,
+          "shaping_signed_per_simulated_second": 0.004642566872525259,
+          "simulated_seconds": 34.13333333333333
+        },
+        "4": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.4786626333917339,
+            "ball_progress_potential": 0.39946638902311926,
+            "boost_waste_rate": 0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": 0.9894685516471341,
+            "touch_quality_event": 0.3863723791503906
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.00498586902711138,
+            "ball_progress_potential": -4.664027177593554e-05,
+            "boost_waste_rate": -0.0012140935793787861,
+            "dodge_resource_event": 0.005147273613339947,
+            "outcome": 0.0,
+            "recovery_potential": -0.01992558993967095,
+            "touch_quality_event": 0.0389044592596754
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.05247535396437721,
+            "ball_progress_potential": 0.0038425564856037534,
+            "boost_waste_rate": -0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.09175973206565523,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "component_signed": {
+            "approach_control_potential": -0.05247535396437721,
+            "ball_progress_potential": 0.0038425564856037534,
+            "boost_waste_rate": -0.021000000000000015,
+            "dodge_resource_event": 0.045,
+            "outcome": 0.0,
+            "recovery_potential": -0.09175973206565523,
+            "touch_quality_event": 0.2751657629394531
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 9.0,
+            "self_touch": 11.0,
+            "touch_velocity_gain": 2.468946441650391,
+            "wasteful_boost": 42.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 4,
+          "sampled_transitions": 1024,
+          "shaping_absolute": 2.319969953212378,
+          "shaping_absolute_per_simulated_second": 0.06796786972301888,
+          "shaping_signed": 0.15877323339502442,
+          "shaping_signed_per_simulated_second": 0.004651559572119856,
+          "simulated_seconds": 34.13333333333333
+        }
+      },
+      "1": {
+        "1": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.5693205614895283,
+            "ball_progress_potential": 0.4992356223682251,
+            "boost_waste_rate": 0.0026250000000000015,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": 1.1285572873899863,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.004936373161942704,
+            "ball_progress_potential": 4.6640271775921294e-05,
+            "boost_waste_rate": -0.0006983172047214081,
+            "dodge_resource_event": 0.005418713095777566,
+            "outcome": 0.0,
+            "recovery_potential": -0.01989399099223222,
+            "touch_quality_event": 0.029915406616780577
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.026159088939566515,
+            "ball_progress_potential": -0.003828378657413047,
+            "boost_waste_rate": -0.0026250000000000015,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.0994009902729233,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_signed": {
+            "approach_control_potential": -0.026159088939566515,
+            "ball_progress_potential": -0.003828378657413047,
+            "boost_waste_rate": -0.0026250000000000015,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.0994009902729233,
+            "touch_quality_event": 0.234947077293396
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 11.0,
+            "self_touch": 5.0,
+            "touch_velocity_gain": 2.2483079312642413,
+            "wasteful_boost": 21.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 1,
+          "sampled_transitions": 4096,
+          "shaping_absolute": 2.4896855485411358,
+          "shaping_absolute_per_simulated_second": 0.0729400063049161,
+          "shaping_signed": 0.15793361942349313,
+          "shaping_signed_per_simulated_second": 0.00462696150654765,
+          "simulated_seconds": 34.13333333333333
+        },
+        "2": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.5674233427346679,
+            "ball_progress_potential": 0.4119583160134393,
+            "boost_waste_rate": 0.0027500000000000007,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": 1.1187687931399968,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.004936373161942611,
+            "ball_progress_potential": 4.664027177594918e-05,
+            "boost_waste_rate": -0.0007397469267095716,
+            "dodge_resource_event": 0.0054187130957776405,
+            "outcome": 0.0,
+            "recovery_potential": -0.019893990992231828,
+            "touch_quality_event": 0.02995260605598413
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.02612674372792487,
+            "ball_progress_potential": -0.003832259619875482,
+            "boost_waste_rate": -0.0027500000000000007,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.09936703628917723,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_signed": {
+            "approach_control_potential": -0.02612674372792487,
+            "ball_progress_potential": -0.003832259619875482,
+            "boost_waste_rate": -0.0027500000000000007,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.09936703628917723,
+            "touch_quality_event": 0.234947077293396
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 11.0,
+            "self_touch": 5.0,
+            "touch_velocity_gain": 2.2483079312642413,
+            "wasteful_boost": 11.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 2,
+          "sampled_transitions": 2048,
+          "shaping_absolute": 2.3908475291815,
+          "shaping_absolute_per_simulated_second": 0.07004436120648926,
+          "shaping_signed": 0.1578710376564184,
+          "shaping_signed_per_simulated_second": 0.004625128056340383,
+          "simulated_seconds": 34.13333333333333
+        },
+        "4": {
+          "budget_clip_counts": {},
+          "component_absolute": {
+            "approach_control_potential": 0.5637317956241307,
+            "ball_progress_potential": 0.39946638902311926,
+            "boost_waste_rate": 0.0025,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": 1.1025348770778438,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_discounted": {
+            "approach_control_potential": 0.00493637316194265,
+            "ball_progress_potential": 4.664027177593554e-05,
+            "boost_waste_rate": -0.0006602996219037411,
+            "dodge_resource_event": 0.005432345186118252,
+            "outcome": 0.0,
+            "recovery_potential": -0.019893990992231974,
+            "touch_quality_event": 0.029965170757292235
+          },
+          "component_proposal_signed": {
+            "approach_control_potential": -0.026118649147053193,
+            "ball_progress_potential": -0.0038425564856037534,
+            "boost_waste_rate": -0.0025,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.09902215711163155,
+            "touch_quality_event": 0.234947077293396
+          },
+          "component_signed": {
+            "approach_control_potential": -0.026118649147053193,
+            "ball_progress_potential": -0.0038425564856037534,
+            "boost_waste_rate": -0.0025,
+            "dodge_resource_event": 0.05499999999999999,
+            "outcome": 0.0,
+            "recovery_potential": -0.09902215711163155,
+            "touch_quality_event": 0.234947077293396
+          },
+          "detector_totals": {
+            "airborne_dodge_acquired": 11.0,
+            "self_touch": 5.0,
+            "touch_velocity_gain": 2.2483079312642413,
+            "wasteful_boost": 5.0
+          },
+          "native_elapsed_ticks": 4096,
+          "nonfinite_values": 0,
+          "outcome_signed": 0.0,
+          "period_ticks": 4,
+          "sampled_transitions": 1024,
+          "shaping_absolute": 2.3581801390184896,
+          "shaping_absolute_per_simulated_second": 0.06908730876030732,
+          "shaping_signed": 0.15846371454910751,
+          "shaping_signed_per_simulated_second": 0.004642491637180884,
+          "simulated_seconds": 34.13333333333333
+        }
+      }
+    },
+    "source": {
+      "longest_contiguous_records": 5998,
+      "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+      "records_in_file": 6000,
+      "selected_first_frame": 92,
+      "selected_last_frame": 4188,
+      "selected_transitions": 4096,
+      "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+      "version": "RivalV9NativePacketCorpusV2"
+    }
+  },
+  "phase_schedule_audit": {
+    "100_hours_without_readiness": "foundation",
+    "250_hours_with_mature_readiness": "mature",
+    "25_hours_with_competence_readiness": "competence",
+    "pilot_at_2_hours": "foundation"
+  },
+  "prospective_bounds": {
+    "combined_shaping_absolute_episode_budget_strictly_below_goal": true,
+    "potential_discounted_abs_difference": {
+      "natural": 1e-08,
+      "synthetic": 1e-10
+    },
+    "potential_raw_signed_abs_difference": {
+      "natural": 0.03,
+      "synthetic": 0.02
+    },
+    "shaping_absolute_rate_ratio_to_period1": [
+      0.7,
+      1.3
+    ]
+  },
+  "reward_contract": {
+    "combined_shaping_absolute_episode_budget": 8.75,
+    "components": [
+      "outcome",
+      "ball_progress_potential",
+      "approach_control_potential",
+      "touch_quality_event",
+      "recovery_potential",
+      "boost_waste_rate",
+      "dodge_resource_event"
+    ],
+    "concede_reward": -10.0,
+    "dense_term_contract": "potential terms use weight*(gamma_120hz**delta_ticks*Phi(next)-Phi(previous)); rate terms use bounded_rate*delta_ticks/120",
+    "gamma_120hz": 0.9987444968227265,
+    "goal_reward": 10.0,
+    "mechanics_events_are_diagnostics_first": true,
+    "named_mechanic_identity_rewards": false,
+    "phases": [
+      {
+        "minimum_simulated_game_hours": 0.0,
+        "name": "foundation",
+        "requires_readiness_gate": false,
+        "weights": {
+          "approach_control_potential": 0.05,
+          "ball_progress_potential": 0.08,
+          "boost_waste_rate_per_second": 0.015,
+          "dodge_resource_event": 0.005,
+          "recovery_potential": 0.04,
+          "touch_quality_event": 0.12
+        }
+      },
+      {
+        "minimum_simulated_game_hours": 25.0,
+        "name": "competence",
+        "requires_readiness_gate": true,
+        "weights": {
+          "approach_control_potential": 0.02,
+          "ball_progress_potential": 0.06,
+          "boost_waste_rate_per_second": 0.0125,
+          "dodge_resource_event": 0.002,
+          "recovery_potential": 0.04,
+          "touch_quality_event": 0.1
+        }
+      },
+      {
+        "minimum_simulated_game_hours": 250.0,
+        "name": "mature",
+        "requires_readiness_gate": true,
+        "weights": {
+          "approach_control_potential": 0.005,
+          "ball_progress_potential": 0.05,
+          "boost_waste_rate_per_second": 0.01,
+          "dodge_resource_event": 0.0,
+          "recovery_potential": 0.03,
+          "touch_quality_event": 0.08
+        }
+      }
+    ],
+    "physics_hz": 120,
+    "reward_version": "RivalScratchRewardV1",
+    "schedule_version": "RivalScratchRewardScheduleV1",
+    "shaping_absolute_episode_budgets": {
+      "approach_control_potential": 1.0,
+      "ball_progress_potential": 2.0,
+      "boost_waste_rate": 1.0,
+      "dodge_resource_event": 0.25,
+      "recovery_potential": 2.5,
+      "touch_quality_event": 2.0
+    }
+  },
+  "schema_version": 1,
+  "source_hashes": {
+    "gate_script_sha256": "cc4dde10bdd50e135e9f45b3c428f155d48aa9c849dc1b6aa9f3b6d2fbc4e0d2",
+    "reward_module_sha256": "53b20d954f56766d729593c8f601c9d9f3a309fe1051ef12822af8cdcc02aacf"
+  },
+  "status": "passed",
+  "symmetry_audit": {
+    "component_signed_abs_differences": {
+      "approach_control_potential": 0.0,
+      "ball_progress_potential": 0.0,
+      "boost_waste_rate": 0.0,
+      "dodge_resource_event": 0.0,
+      "outcome": 0.0,
+      "recovery_potential": 0.0,
+      "touch_quality_event": 0.0
+    },
+    "exact": true,
+    "maximum_abs_difference": 0.0,
+    "operation": "180-degree world mirror then orange team canonical inversion"
+  },
+  "synthetic_audit": {
+    "comparisons": {
+      "2": {
+        "component_differences_from_period1": {
+          "approach_control_potential": {
+            "discounted_abs_difference": 3.469446951953614e-17,
+            "signed_abs_difference": 1.2611280696690763e-05
+          },
+          "ball_progress_potential": {
+            "discounted_abs_difference": 1.734723475976807e-18,
+            "signed_abs_difference": 1.595583559536179e-05
+          },
+          "boost_waste_rate": {
+            "discounted_abs_difference": 9.017976750062828e-05,
+            "signed_abs_difference": 0.0001250000000000001
+          },
+          "dodge_resource_event": {
+            "discounted_abs_difference": 2.3621664399582805e-06,
+            "signed_abs_difference": 0.0
+          },
+          "outcome": {
+            "discounted_abs_difference": 0.002787328831713065,
+            "signed_abs_difference": 0.0
+          },
+          "recovery_potential": {
+            "discounted_abs_difference": 1.1449174941446927e-16,
+            "signed_abs_difference": 1.5872737236535817e-05
+          },
+          "touch_quality_event": {
+            "discounted_abs_difference": 2.503481172540234e-06,
+            "signed_abs_difference": 0.0
+          }
+        },
+        "outcome_exact": true,
+        "shaping_absolute_rate_ratio_to_period1": 0.9992876865145143,
+        "shaping_signed_abs_difference": 0.00011247181766213532
+      },
+      "4": {
+        "component_differences_from_period1": {
+          "approach_control_potential": {
+            "discounted_abs_difference": 4.5102810375396984e-17,
+            "signed_abs_difference": 3.782005984166725e-05
+          },
+          "ball_progress_potential": {
+            "discounted_abs_difference": 3.469446951953614e-18,
+            "signed_abs_difference": 4.780713386728572e-05
+          },
+          "boost_waste_rate": {
+            "discounted_abs_difference": 0.0002711543722805805,
+            "signed_abs_difference": 0.00037500000000000033
+          },
+          "dodge_resource_event": {
+            "discounted_abs_difference": 7.095411359485252e-06,
+            "signed_abs_difference": 0.0
+          },
+          "outcome": {
+            "discounted_abs_difference": 0.008372502597839837,
+            "signed_abs_difference": 0.0
+          },
+          "recovery_potential": {
+            "discounted_abs_difference": 4.85722573273506e-17,
+            "signed_abs_difference": 4.758776982623225e-05
+          },
+          "touch_quality_event": {
+            "discounted_abs_difference": 7.519888712938412e-06,
+            "signed_abs_difference": 0.0
+          }
+        },
+        "outcome_exact": true,
+        "shaping_absolute_rate_ratio_to_period1": 0.9978672033784013,
+        "shaping_signed_abs_difference": 0.00033739930419939
+      }
+    },
+    "description": "Ten simulated seconds of smooth progress/approach, a bounded wasteful-boost interval, four aligned touch events, airborne resource interval, and one terminal goal event.",
+    "results": {
+      "1": {
+        "budget_clip_counts": {},
+        "component_absolute": {
+          "approach_control_potential": 0.06405478116475102,
+          "ball_progress_potential": 0.025433651112533866,
+          "boost_waste_rate": 0.030125000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": 0.09647663975876042,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_discounted": {
+          "approach_control_potential": -0.01969048195151456,
+          "ball_progress_potential": 0.015088596958692822,
+          "boost_waste_rate": -0.016566921579897264,
+          "dodge_resource_event": 0.0018790878232580403,
+          "outcome": 2.2173017017200958,
+          "recovery_potential": -0.017157207683383833,
+          "touch_quality_event": 0.001991502760984777
+        },
+        "component_proposal_signed": {
+          "approach_control_potential": -0.0420945930443897,
+          "ball_progress_potential": 0.025433651112533866,
+          "boost_waste_rate": -0.030125000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.036957325728583366,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_signed": {
+          "approach_control_potential": -0.0420945930443897,
+          "ball_progress_potential": 0.025433651112533866,
+          "boost_waste_rate": -0.030125000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.036957325728583366,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "detector_totals": {
+          "airborne_dodge_acquired": 1.0,
+          "self_touch": 4.0,
+          "touch_velocity_gain": 9.853531327109963e-06,
+          "wasteful_boost": 241.0
+        },
+        "native_elapsed_ticks": 1200,
+        "nonfinite_values": 0,
+        "outcome_signed": 10.0,
+        "period_ticks": 1,
+        "sampled_transitions": 1200,
+        "shaping_absolute": 0.22515461281449708,
+        "shaping_absolute_per_simulated_second": 0.022515461281449708,
+        "shaping_signed": -0.07467872688198747,
+        "shaping_signed_per_simulated_second": -0.007467872688198747,
+        "simulated_seconds": 10.0
+      },
+      "2": {
+        "budget_clip_counts": {},
+        "component_absolute": {
+          "approach_control_potential": 0.06395752682941644,
+          "ball_progress_potential": 0.025417695276938504,
+          "boost_waste_rate": 0.030250000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": 0.09630446926266327,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_discounted": {
+          "approach_control_potential": -0.019690481951514526,
+          "ball_progress_potential": 0.01508859695869282,
+          "boost_waste_rate": -0.016657101347397892,
+          "dodge_resource_event": 0.0018814499896979986,
+          "outcome": 2.220089030551809,
+          "recovery_potential": -0.01715720768338372,
+          "touch_quality_event": 0.001994006242157317
+        },
+        "component_proposal_signed": {
+          "approach_control_potential": -0.04208198176369301,
+          "ball_progress_potential": 0.025417695276938504,
+          "boost_waste_rate": -0.030250000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.03694145299134683,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_signed": {
+          "approach_control_potential": -0.04208198176369301,
+          "ball_progress_potential": 0.025417695276938504,
+          "boost_waste_rate": -0.030250000000000023,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.03694145299134683,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "detector_totals": {
+          "airborne_dodge_acquired": 1.0,
+          "self_touch": 4.0,
+          "touch_velocity_gain": 9.853531327109963e-06,
+          "wasteful_boost": 121.0
+        },
+        "native_elapsed_ticks": 1200,
+        "nonfinite_values": 0,
+        "outcome_signed": 10.0,
+        "period_ticks": 2,
+        "sampled_transitions": 600,
+        "shaping_absolute": 0.22499423214747,
+        "shaping_absolute_per_simulated_second": 0.022499423214747,
+        "shaping_signed": -0.0747911986996496,
+        "shaping_signed_per_simulated_second": -0.0074791198699649605,
+        "simulated_seconds": 10.0
+      },
+      "4": {
+        "budget_clip_counts": {},
+        "component_absolute": {
+          "approach_control_potential": 0.06376325919321826,
+          "ball_progress_potential": 0.02538584397866658,
+          "boost_waste_rate": 0.030500000000000024,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": 0.09596075986661236,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_discounted": {
+          "approach_control_potential": -0.019690481951514606,
+          "ball_progress_potential": 0.015088596958692819,
+          "boost_waste_rate": -0.016838075952177844,
+          "dodge_resource_event": 0.0018861832346175255,
+          "outcome": 2.2256742043179356,
+          "recovery_potential": -0.017157207683383784,
+          "touch_quality_event": 0.0019990226496977154
+        },
+        "component_proposal_signed": {
+          "approach_control_potential": -0.04205677298454803,
+          "ball_progress_potential": 0.02538584397866658,
+          "boost_waste_rate": -0.030500000000000024,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.036909737958757134,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "component_signed": {
+          "approach_control_potential": -0.04205677298454803,
+          "ball_progress_potential": 0.02538584397866658,
+          "boost_waste_rate": -0.030500000000000024,
+          "dodge_resource_event": 0.005,
+          "outcome": 10.0,
+          "recovery_potential": -0.036909737958757134,
+          "touch_quality_event": 0.004064540778451756
+        },
+        "detector_totals": {
+          "airborne_dodge_acquired": 1.0,
+          "self_touch": 4.0,
+          "touch_velocity_gain": 9.853531327109963e-06,
+          "wasteful_boost": 61.0
+        },
+        "native_elapsed_ticks": 1200,
+        "nonfinite_values": 0,
+        "outcome_signed": 10.0,
+        "period_ticks": 4,
+        "sampled_transitions": 300,
+        "shaping_absolute": 0.22467440381694898,
+        "shaping_absolute_per_simulated_second": 0.022467440381694896,
+        "shaping_signed": -0.07501612618618686,
+        "shaping_signed_per_simulated_second": -0.007501612618618686,
+        "simulated_seconds": 10.0
+      }
+    }
+  }
+}
