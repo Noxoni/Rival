@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "verified_utc": "2026-08-23T01:59:26.324Z",
+  "source_head_before_final_commit": "36cb14cf645c4f06b668c34d85ce1a500e4b53da",
+  "repository_sync": {
+    "origin_main_before_final_commit": "36cb14cf645c4f06b668c34d85ce1a500e4b53da",
+    "merge_base": "36cb14cf645c4f06b668c34d85ce1a500e4b53da",
+    "synchronized": true,
+    "post_push_remote_readback": "reported externally after the final push to avoid a self-referential commit"
+  },
+  "tests": {
+    "root_full_pytest": {
+      "command": ".venv/Scripts/python.exe -m pytest -q --basetemp .pytest_tmp/m06-final-root",
+      "passed": 72,
+      "failed": 0,
+      "warnings": 2,
+      "warning_scope": "known torch.jit.load deprecation warnings"
+    },
+    "training_full_pytest": {
+      "command": ".venv/Scripts/python.exe -m pytest -q --basetemp .pytest_tmp/m06-final-training",
+      "working_directory": "training",
+      "passed": 19,
+      "failed": 0,
+      "warnings": 19,
+      "warning_scope": "known torch.jit load/script/save deprecation warnings"
+    },
+    "launcher_note": "The first training-suite invocation used a repository-relative interpreter path from inside training and did not start pytest. The corrected command above ran the complete suite successfully; this was a launcher correction, not a test rerun after failure."
+  },
+  "static_verification": {
+    "ruff_changed_m06_python": "passed",
+    "compileall_training_runtime_and_scripts": "passed",
+    "git_diff_check": "passed",
+    "milestone06_json_files_parsed": 24,
+    "absolute_machine_path_scan": "passed",
+    "secret_like_token_scan": "passed"
+  },
+  "artifacts": {
+    "checkpoint_directory": "training/checkpoints/milestone06/020000016_stage_b_m4p0",
+    "checkpoint_files_verified": {
+      "PPO_POLICY.pt": "bc33498d94789a89c074a186cddc4795579f5f210a7b0750e1f44792b1346ebe",
+      "PPO_POLICY_OPTIMIZER.pt": "04c6c36631a86a90442c7adee0a9882e091e360a7c344aeb035b9df3aa54f83b",
+      "PPO_VALUE_NET.pt": "938d8eb4b77287805b74134e6126bf6c83451c7cca9770e17159414e6ce44211",
+      "PPO_VALUE_NET_OPTIMIZER.pt": "b864174da8ed8cad0363ecfb409ba78d60ed0257c12892962f189dd059e7ddc3",
+      "RIVAL_CAMPAIGN_STATE.json": "fad8f49b6a29eb5315461d0b70fce28e515ab7d8dfa2098fd532639ab9698eb7"
+    },
+    "fresh_checkpoint_reload": {
+      "exact_logits": true,
+      "maximum_absolute_logit_error": 0.0,
+      "policy_optimizer_state_loaded": true,
+      "critic_optimizer_state_loaded": true,
+      "prior_state_reloaded": true
+    },
+    "candidate_actor_checkpoint_sha256": "3b25839bd4dd4dc3bc9b088fc5953e7898858971bb8ef077df3501db8ae11b01",
+    "candidate_torchscript_sha256": "fcb557bbc19c945dba05c986c04cba484d75cafa283f77341addba7e1dafe889",
+    "expanded_action_table_file_sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "large_checkpoints_exports_and_raw_rollouts_ignored": true,
+    "largest_new_compact_result_bytes_before_final_verification": 59731
+  },
+  "deployment": {
+    "checkpoint_to_exact_export_parity": "passed",
+    "exact_export_to_torchscript_parity": "passed",
+    "training_cuda_runtime_load": "passed",
+    "production_cpu_runtime_load": "passed",
+    "opt_in_candidate_runtime_smoke": "passed",
+    "rlbot_v5_match_execution": "8_of_8_complete_no_runtime_errors",
+    "rlbot_telemetry_integrity": "passed",
+    "gameplay_transfer": "rejected_0_wins_8_losses_goal_differential_minus_29",
+    "production_policy": "frozen_wisp_unchanged",
+    "production_promoted": false
+  },
+  "preservation": {
+    "paused_strategy_stash": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "frozen_wisp_bootstrap_preserved": true,
+    "stage_boundary_checkpoints_preserved": true,
+    "raw_rlbot_telemetry_preserved_ignored": true
+  }
+}

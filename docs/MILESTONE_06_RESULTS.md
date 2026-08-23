@@ -26,6 +26,16 @@ The frozen-Wisp headless baseline was 42-58-0 over 100 balanced games. Reward/cu
 - Latest 100-game headless Wisp result: 43-57-0, goal differential -14; health `passed`.
 - Production: frozen Wisp unchanged. Resume: `training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py --stage stage_b --appended-offset -4 --resume training/checkpoints/milestone06/005000010_stage_a_m6p0`
 
+### 020m
+
+- Status: `rejected_at_evaluation_boundary`; cumulative steps/updates: 20,000,016 / 1,194.
+- Aggregate appended-action share: 1.0072%.
+- Latest 100-game headless Wisp result: 59-41-0, goal differential +18; health `passed`.
+- RLBot stage context: 0-8-0, goal differential -29.
+- RLBot telemetry integrity: `passed`; transfer verdict: `severe_regression_at_20m`.
+- Campaign outcome: **rejected/rollback**.
+- Production: frozen Wisp unchanged. Resume: `none authorized; new authority would be required before using training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py --stage stage_c --appended-offset -4 --resume training/checkpoints/milestone06/020000016_stage_b_m4p0`
+
 ## Promotion state
 
-No trained checkpoint is promoted by training-step count alone. A final candidate must pass the governed 16-game RLBot battery, deployment parity, and aggregate gameplay/mechanics review. Until then, the production Rival policy remains frozen Wisp.
+Milestone 06 ended as **rejected/rollback** at the 20M clean boundary. The candidate failed the ordinary eight-game RLBot boundary, so the final 16-game promotion battery was not run and production remains frozen Wisp.

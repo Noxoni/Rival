@@ -1,0 +1,1173 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "evaluation": "deterministic_headless_frozen_wisp",
+  "episode_definition": "natural kickoff until first goal or configured truncation",
+  "games": 100,
+  "balanced_sides": true,
+  "student_cadence_ticks": 4,
+  "teacher_cadence_ticks": 8,
+  "deterministic": true,
+  "seed": 20260825,
+  "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+  "student_source": {
+    "kind": "in_memory_policy_at_verified_checkpoint",
+    "checkpoint": {
+      "directory": "training/checkpoints/milestone06/020000016_stage_b_m4p0",
+      "files": {
+        "PPO_POLICY.pt": {
+          "sha256": "bc33498d94789a89c074a186cddc4795579f5f210a7b0750e1f44792b1346ebe",
+          "size_bytes": 13707893
+        },
+        "PPO_POLICY_OPTIMIZER.pt": {
+          "sha256": "04c6c36631a86a90442c7adee0a9882e091e360a7c344aeb035b9df3aa54f83b",
+          "size_bytes": 27419709
+        },
+        "PPO_VALUE_NET.pt": {
+          "sha256": "938d8eb4b77287805b74134e6126bf6c83451c7cca9770e17159414e6ce44211",
+          "size_bytes": 710813
+        },
+        "PPO_VALUE_NET_OPTIMIZER.pt": {
+          "sha256": "b864174da8ed8cad0363ecfb409ba78d60ed0257c12892962f189dd059e7ddc3",
+          "size_bytes": 1421805
+        },
+        "RIVAL_CAMPAIGN_STATE.json": {
+          "sha256": "fad8f49b6a29eb5315461d0b70fce28e515ab7d8dfa2098fd532639ab9698eb7",
+          "size_bytes": 1214
+        }
+      },
+      "trainer_state": {
+        "format": "rival-milestone06-full-ppo-v1",
+        "schema_version": 1,
+        "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+        "campaign_id": "rival-milestone06-serious-v1",
+        "stage": "stage_b",
+        "completed_iterations": 400,
+        "cumulative_agent_steps": 20000016,
+        "cumulative_model_updates": 1194,
+        "worker_count": 56,
+        "policy_average_reward": 0.0020568610264005993,
+        "action_exploration_prior": {
+          "version": "RivalAppendedActionPriorV1",
+          "legacy_action_count": 90,
+          "expanded_action_count": 158,
+          "appended_logit_offset": -4.0
+        },
+        "prior_history": [
+          {
+            "cumulative_agent_steps": 0,
+            "stage": "stage_a",
+            "from_bootstrap_effective_bias": -12.0,
+            "appended_logit_offset": -6.0,
+            "reason": "measured natural-observation calibration"
+          },
+          {
+            "cumulative_agent_steps": 5000010,
+            "stage": "stage_b",
+            "previous_stage": "stage_a",
+            "previous_appended_logit_offset": -6.0,
+            "appended_logit_offset": -4.0,
+            "reason": "explicit healthy stage-boundary relaxation decision"
+          }
+        ],
+        "source_checkpoint": "training/checkpoints/milestone06/005000010_stage_a_m6p0"
+      },
+      "fresh_reload_proof": {
+        "fresh_instance": true,
+        "exact_logits": true,
+        "max_abs_logit_error": 0.0,
+        "policy_optimizer_state_loaded": true,
+        "critic_optimizer_state_loaded": true,
+        "prior_state_reloaded": {
+          "version": "RivalAppendedActionPriorV1",
+          "legacy_action_count": 90,
+          "expanded_action_count": 158,
+          "appended_logit_offset": -4.0
+        },
+        "state_file_parse_passed": true
+      }
+    }
+  },
+  "action_exploration_prior": {
+    "version": "RivalAppendedActionPriorV1",
+    "legacy_action_count": 90,
+    "expanded_action_count": 158,
+    "appended_logit_offset": -4.0
+  },
+  "outcomes": {
+    "wins": 59,
+    "losses": 41,
+    "ties": 0,
+    "win_rate": 0.59,
+    "goals_for": 59,
+    "goals_against": 41,
+    "goal_differential": 18
+  },
+  "actions": {
+    "sampled_action_count": 86803,
+    "appended_action_count": 0,
+    "appended_action_share": 0.0,
+    "mean_appended_probability_mass": 0.011423519758001464,
+    "full_action_counts": [
+      873,
+      412,
+      1693,
+      2753,
+      1466,
+      3056,
+      1913,
+      758,
+      494,
+      846,
+      741,
+      276,
+      6435,
+      549,
+      1722,
+      178,
+      8153,
+      2745,
+      3882,
+      246,
+      8587,
+      1332,
+      1935,
+      470,
+      84,
+      832,
+      940,
+      310,
+      436,
+      85,
+      612,
+      356,
+      315,
+      246,
+      647,
+      306,
+      161,
+      480,
+      347,
+      366,
+      245,
+      281,
+      635,
+      151,
+      627,
+      142,
+      517,
+      673,
+      276,
+      145,
+      247,
+      823,
+      217,
+      189,
+      547,
+      220,
+      125,
+      327,
+      72,
+      327,
+      145,
+      152,
+      91,
+      214,
+      215,
+      243,
+      168,
+      595,
+      819,
+      1157,
+      911,
+      851,
+      162,
+      2294,
+      301,
+      394,
+      235,
+      3248,
+      139,
+      169,
+      2203,
+      922,
+      687,
+      1184,
+      1354,
+      293,
+      441,
+      605,
+      548,
+      1239,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "action_family_counts": {
+      "legacy_wisp": 86803
+    }
+  },
+  "possession": {
+    "student_touch_proxy_count": 1616
+  },
+  "reward_contribution_audit": {
+    "outcome": {
+      "count": 86803,
+      "mean": 0.00207366104858127,
+      "absolute_mean": 0.011520339158784835,
+      "minimum": -10.0,
+      "maximum": 10.0,
+      "cumulative_signed": 180.0,
+      "cumulative_absolute": 1000.0,
+      "share_of_total_absolute_shaping": 0.0
+    },
+    "possession": {
+      "count": 86803,
+      "mean": 0.0016757100764628941,
+      "absolute_mean": 0.0016757100764628941,
+      "minimum": 0.0,
+      "maximum": 0.15840285644531252,
+      "cumulative_signed": 145.4566617672086,
+      "cumulative_absolute": 145.4566617672086,
+      "share_of_total_absolute_shaping": 0.6742799999744968
+    },
+    "progress": {
+      "count": 86803,
+      "mean": 2.173438604782525e-05,
+      "absolute_mean": 0.0005710528296623828,
+      "minimum": -0.0020773387145996093,
+      "maximum": 0.002194098663330078,
+      "cumulative_signed": 1.8866099121093751,
+      "cumulative_absolute": 49.56909877318382,
+      "share_of_total_absolute_shaping": 0.22978288868618266
+    },
+    "boost_efficiency": {
+      "count": 86803,
+      "mean": -5.510255360395135e-06,
+      "absolute_mean": 5.510255360395135e-06,
+      "minimum": -0.006666666793823243,
+      "maximum": 0.0,
+      "cumulative_signed": -0.47830669604837894,
+      "cumulative_absolute": 0.47830669604837894,
+      "share_of_total_absolute_shaping": 0.0022172421330241823
+    },
+    "recovery": {
+      "count": 86803,
+      "mean": 0.0002074857599604487,
+      "absolute_mean": 0.0002074857599604487,
+      "minimum": 0.0,
+      "maximum": 0.029750311544667122,
+      "cumulative_signed": 18.010386421846828,
+      "cumulative_absolute": 18.010386421846828,
+      "share_of_total_absolute_shaping": 0.0834890833360324
+    },
+    "mechanics_resource": {
+      "count": 86803,
+      "mean": 2.5425388523438134e-05,
+      "absolute_mean": 2.5425388523438134e-05,
+      "minimum": 0.0,
+      "maximum": 0.005,
+      "cumulative_signed": 2.2070000000000003,
+      "cumulative_absolute": 2.2070000000000003,
+      "share_of_total_absolute_shaping": 0.010230785870263912
+    }
+  },
+  "mechanics_recovery": {
+    "airborne_dodge_uses": 956.0,
+    "dodge_resource_acquisitions": 7.0,
+    "productive_resource_followups": 0.0,
+    "wavedash_like_events": 46.0,
+    "wall_speed_recovery_events": 16.0,
+    "aerial_boost_spent": 113.75933716328649,
+    "aerial_useful_distance": 704052.3767700195,
+    "aerial_useful_touches": 678.0,
+    "aerial_commitment_ends": 1028.0,
+    "aerial_end_boost": 29795.923569381237,
+    "recovery_window_starts": 763.0,
+    "recovery_completions": 710.0,
+    "recovery_time_seconds": 720.6666666666662,
+    "recovery_concessions": 32.0
+  },
+  "game_records": [
+    {
+      "game": 1,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 215,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 2,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 440,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 3,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1554,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 4,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1182,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 5,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 463,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 6,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1937,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 7,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1422,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 8,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 400,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 9,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1286,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 10,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 203,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 11,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "loss",
+      "decisions": 1372,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 12,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 769,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 13,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 302,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 14,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1731,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 15,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1380,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 16,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 401,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 17,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 934,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 18,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 648,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 19,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 211,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 20,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 390,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 21,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 141,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 22,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1365,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 23,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 759,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 24,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 941,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 25,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 555,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 26,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 494,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 27,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 592,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 28,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 602,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 29,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1224,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 30,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 601,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 31,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "loss",
+      "decisions": 834,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 32,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1830,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 33,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 638,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 34,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 605,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 35,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 630,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 36,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 786,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 37,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 307,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 38,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1186,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 39,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1228,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 40,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1208,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 41,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 3395,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 42,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 597,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 43,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 381,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 44,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1336,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 45,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 436,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 46,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1472,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 47,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 687,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 48,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 255,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 49,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 320,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 50,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1631,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 51,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 612,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 52,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 711,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 53,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "loss",
+      "decisions": 1102,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 54,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 499,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 55,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 472,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 56,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 510,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 57,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 650,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 58,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 585,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 59,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 167,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 60,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1114,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 61,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 656,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 62,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 488,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 63,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 847,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 64,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 2831,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 65,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 191,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 66,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 308,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 67,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1504,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 68,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 409,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 69,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 203,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 70,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 210,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 71,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1011,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 72,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 198,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 73,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "loss",
+      "decisions": 492,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 74,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 482,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 75,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 3684,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 76,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1398,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 77,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1724,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 78,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 1157,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 79,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 2868,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 80,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 534,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 81,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 322,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 82,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 839,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 83,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 397,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 84,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "win",
+      "decisions": 358,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 85,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 234,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 86,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 590,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 87,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1088,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 88,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 676,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 89,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 675,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 90,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 355,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 91,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 253,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 92,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 480,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 93,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1862,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 94,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 818,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 95,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 1105,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 96,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 397,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 97,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 358,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 98,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 2782,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 99,
+      "student_team": 0,
+      "student_side": "blue",
+      "outcome": "win",
+      "decisions": 299,
+      "terminated_by_goal": true
+    },
+    {
+      "game": 100,
+      "student_team": 1,
+      "student_side": "orange",
+      "outcome": "loss",
+      "decisions": 1022,
+      "terminated_by_goal": true
+    }
+  ],
+  "baseline_comparison": {
+    "baseline_win_rate": 0.42,
+    "candidate_win_rate": 0.59,
+    "win_rate_drop": -0.16999999999999998,
+    "maximum_allowed_drop": 0.2,
+    "not_collapsed": true
+  },
+  "health": {
+    "all_metrics_finite": true,
+    "balanced_sides": true,
+    "appended_share_below_rejection_gate": true,
+    "frozen_wisp_performance_not_collapsed": true,
+    "passed": true
+  },
+  "wall_seconds": 174.86362960003316
+}

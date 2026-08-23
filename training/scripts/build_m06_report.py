@@ -28,6 +28,12 @@ def main() -> int:
     stage.add_argument("--next-stage")
     stage.add_argument("--next-offset", type=float)
     stage.add_argument("--rlbot", type=Path)
+    stage.add_argument("--diagnostics", type=Path)
+    stage.add_argument(
+        "--completion-outcome",
+        choices=("healthy_candidate", "rejected_rollback"),
+    )
+    stage.add_argument("--final-verification", type=Path)
     args = parser.parse_args()
     if args.mode == "preflight":
         report = build_preflight_report()
@@ -38,11 +44,14 @@ def main() -> int:
             next_stage=args.next_stage,
             next_offset=args.next_offset,
             rlbot_path=args.rlbot,
+            diagnostics_path=args.diagnostics,
+            completion_outcome=args.completion_outcome,
+            final_verification_path=args.final_verification,
         )
     markdown = write_results_markdown()
     print(json.dumps(report, indent=2))
     print(f"wrote {markdown.relative_to(REPOSITORY_ROOT).as_posix()}")
-    return 0 if report["status"] not in {"failed", "rejected_at_evaluation_boundary"} else 2
+    return 0 if report["status"] != "failed" else 2
 
 
 if __name__ == "__main__":

@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "label": "stage_b_020m",
+  "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+  "source_checkpoint": "training/checkpoints/milestone06/020000016_stage_b_m4p0",
+  "source_campaign_state": {
+    "format": "rival-milestone06-full-ppo-v1",
+    "schema_version": 1,
+    "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+    "campaign_id": "rival-milestone06-serious-v1",
+    "stage": "stage_b",
+    "completed_iterations": 400,
+    "cumulative_agent_steps": 20000016,
+    "cumulative_model_updates": 1194,
+    "worker_count": 56,
+    "policy_average_reward": 0.0020568610264005993,
+    "action_exploration_prior": {
+      "version": "RivalAppendedActionPriorV1",
+      "legacy_action_count": 90,
+      "expanded_action_count": 158,
+      "appended_logit_offset": -4.0
+    },
+    "prior_history": [
+      {
+        "cumulative_agent_steps": 0,
+        "stage": "stage_a",
+        "from_bootstrap_effective_bias": -12.0,
+        "appended_logit_offset": -6.0,
+        "reason": "measured natural-observation calibration"
+      },
+      {
+        "cumulative_agent_steps": 5000010,
+        "stage": "stage_b",
+        "previous_stage": "stage_a",
+        "previous_appended_logit_offset": -6.0,
+        "appended_logit_offset": -4.0,
+        "reason": "explicit healthy stage-boundary relaxation decision"
+      }
+    ],
+    "source_checkpoint": "training/checkpoints/milestone06/005000010_stage_a_m6p0"
+  },
+  "actor_checkpoint": {
+    "path": "training/artifacts/milestone06/stage_b_020m/candidate_actor.pt",
+    "sha256": "3b25839bd4dd4dc3bc9b088fc5953e7898858971bb8ef077df3501db8ae11b01",
+    "size_bytes": 13707093,
+    "format": "rival-student-actor-v1",
+    "action_count": 158
+  },
+  "torchscript_export": {
+    "path": "training/artifacts/milestone06/stage_b_020m/candidate_actor.ts",
+    "sha256": "fcb557bbc19c945dba05c986c04cba484d75cafa283f77341addba7e1dafe889",
+    "size_bytes": 13726336,
+    "input_shape": [
+      1,
+      432
+    ],
+    "output_shape": [
+      1,
+      158
+    ]
+  },
+  "action_table": {
+    "path": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "file_sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "logical_float32_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "expected_logical_float32_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "shape": [
+      158,
+      8
+    ],
+    "exact_reload": true,
+    "passed": true
+  },
+  "logit_parity": {
+    "checkpoint_policy_to_baked_actor_exact": false,
+    "checkpoint_policy_to_baked_actor_allclose_1e-6": true,
+    "checkpoint_policy_to_exact_export_exact": true,
+    "exact_export_to_torchscript_exact": true,
+    "checkpoint_policy_to_baked_actor_max_abs_error": 4.76837158203125e-07,
+    "checkpoint_policy_to_exact_export_max_abs_error": 0.0,
+    "exact_export_to_torchscript_max_abs_error": 0.0,
+    "finite": true,
+    "passed": true
+  },
+  "runtime_mode": "opt_in_candidate_only",
+  "production_default": "frozen_wisp_unchanged",
+  "rlbot_environment": {
+    "RIVAL_CANDIDATE_MODEL_PATH": "training/artifacts/milestone06/stage_b_020m/candidate_actor.ts",
+    "RIVAL_CANDIDATE_ACTION_TABLE_PATH": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "RIVAL_TICK_SKIP": "4"
+  },
+  "production_promoted": false
+}

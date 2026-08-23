@@ -21,6 +21,10 @@ def _write(path: Path, value: dict[str, Any]) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
 
 
+def _optional_read(path: Path) -> dict[str, Any] | None:
+    return _read(path) if path.is_file() else None
+
+
 def _checkpoint_compact(manifest: dict[str, Any]) -> dict[str, Any]:
     state = manifest["trainer_state"]
     return {
@@ -191,6 +195,9 @@ def build_stage_report(
     next_stage: str | None,
     next_offset: float | None,
     rlbot_path: str | Path | None = None,
+    diagnostics_path: str | Path | None = None,
+    completion_outcome: str | None = None,
+    final_verification_path: str | Path | None = None,
 ) -> dict[str, Any]:
     config = load_milestone06_config()
     summary = _read(Path(summary_path))
@@ -206,6 +213,23 @@ def build_stage_report(
             }
         )
     rlbot = _read(Path(rlbot_path)) if rlbot_path is not None else None
+    diagnostics = (
+        _read(Path(diagnostics_path)) if diagnostics_path is not None else None
+    )
+    final_verification = (
+        _read(Path(final_verification_path))
+        if final_verification_path is not None
+        else None
+    )
+    if completion_outcome not in {None, "healthy_candidate", "rejected_rollback"}:
+        raise ValueError(f"Unknown completion outcome {completion_outcome!r}")
+    if completion_outcome is not None and next_stage is not None:
+        raise ValueError("A completed campaign cannot authorize a next stage")
+    if completion_outcome == "rejected_rollback":
+        if rlbot is None or diagnostics is None:
+            raise ValueError("A rollback outcome requires RLBot and diagnostic evidence")
+        if diagnostics["campaign_decision"]["outcome"] != "rejected_rollback":
+            raise ValueError("Diagnostic evidence does not support a rollback outcome")
     latest = summary["latest_checkpoint"]
     next_prior_decision = None
     if next_stage is not None:
@@ -254,9 +278,75 @@ def build_stage_report(
         )
     else:
         exact_resume = summary["exact_same_stage_resume_command"]
+    stage_names = [stage["name"] for stage in config["stages"]]
+    stage_index = stage_names.index(summary["stage"])
+    possible_next_stage = (
+        stage_names[stage_index + 1] if stage_index + 1 < len(stage_names) else None
+    )
+    resume_if_new_authority = None
+    if completion_outcome is not None and possible_next_stage is not None:
+        resume_if_new_authority = (
+            "training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py "
+            f"--stage {possible_next_stage} "
+            f"--appended-offset {summary['action_exploration_prior']['appended_logit_offset']:g} "
+            f"--resume {latest['directory']}"
+        )
+        exact_resume = None
+
+    candidate_export = _optional_read(RESULTS_ROOT / f"candidate_export_{label}.json")
+    candidate_runtime = _optional_read(
+        RESULTS_ROOT / f"candidate_runtime_smoke_{label}.json"
+    )
+    training_runtime = _optional_read(
+        RESULTS_ROOT / f"deployment_runtime_training_{label}.json"
+    )
+    production_runtime = _optional_read(
+        RESULTS_ROOT / f"deployment_runtime_production_{label}.json"
+    )
+    completion_status = (
+        "rejected_at_evaluation_boundary"
+        if completion_outcome == "rejected_rollback"
+        else summary["status"]
+    )
+    compact_diagnostics = None
+    if diagnostics is not None:
+        compact_diagnostics = {
+            "path": Path(diagnostics_path).as_posix(),
+            "status": diagnostics["status"],
+            "comparison": diagnostics["comparison"],
+            "diagnosis": diagnostics["diagnosis"],
+            "campaign_decision": diagnostics["campaign_decision"],
+            "execution_note": diagnostics["execution_note"],
+        }
+    deployment_boundary = None
+    if candidate_export is not None:
+        deployment_boundary = {
+            "candidate_export": candidate_export,
+            "candidate_runtime_smoke": candidate_runtime,
+            "training_runtime": training_runtime,
+            "production_runtime": production_runtime,
+            "exact_export_command": (
+                "training/.venv/Scripts/python.exe "
+                "training/scripts/export_m06_candidate.py "
+                f"--checkpoint {latest['directory']} --label {candidate_export['label']} "
+                f"--output training/results/milestone06/candidate_export_{label}.json"
+            ),
+            "exact_rlbot_evaluation_command": (
+                ".venv/Scripts/python.exe "
+                "training/scripts/run_m06_rlbot_stage_eval.py "
+                f"--export-report training/results/milestone06/candidate_export_{label}.json "
+                f"--games 8 --output training/results/milestone06/rlbot_{label}.json"
+            ),
+            "opt_in_candidate_environment": candidate_export["rlbot_environment"],
+            "deployment_status": (
+                "rejected_do_not_promote"
+                if completion_outcome == "rejected_rollback"
+                else "candidate_only_not_promoted"
+            ),
+        }
     report = {
         "schema_version": 1,
-        "status": summary["status"],
+        "status": completion_status,
         "boundary": label,
         "stage": summary["stage"],
         "cumulative_agent_steps": summary["cumulative_agent_steps"],
@@ -301,9 +391,49 @@ def build_stage_report(
         },
         "headless_frozen_wisp_evaluations": evaluations,
         "rlbot_evaluation": rlbot,
+        "rlbot_diagnostics": compact_diagnostics,
+        "deployment_boundary": deployment_boundary,
         "health": summary["health"],
         "next_stage_prior_decision": next_prior_decision,
         "exact_resume_command": exact_resume,
+        "resume_command_if_new_authority": resume_if_new_authority,
+        "campaign_outcome": (
+            None
+            if completion_outcome is None
+            else {
+                "healthy_candidate": "healthy candidate",
+                "rejected_rollback": "rejected/rollback",
+            }[completion_outcome]
+        ),
+        "campaign_ceiling_agent_steps": config["campaign_ceiling_agent_steps"],
+        "unused_ceiling_agent_steps": (
+            config["campaign_ceiling_agent_steps"]
+            - summary["cumulative_agent_steps"]
+        ),
+        "remaining_authorized_agent_steps": (
+            0
+            if completion_outcome is not None
+            else config["campaign_ceiling_agent_steps"]
+            - summary["cumulative_agent_steps"]
+        ),
+        "best_checkpoint": {
+            "basis": (
+                "highest 100-game headless frozen-Wisp result among trained boundaries; "
+                "retained for research but rejected for deployment by the 20M RLBot battery"
+                if completion_outcome == "rejected_rollback"
+                else "latest health-passed trained boundary"
+            ),
+            "checkpoint": _checkpoint_compact(latest),
+        },
+        "best_verified_deployment_policy": (
+            "frozen_wisp_v4.1_4-4_goal_differential_plus_5"
+        ),
+        "final_promotion_battery": (
+            "not_run_candidate_failed_ordinary_20m_boundary"
+            if completion_outcome == "rejected_rollback"
+            else "not_run"
+        ),
+        "final_verification": final_verification,
         "production_policy": "frozen_wisp_unchanged",
         "production_promoted": False,
     }
@@ -393,21 +523,50 @@ def write_results_markdown() -> Path:
                 f"{aggregate['losses']}-{aggregate['ties']}, goal differential "
                 f"{aggregate['goal_differential']:+d}."
             )
+        if stage.get("rlbot_diagnostics") is not None:
+            diagnosis = stage["rlbot_diagnostics"]["diagnosis"]
+            lines.append(
+                "- RLBot telemetry integrity: "
+                f"`{'passed' if diagnosis['runtime_integrity_passed'] else 'failed'}`; "
+                f"transfer verdict: `{diagnosis['gameplay_transfer_verdict']}`."
+            )
+        if stage.get("campaign_outcome") is not None:
+            lines.append(f"- Campaign outcome: **{stage['campaign_outcome']}**.")
+        if stage["exact_resume_command"] is not None:
+            resume_text = stage["exact_resume_command"]
+        elif stage.get("resume_command_if_new_authority") is not None:
+            resume_text = (
+                "none authorized; new authority would be required before using "
+                f"{stage['resume_command_if_new_authority']}"
+            )
+        else:
+            resume_text = "none; health gate stopped campaign"
         lines.extend(
             [
                 f"- Production: frozen Wisp unchanged. Resume: "
-                f"`{stage['exact_resume_command'] or 'none; health gate stopped campaign'}`",
+                f"`{resume_text}`",
                 "",
             ]
         )
+    completed_stage = next(
+        (stage for stage in reversed(stages) if stage.get("campaign_outcome") is not None),
+        None,
+    )
     lines.extend(
         [
             "## Promotion state",
             "",
-            "No trained checkpoint is promoted by training-step count alone. A final "
-            "candidate must pass the governed 16-game RLBot battery, deployment parity, "
-            "and aggregate gameplay/mechanics review. Until then, the production Rival "
-            "policy remains frozen Wisp.",
+            (
+                "Milestone 06 ended as **rejected/rollback** at the 20M clean boundary. "
+                "The candidate failed the ordinary eight-game RLBot boundary, so the final "
+                "16-game promotion battery was not run and production remains frozen Wisp."
+                if completed_stage is not None
+                and completed_stage["campaign_outcome"] == "rejected/rollback"
+                else "No trained checkpoint is promoted by training-step count alone. A final "
+                "candidate must pass the governed 16-game RLBot battery, deployment parity, "
+                "and aggregate gameplay/mechanics review. Until then, the production Rival "
+                "policy remains frozen Wisp."
+            ),
             "",
         ]
     )

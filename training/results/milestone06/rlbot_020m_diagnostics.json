@@ -1,0 +1,1596 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "purpose": "diagnose_20m_rlbot_regression_before_next_training_stage",
+  "candidate": {
+    "label": "stage_b_020m",
+    "cumulative_agent_steps": 20000016,
+    "model_sha256": "fcb557bbc19c945dba05c986c04cba484d75cafa283f77341addba7e1dafe889",
+    "gameplay": {
+      "overall": {
+        "games": 8,
+        "complete": 8,
+        "wins": 0,
+        "losses": 8,
+        "ties": 0,
+        "goals_for": 27,
+        "goals_against": 56,
+        "goal_differential": -29
+      },
+      "nexto": {
+        "games": 4,
+        "complete": 4,
+        "wins": 0,
+        "losses": 4,
+        "ties": 0,
+        "goals_for": 12,
+        "goals_against": 28,
+        "goal_differential": -16
+      },
+      "wisp": {
+        "games": 4,
+        "complete": 4,
+        "wins": 0,
+        "losses": 4,
+        "ties": 0,
+        "goals_for": 15,
+        "goals_against": 28,
+        "goal_differential": -13
+      }
+    },
+    "telemetry": {
+      "sessions": 8,
+      "decision_records": 88904,
+      "all_decision_counts_match": true,
+      "actions": {
+        "legacy_count": 88904,
+        "appended_count": 0,
+        "appended_share": 0.0,
+        "minimum_unique_actions_used_per_session": 90,
+        "maximum_unique_actions_used_per_session": 90,
+        "maximum_consecutive_identical_action_run": 132,
+        "family_counts": {
+          "legacy_wisp": 88904
+        },
+        "top_action_counts_from_per_session_top10": {
+          "18": 9604,
+          "16": 8278,
+          "20": 6584,
+          "12": 5787,
+          "22": 5708,
+          "17": 3914,
+          "5": 2760,
+          "77": 2405,
+          "73": 1525,
+          "3": 1228
+        }
+      },
+      "controls": {
+        "aerial_like_share": 0.375,
+        "boost_share": 0.3974286871231891,
+        "handbrake_share": 0.2166606676864933,
+        "jump_share": 0.05634167191577432,
+        "self_airborne_share": 0.4454242778727616
+      },
+      "policy": {
+        "mean_confidence": 0.08692769667078881,
+        "mean_margin": 0.028565545794080244
+      },
+      "cadence": {
+        "tick_skip_counts": {
+          "4": 88904
+        },
+        "action_delay_counts": {
+          "3": 88904
+        },
+        "frame_delta_counts": {
+          "4": 85317,
+          "5": 1565,
+          "6": 580,
+          "3": 536,
+          "7": 501,
+          "8": 103,
+          "2": 101,
+          "1": 35,
+          "9": 28,
+          "364": 27,
+          "365": 24,
+          "10": 13
+        },
+        "mean_decisions_per_simulated_game_second": 27.15758920748414
+      },
+      "invariant_totals": {
+        "baseline_or_final_action_mismatches": 0,
+        "deterministic_top_action_mismatches": 0,
+        "intervention_count": 0,
+        "invalid_action_indices": 0,
+        "legal_mask_length_mismatches": 0,
+        "legal_mask_not_all_true_records": 0,
+        "legal_mask_selected_action_forbidden": 0,
+        "malformed_json_records": 0,
+        "manifest_invalid_record_count": 0
+      },
+      "runtime_warning_count": 0,
+      "runtime_error_count": 0,
+      "effective_game_seconds_per_wall_second": {
+        "mean": 3.736038615070558,
+        "minimum": 3.535277192685554,
+        "p50": 3.665512271089251,
+        "p95": 4.029707683206197,
+        "maximum": 4.108055916469253
+      }
+    },
+    "sessions": [
+      {
+        "session_id": "rival-v6-natural-nexto-blue-20260823T013115Z-4271bf8a",
+        "opponent": "nexto",
+        "rival_side": "blue",
+        "outcome": "loss",
+        "score": {
+          "rival": 3,
+          "opponent": 10
+        },
+        "decision_records": 11547,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 11547,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.655031341558636,
+          "maximum_consecutive_identical_action_run": 132,
+          "top_actions": [
+            {
+              "action_index": 18,
+              "count": 1344,
+              "share": 0.11639386853728241
+            },
+            {
+              "action_index": 16,
+              "count": 1149,
+              "share": 0.09950636528968564
+            },
+            {
+              "action_index": 22,
+              "count": 840,
+              "share": 0.07274616783580151
+            },
+            {
+              "action_index": 12,
+              "count": 838,
+              "share": 0.0725729626742877
+            },
+            {
+              "action_index": 20,
+              "count": 601,
+              "share": 0.05204815103490084
+            },
+            {
+              "action_index": 17,
+              "count": 556,
+              "share": 0.048151034900840044
+            },
+            {
+              "action_index": 5,
+              "count": 335,
+              "share": 0.029011864553563697
+            },
+            {
+              "action_index": 77,
+              "count": 330,
+              "share": 0.028578851649779163
+            },
+            {
+              "action_index": 80,
+              "count": 312,
+              "share": 0.027020005196154846
+            },
+            {
+              "action_index": 73,
+              "count": 239,
+              "share": 0.02069801680090067
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 11547
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.3407811552784273,
+          "boost_share": 0.40131635922750497,
+          "handbrake_share": 0.216852862215294,
+          "jump_share": 0.05265436910019919,
+          "self_airborne_share": 0.40504027020005196
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.0948414510444892,
+            "minimum": 0.011730354279279709,
+            "p50": 0.05731486901640892,
+            "p95": 0.34165483713150024,
+            "maximum": 0.9735040068626404
+          },
+          "margin": {
+            "mean": 0.03256156988920389,
+            "minimum": 2.2351741790771484e-08,
+            "p50": 0.00477214902639389,
+            "p95": 0.2178068682551384,
+            "maximum": 0.9621328450739384
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 11547
+          },
+          "action_delay_counts": {
+            "3": 11547
+          },
+          "tick_window_counts": {
+            "1": 11415,
+            "2": 60,
+            "4": 34,
+            "3": 25,
+            "5": 5,
+            "7": 2,
+            "361": 2,
+            "-1": 1,
+            "10": 1,
+            "362": 1,
+            "512": 1
+          },
+          "frame_delta_counts": {
+            "4": 11104,
+            "5": 173,
+            "6": 91,
+            "3": 56,
+            "7": 56,
+            "2": 24,
+            "8": 13,
+            "364": 5,
+            "1": 4,
+            "9": 4,
+            "10": 3,
+            "363": 3
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 26.670003262842393
+        },
+        "phases": {
+          "Active": 9064,
+          "Countdown": 1594,
+          "Kickoff": 889
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1571
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.535277192685554,
+          "state_setting_apply_count": 164,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-nexto-orange-20260823T013341Z-7b234e08",
+        "opponent": "nexto",
+        "rival_side": "orange",
+        "outcome": "loss",
+        "score": {
+          "rival": 2,
+          "opponent": 6
+        },
+        "decision_records": 10558,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 10558,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.737559076952949,
+          "maximum_consecutive_identical_action_run": 131,
+          "top_actions": [
+            {
+              "action_index": 18,
+              "count": 1056,
+              "share": 0.10001894298162531
+            },
+            {
+              "action_index": 16,
+              "count": 942,
+              "share": 0.08922144345519985
+            },
+            {
+              "action_index": 20,
+              "count": 788,
+              "share": 0.07463534760371282
+            },
+            {
+              "action_index": 22,
+              "count": 675,
+              "share": 0.0639325629854139
+            },
+            {
+              "action_index": 17,
+              "count": 607,
+              "share": 0.057491949232809245
+            },
+            {
+              "action_index": 12,
+              "count": 542,
+              "share": 0.0513354802045842
+            },
+            {
+              "action_index": 5,
+              "count": 292,
+              "share": 0.02765675317294942
+            },
+            {
+              "action_index": 77,
+              "count": 273,
+              "share": 0.02585716991854518
+            },
+            {
+              "action_index": 73,
+              "count": 249,
+              "share": 0.02358401212350824
+            },
+            {
+              "action_index": 80,
+              "count": 244,
+              "share": 0.023110437582875544
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 10558
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.3486455768137905,
+          "boost_share": 0.3963818905095662,
+          "handbrake_share": 0.2237166129948854,
+          "jump_share": 0.04394771737071415,
+          "self_airborne_share": 0.4122939950748248
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.08408302420183598,
+            "minimum": 0.01181138027459383,
+            "p50": 0.05150900036096573,
+            "p95": 0.337564080953598,
+            "maximum": 0.9750741720199585
+          },
+          "margin": {
+            "mean": 0.026398342310037796,
+            "minimum": 2.905726432800293e-07,
+            "p50": 0.004000813700258732,
+            "p95": 0.2125861868262291,
+            "maximum": 0.9721551223192364
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 10558
+          },
+          "action_delay_counts": {
+            "3": 10558
+          },
+          "tick_window_counts": {
+            "1": 10470,
+            "2": 44,
+            "4": 20,
+            "3": 18,
+            "-1": 1,
+            "5": 1,
+            "6": 1,
+            "361": 1,
+            "362": 1,
+            "449": 1
+          },
+          "frame_delta_counts": {
+            "4": 10217,
+            "5": 130,
+            "6": 69,
+            "7": 57,
+            "3": 53,
+            "2": 11,
+            "8": 4,
+            "365": 4,
+            "1": 3,
+            "364": 2,
+            "10": 1,
+            "14": 1
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 27.55219118911676
+        },
+        "phases": {
+          "Active": 8934,
+          "Countdown": 1040,
+          "Kickoff": 584
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1432
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.8842038214319494,
+          "state_setting_apply_count": 145,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-nexto-blue-20260823T013526Z-619e1a55",
+        "opponent": "nexto",
+        "rival_side": "blue",
+        "outcome": "loss",
+        "score": {
+          "rival": 3,
+          "opponent": 4
+        },
+        "decision_records": 10698,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 10698,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.7243292499968974,
+          "maximum_consecutive_identical_action_run": 129,
+          "top_actions": [
+            {
+              "action_index": 16,
+              "count": 1060,
+              "share": 0.0990839409235371
+            },
+            {
+              "action_index": 18,
+              "count": 1058,
+              "share": 0.09889699009160591
+            },
+            {
+              "action_index": 20,
+              "count": 786,
+              "share": 0.07347167694896242
+            },
+            {
+              "action_index": 12,
+              "count": 708,
+              "share": 0.06618059450364554
+            },
+            {
+              "action_index": 17,
+              "count": 603,
+              "share": 0.05636567582725743
+            },
+            {
+              "action_index": 22,
+              "count": 479,
+              "share": 0.0447747242475229
+            },
+            {
+              "action_index": 5,
+              "count": 302,
+              "share": 0.028229575621611516
+            },
+            {
+              "action_index": 14,
+              "count": 272,
+              "share": 0.025425313142643485
+            },
+            {
+              "action_index": 77,
+              "count": 271,
+              "share": 0.025331837726677884
+            },
+            {
+              "action_index": 80,
+              "count": 255,
+              "share": 0.023836231071228266
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 10698
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.36249766311460085,
+          "boost_share": 0.36932136848008973,
+          "handbrake_share": 0.21564778463264161,
+          "jump_share": 0.04197046176855487,
+          "self_airborne_share": 0.4204524210132735
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.07956918842472786,
+            "minimum": 0.01184879057109356,
+            "p50": 0.051284434273839,
+            "p95": 0.2942042857408523,
+            "maximum": 0.9738537669181824
+          },
+          "margin": {
+            "mean": 0.022058089315274216,
+            "minimum": 1.30385160446167e-07,
+            "p50": 0.004016093909740448,
+            "p95": 0.12763516828417767,
+            "maximum": 0.9482159288600087
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 10698
+          },
+          "action_delay_counts": {
+            "3": 10698
+          },
+          "tick_window_counts": {
+            "1": 10623,
+            "2": 40,
+            "3": 16,
+            "4": 11,
+            "362": 3,
+            "5": 2,
+            "-1": 1,
+            "6": 1,
+            "439": 1
+          },
+          "frame_delta_counts": {
+            "4": 10364,
+            "5": 136,
+            "6": 79,
+            "7": 50,
+            "3": 46,
+            "2": 5,
+            "8": 4,
+            "1": 3,
+            "365": 3,
+            "10": 2,
+            "9": 1,
+            "363": 1
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 28.04867848873385
+        },
+        "phases": {
+          "Active": 9250,
+          "Countdown": 928,
+          "Kickoff": 520
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1448
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 4.108055916469253,
+          "state_setting_apply_count": 148,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-nexto-orange-20260823T013709Z-07d2cc4b",
+        "opponent": "nexto",
+        "rival_side": "orange",
+        "outcome": "loss",
+        "score": {
+          "rival": 4,
+          "opponent": 8
+        },
+        "decision_records": 11633,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 11633,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.7108175010190254,
+          "maximum_consecutive_identical_action_run": 132,
+          "top_actions": [
+            {
+              "action_index": 18,
+              "count": 1442,
+              "share": 0.12395770652454224
+            },
+            {
+              "action_index": 16,
+              "count": 1005,
+              "share": 0.08639216023381759
+            },
+            {
+              "action_index": 12,
+              "count": 740,
+              "share": 0.06361213788360698
+            },
+            {
+              "action_index": 22,
+              "count": 735,
+              "share": 0.06318232614115017
+            },
+            {
+              "action_index": 20,
+              "count": 699,
+              "share": 0.06008768159546119
+            },
+            {
+              "action_index": 17,
+              "count": 538,
+              "share": 0.0462477434883521
+            },
+            {
+              "action_index": 5,
+              "count": 380,
+              "share": 0.032665692426717095
+            },
+            {
+              "action_index": 14,
+              "count": 292,
+              "share": 0.025101005759477348
+            },
+            {
+              "action_index": 73,
+              "count": 278,
+              "share": 0.023897532880598298
+            },
+            {
+              "action_index": 77,
+              "count": 263,
+              "share": 0.022608097653227886
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 11633
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.3955987277572423,
+          "boost_share": 0.4249978509412877,
+          "handbrake_share": 0.2231582566835726,
+          "jump_share": 0.06051749333791799,
+          "self_airborne_share": 0.4664317029141236
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.08840020560336592,
+            "minimum": 0.011661886237561703,
+            "p50": 0.051286377012729645,
+            "p95": 0.33827975392341614,
+            "maximum": 0.9740564227104187
+          },
+          "margin": {
+            "mean": 0.028985101936422984,
+            "minimum": 1.955777406692505e-08,
+            "p50": 0.004262164235115051,
+            "p95": 0.21257617324590683,
+            "maximum": 0.9560820851475
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 11633
+          },
+          "action_delay_counts": {
+            "3": 11633
+          },
+          "tick_window_counts": {
+            "1": 11542,
+            "2": 41,
+            "4": 20,
+            "3": 19,
+            "5": 5,
+            "361": 2,
+            "-1": 1,
+            "6": 1,
+            "362": 1,
+            "437": 1
+          },
+          "frame_delta_counts": {
+            "4": 11284,
+            "5": 121,
+            "6": 75,
+            "7": 62,
+            "3": 39,
+            "2": 16,
+            "8": 12,
+            "365": 5,
+            "1": 4,
+            "363": 3,
+            "364": 2,
+            "9": 1
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 26.962047447086213
+        },
+        "phases": {
+          "Active": 9297,
+          "Countdown": 1511,
+          "Kickoff": 825
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1578
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.6190400129313285,
+          "state_setting_apply_count": 163,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-wisp-blue-20260823T013915Z-62990772",
+        "opponent": "wisp",
+        "rival_side": "blue",
+        "outcome": "loss",
+        "score": {
+          "rival": 5,
+          "opponent": 7
+        },
+        "decision_records": 11522,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 11522,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.70055404991327,
+          "maximum_consecutive_identical_action_run": 132,
+          "top_actions": [
+            {
+              "action_index": 18,
+              "count": 1256,
+              "share": 0.10900885262975178
+            },
+            {
+              "action_index": 16,
+              "count": 1080,
+              "share": 0.09373372678354452
+            },
+            {
+              "action_index": 20,
+              "count": 857,
+              "share": 0.07437944801249784
+            },
+            {
+              "action_index": 22,
+              "count": 767,
+              "share": 0.06656830411386912
+            },
+            {
+              "action_index": 12,
+              "count": 723,
+              "share": 0.0627495226523173
+            },
+            {
+              "action_index": 17,
+              "count": 428,
+              "share": 0.03714632876236765
+            },
+            {
+              "action_index": 5,
+              "count": 402,
+              "share": 0.03488977608054157
+            },
+            {
+              "action_index": 3,
+              "count": 341,
+              "share": 0.029595556327026557
+            },
+            {
+              "action_index": 77,
+              "count": 311,
+              "share": 0.02699184169415032
+            },
+            {
+              "action_index": 73,
+              "count": 273,
+              "share": 0.023693803159173753
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 11522
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.3952438812706127,
+          "boost_share": 0.39489671931956255,
+          "handbrake_share": 0.22426662037840653,
+          "jump_share": 0.06240236070126714,
+          "self_airborne_share": 0.4789099114737025
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.09207084325685867,
+            "minimum": 0.01184444036334753,
+            "p50": 0.05111769214272499,
+            "p95": 0.34165483713150024,
+            "maximum": 0.993274450302124
+          },
+          "margin": {
+            "mean": 0.03236183010813155,
+            "minimum": 4.0978193283081055e-08,
+            "p50": 0.004248058423399925,
+            "p95": 0.21590328961610794,
+            "maximum": 0.9890337693504989
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 11522
+          },
+          "action_delay_counts": {
+            "3": 11522
+          },
+          "tick_window_counts": {
+            "1": 11427,
+            "2": 42,
+            "3": 26,
+            "4": 16,
+            "5": 4,
+            "362": 3,
+            "-1": 1,
+            "6": 1,
+            "361": 1,
+            "463": 1
+          },
+          "frame_delta_counts": {
+            "4": 11150,
+            "5": 147,
+            "6": 68,
+            "7": 66,
+            "3": 50,
+            "2": 8,
+            "8": 8,
+            "364": 5,
+            "1": 4,
+            "365": 4,
+            "9": 2,
+            "10": 2
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 26.917940871387415
+        },
+        "phases": {
+          "Active": 9182,
+          "Countdown": 1511,
+          "Kickoff": 829
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1563
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.60313523484656,
+          "state_setting_apply_count": 162,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-wisp-orange-20260823T014121Z-1d46081e",
+        "opponent": "wisp",
+        "rival_side": "orange",
+        "outcome": "loss",
+        "score": {
+          "rival": 5,
+          "opponent": 8
+        },
+        "decision_records": 11559,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 11559,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.6977736847035683,
+          "maximum_consecutive_identical_action_run": 132,
+          "top_actions": [
+            {
+              "action_index": 18,
+              "count": 1384,
+              "share": 0.11973354096375119
+            },
+            {
+              "action_index": 16,
+              "count": 950,
+              "share": 0.0821870404014188
+            },
+            {
+              "action_index": 20,
+              "count": 938,
+              "share": 0.08114888831213773
+            },
+            {
+              "action_index": 22,
+              "count": 861,
+              "share": 0.07448741240591747
+            },
+            {
+              "action_index": 12,
+              "count": 681,
+              "share": 0.05891513106670127
+            },
+            {
+              "action_index": 17,
+              "count": 423,
+              "share": 0.036594861147158056
+            },
+            {
+              "action_index": 5,
+              "count": 345,
+              "share": 0.02984687256683104
+            },
+            {
+              "action_index": 77,
+              "count": 333,
+              "share": 0.02880872047754996
+            },
+            {
+              "action_index": 3,
+              "count": 304,
+              "share": 0.026299852928454017
+            },
+            {
+              "action_index": 73,
+              "count": 240,
+              "share": 0.020763041785621595
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 11559
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.3784929492170603,
+          "boost_share": 0.4223548749891859,
+          "handbrake_share": 0.20685180378925513,
+          "jump_share": 0.06099143524526343,
+          "self_airborne_share": 0.4522882602301237
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.09194574781240467,
+            "minimum": 0.011790761724114418,
+            "p50": 0.051132552325725555,
+            "p95": 0.34211260080337524,
+            "maximum": 0.989021360874176
+          },
+          "margin": {
+            "mean": 0.032167420779548324,
+            "minimum": 5.122274160385132e-08,
+            "p50": 0.004111386835575104,
+            "p95": 0.2181546837091446,
+            "maximum": 0.9834377076476812
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 11559
+          },
+          "action_delay_counts": {
+            "3": 11559
+          },
+          "tick_window_counts": {
+            "1": 11392,
+            "2": 88,
+            "4": 32,
+            "3": 24,
+            "5": 8,
+            "8": 4,
+            "7": 2,
+            "361": 2,
+            "362": 2,
+            "-1": 1,
+            "6": 1,
+            "9": 1
+          },
+          "frame_delta_counts": {
+            "4": 11023,
+            "5": 247,
+            "6": 78,
+            "7": 73,
+            "3": 66,
+            "8": 18,
+            "2": 17,
+            "9": 10,
+            "364": 6,
+            "1": 5,
+            "10": 4,
+            "365": 3
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 26.619839945094515
+        },
+        "phases": {
+          "Active": 9023,
+          "Countdown": 1615,
+          "Kickoff": 921
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1577
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.5496779150653346,
+          "state_setting_apply_count": 165,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-wisp-blue-20260823T014331Z-b11b302f",
+        "opponent": "wisp",
+        "rival_side": "blue",
+        "outcome": "loss",
+        "score": {
+          "rival": 3,
+          "opponent": 5
+        },
+        "decision_records": 10532,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 10532,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.685490802464922,
+          "maximum_consecutive_identical_action_run": 129,
+          "top_actions": [
+            {
+              "action_index": 20,
+              "count": 1079,
+              "share": 0.10244967717432586
+            },
+            {
+              "action_index": 18,
+              "count": 1026,
+              "share": 0.09741739460691226
+            },
+            {
+              "action_index": 16,
+              "count": 976,
+              "share": 0.09266995822255981
+            },
+            {
+              "action_index": 12,
+              "count": 716,
+              "share": 0.06798328902392708
+            },
+            {
+              "action_index": 22,
+              "count": 599,
+              "share": 0.056874287884542345
+            },
+            {
+              "action_index": 17,
+              "count": 345,
+              "share": 0.032757311052031904
+            },
+            {
+              "action_index": 5,
+              "count": 338,
+              "share": 0.03209266995822256
+            },
+            {
+              "action_index": 3,
+              "count": 310,
+              "share": 0.029434105582985187
+            },
+            {
+              "action_index": 77,
+              "count": 285,
+              "share": 0.027060387390808963
+            },
+            {
+              "action_index": 14,
+              "count": 201,
+              "share": 0.019084694265096847
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 10532
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.37134447398404863,
+          "boost_share": 0.36830611469806307,
+          "handbrake_share": 0.20413976452715535,
+          "jump_share": 0.05469046714774022,
+          "self_airborne_share": 0.4468287124952526
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.07638147196405631,
+            "minimum": 0.011753961443901062,
+            "p50": 0.04485936835408211,
+            "p95": 0.3123454183340025,
+            "maximum": 0.9615200757980347
+          },
+          "margin": {
+            "mean": 0.02332450344538167,
+            "minimum": 2.086162567138672e-07,
+            "p50": 0.0033841561526060104,
+            "p95": 0.15536809489130823,
+            "maximum": 0.9437638353556395
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 10532
+          },
+          "action_delay_counts": {
+            "3": 10532
+          },
+          "tick_window_counts": {
+            "1": 10350,
+            "2": 119,
+            "4": 26,
+            "3": 25,
+            "5": 7,
+            "362": 3,
+            "-1": 1,
+            "414": 1
+          },
+          "frame_delta_counts": {
+            "4": 9969,
+            "5": 265,
+            "3": 108,
+            "7": 66,
+            "6": 60,
+            "8": 27,
+            "1": 10,
+            "2": 6,
+            "9": 6,
+            "365": 5,
+            "364": 2,
+            "10": 1
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 27.444354589097184
+        },
+        "phases": {
+          "Active": 8905,
+          "Countdown": 1042,
+          "Kickoff": 585
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1435
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.87693429788731,
+          "state_setting_apply_count": 147,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      },
+      {
+        "session_id": "rival-v6-natural-wisp-orange-20260823T014517Z-08a85d77",
+        "opponent": "wisp",
+        "rival_side": "orange",
+        "outcome": "loss",
+        "score": {
+          "rival": 2,
+          "opponent": 8
+        },
+        "decision_records": 10855,
+        "decision_count_matches_stage_and_manifest": true,
+        "actions": {
+          "legacy_count": 10855,
+          "appended_count": 0,
+          "appended_share": 0.0,
+          "unique_actions_used": 90,
+          "empirical_entropy_nats": 3.6873679702139173,
+          "maximum_consecutive_identical_action_run": 130,
+          "top_actions": [
+            {
+              "action_index": 16,
+              "count": 1116,
+              "share": 0.10280976508521418
+            },
+            {
+              "action_index": 18,
+              "count": 1038,
+              "share": 0.09562413634269921
+            },
+            {
+              "action_index": 12,
+              "count": 839,
+              "share": 0.07729157070474436
+            },
+            {
+              "action_index": 20,
+              "count": 836,
+              "share": 0.07701520036849378
+            },
+            {
+              "action_index": 22,
+              "count": 752,
+              "share": 0.06927683095347766
+            },
+            {
+              "action_index": 17,
+              "count": 414,
+              "share": 0.038139106402579455
+            },
+            {
+              "action_index": 5,
+              "count": 366,
+              "share": 0.03371718102257024
+            },
+            {
+              "action_index": 77,
+              "count": 339,
+              "share": 0.031229847996315063
+            },
+            {
+              "action_index": 3,
+              "count": 273,
+              "share": 0.025149700598802394
+            },
+            {
+              "action_index": 73,
+              "count": 246,
+              "share": 0.022662367572547214
+            }
+          ],
+          "family_counts": {
+            "legacy_wisp": 10855
+          }
+        },
+        "controls": {
+          "aerial_like_share": 0.4056195301704284,
+          "boost_share": 0.3968678028558268,
+          "handbrake_share": 0.21814831874712115,
+          "jump_share": 0.07222478120681713,
+          "self_airborne_share": 0.4784891754951635
+        },
+        "policy": {
+          "confidence": {
+            "mean": 0.08638006014185724,
+            "minimum": 0.011710810475051403,
+            "p50": 0.0463348850607872,
+            "p95": 0.34211260080337524,
+            "maximum": 0.980461597442627
+          },
+          "margin": {
+            "mean": 0.029606459120426625,
+            "minimum": 2.1420419216156006e-07,
+            "p50": 0.0034669265151023865,
+            "p95": 0.2181546837091446,
+            "maximum": 0.9615541063249111
+          },
+          "nonfinite_probability_fields": 0
+        },
+        "cadence": {
+          "tick_skip_counts": {
+            "4": 10855
+          },
+          "action_delay_counts": {
+            "3": 10855
+          },
+          "tick_window_counts": {
+            "1": 10660,
+            "2": 149,
+            "4": 19,
+            "3": 15,
+            "5": 5,
+            "7": 2,
+            "-1": 1,
+            "6": 1,
+            "8": 1,
+            "361": 1,
+            "479": 1
+          },
+          "frame_delta_counts": {
+            "4": 10206,
+            "5": 346,
+            "3": 118,
+            "7": 71,
+            "6": 60,
+            "8": 17,
+            "2": 14,
+            "364": 5,
+            "9": 4,
+            "363": 4,
+            "1": 2,
+            "11": 2
+          },
+          "negative_frame_deltas": 0,
+          "decisions_per_simulated_game_second": 27.04565786651479
+        },
+        "phases": {
+          "Active": 8887,
+          "Countdown": 1248,
+          "Kickoff": 720
+        },
+        "invariants": {
+          "malformed_json_records": 0,
+          "invalid_action_indices": 0,
+          "legal_mask_length_mismatches": 0,
+          "legal_mask_selected_action_forbidden": 0,
+          "legal_mask_not_all_true_records": 0,
+          "deterministic_top_action_mismatches": 0,
+          "baseline_or_final_action_mismatches": 0,
+          "intervention_count": 0,
+          "manifest_invalid_record_count": 0
+        },
+        "execution": {
+          "requested_game_speed": 5.0,
+          "observed_packet_game_speed": {
+            "maximum": 1.0,
+            "median": 1.0,
+            "minimum": 1.0,
+            "samples": 1481
+          },
+          "requested_speed_reached_by_packet_field": false,
+          "effective_game_seconds_per_wall_second": 3.711984529247174,
+          "state_setting_apply_count": 153,
+          "runtime_warnings": [],
+          "runtime_error": null
+        }
+      }
+    ]
+  },
+  "historical_frozen_wisp_context": {
+    "gameplay": {
+      "active_decision_count": 37223,
+      "decision_count": 43792,
+      "favorable_eta": {
+        "favorable_count": 23850,
+        "observation_count": 37223,
+        "share": 0.6407328802084733,
+        "threshold_seconds": 0.0
+      },
+      "goal_differential": 5,
+      "goals_against": 30,
+      "goals_conceded_within_window_after_possession_loss": 41,
+      "goals_for": 35,
+      "goals_scored_within_window_after_possession_loss": 21,
+      "losses": 4,
+      "match_count": 8,
+      "natural_adjustment": {
+        "applied_decision_count": 0,
+        "applied_next_goal": {
+          "conceded": 0,
+          "none": 0,
+          "scored": 0
+        },
+        "applied_next_touch": {
+          "none": 0,
+          "opponent": 0,
+          "self": 0
+        },
+        "eligible_decision_count": 0,
+        "hypothetical_change_count": 0,
+        "mean_session_applied_severity": null,
+        "record_count": 0
+      },
+      "possession_loss_transition_count": 367,
+      "ties": 0,
+      "touches": {
+        "opponent": 955,
+        "self": 2981
+      },
+      "wins": 4
+    },
+    "telemetry": {
+      "sessions": 8,
+      "decision_records": 43792,
+      "all_decision_counts_match": true,
+      "actions": {
+        "legacy_count": 43792,
+        "appended_count": 0,
+        "appended_share": 0.0,
+        "minimum_unique_actions_used_per_session": 89,
+        "maximum_unique_actions_used_per_session": 89,
+        "maximum_consecutive_identical_action_run": 68,
+        "family_counts": {
+          "legacy_wisp": 43792
+        },
+        "top_action_counts_from_per_session_top10": {
+          "18": 4563,
+          "16": 3766,
+          "20": 3017,
+          "12": 2597,
+          "22": 2225,
+          "8": 1104,
+          "42": 924,
+          "84": 903,
+          "17": 741,
+          "7": 729
+        }
+      },
+      "controls": {
+        "aerial_like_share": 0.47074808184143224,
+        "boost_share": 0.32037815126050423,
+        "handbrake_share": 0.16112531969309463,
+        "jump_share": 0.05195012787723785,
+        "self_airborne_share": 0.4595816587504567
+      },
+      "policy": {
+        "mean_confidence": 0.16768085522880688,
+        "mean_margin": 0.07522067144251664
+      },
+      "cadence": {
+        "tick_skip_counts": {
+          "8": 43792
+        },
+        "action_delay_counts": {
+          "7": 43792
+        },
+        "frame_delta_counts": {
+          "8": 42570,
+          "9": 320,
+          "10": 290,
+          "11": 186,
+          "7": 112,
+          "6": 101,
+          "5": 87,
+          "365": 14,
+          "364": 8,
+          "12": 7,
+          "366": 7,
+          "3": 6
+        },
+        "mean_decisions_per_simulated_game_second": 13.955206876648266
+      },
+      "invariant_totals": {
+        "baseline_or_final_action_mismatches": 0,
+        "deterministic_top_action_mismatches": 0,
+        "intervention_count": 0,
+        "invalid_action_indices": 0,
+        "legal_mask_length_mismatches": 0,
+        "legal_mask_not_all_true_records": 43792,
+        "legal_mask_selected_action_forbidden": 0,
+        "malformed_json_records": 0,
+        "manifest_invalid_record_count": 0
+      },
+      "runtime_warning_count": 0,
+      "runtime_error_count": 0,
+      "effective_game_seconds_per_wall_second": {
+        "mean": 3.960661335039709,
+        "minimum": 3.6688480431758093,
+        "p50": 3.953601809114228,
+        "p95": 4.208433355292451,
+        "maximum": 4.210564507927089
+      }
+    }
+  },
+  "comparison": {
+    "overall_win_delta": -4,
+    "overall_goal_differential_delta": -34,
+    "decision_frequency_ratio_candidate_to_wisp": 1.9460542181519274,
+    "candidate_deterministic_appended_action_share": 0.0
+  },
+  "diagnosis": {
+    "runtime_integrity_passed": true,
+    "deployment_adapter_fault_observed": false,
+    "action_table_or_mask_fault_observed": false,
+    "cadence_configuration_fault_observed": false,
+    "candidate_action_collapse_observed": false,
+    "productive_appended_action_use_observed": false,
+    "gameplay_transfer_verdict": "severe_regression_at_20m",
+    "interpretation": "The 20M candidate completed all eight RLBot v5 matches with exact candidate runtime metadata, deterministic top-action selection, a valid 158-action mask, four-tick cadence, and no runtime errors or interventions. It selected no appended action deterministically. The 0-8, -29 result is therefore a real deployment-gameplay rejection signal, not evidence of productive mechanics use and not explained by an observed loader, mask, or cadence-configuration fault. Learned legacy-logit drift, the four-tick student deployment seam, and RocketSim-to-RLBot transfer remain unresolved causal possibilities."
+  },
+  "campaign_decision": {
+    "outcome": "rejected_rollback",
+    "continue_to_stage_c": false,
+    "reason": "The actual RLBot boundary regressed from the historical frozen-Wisp 4-4, +5 context to 0-8, -29. The campaign ceiling is not a quota, and continuing self-play after this external benchmark failure would violate the smallest-response rollback order.",
+    "production_policy": "frozen_wisp_unchanged",
+    "production_promoted": false
+  },
+  "execution_note": "The RLBot packet game_speed field remained 1.0 in both candidate and historical runs while state-setting acceleration advanced the match faster than wall time. That shared telemetry behavior is not used to invalidate the candidate battery."
+}
