@@ -7,8 +7,10 @@ observation/action/reward classes are intentionally not imported.
 from __future__ import annotations
 
 import math
+import multiprocessing
 from typing import Any
 
+import gym
 import numpy as np
 from rlgym.api import AgentID, ObsBuilder, RLGym, RewardFunction, StateMutator
 from rlgym.rocket_league.api import GameState
@@ -24,6 +26,7 @@ from rlgym.rocket_league.state_mutators import (
     FixedTeamSizeMutator,
     MutatorSequence,
 )
+from rlgym_ppo.util import RLGymV2GymWrapper
 
 from .v9_actions import RivalActionV1Parser
 from .v9_canonical import RocketSimCanonicalAdapterV1
@@ -44,6 +47,19 @@ V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV2OneTickDelay"
 V9_TRAINING_ENVIRONMENT_VERSION = (
     "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry"
 )
+
+
+class RivalV9ContinuousGymWrapper(RLGymV2GymWrapper):
+    """Repair rlgym-ppo's discrete-only v2 wrapper action-space discovery."""
+
+    def __init__(self, rlgym_env: RLGym) -> None:
+        super().__init__(rlgym_env)
+        self.is_discrete = False
+        self.action_space = gym.spaces.Box(
+            low=np.asarray([-1.0] * 5 + [0.0] * 3, dtype=np.float32),
+            high=np.ones(8, dtype=np.float32),
+            dtype=np.float32,
+        )
 
 
 class RivalV9DeterministicKickoffMutator(StateMutator[GameState]):
@@ -233,4 +249,20 @@ def build_v9_training_env(
         ),
         shared_info_provider=None,
         renderer=None,
+    )
+
+
+def make_v9_training_gym_env() -> RivalV9ContinuousGymWrapper:
+    """Pickle-safe actual-v9 worker factory for rlgym-ppo.
+
+    ``BatchedAgentManager`` does not pass its per-process seed into the factory,
+    so derive only the augmentation RNG offset from multiprocessing's stable
+    worker identity. RocketSim state remains governed by the environment's
+    explicit reset/curriculum implementation.
+    """
+
+    identity = multiprocessing.current_process()._identity  # noqa: SLF001
+    worker_offset = int(identity[-1]) if identity else 0
+    return RivalV9ContinuousGymWrapper(
+        build_v9_training_env(symmetry_seed=20260908 + worker_offset)
     )

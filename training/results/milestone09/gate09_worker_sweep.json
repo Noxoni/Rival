@@ -1,0 +1,4708 @@
+{
+  "checks": {
+    "actual_v9_actor_and_environment_used": true,
+    "at_least_one_stable_candidate": true,
+    "base_16_to_56_sweep_complete": true,
+    "cuda_used": true,
+    "every_candidate_completed_without_error": true,
+    "ppo_iteration_timed_on_two_leading_candidates": true,
+    "selected_candidate_cleanup_passed": true,
+    "selected_candidate_has_no_worker_crash_or_stall": true,
+    "selected_candidate_restart_passed": true,
+    "selected_is_highest_stable_sustained_agent_step_rate": true,
+    "upper_extension_stopped_at_saturation_instability_or_cap": true
+  },
+  "commands": {
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_worker_sweep_gate.py",
+    "tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_policy.py training/tests/test_v9_worker_benchmark.py -q"
+  },
+  "contract": {
+    "actor_parameter_count": 1965784,
+    "agents_per_environment": 2,
+    "base_candidates": [
+      16,
+      24,
+      32,
+      40,
+      48,
+      56
+    ],
+    "device": "cuda:0",
+    "environment_version": "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry",
+    "material_upper_improvement_fraction": 0.03,
+    "maximum_extension_workers": 96,
+    "measured_agent_steps_per_window": 20000,
+    "measured_windows": 3,
+    "min_inference_size": "min(workers,16)",
+    "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+    "observation_size": 714,
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "policy_version": "RivalPolicyV1",
+    "prediction_refresh_ticks": 1,
+    "repeat_action": false,
+    "restart_agent_steps": 4096,
+    "standardize_observations": false,
+    "upper_increment": 8,
+    "warmup_agent_steps": 4096
+  },
+  "gate": 9,
+  "gate_name": "actual_v9_worker_throughput_sweep",
+  "gate_semantics": {
+    "losses_used": false,
+    "randomly_initialized_scratch_actor_used": true,
+    "scores_used": false,
+    "trained_checkpoint_used": false,
+    "wins_used": false
+  },
+  "generated_at_utc": "2026-08-23T18:38:54.639566+00:00",
+  "milestone": 9,
+  "ppo_inclusive_leading_candidate_iterations": [
+    {
+      "actor_gradient_norm": {
+        "maximum": 4.908684730529785,
+        "mean": 2.0654635280370712,
+        "minimum": 0.6423603892326355,
+        "p50": 1.3554044961929321,
+        "p95": 4.390753871202468,
+        "p99": 4.805098558664321,
+        "samples": 4
+      },
+      "actor_loss": {
+        "maximum": 0.007526365574449301,
+        "mean": -0.0011641536839306355,
+        "minimum": -0.007355479057878256,
+        "p50": -0.0024137506261467934,
+        "p95": 0.006209758261684325,
+        "p99": 0.0072630441118963045,
+        "samples": 4
+      },
+      "agent_steps_per_second": 4744.03089475428,
+      "analog_head_gradient_nonzero": true,
+      "button_head_gradient_nonzero": true,
+      "collected_agent_steps": 48006,
+      "critic_gradient_norm": {
+        "maximum": 3.2410879135131836,
+        "mean": 1.4989038705825806,
+        "minimum": 0.41309720277786255,
+        "p50": 1.170715183019638,
+        "p95": 2.987517344951629,
+        "p99": 3.1903737998008723,
+        "samples": 4
+      },
+      "critic_loss": {
+        "maximum": 0.01665998063981533,
+        "mean": 0.006004238908644766,
+        "minimum": 0.001175574609078467,
+        "p50": 0.0030907001928426325,
+        "p95": 0.014835021202452477,
+        "p99": 0.016294988752342757,
+        "samples": 4
+      },
+      "entropy": {
+        "maximum": 5.022990703582764,
+        "mean": 5.009019255638123,
+        "minimum": 4.997626304626465,
+        "p50": 5.007730007171631,
+        "p95": 5.021229386329651,
+        "p99": 5.022638440132141,
+        "samples": 4
+      },
+      "epochs": 1,
+      "errors": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 96.0,
+          "mean": 33.27096327096327,
+          "minimum": 16.0,
+          "p50": 26.0,
+          "p95": 80.0,
+          "p99": 90.0,
+          "samples": 1443
+        },
+        "batch_size_counts": {
+          "16": 74,
+          "18": 74,
+          "20": 89,
+          "22": 148,
+          "24": 182,
+          "26": 166,
+          "28": 151,
+          "30": 102,
+          "32": 62,
+          "34": 34,
+          "36": 38,
+          "38": 30,
+          "40": 18,
+          "42": 17,
+          "44": 12,
+          "46": 17,
+          "48": 13,
+          "50": 12,
+          "52": 10,
+          "54": 16,
+          "56": 8,
+          "58": 11,
+          "60": 8,
+          "62": 5,
+          "64": 10,
+          "66": 7,
+          "68": 9,
+          "70": 4,
+          "72": 10,
+          "74": 7,
+          "76": 8,
+          "78": 10,
+          "80": 10,
+          "82": 16,
+          "84": 13,
+          "86": 8,
+          "88": 9,
+          "90": 11,
+          "92": 5,
+          "94": 4,
+          "96": 5
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 70.64420008100569,
+          "mean": 5.583797714205708,
+          "minimum": 3.291900036856532,
+          "p50": 4.623799934051931,
+          "p95": 10.603629960678516,
+          "p99": 16.522436025552445,
+          "samples": 1443
+        },
+        "calls": 1443,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 1313.0500010447577,
+          "mean": 201.11305563181395,
+          "minimum": 43.292553411757055,
+          "p50": 175.91764780637973,
+          "p95": 419.18855691399096,
+          "p99": 815.9146962024131,
+          "samples": 1443
+        }
+      },
+      "iteration_wall_seconds": 11.170206899987534,
+      "minibatch_size": 12000,
+      "minibatches": 4,
+      "nonzero_actor_and_critic_updates": true,
+      "ppo_update_wall_seconds": 0.5699201000388712,
+      "rollout_agent_steps_target": 48000,
+      "rollout_package_seconds": 10.119242699933238,
+      "rollout_wall_seconds": 10.401315800030716,
+      "scope": "Gate 9 one-iteration leading-candidate benchmark at 48k steps; not the multiple-iteration save/reload/resume acceptance in Gate 11",
+      "status": "passed",
+      "workers": 56
+    },
+    {
+      "actor_gradient_norm": {
+        "maximum": 5.556595325469971,
+        "mean": 2.667154237627983,
+        "minimum": 0.7700059413909912,
+        "p50": 2.1710078418254852,
+        "p95": 5.231766295433044,
+        "p99": 5.491629519462585,
+        "samples": 4
+      },
+      "actor_loss": {
+        "maximum": 0.016878344118595123,
+        "mean": 0.0015249121934175491,
+        "minimum": -0.009825451299548149,
+        "p50": -0.0004766220226883888,
+        "p95": 0.015157066937535997,
+        "p99": 0.016534088682383295,
+        "samples": 4
+      },
+      "agent_steps_per_second": 4911.012502564291,
+      "analog_head_gradient_nonzero": true,
+      "button_head_gradient_nonzero": true,
+      "collected_agent_steps": 48004,
+      "critic_gradient_norm": {
+        "maximum": 3.2414000034332275,
+        "mean": 1.496523417532444,
+        "minimum": 0.4553852379322052,
+        "p50": 1.1446542143821716,
+        "p95": 2.999279230833053,
+        "p99": 3.1929758489131923,
+        "samples": 4
+      },
+      "critic_loss": {
+        "maximum": 0.016564002260565758,
+        "mean": 0.00597049412317574,
+        "minimum": 0.0011891553876921535,
+        "p50": 0.003064409422222525,
+        "p95": 0.014799214969389136,
+        "p99": 0.016211044802330432,
+        "samples": 4
+      },
+      "entropy": {
+        "maximum": 5.041343688964844,
+        "mean": 5.023670196533203,
+        "minimum": 5.002206802368164,
+        "p50": 5.025565147399902,
+        "p95": 5.038982200622558,
+        "p99": 5.0408713912963865,
+        "samples": 4
+      },
+      "epochs": 1,
+      "errors": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 112.0,
+          "mean": 32.65533650577838,
+          "minimum": 16.0,
+          "p50": 26.0,
+          "p95": 94.0,
+          "p99": 108.0,
+          "samples": 1471
+        },
+        "batch_size_counts": {
+          "100": 12,
+          "102": 10,
+          "104": 10,
+          "106": 6,
+          "108": 7,
+          "110": 8,
+          "112": 5,
+          "16": 54,
+          "18": 69,
+          "20": 101,
+          "22": 161,
+          "24": 228,
+          "26": 240,
+          "28": 164,
+          "30": 93,
+          "32": 49,
+          "34": 36,
+          "36": 27,
+          "38": 20,
+          "40": 15,
+          "42": 14,
+          "44": 13,
+          "46": 7,
+          "48": 11,
+          "50": 3,
+          "52": 11,
+          "54": 11,
+          "56": 6,
+          "58": 7,
+          "60": 4,
+          "62": 2,
+          "64": 3,
+          "66": 2,
+          "68": 5,
+          "70": 4,
+          "72": 1,
+          "74": 3,
+          "76": 2,
+          "78": 1,
+          "80": 3,
+          "82": 5,
+          "84": 2,
+          "86": 5,
+          "88": 2,
+          "90": 5,
+          "92": 7,
+          "94": 4,
+          "96": 5,
+          "98": 8
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 97.4870000500232,
+          "mean": 5.504282119852965,
+          "minimum": 3.1568999402225018,
+          "p50": 4.555599996820092,
+          "p95": 11.615299968980253,
+          "p99": 18.76316998386755,
+          "samples": 1471
+        },
+        "calls": 1471,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 4061.9583354176334,
+          "mean": 205.5767489907686,
+          "minimum": 29.50357156805694,
+          "p50": 172.07499643388604,
+          "p95": 438.16469685855105,
+          "p99": 849.1354528814553,
+          "samples": 1471
+        }
+      },
+      "iteration_wall_seconds": 10.454633900080808,
+      "minibatch_size": 12000,
+      "minibatches": 4,
+      "nonzero_actor_and_critic_updates": true,
+      "ppo_update_wall_seconds": 0.16464219999033958,
+      "rollout_agent_steps_target": 48000,
+      "rollout_package_seconds": 9.774766399990767,
+      "rollout_wall_seconds": 10.177846300066449,
+      "scope": "Gate 9 one-iteration leading-candidate benchmark at 48k steps; not the multiple-iteration save/reload/resume acceptance in Gate 11",
+      "status": "passed",
+      "workers": 64
+    }
+  ],
+  "ppo_iteration_scope": {
+    "epochs": 1,
+    "minibatch_size": 12000,
+    "not_gate11": true,
+    "purpose": "Gate 9 candidate wall-time comparison",
+    "rollout_agent_steps": 48000
+  },
+  "results": [
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 11.957257243483385,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          13468,
+          40328,
+          14016,
+          10828,
+          2600,
+          18240,
+          34020,
+          16440,
+          22184,
+          37504,
+          37248,
+          34680,
+          35004,
+          7216,
+          40368,
+          10768
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 18.0,
+          "mean": 16.000533333333333,
+          "minimum": 16.0,
+          "p50": 16.0,
+          "p95": 16.0,
+          "p99": 16.0,
+          "samples": 3750
+        },
+        "batch_size_counts": {
+          "16": 3749,
+          "18": 1
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 134.06030007172376,
+          "mean": 3.9447207189785938,
+          "minimum": 2.321199979633093,
+          "p50": 3.806699998676777,
+          "p95": 5.234554992057382,
+          "p99": 6.306887001264832,
+          "samples": 3750
+        },
+        "calls": 3750,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 8378.768754482735,
+          "mean": 246.53439141758201,
+          "minimum": 145.0749987270683,
+          "p50": 237.91874991729856,
+          "p95": 327.0762481406564,
+          "p99": 394.180437579052,
+          "samples": 3750
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 91.8,
+          "mean": 66.4974358974359,
+          "minimum": 50.6,
+          "p50": 66.2,
+          "p95": 74.17,
+          "p99": 85.68199999999996,
+          "samples": 39
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3423.0,
+          "mean": 3378.8205128205127,
+          "minimum": 3317.0,
+          "p50": 3373.0,
+          "p95": 3422.0,
+          "p99": 3422.62,
+          "samples": 39
+        },
+        "gpu_utilization_percent": {
+          "maximum": 28.0,
+          "mean": 25.384615384615383,
+          "minimum": 14.0,
+          "p50": 26.0,
+          "p95": 28.0,
+          "p99": 28.0,
+          "samples": 39
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 39
+        },
+        "system_memory_available_mib": {
+          "maximum": 29996.97265625,
+          "mean": 29774.99799679487,
+          "minimum": 29640.04296875,
+          "p50": 29711.75390625,
+          "p95": 29976.32734375,
+          "p99": 29993.426484375,
+          "samples": 39
+        },
+        "system_memory_used_mib": {
+          "maximum": 33494.78515625,
+          "mean": 33359.830128205125,
+          "minimum": 33137.85546875,
+          "p50": 33423.07421875,
+          "p95": 33486.798828125,
+          "p99": 33493.173125,
+          "samples": 39
+        },
+        "worker_rss_mib": {
+          "maximum": 8610.53125,
+          "mean": 8610.35767227564,
+          "minimum": 8610.03125,
+          "p50": 8610.3671875,
+          "p95": 8610.53125,
+          "p99": 8610.53125,
+          "samples": 39
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 2900.088893265836,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4096,
+        "errors": [],
+        "package_collection_seconds": 1.4123704999219626,
+        "passed": true,
+        "wall_seconds": 1.4348583000246435,
+        "workers_alive": 16
+      },
+      "simulated_game_hours_per_wall_hour": 11.957257243483385,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 2912.953039944713,
+      "sustained_agent_steps_per_second_mean": 2869.7417384360124,
+      "sustained_agent_steps_per_second_median": 2866.5142703395836,
+      "sustained_agent_steps_per_second_minimum": 2829.75790502374,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.011861993591524032,
+      "windows": [
+        {
+          "agent_steps_per_second": 2866.5142703395836,
+          "aggregate_simulated_game_seconds_per_second": 11.943809459748264,
+          "collected_agent_steps": 20000,
+          "inference": {
+            "batch_size": {
+              "maximum": 16.0,
+              "mean": 16.0,
+              "minimum": 16.0,
+              "p50": 16.0,
+              "p95": 16.0,
+              "p99": 16.0,
+              "samples": 1250
+            },
+            "batch_size_counts": {
+              "16": 1250
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 134.06030007172376,
+              "mean": 4.053352399356664,
+              "minimum": 2.4648000253364444,
+              "p50": 3.846699954010546,
+              "p95": 5.356504954397675,
+              "p99": 6.406301000388339,
+              "samples": 1250
+            },
+            "calls": 1250,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 8378.768754482735,
+              "mean": 253.33452495979145,
+              "minimum": 154.05000158352777,
+              "p50": 240.41874712565914,
+              "p95": 334.78155964985467,
+              "p99": 400.3938125242712,
+              "samples": 1250
+            }
+          },
+          "package_collection_seconds": 6.9771151000168175,
+          "simulated_game_hours_per_wall_hour": 11.943809459748264,
+          "torch_cuda_peak_allocated_mib": 39.84814453125,
+          "wall_seconds": 7.092687199939974,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 2912.953039944713,
+          "aggregate_simulated_game_seconds_per_second": 12.137304333102971,
+          "collected_agent_steps": 20000,
+          "inference": {
+            "batch_size": {
+              "maximum": 16.0,
+              "mean": 16.0,
+              "minimum": 16.0,
+              "p50": 16.0,
+              "p95": 16.0,
+              "p99": 16.0,
+              "samples": 1250
+            },
+            "batch_size_counts": {
+              "16": 1250
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 7.277199998497963,
+              "mean": 3.8755765587091444,
+              "minimum": 2.4806999135762453,
+              "p50": 3.8003999507054687,
+              "p95": 5.136524996487424,
+              "p99": 6.09662703005597,
+              "samples": 1250
+            },
+            "calls": 1250,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 454.8249999061227,
+              "mean": 242.22353491932154,
+              "minimum": 155.04374459851533,
+              "p50": 237.5249969190918,
+              "p95": 321.032812280464,
+              "p99": 381.0391893784981,
+              "samples": 1250
+            }
+          },
+          "package_collection_seconds": 6.865884799975902,
+          "simulated_game_hours_per_wall_hour": 12.137304333102971,
+          "torch_cuda_peak_allocated_mib": 39.84814453125,
+          "wall_seconds": 6.9929733000462875,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 2829.75790502374,
+          "aggregate_simulated_game_seconds_per_second": 11.790657937598917,
+          "collected_agent_steps": 20002,
+          "inference": {
+            "batch_size": {
+              "maximum": 18.0,
+              "mean": 16.0016,
+              "minimum": 16.0,
+              "p50": 16.0,
+              "p95": 16.0,
+              "p99": 16.0,
+              "samples": 1250
+            },
+            "batch_size_counts": {
+              "16": 1249,
+              "18": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 44.00410002563149,
+              "mean": 3.9052331988699733,
+              "minimum": 2.321199979633093,
+              "p50": 3.775549994315952,
+              "p95": 5.204149929340929,
+              "p99": 6.279409965500236,
+              "samples": 1250
+            },
+            "calls": 1250,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 2750.256251601968,
+              "mean": 244.045114373633,
+              "minimum": 145.0749987270683,
+              "p50": 235.971874644747,
+              "p95": 325.0143719924381,
+              "p99": 392.4631228437647,
+              "samples": 1250
+            }
+          },
+          "package_collection_seconds": 7.068449200014584,
+          "simulated_game_hours_per_wall_hour": 11.790657937598917,
+          "torch_cuda_peak_allocated_mib": 39.890625,
+          "wall_seconds": 7.18236810003873,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 13468
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40328
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14016
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10828
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 2600
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18240
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34020
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16440
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22184
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37504
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37248
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34680
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35004
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 7216
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40368
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10768
+        }
+      ],
+      "workers": 16
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 15.839543959717702,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          23640,
+          40636,
+          17396,
+          24216,
+          23704,
+          6292,
+          38580,
+          2868,
+          39884,
+          40628,
+          8152,
+          30008,
+          10360,
+          1408,
+          40640,
+          32212,
+          14172,
+          32760,
+          29640,
+          3128,
+          26996,
+          20812,
+          13884,
+          19036
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 40.0,
+          "mean": 22.121591746499632,
+          "minimum": 16.0,
+          "p50": 22.0,
+          "p95": 30.0,
+          "p99": 32.0,
+          "samples": 2714
+        },
+        "batch_size_counts": {
+          "16": 483,
+          "18": 306,
+          "20": 417,
+          "22": 393,
+          "24": 363,
+          "26": 314,
+          "28": 219,
+          "30": 113,
+          "32": 101,
+          "36": 3,
+          "38": 1,
+          "40": 1
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 52.78330005239695,
+          "mean": 4.667684267012179,
+          "minimum": 2.584100002422929,
+          "p50": 4.485649988055229,
+          "p95": 6.241714989300816,
+          "p99": 7.7271629928145495,
+          "samples": 2714
+        },
+        "calls": 2714,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 2199.304168849873,
+          "mean": 220.26290879104536,
+          "minimum": 83.1812503747642,
+          "p50": 212.3072706374594,
+          "p95": 328.5922213561005,
+          "p99": 422.66305950761284,
+          "samples": 2714
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 96.5,
+          "mean": 87.01724137931033,
+          "minimum": 63.5,
+          "p50": 87.8,
+          "p95": 94.94,
+          "p99": 96.444,
+          "samples": 29
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3814.0,
+          "mean": 3386.6206896551726,
+          "minimum": 3294.0,
+          "p50": 3348.0,
+          "p95": 3650.999999999999,
+          "p99": 3811.48,
+          "samples": 29
+        },
+        "gpu_utilization_percent": {
+          "maximum": 32.0,
+          "mean": 25.82758620689655,
+          "minimum": 13.0,
+          "p50": 26.0,
+          "p95": 28.0,
+          "p99": 30.879999999999995,
+          "samples": 29
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 29
+        },
+        "system_memory_available_mib": {
+          "maximum": 26555.44921875,
+          "mean": 26232.846443965518,
+          "minimum": 25986.7734375,
+          "p50": 26169.27734375,
+          "p95": 26526.71484375,
+          "p99": 26554.21328125,
+          "samples": 29
+        },
+        "system_memory_used_mib": {
+          "maximum": 37148.0546875,
+          "mean": 36901.981681034486,
+          "minimum": 36579.37890625,
+          "p50": 36965.55078125,
+          "p95": 37070.18515625,
+          "p99": 37129.40734375,
+          "samples": 29
+        },
+        "worker_rss_mib": {
+          "maximum": 12916.02734375,
+          "mean": 12915.765759698275,
+          "minimum": 12915.37890625,
+          "p50": 12915.77734375,
+          "p95": 12915.99375,
+          "p99": 12916.0196875,
+          "samples": 29
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 3513.163233619939,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4104,
+        "errors": [],
+        "package_collection_seconds": 1.168178000021726,
+        "passed": true,
+        "wall_seconds": 1.1911232999991626,
+        "workers_alive": 24
+      },
+      "simulated_game_hours_per_wall_hour": 15.839543959717702,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 3915.1720037122623,
+      "sustained_agent_steps_per_second_mean": 3801.4905503322484,
+      "sustained_agent_steps_per_second_median": 3772.889336560949,
+      "sustained_agent_steps_per_second_minimum": 3716.410310723534,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.02199833169182073,
+      "windows": [
+        {
+          "agent_steps_per_second": 3915.1720037122623,
+          "aggregate_simulated_game_seconds_per_second": 16.313216682134428,
+          "collected_agent_steps": 20012,
+          "inference": {
+            "batch_size": {
+              "maximum": 32.0,
+              "mean": 22.258064516129032,
+              "minimum": 16.0,
+              "p50": 22.0,
+              "p95": 30.0,
+              "p99": 32.0,
+              "samples": 899
+            },
+            "batch_size_counts": {
+              "16": 167,
+              "18": 112,
+              "20": 127,
+              "22": 107,
+              "24": 110,
+              "26": 95,
+              "28": 92,
+              "30": 53,
+              "32": 36
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 10.676699923351407,
+              "mean": 4.646577641965658,
+              "minimum": 2.584100002422929,
+              "p50": 4.4658000115305185,
+              "p95": 6.289679929614065,
+              "p99": 7.975029922090466,
+              "samples": 899
+            },
+            "calls": 899,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 536.5812539821491,
+              "mean": 219.11962750863984,
+              "minimum": 86.13666674743097,
+              "p50": 212.22083402487138,
+              "p95": 337.81541343260966,
+              "p99": 429.682124609826,
+              "samples": 899
+            }
+          },
+          "package_collection_seconds": 5.111397399916314,
+          "simulated_game_hours_per_wall_hour": 16.313216682134428,
+          "torch_cuda_peak_allocated_mib": 40.1904296875,
+          "wall_seconds": 5.236369999940507,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 3716.410310723534,
+          "aggregate_simulated_game_seconds_per_second": 15.485042961348059,
+          "collected_agent_steps": 20022,
+          "inference": {
+            "batch_size": {
+              "maximum": 40.0,
+              "mean": 22.24222222222222,
+              "minimum": 16.0,
+              "p50": 22.0,
+              "p95": 30.0,
+              "p99": 32.0,
+              "samples": 900
+            },
+            "batch_size_counts": {
+              "16": 157,
+              "18": 79,
+              "20": 144,
+              "22": 141,
+              "24": 142,
+              "26": 97,
+              "28": 67,
+              "30": 31,
+              "32": 38,
+              "36": 2,
+              "38": 1,
+              "40": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 52.78330005239695,
+              "mean": 4.699395667347643,
+              "minimum": 3.0498000560328364,
+              "p50": 4.48329997016117,
+              "p95": 6.272195029305294,
+              "p99": 7.344937928719445,
+              "samples": 900
+            },
+            "calls": 900,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 2199.304168849873,
+              "mean": 219.73369550784597,
+              "minimum": 98.70937719824724,
+              "p50": 209.889583735882,
+              "p95": 314.0394411457236,
+              "p99": 411.67537303408596,
+              "samples": 900
+            }
+          },
+          "package_collection_seconds": 5.387456799973734,
+          "simulated_game_hours_per_wall_hour": 15.485042961348059,
+          "torch_cuda_peak_allocated_mib": 40.36181640625,
+          "wall_seconds": 5.50399350002408,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 3772.889336560949,
+          "aggregate_simulated_game_seconds_per_second": 15.72037223567062,
+          "collected_agent_steps": 20006,
+          "inference": {
+            "batch_size": {
+              "maximum": 36.0,
+              "mean": 21.868852459016395,
+              "minimum": 16.0,
+              "p50": 22.0,
+              "p95": 30.0,
+              "p99": 32.0,
+              "samples": 915
+            },
+            "batch_size_counts": {
+              "16": 159,
+              "18": 115,
+              "20": 146,
+              "22": 145,
+              "24": 111,
+              "26": 122,
+              "28": 60,
+              "30": 29,
+              "32": 27,
+              "36": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 9.396200068295002,
+              "mean": 4.657230273148686,
+              "minimum": 2.6618000119924545,
+              "p50": 4.523599985986948,
+              "p95": 6.13522999919951,
+              "p99": 7.769214031286541,
+              "samples": 915
+            },
+            "calls": 915,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 587.2625042684376,
+              "mean": 221.9067359252114,
+              "minimum": 83.1812503747642,
+              "p50": 213.7136391618035,
+              "p95": 327.8475002540896,
+              "p99": 399.70850193640234,
+              "samples": 915
+            }
+          },
+          "package_collection_seconds": 5.302567400038242,
+          "simulated_game_hours_per_wall_hour": 15.72037223567062,
+          "torch_cuda_peak_allocated_mib": 40.27587890625,
+          "wall_seconds": 5.429730199975893,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23640
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40636
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17396
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24216
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23704
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 6292
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 38580
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 2868
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39884
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40628
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8152
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30008
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10360
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 1408
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40640
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32212
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14172
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32760
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29640
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3128
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26996
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 20812
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 13884
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 19036
+        }
+      ],
+      "workers": 24
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 17.602872459988085,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          18320,
+          24980,
+          32436,
+          21632,
+          40912,
+          36564,
+          10748,
+          26976,
+          35368,
+          39944,
+          30420,
+          9052,
+          39824,
+          26048,
+          12004,
+          21840,
+          39772,
+          35468,
+          6424,
+          14820,
+          31636,
+          28488,
+          32720,
+          40040,
+          40736,
+          18192,
+          29352,
+          12748,
+          32544,
+          36688,
+          9300,
+          17516
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 50.0,
+          "mean": 28.189760450915923,
+          "minimum": 16.0,
+          "p50": 28.0,
+          "p95": 44.0,
+          "p99": 48.0,
+          "samples": 2129
+        },
+        "batch_size_counts": {
+          "16": 267,
+          "18": 143,
+          "20": 106,
+          "22": 115,
+          "24": 145,
+          "26": 195,
+          "28": 225,
+          "30": 174,
+          "32": 172,
+          "34": 150,
+          "36": 110,
+          "38": 92,
+          "40": 54,
+          "42": 34,
+          "44": 44,
+          "46": 41,
+          "48": 60,
+          "50": 2
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 32.66200004145503,
+          "mean": 4.920191311377187,
+          "minimum": 2.8735999949276447,
+          "p50": 4.590700031258166,
+          "p95": 7.35284003894776,
+          "p99": 9.217608021572232,
+          "samples": 2129
+        },
+        "calls": 2129,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 2041.3750025909394,
+          "mean": 193.3862027878386,
+          "minimum": 61.86874816194177,
+          "p50": 169.4233350766202,
+          "p95": 346.7023061463036,
+          "p99": 476.8384966882872,
+          "samples": 2129
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 99.6,
+          "mean": 88.6148148148148,
+          "minimum": 55.3,
+          "p50": 91.5,
+          "p95": 97.58999999999999,
+          "p99": 99.44399999999999,
+          "samples": 27
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3430.0,
+          "mean": 3353.814814814815,
+          "minimum": 3289.0,
+          "p50": 3366.0,
+          "p95": 3408.8,
+          "p99": 3424.8,
+          "samples": 27
+        },
+        "gpu_utilization_percent": {
+          "maximum": 26.0,
+          "mean": 23.333333333333332,
+          "minimum": 17.0,
+          "p50": 24.0,
+          "p95": 26.0,
+          "p99": 26.0,
+          "samples": 27
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 27
+        },
+        "system_memory_available_mib": {
+          "maximum": 23577.7578125,
+          "mean": 23463.204716435186,
+          "minimum": 23179.4609375,
+          "p50": 23519.38671875,
+          "p95": 23571.3875,
+          "p99": 23576.901640625,
+          "samples": 27
+        },
+        "system_memory_used_mib": {
+          "maximum": 39955.3671875,
+          "mean": 39671.62340856482,
+          "minimum": 39557.0703125,
+          "p50": 39615.44140625,
+          "p95": 39943.190234375,
+          "p99": 39953.20390625,
+          "samples": 27
+        },
+        "worker_rss_mib": {
+          "maximum": 17218.11328125,
+          "mean": 17217.86183449074,
+          "minimum": 17217.5,
+          "p50": 17217.8515625,
+          "p95": 17218.105078125,
+          "p99": 17218.11328125,
+          "samples": 27
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 3929.637476838943,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4106,
+        "errors": [],
+        "package_collection_seconds": 1.0448801000602543,
+        "passed": true,
+        "wall_seconds": 1.065419499995187,
+        "workers_alive": 32
+      },
+      "simulated_game_hours_per_wall_hour": 17.602872459988085,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 4270.250706897826,
+      "sustained_agent_steps_per_second_mean": 4224.68939039714,
+      "sustained_agent_steps_per_second_median": 4214.592769317824,
+      "sustained_agent_steps_per_second_minimum": 4189.224694975772,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.00801015325518326,
+      "windows": [
+        {
+          "agent_steps_per_second": 4214.592769317824,
+          "aggregate_simulated_game_seconds_per_second": 17.56080320549093,
+          "collected_agent_steps": 20002,
+          "inference": {
+            "batch_size": {
+              "maximum": 48.0,
+              "mean": 28.259887005649716,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 45.299999999999955,
+              "p99": 48.0,
+              "samples": 708
+            },
+            "batch_size_counts": {
+              "16": 95,
+              "18": 44,
+              "20": 32,
+              "22": 35,
+              "24": 48,
+              "26": 61,
+              "28": 68,
+              "30": 64,
+              "32": 62,
+              "34": 58,
+              "36": 36,
+              "38": 25,
+              "40": 25,
+              "42": 6,
+              "44": 13,
+              "46": 15,
+              "48": 21
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 32.66200004145503,
+              "mean": 4.9511149719996785,
+              "minimum": 3.4553000004962087,
+              "p50": 4.608499933965504,
+              "p95": 7.324274972779676,
+              "p99": 9.126993021927772,
+              "samples": 708
+            },
+            "calls": 708,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 2041.3750025909394,
+              "mean": 194.47346799350413,
+              "minimum": 73.96666721130411,
+              "p50": 167.7902238533044,
+              "p95": 340.9319811908062,
+              "p99": 472.1567687176328,
+              "samples": 708
+            }
+          },
+          "package_collection_seconds": 4.745891500031576,
+          "simulated_game_hours_per_wall_hour": 17.56080320549093,
+          "torch_cuda_peak_allocated_mib": 40.53271484375,
+          "wall_seconds": 4.871809600037523,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 4270.250706897826,
+          "aggregate_simulated_game_seconds_per_second": 17.792711278740942,
+          "collected_agent_steps": 20012,
+          "inference": {
+            "batch_size": {
+              "maximum": 50.0,
+              "mean": 28.342776203966007,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 44.0,
+              "p99": 48.0,
+              "samples": 706
+            },
+            "batch_size_counts": {
+              "16": 78,
+              "18": 39,
+              "20": 33,
+              "22": 41,
+              "24": 45,
+              "26": 67,
+              "28": 87,
+              "30": 69,
+              "32": 61,
+              "34": 54,
+              "36": 37,
+              "38": 27,
+              "40": 10,
+              "42": 14,
+              "44": 15,
+              "46": 9,
+              "48": 19,
+              "50": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 11.473200051113963,
+              "mean": 4.9761386679567225,
+              "minimum": 2.8735999949276447,
+              "p50": 4.632850002963096,
+              "p95": 7.402250048471615,
+              "p99": 9.294320020126182,
+              "samples": 706
+            },
+            "calls": 706,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 714.1000023693778,
+              "mean": 193.143519913362,
+              "minimum": 62.46956510712271,
+              "p50": 169.73669885490568,
+              "p95": 346.615624948754,
+              "p99": 489.74281016853655,
+              "samples": 706
+            }
+          },
+          "package_collection_seconds": 4.686375900055282,
+          "simulated_game_hours_per_wall_hour": 17.792711278740942,
+          "torch_cuda_peak_allocated_mib": 40.57568359375,
+          "wall_seconds": 4.80902819999028,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 4189.224694975772,
+          "aggregate_simulated_game_seconds_per_second": 17.455102895732384,
+          "collected_agent_steps": 20002,
+          "inference": {
+            "batch_size": {
+              "maximum": 50.0,
+              "mean": 27.96923076923077,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 46.0,
+              "p99": 48.0,
+              "samples": 715
+            },
+            "batch_size_counts": {
+              "16": 94,
+              "18": 60,
+              "20": 41,
+              "22": 39,
+              "24": 52,
+              "26": 67,
+              "28": 70,
+              "30": 41,
+              "32": 49,
+              "34": 38,
+              "36": 37,
+              "38": 40,
+              "40": 19,
+              "42": 14,
+              "44": 16,
+              "46": 17,
+              "48": 20,
+              "50": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 11.686800047755241,
+              "mean": 4.834327275760576,
+              "minimum": 2.969699911773205,
+              "p50": 4.537999979220331,
+              "p95": 7.306630001403389,
+              "p99": 8.834962048567833,
+              "samples": 715
+            },
+            "calls": 715,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 595.2562496531755,
+              "mean": 192.54921026164186,
+              "minimum": 61.86874816194177,
+              "p50": 170.1541623333469,
+              "p95": 347.6144974896063,
+              "p99": 470.30729128487616,
+              "samples": 715
+            }
+          },
+          "package_collection_seconds": 4.7746305000036955,
+          "simulated_game_hours_per_wall_hour": 17.455102895732384,
+          "torch_cuda_peak_allocated_mib": 40.57568359375,
+          "wall_seconds": 4.9001890000654384,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18320
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24980
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32436
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21632
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40912
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36564
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10748
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26976
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35368
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39944
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30420
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9052
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39824
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26048
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 12004
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21840
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39772
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35468
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 6424
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14820
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 31636
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28488
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32720
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40040
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40736
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18192
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29352
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 12748
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32544
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36688
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9300
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17516
+        }
+      ],
+      "workers": 32
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 18.342432146209486,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          24008,
+          39620,
+          37504,
+          29336,
+          22560,
+          36516,
+          26132,
+          7984,
+          40940,
+          33580,
+          6372,
+          24112,
+          29304,
+          15404,
+          34604,
+          38564,
+          8436,
+          5132,
+          8076,
+          33076,
+          35944,
+          23724,
+          36928,
+          32272,
+          18952,
+          38680,
+          24176,
+          40848,
+          3244,
+          17616,
+          22588,
+          37852,
+          8416,
+          28336,
+          11836,
+          5884,
+          40600,
+          22524,
+          22392,
+          14760
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 76.0,
+          "mean": 31.878916622411047,
+          "minimum": 16.0,
+          "p50": 28.0,
+          "p95": 56.0,
+          "p99": 64.0,
+          "samples": 1883
+        },
+        "batch_size_counts": {
+          "16": 161,
+          "18": 108,
+          "20": 145,
+          "22": 159,
+          "24": 175,
+          "26": 170,
+          "28": 149,
+          "30": 94,
+          "32": 61,
+          "34": 51,
+          "36": 45,
+          "38": 27,
+          "40": 35,
+          "42": 26,
+          "44": 38,
+          "46": 66,
+          "48": 65,
+          "50": 77,
+          "52": 71,
+          "54": 49,
+          "56": 28,
+          "58": 20,
+          "60": 25,
+          "62": 17,
+          "64": 17,
+          "68": 1,
+          "70": 1,
+          "74": 1,
+          "76": 1
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 13.354100054129958,
+          "mean": 5.129292620661502,
+          "minimum": 2.83590005710721,
+          "p50": 4.574800026603043,
+          "p95": 8.861929969862103,
+          "p99": 11.239208071492625,
+          "samples": 1883
+        },
+        "calls": 1883,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 741.8944474516643,
+          "mean": 188.44741464413556,
+          "minimum": 45.74032350172919,
+          "p50": 165.8208348089829,
+          "p95": 372.401252874018,
+          "p99": 552.650384054604,
+          "samples": 1883
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 99.2,
+          "mean": 94.78333333333335,
+          "minimum": 86.3,
+          "p50": 95.4,
+          "p95": 98.485,
+          "p99": 99.039,
+          "samples": 24
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3409.0,
+          "mean": 3313.875,
+          "minimum": 3240.0,
+          "p50": 3320.5,
+          "p95": 3374.2,
+          "p99": 3401.41,
+          "samples": 24
+        },
+        "gpu_utilization_percent": {
+          "maximum": 23.0,
+          "mean": 20.083333333333332,
+          "minimum": 14.0,
+          "p50": 20.0,
+          "p95": 22.849999999999998,
+          "p99": 23.0,
+          "samples": 24
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 24
+        },
+        "system_memory_available_mib": {
+          "maximum": 20577.48828125,
+          "mean": 20533.161295572918,
+          "minimum": 20469.28125,
+          "p50": 20534.5703125,
+          "p95": 20573.2314453125,
+          "p99": 20576.5637890625,
+          "samples": 24
+        },
+        "system_memory_used_mib": {
+          "maximum": 42665.546875,
+          "mean": 42601.666829427086,
+          "minimum": 42557.33984375,
+          "p50": 42600.2578125,
+          "p95": 42648.7216796875,
+          "p99": 42662.026796875,
+          "samples": 24
+        },
+        "worker_rss_mib": {
+          "maximum": 21524.5,
+          "mean": 21524.221028645832,
+          "minimum": 21523.80859375,
+          "p50": 21524.228515625,
+          "p95": 21524.480859375,
+          "p99": 21524.49640625,
+          "samples": 24
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 3774.4989662927082,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4106,
+        "errors": [],
+        "package_collection_seconds": 1.0878265000646934,
+        "passed": true,
+        "wall_seconds": 1.1133484999882057,
+        "workers_alive": 40
+      },
+      "simulated_game_hours_per_wall_hour": 18.342432146209486,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 4505.373992577277,
+      "sustained_agent_steps_per_second_mean": 4402.183715090277,
+      "sustained_agent_steps_per_second_median": 4358.758363451448,
+      "sustained_agent_steps_per_second_minimum": 4342.418789242105,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.01664419947420913,
+      "windows": [
+        {
+          "agent_steps_per_second": 4505.373992577277,
+          "aggregate_simulated_game_seconds_per_second": 18.772391635738654,
+          "collected_agent_steps": 20010,
+          "inference": {
+            "batch_size": {
+              "maximum": 74.0,
+              "mean": 32.151125401929264,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 56.0,
+              "p99": 64.0,
+              "samples": 622
+            },
+            "batch_size_counts": {
+              "16": 55,
+              "18": 30,
+              "20": 44,
+              "22": 38,
+              "24": 64,
+              "26": 58,
+              "28": 47,
+              "30": 37,
+              "32": 23,
+              "34": 24,
+              "36": 17,
+              "38": 11,
+              "40": 9,
+              "42": 8,
+              "44": 17,
+              "46": 25,
+              "48": 16,
+              "50": 24,
+              "52": 22,
+              "54": 17,
+              "56": 9,
+              "58": 4,
+              "60": 7,
+              "62": 7,
+              "64": 6,
+              "68": 1,
+              "70": 1,
+              "74": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 13.012500014156103,
+              "mean": 5.068773637530229,
+              "minimum": 2.83590005710721,
+              "p50": 4.606850037816912,
+              "p95": 8.363960031419989,
+              "p99": 11.055525946430862,
+              "samples": 622
+            },
+            "calls": 622,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 700.1937556196935,
+              "mean": 183.9408563302497,
+              "minimum": 45.74032350172919,
+              "p50": 159.8499992933984,
+              "p95": 362.3287539812728,
+              "p99": 545.3880757241594,
+              "samples": 622
+            }
+          },
+          "package_collection_seconds": 4.441362699959427,
+          "simulated_game_hours_per_wall_hour": 18.772391635738654,
+          "torch_cuda_peak_allocated_mib": 41.08935546875,
+          "wall_seconds": 4.557456300011836,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 4342.418789242105,
+          "aggregate_simulated_game_seconds_per_second": 18.093411621842105,
+          "collected_agent_steps": 20018,
+          "inference": {
+            "batch_size": {
+              "maximum": 64.0,
+              "mean": 31.339593114241,
+              "minimum": 16.0,
+              "p50": 26.0,
+              "p95": 56.0,
+              "p99": 62.0,
+              "samples": 639
+            },
+            "batch_size_counts": {
+              "16": 47,
+              "18": 41,
+              "20": 48,
+              "22": 66,
+              "24": 57,
+              "26": 63,
+              "28": 58,
+              "30": 29,
+              "32": 14,
+              "34": 12,
+              "36": 21,
+              "38": 13,
+              "40": 13,
+              "42": 11,
+              "44": 10,
+              "46": 20,
+              "48": 20,
+              "50": 26,
+              "52": 22,
+              "54": 15,
+              "56": 9,
+              "58": 7,
+              "60": 7,
+              "62": 4,
+              "64": 6
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 13.354100054129958,
+              "mean": 5.27868685691511,
+              "minimum": 3.2418000046163797,
+              "p50": 4.609600058756769,
+              "p95": 9.789380023721606,
+              "p99": 11.669999917503448,
+              "samples": 639
+            },
+            "calls": 639,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 741.8944474516643,
+              "mean": 195.40020826120124,
+              "minimum": 57.06562478735577,
+              "p50": 171.21250372535238,
+              "p95": 416.26750025898224,
+              "p99": 571.4310504554306,
+              "samples": 639
+            }
+          },
+          "package_collection_seconds": 4.60987320006825,
+          "simulated_game_hours_per_wall_hour": 18.093411621842105,
+          "torch_cuda_peak_allocated_mib": 40.875,
+          "wall_seconds": 4.732595800072886,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 4358.758363451448,
+          "aggregate_simulated_game_seconds_per_second": 18.1614931810477,
+          "collected_agent_steps": 20006,
+          "inference": {
+            "batch_size": {
+              "maximum": 76.0,
+              "mean": 32.160771704180064,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 57.899999999999864,
+              "p99": 62.0,
+              "samples": 622
+            },
+            "batch_size_counts": {
+              "16": 59,
+              "18": 37,
+              "20": 53,
+              "22": 55,
+              "24": 54,
+              "26": 49,
+              "28": 44,
+              "30": 28,
+              "32": 24,
+              "34": 15,
+              "36": 7,
+              "38": 3,
+              "40": 13,
+              "42": 7,
+              "44": 11,
+              "46": 21,
+              "48": 29,
+              "50": 27,
+              "52": 27,
+              "54": 17,
+              "56": 10,
+              "58": 9,
+              "60": 11,
+              "62": 6,
+              "64": 5,
+              "76": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 12.984500033780932,
+              "mean": 5.036334245326446,
+              "minimum": 3.181600011885166,
+              "p50": 4.530799982603639,
+              "p95": 8.446969947544858,
+              "p99": 10.848456943640478,
+              "samples": 622
+            },
+            "calls": 622,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 721.3611129878295,
+              "mean": 185.81115121958896,
+              "minimum": 54.17096901745085,
+              "p50": 167.39446540928577,
+              "p95": 354.68522999673763,
+              "p99": 550.6389248079025,
+              "samples": 622
+            }
+          },
+          "package_collection_seconds": 4.589839200023562,
+          "simulated_game_hours_per_wall_hour": 18.1614931810477,
+          "torch_cuda_peak_allocated_mib": 41.13232421875,
+          "wall_seconds": 4.712960500037298,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24008
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39620
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37504
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29336
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22560
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36516
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26132
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 7984
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40940
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 33580
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 6372
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24112
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29304
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 15404
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34604
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 38564
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8436
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5132
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8076
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 33076
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35944
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23724
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36928
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32272
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18952
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 38680
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24176
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40848
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3244
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17616
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22588
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37852
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8416
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28336
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 11836
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5884
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40600
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22524
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22392
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14760
+        }
+      ],
+      "workers": 40
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 20.38875947936779,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          36072,
+          36156,
+          29104,
+          9484,
+          29572,
+          38456,
+          12436,
+          40080,
+          17292,
+          34716,
+          5256,
+          21844,
+          16308,
+          13600,
+          20724,
+          32280,
+          15816,
+          8716,
+          32204,
+          2164,
+          2068,
+          22360,
+          30036,
+          17424,
+          30252,
+          10752,
+          27540,
+          10400,
+          25648,
+          18968,
+          18520,
+          24980,
+          39772,
+          39824,
+          29636,
+          3064,
+          22992,
+          8296,
+          40288,
+          26704,
+          1408,
+          18644,
+          6744,
+          36124,
+          28444,
+          19336,
+          29828,
+          14176
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 80.0,
+          "mean": 33.581889323644496,
+          "minimum": 16.0,
+          "p50": 28.0,
+          "p95": 68.0,
+          "p99": 76.0,
+          "samples": 1789
+        },
+        "batch_size_counts": {
+          "16": 67,
+          "18": 68,
+          "20": 96,
+          "22": 143,
+          "24": 190,
+          "26": 191,
+          "28": 183,
+          "30": 163,
+          "32": 107,
+          "34": 58,
+          "36": 55,
+          "38": 46,
+          "40": 36,
+          "42": 25,
+          "44": 21,
+          "46": 25,
+          "48": 20,
+          "50": 20,
+          "52": 23,
+          "54": 26,
+          "56": 24,
+          "58": 17,
+          "60": 22,
+          "62": 23,
+          "64": 19,
+          "66": 25,
+          "68": 17,
+          "70": 21,
+          "72": 16,
+          "74": 14,
+          "76": 13,
+          "78": 8,
+          "80": 7
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 18.92149995546788,
+          "mean": 5.5916699288150555,
+          "minimum": 3.235999960452318,
+          "p50": 4.7842999920248985,
+          "p95": 10.578339989297085,
+          "p99": 13.64044804591683,
+          "samples": 1789
+        },
+        "calls": 1789,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 1034.6166673116386,
+          "mean": 193.91706244741616,
+          "minimum": 44.944443895171084,
+          "p50": 169.13845991859068,
+          "p95": 398.3249986777082,
+          "p99": 644.726603059098,
+          "samples": 1789
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 100.0,
+          "mean": 95.80476190476192,
+          "minimum": 91.4,
+          "p50": 95.4,
+          "p95": 99.9,
+          "p99": 99.98,
+          "samples": 21
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3350.0,
+          "mean": 3286.6666666666665,
+          "minimum": 3231.0,
+          "p50": 3282.0,
+          "p95": 3331.0,
+          "p99": 3346.2,
+          "samples": 21
+        },
+        "gpu_utilization_percent": {
+          "maximum": 21.0,
+          "mean": 18.19047619047619,
+          "minimum": 15.0,
+          "p50": 18.0,
+          "p95": 20.0,
+          "p99": 20.8,
+          "samples": 21
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 21
+        },
+        "system_memory_available_mib": {
+          "maximum": 17375.08203125,
+          "mean": 17290.169828869046,
+          "minimum": 17045.59375,
+          "p50": 17336.33203125,
+          "p95": 17365.83984375,
+          "p99": 17373.23359375,
+          "samples": 21
+        },
+        "system_memory_used_mib": {
+          "maximum": 46089.234375,
+          "mean": 45844.658296130954,
+          "minimum": 45759.74609375,
+          "p50": 45798.49609375,
+          "p95": 46062.3828125,
+          "p99": 46083.8640625,
+          "samples": 21
+        },
+        "worker_rss_mib": {
+          "maximum": 25830.94921875,
+          "mean": 25830.626488095237,
+          "minimum": 25830.05859375,
+          "p50": 25830.6328125,
+          "p95": 25830.91796875,
+          "p99": 25830.94296875,
+          "samples": 21
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 4038.862218554051,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4114,
+        "errors": [],
+        "package_collection_seconds": 1.018603700096719,
+        "passed": true,
+        "wall_seconds": 1.0390152001054958,
+        "workers_alive": 48
+      },
+      "simulated_game_hours_per_wall_hour": 20.38875947936779,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 5008.615183179546,
+      "sustained_agent_steps_per_second_mean": 4893.30227504827,
+      "sustained_agent_steps_per_second_median": 5007.4999943167495,
+      "sustained_agent_steps_per_second_minimum": 4663.791647648511,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.033165570092285046,
+      "windows": [
+        {
+          "agent_steps_per_second": 5008.615183179546,
+          "aggregate_simulated_game_seconds_per_second": 20.869229929914773,
+          "collected_agent_steps": 20032,
+          "inference": {
+            "batch_size": {
+              "maximum": 80.0,
+              "mean": 34.13310580204778,
+              "minimum": 16.0,
+              "p50": 30.0,
+              "p95": 68.0,
+              "p99": 76.0,
+              "samples": 586
+            },
+            "batch_size_counts": {
+              "16": 19,
+              "18": 21,
+              "20": 34,
+              "22": 40,
+              "24": 62,
+              "26": 45,
+              "28": 69,
+              "30": 62,
+              "32": 38,
+              "34": 16,
+              "36": 20,
+              "38": 15,
+              "40": 12,
+              "42": 6,
+              "44": 9,
+              "46": 8,
+              "48": 7,
+              "50": 8,
+              "52": 9,
+              "54": 10,
+              "56": 9,
+              "58": 6,
+              "60": 4,
+              "62": 7,
+              "64": 8,
+              "66": 10,
+              "68": 7,
+              "70": 5,
+              "72": 6,
+              "74": 6,
+              "76": 4,
+              "78": 2,
+              "80": 2
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 15.285099972970784,
+              "mean": 5.6159232108164,
+              "minimum": 3.366100019775331,
+              "p50": 4.803999967407435,
+              "p95": 10.77719999011606,
+              "p99": 13.163300044834612,
+              "samples": 586
+            },
+            "calls": 586,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 832.8687472385354,
+              "mean": 192.9052844375668,
+              "minimum": 45.48783810507204,
+              "p50": 169.12756445190797,
+              "p95": 394.58805234631996,
+              "p99": 636.2261121264758,
+              "samples": 586
+            }
+          },
+          "package_collection_seconds": 3.9995086999842897,
+          "simulated_game_hours_per_wall_hour": 20.869229929914773,
+          "torch_cuda_peak_allocated_mib": 41.21826171875,
+          "wall_seconds": 4.115800500032492,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 5007.4999943167495,
+          "aggregate_simulated_game_seconds_per_second": 20.864583309653124,
+          "collected_agent_steps": 20020,
+          "inference": {
+            "batch_size": {
+              "maximum": 80.0,
+              "mean": 34.321917808219176,
+              "minimum": 16.0,
+              "p50": 30.0,
+              "p95": 66.0,
+              "p99": 76.0,
+              "samples": 584
+            },
+            "batch_size_counts": {
+              "16": 13,
+              "18": 13,
+              "20": 24,
+              "22": 41,
+              "24": 61,
+              "26": 64,
+              "28": 69,
+              "30": 55,
+              "32": 34,
+              "34": 21,
+              "36": 18,
+              "38": 19,
+              "40": 18,
+              "42": 7,
+              "44": 9,
+              "46": 14,
+              "48": 9,
+              "50": 8,
+              "52": 9,
+              "54": 10,
+              "56": 9,
+              "58": 4,
+              "60": 9,
+              "62": 8,
+              "64": 4,
+              "66": 7,
+              "68": 5,
+              "70": 7,
+              "72": 4,
+              "74": 3,
+              "76": 6,
+              "78": 1,
+              "80": 1
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 15.382199897430837,
+              "mean": 5.663605994737885,
+              "minimum": 3.235999960452318,
+              "p50": 4.87020006403327,
+              "p95": 10.27286002645269,
+              "p99": 13.586729032685968,
+              "samples": 584
+            },
+            "calls": 584,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 745.1222239372631,
+              "mean": 189.28244661504834,
+              "minimum": 44.944443895171084,
+              "p50": 165.60312603057054,
+              "p95": 384.4597848365085,
+              "p99": 593.6015848904692,
+              "samples": 584
+            }
+          },
+          "package_collection_seconds": 3.998003000044264,
+          "simulated_game_hours_per_wall_hour": 20.864583309653124,
+          "torch_cuda_peak_allocated_mib": 41.21826171875,
+          "wall_seconds": 4.164125500014052,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 4663.791647648511,
+          "aggregate_simulated_game_seconds_per_second": 19.43246519853546,
+          "collected_agent_steps": 20026,
+          "inference": {
+            "batch_size": {
+              "maximum": 80.0,
+              "mean": 32.36187399030695,
+              "minimum": 16.0,
+              "p50": 26.0,
+              "p95": 70.0,
+              "p99": 78.0,
+              "samples": 619
+            },
+            "batch_size_counts": {
+              "16": 35,
+              "18": 34,
+              "20": 38,
+              "22": 62,
+              "24": 67,
+              "26": 82,
+              "28": 45,
+              "30": 46,
+              "32": 35,
+              "34": 21,
+              "36": 17,
+              "38": 12,
+              "40": 6,
+              "42": 12,
+              "44": 3,
+              "46": 3,
+              "48": 4,
+              "50": 4,
+              "52": 5,
+              "54": 6,
+              "56": 6,
+              "58": 7,
+              "60": 9,
+              "62": 8,
+              "64": 7,
+              "66": 8,
+              "68": 5,
+              "70": 9,
+              "72": 6,
+              "74": 5,
+              "76": 3,
+              "78": 5,
+              "80": 4
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 18.92149995546788,
+              "mean": 5.50084103422423,
+              "minimum": 3.508300054818392,
+              "p50": 4.629100090824068,
+              "p95": 10.683260043151678,
+              "p99": 14.314820053987216,
+              "samples": 619
+            },
+            "calls": 619,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1034.6166673116386,
+              "mean": 199.24746238259308,
+              "minimum": 52.181578020712266,
+              "p50": 173.0461551163059,
+              "p95": 426.1981228550073,
+              "p99": 685.0323701016335,
+              "samples": 619
+            }
+          },
+          "package_collection_seconds": 4.29393110005185,
+          "simulated_game_hours_per_wall_hour": 19.43246519853546,
+          "torch_cuda_peak_allocated_mib": 41.21826171875,
+          "wall_seconds": 4.426043100073002,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36072
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36156
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29104
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9484
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29572
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 38456
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 12436
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40080
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17292
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34716
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5256
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21844
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16308
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 13600
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 20724
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32280
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 15816
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8716
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32204
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 2164
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 2068
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22360
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30036
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17424
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30252
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10752
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 27540
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10400
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 25648
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18968
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18520
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24980
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39772
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39824
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29636
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3064
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22992
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8296
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40288
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26704
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 1408
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18644
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 6744
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36124
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28444
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 19336
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29828
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14176
+        }
+      ],
+      "workers": 48
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 21.13737998758599,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          35356,
+          32028,
+          10980,
+          29416,
+          32548,
+          18760,
+          32348,
+          25500,
+          30524,
+          5536,
+          36444,
+          11196,
+          25496,
+          13292,
+          15808,
+          39860,
+          17964,
+          27696,
+          21740,
+          31964,
+          18976,
+          32052,
+          23748,
+          8088,
+          20864,
+          29796,
+          37016,
+          3572,
+          34972,
+          27720,
+          16608,
+          19200,
+          40620,
+          28608,
+          21452,
+          9508,
+          30448,
+          19564,
+          30904,
+          22056,
+          18236,
+          35232,
+          35548,
+          3896,
+          16252,
+          30844,
+          34416,
+          18352,
+          21688,
+          2656,
+          21008,
+          21188,
+          11836,
+          8888,
+          21952,
+          18296
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 96.0,
+          "mean": 35.375368296994694,
+          "minimum": 16.0,
+          "p50": 28.0,
+          "p95": 80.0,
+          "p99": 92.0,
+          "samples": 1697
+        },
+        "batch_size_counts": {
+          "16": 54,
+          "18": 46,
+          "20": 84,
+          "22": 86,
+          "24": 173,
+          "26": 223,
+          "28": 220,
+          "30": 158,
+          "32": 100,
+          "34": 80,
+          "36": 50,
+          "38": 33,
+          "40": 27,
+          "42": 29,
+          "44": 9,
+          "46": 24,
+          "48": 7,
+          "50": 15,
+          "52": 15,
+          "54": 12,
+          "56": 21,
+          "58": 16,
+          "60": 14,
+          "62": 13,
+          "64": 10,
+          "66": 11,
+          "68": 10,
+          "70": 10,
+          "72": 9,
+          "74": 9,
+          "76": 11,
+          "78": 17,
+          "80": 19,
+          "82": 17,
+          "84": 18,
+          "86": 14,
+          "88": 8,
+          "90": 5,
+          "92": 8,
+          "94": 6,
+          "96": 6
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 21.253699902445078,
+          "mean": 5.827728874183441,
+          "minimum": 3.4209999721497297,
+          "p50": 4.758900031447411,
+          "p95": 11.962439981289199,
+          "p99": 16.118548009544607,
+          "samples": 1697
+        },
+        "calls": 1697,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 1235.5937506072223,
+          "mean": 196.57185806118167,
+          "minimum": 42.33749981115883,
+          "p50": 168.47999844079217,
+          "p95": 441.3730464875695,
+          "p99": 683.0537437986677,
+          "samples": 1697
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 99.8,
+          "mean": 97.27142857142859,
+          "minimum": 93.9,
+          "p50": 97.2,
+          "p95": 99.8,
+          "p99": 99.8,
+          "samples": 21
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3332.0,
+          "mean": 3267.904761904762,
+          "minimum": 3221.0,
+          "p50": 3264.0,
+          "p95": 3312.0,
+          "p99": 3328.0,
+          "samples": 21
+        },
+        "gpu_utilization_percent": {
+          "maximum": 19.0,
+          "mean": 16.714285714285715,
+          "minimum": 14.0,
+          "p50": 17.0,
+          "p95": 19.0,
+          "p99": 19.0,
+          "samples": 21
+        },
+        "system_commit_used_mib": {
+          "maximum": 289.953125,
+          "mean": 289.953125,
+          "minimum": 289.953125,
+          "p50": 289.953125,
+          "p95": 289.953125,
+          "p99": 289.953125,
+          "samples": 21
+        },
+        "system_memory_available_mib": {
+          "maximum": 13972.8125,
+          "mean": 13937.215587797618,
+          "minimum": 13913.41015625,
+          "p50": 13933.3828125,
+          "p95": 13970.40234375,
+          "p99": 13972.33046875,
+          "samples": 21
+        },
+        "system_memory_used_mib": {
+          "maximum": 49221.41796875,
+          "mean": 49197.61253720238,
+          "minimum": 49162.015625,
+          "p50": 49201.4453125,
+          "p95": 49221.359375,
+          "p99": 49221.40625,
+          "samples": 21
+        },
+        "worker_rss_mib": {
+          "maximum": 30139.828125,
+          "mean": 30139.56640625,
+          "minimum": 30138.75390625,
+          "p50": 30139.6640625,
+          "p95": 30139.78515625,
+          "p99": 30139.81953125,
+          "samples": 21
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 4158.884702055873,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4130,
+        "errors": [],
+        "package_collection_seconds": 0.9930546999676153,
+        "passed": true,
+        "wall_seconds": 1.014303999952972,
+        "workers_alive": 56
+      },
+      "simulated_game_hours_per_wall_hour": 21.13737998758599,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 5105.457973495545,
+      "sustained_agent_steps_per_second_mean": 5072.971197020638,
+      "sustained_agent_steps_per_second_median": 5086.33351128464,
+      "sustained_agent_steps_per_second_minimum": 5027.12210628173,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.006573479050084906,
+      "windows": [
+        {
+          "agent_steps_per_second": 5027.12210628173,
+          "aggregate_simulated_game_seconds_per_second": 20.94634210950721,
+          "collected_agent_steps": 20044,
+          "inference": {
+            "batch_size": {
+              "maximum": 96.0,
+              "mean": 35.112280701754386,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 82.0,
+              "p99": 94.0,
+              "samples": 570
+            },
+            "batch_size_counts": {
+              "16": 24,
+              "18": 18,
+              "20": 25,
+              "22": 29,
+              "24": 56,
+              "26": 75,
+              "28": 80,
+              "30": 58,
+              "32": 29,
+              "34": 34,
+              "36": 15,
+              "38": 9,
+              "40": 5,
+              "42": 7,
+              "44": 2,
+              "46": 7,
+              "48": 1,
+              "50": 4,
+              "52": 6,
+              "54": 2,
+              "56": 8,
+              "58": 5,
+              "60": 4,
+              "62": 3,
+              "66": 2,
+              "68": 3,
+              "70": 5,
+              "72": 2,
+              "74": 3,
+              "76": 2,
+              "78": 7,
+              "80": 9,
+              "82": 4,
+              "84": 9,
+              "86": 5,
+              "88": 3,
+              "92": 2,
+              "94": 4,
+              "96": 4
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 21.253699902445078,
+              "mean": 5.855677719023732,
+              "minimum": 3.4209999721497297,
+              "p50": 4.753949993755668,
+              "p95": 12.263829977018734,
+              "p99": 16.553845985326877,
+              "samples": 570
+            },
+            "calls": 570,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1235.5937506072223,
+              "mean": 201.1145668636495,
+              "minimum": 42.51874997862615,
+              "p50": 168.99851367010604,
+              "p95": 457.0074999579584,
+              "p99": 672.588148321207,
+              "samples": 570
+            }
+          },
+          "package_collection_seconds": 3.9871718999929726,
+          "simulated_game_hours_per_wall_hour": 20.94634210950721,
+          "torch_cuda_peak_allocated_mib": 41.560546875,
+          "wall_seconds": 4.092984899994917,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 5105.457973495545,
+          "aggregate_simulated_game_seconds_per_second": 21.272741556231438,
+          "collected_agent_steps": 20006,
+          "inference": {
+            "batch_size": {
+              "maximum": 92.0,
+              "mean": 35.51418439716312,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 81.70000000000005,
+              "p99": 90.0,
+              "samples": 564
+            },
+            "batch_size_counts": {
+              "16": 12,
+              "18": 10,
+              "20": 32,
+              "22": 34,
+              "24": 55,
+              "26": 70,
+              "28": 79,
+              "30": 49,
+              "32": 33,
+              "34": 20,
+              "36": 22,
+              "38": 13,
+              "40": 11,
+              "42": 14,
+              "44": 3,
+              "46": 7,
+              "48": 3,
+              "50": 5,
+              "52": 5,
+              "54": 4,
+              "56": 5,
+              "58": 6,
+              "60": 6,
+              "62": 6,
+              "64": 5,
+              "66": 6,
+              "68": 2,
+              "70": 2,
+              "72": 5,
+              "74": 3,
+              "76": 1,
+              "78": 2,
+              "80": 5,
+              "82": 6,
+              "84": 5,
+              "86": 6,
+              "88": 4,
+              "90": 4,
+              "92": 4
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 18.80129997152835,
+              "mean": 5.783325177823781,
+              "minimum": 3.482700092718005,
+              "p50": 4.739049996715039,
+              "p95": 11.892800033092504,
+              "p99": 16.388402052689344,
+              "samples": 564
+            },
+            "calls": 564,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1022.7812526864,
+              "mean": 192.68622224037006,
+              "minimum": 45.105681320737034,
+              "p50": 164.60192273370922,
+              "p95": 419.22775969093595,
+              "p99": 735.501948394813,
+              "samples": 564
+            }
+          },
+          "package_collection_seconds": 3.918551499955356,
+          "simulated_game_hours_per_wall_hour": 21.272741556231438,
+          "torch_cuda_peak_allocated_mib": 41.47509765625,
+          "wall_seconds": 4.07503980002366,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 5086.33351128464,
+          "aggregate_simulated_game_seconds_per_second": 21.193056297019332,
+          "collected_agent_steps": 20018,
+          "inference": {
+            "batch_size": {
+              "maximum": 96.0,
+              "mean": 35.50266429840142,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 78.0,
+              "p99": 90.75999999999999,
+              "samples": 563
+            },
+            "batch_size_counts": {
+              "16": 18,
+              "18": 18,
+              "20": 27,
+              "22": 23,
+              "24": 62,
+              "26": 78,
+              "28": 61,
+              "30": 51,
+              "32": 38,
+              "34": 26,
+              "36": 13,
+              "38": 11,
+              "40": 11,
+              "42": 8,
+              "44": 4,
+              "46": 10,
+              "48": 3,
+              "50": 6,
+              "52": 4,
+              "54": 6,
+              "56": 8,
+              "58": 5,
+              "60": 4,
+              "62": 4,
+              "64": 5,
+              "66": 3,
+              "68": 5,
+              "70": 3,
+              "72": 2,
+              "74": 3,
+              "76": 8,
+              "78": 8,
+              "80": 5,
+              "82": 7,
+              "84": 4,
+              "86": 3,
+              "88": 1,
+              "90": 1,
+              "92": 2,
+              "94": 2,
+              "96": 2
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 17.28900009766221,
+              "mean": 5.843915096542022,
+              "minimum": 3.4875000128522515,
+              "p50": 4.831199999898672,
+              "p95": 11.887569981627166,
+              "p99": 15.010679997503756,
+              "samples": 563
+            },
+            "calls": 563,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 984.187499852851,
+              "mean": 195.86520545999355,
+              "minimum": 42.33749981115883,
+              "p50": 170.1615356768553,
+              "p95": 429.44517723905545,
+              "p99": 646.5957583566488,
+              "samples": 563
+            }
+          },
+          "package_collection_seconds": 3.9356443999568,
+          "simulated_game_hours_per_wall_hour": 21.193056297019332,
+          "torch_cuda_peak_allocated_mib": 41.560546875,
+          "wall_seconds": 4.041081300005317,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35356
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32028
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10980
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29416
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32548
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18760
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32348
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 25500
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30524
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5536
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36444
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 11196
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 25496
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 13292
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 15808
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39860
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17964
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 27696
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21740
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 31964
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18976
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32052
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23748
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8088
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 20864
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29796
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37016
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3572
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34972
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 27720
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16608
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 19200
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40620
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28608
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21452
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9508
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30448
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 19564
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30904
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22056
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18236
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35232
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35548
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3896
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16252
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30844
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34416
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18352
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21688
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 2656
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21008
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21188
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 11836
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8888
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21952
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 18296
+        }
+      ],
+      "workers": 56
+    },
+    {
+      "aggregate_simulated_game_seconds_per_second_mean": 21.086138187998383,
+      "cleanup": {
+        "lingering_measured_worker_pids": [],
+        "measured_worker_pids": [
+          14940,
+          28636,
+          28516,
+          19128,
+          17332,
+          17732,
+          33156,
+          30976,
+          21032,
+          28296,
+          39764,
+          35000,
+          22392,
+          6424,
+          34724,
+          10356,
+          25228,
+          35140,
+          5656,
+          14256,
+          23544,
+          16108,
+          29180,
+          27248,
+          32828,
+          31800,
+          37480,
+          5260,
+          24828,
+          40656,
+          40220,
+          33932,
+          39288,
+          36072,
+          17452,
+          31348,
+          23912,
+          40640,
+          29104,
+          40096,
+          1408,
+          40288,
+          3076,
+          8436,
+          25576,
+          32248,
+          23632,
+          22084,
+          1700,
+          37424,
+          23616,
+          11756,
+          39676,
+          21872,
+          9404,
+          36016,
+          37880,
+          36452,
+          9460,
+          34708,
+          9420,
+          26328,
+          16288,
+          8812
+        ],
+        "passed": true
+      },
+      "environment_shapes": [
+        714,
+        8,
+        2
+      ],
+      "errors_or_stalls": [],
+      "finite": true,
+      "inference": {
+        "batch_size": {
+          "maximum": 116.0,
+          "mean": 37.79622641509434,
+          "minimum": 16.0,
+          "p50": 28.0,
+          "p95": 96.0,
+          "p99": 110.0,
+          "samples": 1590
+        },
+        "batch_size_counts": {
+          "100": 13,
+          "102": 10,
+          "104": 10,
+          "106": 9,
+          "108": 7,
+          "110": 6,
+          "112": 10,
+          "116": 1,
+          "16": 52,
+          "18": 42,
+          "20": 61,
+          "22": 101,
+          "24": 156,
+          "26": 188,
+          "28": 219,
+          "30": 142,
+          "32": 102,
+          "34": 67,
+          "36": 44,
+          "38": 29,
+          "40": 15,
+          "42": 14,
+          "44": 27,
+          "46": 11,
+          "48": 14,
+          "50": 17,
+          "52": 11,
+          "54": 21,
+          "56": 13,
+          "58": 12,
+          "60": 13,
+          "62": 13,
+          "64": 5,
+          "66": 8,
+          "68": 8,
+          "70": 7,
+          "72": 8,
+          "74": 6,
+          "76": 7,
+          "78": 4,
+          "80": 3,
+          "82": 3,
+          "84": 7,
+          "86": 6,
+          "88": 2,
+          "90": 9,
+          "92": 11,
+          "94": 21,
+          "96": 15,
+          "98": 10
+        },
+        "batch_wall_milliseconds": {
+          "maximum": 24.711899925023317,
+          "mean": 6.077728805398721,
+          "minimum": 3.3626999938860536,
+          "p50": 4.795999964699149,
+          "p95": 14.69071497558616,
+          "p99": 19.44185400265264,
+          "samples": 1590
+        },
+        "calls": 1590,
+        "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+        "per_agent_microseconds": {
+          "maximum": 1544.4937453139573,
+          "mean": 201.44342289506267,
+          "minimum": 35.730356882725445,
+          "p50": 168.04919775891813,
+          "p95": 506.5967873503851,
+          "p99": 870.3495840697229,
+          "samples": 1590
+        }
+      },
+      "measured_agent_steps_per_window_target": 20000,
+      "measured_windows": 3,
+      "min_inference_size": 16,
+      "resources": {
+        "cpu_utilization_percent": {
+          "maximum": 100.0,
+          "mean": 95.8,
+          "minimum": 73.6,
+          "p50": 97.4,
+          "p95": 100.0,
+          "p99": 100.0,
+          "samples": 21
+        },
+        "gpu_memory_used_mib": {
+          "maximum": 3559.0,
+          "mean": 3265.714285714286,
+          "minimum": 3197.0,
+          "p50": 3259.0,
+          "p95": 3307.0,
+          "p99": 3508.6000000000004,
+          "samples": 21
+        },
+        "gpu_utilization_percent": {
+          "maximum": 21.0,
+          "mean": 16.142857142857142,
+          "minimum": 14.0,
+          "p50": 16.0,
+          "p95": 18.0,
+          "p99": 20.400000000000002,
+          "samples": 21
+        },
+        "system_commit_used_mib": {
+          "maximum": 296.2890625,
+          "mean": 296.2890625,
+          "minimum": 296.2890625,
+          "p50": 296.2890625,
+          "p95": 296.2890625,
+          "p99": 296.2890625,
+          "samples": 21
+        },
+        "system_memory_available_mib": {
+          "maximum": 11416.453125,
+          "mean": 11367.043526785714,
+          "minimum": 11075.484375,
+          "p50": 11396.95703125,
+          "p95": 11407.34375,
+          "p99": 11414.63125,
+          "samples": 21
+        },
+        "system_memory_used_mib": {
+          "maximum": 52059.34375,
+          "mean": 51767.78459821428,
+          "minimum": 51718.375,
+          "p50": 51737.87109375,
+          "p95": 51873.9140625,
+          "p99": 52022.2578125,
+          "samples": 21
+        },
+        "worker_rss_mib": {
+          "maximum": 34441.953125,
+          "mean": 34441.63262648809,
+          "minimum": 34440.61328125,
+          "p50": 34441.75,
+          "p95": 34441.94921875,
+          "p99": 34441.95234375,
+          "samples": 21
+        }
+      },
+      "restart_reliability": {
+        "agent_steps_per_second": 3938.562641376506,
+        "agent_steps_target": 4096,
+        "attempted": true,
+        "collected_agent_steps": 4108,
+        "errors": [],
+        "package_collection_seconds": 1.0430200999835506,
+        "passed": true,
+        "wall_seconds": 1.067693499964662,
+        "workers_alive": 64
+      },
+      "simulated_game_hours_per_wall_hour": 21.086138187998383,
+      "stable": true,
+      "status": "stable",
+      "sustained_agent_steps_per_second_maximum": 5142.19783133561,
+      "sustained_agent_steps_per_second_mean": 5060.673165119612,
+      "sustained_agent_steps_per_second_median": 5111.039899584511,
+      "sustained_agent_steps_per_second_minimum": 4928.781764438713,
+      "warmup_agent_steps_target": 4096,
+      "window_rate_coefficient_of_variation": 0.01859926012592964,
+      "windows": [
+        {
+          "agent_steps_per_second": 5142.19783133561,
+          "aggregate_simulated_game_seconds_per_second": 21.42582429723171,
+          "collected_agent_steps": 20010,
+          "inference": {
+            "batch_size": {
+              "maximum": 112.0,
+              "mean": 37.549718574108816,
+              "minimum": 16.0,
+              "p50": 30.0,
+              "p95": 96.0,
+              "p99": 105.3599999999999,
+              "samples": 533
+            },
+            "batch_size_counts": {
+              "100": 5,
+              "102": 6,
+              "104": 4,
+              "106": 3,
+              "110": 2,
+              "112": 1,
+              "16": 11,
+              "18": 12,
+              "20": 11,
+              "22": 38,
+              "24": 58,
+              "26": 54,
+              "28": 80,
+              "30": 56,
+              "32": 41,
+              "34": 20,
+              "36": 15,
+              "38": 11,
+              "40": 4,
+              "42": 5,
+              "44": 9,
+              "46": 4,
+              "48": 4,
+              "50": 3,
+              "52": 4,
+              "54": 7,
+              "56": 7,
+              "58": 6,
+              "60": 4,
+              "62": 5,
+              "64": 3,
+              "66": 4,
+              "68": 1,
+              "70": 2,
+              "72": 2,
+              "74": 1,
+              "76": 3,
+              "78": 3,
+              "80": 1,
+              "84": 1,
+              "86": 3,
+              "90": 3,
+              "92": 4,
+              "94": 4,
+              "96": 5,
+              "98": 3
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 23.416400072164834,
+              "mean": 6.106697560871617,
+              "minimum": 3.5871999571099877,
+              "p50": 4.788800026290119,
+              "p95": 14.879619982093567,
+              "p99": 19.079171959310752,
+              "samples": 533
+            },
+            "calls": 533,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1430.7937453850172,
+              "mean": 200.30003756465322,
+              "minimum": 37.07999977367845,
+              "p50": 166.33000147218505,
+              "p95": 516.4067838839917,
+              "p99": 818.6643324249067,
+              "samples": 533
+            }
+          },
+          "package_collection_seconds": 3.891332200029865,
+          "simulated_game_hours_per_wall_hour": 21.42582429723171,
+          "torch_cuda_peak_allocated_mib": 41.90283203125,
+          "wall_seconds": 3.990203500026837,
+          "window": 1
+        },
+        {
+          "agent_steps_per_second": 5111.039899584511,
+          "aggregate_simulated_game_seconds_per_second": 21.29599958160213,
+          "collected_agent_steps": 20082,
+          "inference": {
+            "batch_size": {
+              "maximum": 112.0,
+              "mean": 36.91143911439114,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 95.89999999999986,
+              "p99": 111.18000000000006,
+              "samples": 542
+            },
+            "batch_size_counts": {
+              "100": 6,
+              "104": 2,
+              "106": 4,
+              "108": 2,
+              "110": 2,
+              "112": 6,
+              "16": 29,
+              "18": 18,
+              "20": 20,
+              "22": 38,
+              "24": 40,
+              "26": 76,
+              "28": 72,
+              "30": 42,
+              "32": 29,
+              "34": 25,
+              "36": 16,
+              "38": 13,
+              "40": 5,
+              "42": 3,
+              "44": 9,
+              "46": 3,
+              "48": 7,
+              "50": 6,
+              "52": 4,
+              "54": 8,
+              "56": 3,
+              "58": 2,
+              "60": 4,
+              "62": 4,
+              "66": 3,
+              "68": 2,
+              "70": 2,
+              "72": 3,
+              "74": 3,
+              "76": 2,
+              "78": 1,
+              "80": 1,
+              "82": 3,
+              "84": 4,
+              "86": 1,
+              "88": 1,
+              "90": 2,
+              "92": 4,
+              "94": 6,
+              "96": 2,
+              "98": 4
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 22.007500054314733,
+              "mean": 5.86225701121414,
+              "minimum": 3.3912999788299203,
+              "p50": 4.703199956566095,
+              "p95": 13.64784997422248,
+              "p99": 18.136071007465944,
+              "samples": 542
+            },
+            "calls": 542,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1222.638891906374,
+              "mean": 198.27795360554327,
+              "minimum": 35.730356882725445,
+              "p50": 171.21874892230457,
+              "p95": 473.9626206719547,
+              "p99": 671.8626829932871,
+              "samples": 542
+            }
+          },
+          "package_collection_seconds": 3.929141700034961,
+          "simulated_game_hours_per_wall_hour": 21.29599958160213,
+          "torch_cuda_peak_allocated_mib": 41.90283203125,
+          "wall_seconds": 4.099310199962929,
+          "window": 2
+        },
+        {
+          "agent_steps_per_second": 4928.781764438713,
+          "aggregate_simulated_game_seconds_per_second": 20.536590685161304,
+          "collected_agent_steps": 20004,
+          "inference": {
+            "batch_size": {
+              "maximum": 116.0,
+              "mean": 38.98252427184466,
+              "minimum": 16.0,
+              "p50": 28.0,
+              "p95": 96.59999999999991,
+              "p99": 109.72000000000003,
+              "samples": 515
+            },
+            "batch_size_counts": {
+              "100": 2,
+              "102": 4,
+              "104": 4,
+              "106": 2,
+              "108": 5,
+              "110": 2,
+              "112": 3,
+              "116": 1,
+              "16": 12,
+              "18": 12,
+              "20": 30,
+              "22": 25,
+              "24": 58,
+              "26": 58,
+              "28": 67,
+              "30": 44,
+              "32": 32,
+              "34": 22,
+              "36": 13,
+              "38": 5,
+              "40": 6,
+              "42": 6,
+              "44": 9,
+              "46": 4,
+              "48": 3,
+              "50": 8,
+              "52": 3,
+              "54": 6,
+              "56": 3,
+              "58": 4,
+              "60": 5,
+              "62": 4,
+              "64": 2,
+              "66": 1,
+              "68": 5,
+              "70": 3,
+              "72": 3,
+              "74": 2,
+              "76": 2,
+              "80": 1,
+              "84": 2,
+              "86": 2,
+              "88": 1,
+              "90": 4,
+              "92": 3,
+              "94": 11,
+              "96": 8,
+              "98": 3
+            },
+            "batch_wall_milliseconds": {
+              "maximum": 24.711899925023317,
+              "mean": 6.274515923420058,
+              "minimum": 3.3626999938860536,
+              "p50": 4.94689994957298,
+              "p95": 15.579340013209729,
+              "p99": 20.470424080267556,
+              "samples": 515
+            },
+            "calls": 515,
+            "includes": "actor forward, hybrid sampling/log-probability, and GPU-to-CPU action transfer",
+            "per_agent_microseconds": {
+              "maximum": 1544.4937453139573,
+              "mean": 205.95819713977673,
+              "minimum": 36.09374938865325,
+              "p50": 167.7571438319449,
+              "p95": 520.1340623898424,
+              "p99": 921.5177309621753,
+              "samples": 515
+            }
+          },
+          "package_collection_seconds": 4.058609400060959,
+          "simulated_game_hours_per_wall_hour": 20.536590685161304,
+          "torch_cuda_peak_allocated_mib": 41.98876953125,
+          "wall_seconds": 4.157724900054745,
+          "window": 3
+        }
+      ],
+      "worker_crashes_or_stalls": 0,
+      "worker_process_health": [
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14940
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28636
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28516
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 19128
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17332
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17732
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 33156
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 30976
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21032
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 28296
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39764
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35000
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22392
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 6424
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34724
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 10356
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 25228
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 35140
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5656
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 14256
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23544
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16108
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29180
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 27248
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32828
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 31800
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37480
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 5260
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 24828
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40656
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40220
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 33932
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39288
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36072
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 17452
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 31348
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23912
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40640
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 29104
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40096
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 1408
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 40288
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 3076
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8436
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 25576
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 32248
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23632
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 22084
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 1700
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37424
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 23616
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 11756
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 39676
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 21872
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9404
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36016
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 37880
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 36452
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9460
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 34708
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 9420
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 26328
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 16288
+        },
+        {
+          "alive": true,
+          "exit_code": null,
+          "pid": 8812
+        }
+      ],
+      "workers": 64
+    }
+  ],
+  "runtime": {
+    "cpu_logical_count": 16,
+    "cpu_physical_count": 8,
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 5090",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13",
+    "system_memory_total_mib": 63134.828125,
+    "torch": "2.13.0+cu130"
+  },
+  "schema_version": 1,
+  "selection": {
+    "criterion": "maximum stable sustained total agent-steps/sec among candidates whose workers remained alive, cleaned up, and passed same-count restart",
+    "m06_56_worker_result_transferred_without_measurement": false,
+    "selected_aggregate_simulated_game_seconds_per_second": 21.13737998758599,
+    "selected_simulated_game_hours_per_wall_hour": 21.13737998758599,
+    "selected_sustained_agent_steps_per_second": 5072.971197020638,
+    "selected_worker_count": 56,
+    "stable_ranking": [
+      {
+        "agent_steps_per_second": 5072.971197020638,
+        "workers": 56
+      },
+      {
+        "agent_steps_per_second": 5060.673165119612,
+        "workers": 64
+      },
+      {
+        "agent_steps_per_second": 4893.30227504827,
+        "workers": 48
+      },
+      {
+        "agent_steps_per_second": 4402.183715090277,
+        "workers": 40
+      },
+      {
+        "agent_steps_per_second": 4224.68939039714,
+        "workers": 32
+      },
+      {
+        "agent_steps_per_second": 3801.4905503322484,
+        "workers": 24
+      },
+      {
+        "agent_steps_per_second": 2869.7417384360124,
+        "workers": 16
+      }
+    ]
+  },
+  "source_hashes": {
+    "benchmark_sha256": "de89b364b7538e14b6fbd842527e8cca162a764214176b7edd98f38e93ec0238",
+    "environment_sha256": "940dfacc8c2c407ad3ba666daa04f74f06154bb5da6ffc1fd386aed323adf991",
+    "policy_sha256": "37aa8e2b79ddc4637eee99ff7c57aabb00c3eb9de17b170aef4e21b5d559f04e",
+    "script_sha256": "0b75d68492fa4be5bd4aee23010d5184b3e2b7a70260cd4f7f29aed7005503c9"
+  },
+  "status": "passed"
+}
