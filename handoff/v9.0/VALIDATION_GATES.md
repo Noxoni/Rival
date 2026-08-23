@@ -30,7 +30,7 @@ Required tests:
 7. categorical button log probability and entropy are correct;
 8. mixed log probability equals analog sum + categorical log probability;
 9. PPO backprop reproduces rollout log probabilities for stored actions within tight tolerance;
-10. physical-effect masks never remove an input that can still matter and are identical in training/deployment;
+10. all eight button combinations remain legal in every state and no state-dependent action mask exists;
 11. known representative mechanics controller traces pass through the parser byte/float-identically without quantization/synthesis.
 
 ### Gradient test
