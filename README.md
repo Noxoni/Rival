@@ -14,7 +14,7 @@ Rival is for offline RLBot play only. It must not be used to cheat or otherwise 
 - Natural adjustment: `off`
 - Completed v4.1 natural benchmark: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
 
-The runtime gameplay-adjustment experiments were rejected and remain disabled. Production was not replaced by any trained M06 candidate.
+The runtime gameplay-adjustment experiments were rejected and remain disabled. Production was not replaced by any trained candidate.
 
 ## Milestone 05 — training foundation complete
 
@@ -34,32 +34,46 @@ Completed rollback boundary:
 
 M06 reached 20,000,016 agent-steps. RocketSim/headless evaluation against frozen Wisp improved from 42–58 preflight to 59–41 at 20M, but the required RLBot v5 boundary battery regressed severely: the trained candidate went 0–8 against installed Nexto/Wisp with a 27–56 goal line. Stage C/D were correctly stopped and production remained frozen Wisp.
 
-The failure was not explained by appended-action overuse: the RLBot battery selected zero actions from indices 90–157. M06 evidence leaves three major unresolved causes: legacy-policy drift, the forced four-tick candidate deployment cadence, and RocketSim/RLGym-to-RLBot observation/transition mismatch.
-
 See `docs/MILESTONE_06_RESULTS.md` and `training/results/milestone06/`.
 
-## Current Codex handoff — v7.0
+## Milestone 07 — transfer diagnosis complete
+
+Completed boundary:
+
+`10c41f708d6e8145bf719f8f322041e7753f6c3f`
+
+M07 isolated the failure instead of resuming training.
+
+Key findings:
+
+- the same zero-step reconstructed Wisp moved from 2–2 / +4 at tick 8 to 0–4 / −11 at tick 4 before any learning, proving a primary strategic cadence mismatch;
+- the rejected 20M actor drifted materially within legacy actions 0–89, reaching only 68.0% masked top-1 agreement with frozen Wisp on held live observations;
+- the old training-style 432 observation changed frozen-Wisp top-1 on more than half of held live states, with ETA and touch/handbrake/player-state semantics as the dominant mismatch;
+- spatial action parsing/mirroring was exact;
+- the generic RocketSim legacy8 delay did not reproduce production Wisp's real eight-tick temporal schedule;
+- short-horizon RocketSim physics was close initially but accumulated secondary orientation divergence.
+
+The optional RLViser spectator was also added as a separate process so selected checkpoints can be watched without entering the training hot path.
+
+See `docs/MILESTONE_07_RESULTS.md` and `training/results/milestone07/`.
+
+## Current Codex handoff — v8.0
 
 Start here:
 
-`handoff/v7.0/CODEX_START_PROMPT.md`
+`handoff/v8.0/CODEX_START_PROMPT.md`
 
-Milestone 07 does **not** authorize more serious PPO training. It isolates the transfer failure first.
+Milestone 08 implements the corrective architecture supported by M07 rather than resuming the rejected M06 actor.
 
-The diagnostic uses the RLGym-style decomposition:
+Architecture:
 
-`state s -> observation O(s) -> policy pi(o) -> action function I -> action a -> transition T(s'|s,a)`
+`frozen 8-tick Wisp strategic branch + separate 4-tick PASS-or-mechanics branch`
 
-It separately audits:
+The strategic branch keeps the exact zero-step Wisp policy and legacy actions 0–89. The mechanics/recovery branch is separately trainable and initially chooses only PASS or appended actions 90–157. With mechanics disabled or forced PASS, the complete agent must reduce to the verified tick-8 strategic path.
 
-- zero-step reconstructed Wisp in RLBot at tick 8 versus tick 4;
-- the rejected 20M actor at tick 8 versus tick 4 with appended actions hard-masked;
-- same-live-observation policy/logit parity and legacy-action drift;
-- feature-group differences between training and live 432-value observations;
-- action parser, mirroring, repeat and delay semantics;
-- bounded short-horizon RocketSim versus RLBot physical divergence on natural states.
+Before PPO, M08 must repair the live/training Wisp observation contract, especially ETA and touch/handbrake/player-state semantics, and reproduce production Wisp's true eight-tick temporal execution in RocketSim. Frozen-Wisp policy agreement between live and training representations has a 97% hard floor and 99% target before learning is allowed.
 
-The goal is a ranked causal diagnosis and a concrete corrective architecture for the next training milestone. Do not resume the 20M checkpoint until the transfer seam is understood.
+If those gates pass, M08 authorizes at most 5M agent-steps of mechanics-head-only PPO with RLBot transfer checks at bounded checkpoints. Strategic Wisp weights remain frozen throughout. Production promotion is not authorized in M08.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
