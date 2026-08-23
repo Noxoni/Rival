@@ -4,7 +4,10 @@ import numpy as np
 
 from rival_training.v9_actions import ACTION_DIM
 from rival_training.v9_environment import build_v9_diagnostic_env
-from rival_training.v9_observations import OBSERVATION_SIZE
+from rival_training.v9_observations import (
+    OBSERVATION_SIZE,
+    observation_schema_manifest,
+)
 
 
 def test_v9_diagnostic_environment_is_native_one_tick_and_finite() -> None:
@@ -54,3 +57,56 @@ def test_prediction_refresh_periods_expose_expected_age_cycle() -> None:
             assert observed_ages == [index % period for index in range(1, period * 2 + 1)]
         finally:
             environment.close()
+
+
+def test_observation_history_records_applied_not_newly_selected_controller() -> None:
+    environment = build_v9_diagnostic_env(prediction_refresh_ticks=1)
+    try:
+        environment.reset()
+        agents_by_team = {
+            int(environment.state.cars[agent].team_num): agent
+            for agent in environment.agents
+        }
+        first = {
+            agents_by_team[0]: np.asarray(
+                [1.0, -0.2, 0.3, -0.4, 0.5, 1, 1, 0], dtype=np.float32
+            ),
+            agents_by_team[1]: np.asarray(
+                [-1.0, 0.6, -0.7, 0.8, -0.9, 0, 0, 1], dtype=np.float32
+            ),
+        }
+        second = {
+            agent: np.asarray(
+                [0.25, 0.35, -0.45, 0.55, -0.65, 0, 1, 1], dtype=np.float32
+            )
+            for agent in environment.agents
+        }
+        first_observations, *_ = environment.step(first)
+        history = next(
+            field
+            for field in observation_schema_manifest()["fields"]
+            if field["name"] == "history.self_controllers"
+        )
+        start, end = int(history["start"]), int(history["end"])
+        for agent, observation in first_observations.items():
+            rows = observation[start:end].reshape(8, ACTION_DIM)
+            np.testing.assert_array_equal(rows[-1], np.zeros(ACTION_DIM))
+            np.testing.assert_array_equal(
+                environment.shared_info["rival_v9_pending_actions"][agent],
+                first[agent],
+            )
+
+        second_observations, *_ = environment.step(second)
+        for agent, observation in second_observations.items():
+            rows = observation[start:end].reshape(8, ACTION_DIM)
+            np.testing.assert_array_equal(rows[-1], first[agent])
+            np.testing.assert_array_equal(
+                environment.shared_info["rival_v9_applied_actions"][agent],
+                first[agent],
+            )
+            np.testing.assert_array_equal(
+                environment.shared_info["rival_v9_pending_actions"][agent],
+                second[agent],
+            )
+    finally:
+        environment.close()

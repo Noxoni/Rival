@@ -54,9 +54,37 @@ def test_parser_emits_one_exact_physics_tick_and_updates_applied_history() -> No
     assert parser.repeats == 1
     assert parsed["blue"].shape == (1, ACTION_DIM)
     assert np.array_equal(parsed["blue"][0], action)
-    assert np.array_equal(shared["previous_actions"]["blue"], action)
-    assert np.array_equal(shared["rival_action_last_applied"]["blue"], action)
+    assert np.array_equal(shared["rival_v9_selected_actions"]["blue"], action)
+    assert np.array_equal(shared["rival_v9_pending_actions"]["blue"], action)
+    assert np.array_equal(shared["previous_actions"]["blue"], np.zeros(ACTION_DIM))
+    assert np.array_equal(
+        shared["rival_action_last_applied"]["blue"], np.zeros(ACTION_DIM)
+    )
+    next_action = -action.copy()
+    next_action[ANALOG_DIM:] = np.asarray([0, 1, 0], dtype=np.float32)
+    parser.parse_actions({"blue": next_action}, None, shared)
+    assert np.array_equal(shared["rival_v9_applied_actions"]["blue"], action)
+    assert np.array_equal(shared["rival_v9_pending_actions"]["blue"], next_action)
+    assert shared["rival_v9_last_decision_index"] == 1
+    assert shared["rival_v9_policy_decision_index"] == 2
     assert shared["cadence_ticks"] == 1
+
+
+def test_missing_agent_selection_preserves_previous_controller_exactly() -> None:
+    parser = RivalActionV1Parser()
+    shared: dict = {}
+    parser.reset(["blue", "orange"], None, shared)
+    blue = np.asarray([1, -0.2, 0.3, -0.4, 0.5, 1, 1, 0], dtype=np.float32)
+    orange = np.asarray([-1, 0.6, -0.7, 0.8, -0.9, 0, 0, 1], dtype=np.float32)
+    parser.parse_actions({"blue": blue, "orange": orange}, None, shared)
+    orange_next = orange.copy()
+    orange_next[:ANALOG_DIM] *= -1.0
+    orange_next[ANALOG_DIM:] = np.asarray([1, 0, 0], dtype=np.float32)
+    parsed = parser.parse_actions({"orange": orange_next}, None, shared)
+    assert np.array_equal(parsed["blue"][0], blue)
+    assert np.array_equal(shared["rival_v9_applied_actions"]["blue"], blue)
+    assert np.array_equal(shared["rival_v9_pending_actions"]["blue"], blue)
+    assert shared["rival_v9_missed_action_selections"] == 1
 
 
 def test_full_continuous_axes_and_steer_yaw_independence_survive_parser() -> None:

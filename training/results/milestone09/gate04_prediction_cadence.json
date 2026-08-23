@@ -19,10 +19,10 @@
     "action_trace_sha256": "98906d9f590b0255f21b1bcd57e54d991d425519ba031ee017fc24164fefc95d",
     "agents": 2,
     "diagnostic_reward": "identically_zero",
-    "environment_version": "RivalScratch1v1RocketSimV1",
+    "environment_version": "RivalScratch1v1RocketSimV2OneTickDelay",
     "measured_agent_steps_per_period": 9600,
     "measured_ticks_per_period": 4800,
-    "observation_schema_sha256": "3e42ba6b59bf971cc474210a51515e682f80426c46e8d22f2e1cc794f221715a",
+    "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
     "observation_version": "RivalObsV1",
     "physics_hz": 120,
     "prediction_periods_ticks": [
@@ -62,7 +62,7 @@
   },
   "gate": 4,
   "gate_name": "prediction_update_cadence_benchmark",
-  "generated_at_utc": "2026-08-23T17:26:35.688650+00:00",
+  "generated_at_utc": "2026-08-23T17:36:26.905170+00:00",
   "interpretation": "This gate measures the complete canonical adapter plus shared RivalObsV1 workload at native one-tick environment cadence. It is not PPO throughput, worker-count evidence, or a policy-skill evaluation.",
   "milestone": 9,
   "natural_rlbot_freshness_replay": {
@@ -85,11 +85,11 @@
         },
         "nonfinite_observations": 0,
         "observation_build_seconds": {
-          "max": 0.023503400036133826,
-          "mean": 0.0010097913664843267,
-          "p50": 0.000979200005531311,
-          "p95": 0.0014378400053828956,
-          "p99": 0.0017195369396358737
+          "max": 0.023632199969142675,
+          "mean": 0.0010143008993278879,
+          "p50": 0.0009421999566257,
+          "p95": 0.0015104599762707951,
+          "p99": 0.0018388029164634646
         },
         "period_ticks": 1,
         "prediction_age_distribution": {
@@ -97,11 +97,11 @@
         },
         "predictor_refreshes": 6000,
         "predictor_seconds": {
-          "max": 0.022711099940352142,
-          "mean": 0.0003048685166674356,
-          "p50": 0.00024580000899732113,
-          "p95": 0.000702129991259426,
-          "p99": 0.0008679119730368259
+          "max": 0.022808899986557662,
+          "mean": 0.00030768900060017284,
+          "p50": 0.00024320004740729928,
+          "p95": 0.0007166149851400406,
+          "p99": 0.000870611993595958
         },
         "records": 6000
       },
@@ -123,11 +123,11 @@
         },
         "nonfinite_observations": 0,
         "observation_build_seconds": {
-          "max": 0.023477000067941844,
-          "mean": 0.000861739267304074,
-          "p50": 0.0007740999571979046,
-          "p95": 0.0014231350040063264,
-          "p99": 0.0016283099423162642
+          "max": 0.02365100011229515,
+          "mean": 0.0008289942663589803,
+          "p50": 0.000694699992891401,
+          "p95": 0.0013120100949890912,
+          "p99": 0.0015202129352837803
         },
         "period_ticks": 2,
         "prediction_age_distribution": {
@@ -136,11 +136,11 @@
         },
         "predictor_refreshes": 3001,
         "predictor_seconds": {
-          "max": 0.022613100009039044,
-          "mean": 0.0003129592133075823,
-          "p50": 0.00024200009647756815,
-          "p95": 0.0007415000582113862,
-          "p99": 0.0008619000436738133
+          "max": 0.022796800010837615,
+          "mean": 0.00030387140917090554,
+          "p50": 0.00023619993589818478,
+          "p95": 0.0007127999560907483,
+          "p99": 0.0008341999491676688
         },
         "records": 6000
       },
@@ -162,11 +162,11 @@
         },
         "nonfinite_observations": 0,
         "observation_build_seconds": {
-          "max": 0.02476670010946691,
-          "mean": 0.0007769576327409596,
-          "p50": 0.0006757999653927982,
-          "p95": 0.0012241050077136605,
-          "p99": 0.00147760295891203
+          "max": 0.023362300009466708,
+          "mean": 0.000745884616781647,
+          "p50": 0.0006552999839186668,
+          "p95": 0.0011684099328704179,
+          "p99": 0.0014428280421998358
         },
         "period_ticks": 4,
         "prediction_age_distribution": {
@@ -177,11 +177,11 @@
         },
         "predictor_refreshes": 1502,
         "predictor_seconds": {
-          "max": 0.02385230001527816,
-          "mean": 0.00031974500601059607,
-          "p50": 0.0002443999983370304,
-          "p95": 0.0007250550494063646,
-          "p99": 0.0008555579965468497
+          "max": 0.022556600044481456,
+          "mean": 0.0003114366870883173,
+          "p50": 0.0002413999754935503,
+          "p95": 0.0007009199878666556,
+          "p99": 0.0008287720242515207
         },
         "records": 6000
       }
@@ -197,8 +197,8 @@
   "open_loop_environment_trajectory_diagnostic": {
     "gate_use": "Diagnostic only. Cache freshness is compared on the identical frozen native corpus because independently created RocketSim arenas can have process-order variation unrelated to observation cadence.",
     "hashes_by_period": {
-      "1": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
-      "2": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
+      "1": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
+      "2": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
       "4": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd"
     },
     "unique_hashes": 2
@@ -211,7 +211,7 @@
   "results": {
     "1": {
       "agent_steps": 9600,
-      "agent_steps_per_second": 729.415274125994,
+      "agent_steps_per_second": 722.1243309134334,
       "episode_resets": 1,
       "fresh_period1_observation_comparison": {
         "all_observation_max_abs": 0.0,
@@ -228,13 +228,13 @@
         "reference_period_ticks": 1
       },
       "nonfinite_observation_ticks": 0,
-      "observation_build_cpu_total_seconds": 9.949787302757613,
+      "observation_build_cpu_total_seconds": 10.024390798760578,
       "observation_build_seconds": {
-        "max": 0.03325149999000132,
-        "mean": 0.001036220298141805,
-        "p50": 0.0010241999989375472,
-        "p95": 0.0016492949915118515,
-        "p99": 0.0017840950796380638
+        "max": 0.02407429995946586,
+        "mean": 0.001043989876979856,
+        "p50": 0.0010299499845132232,
+        "p95": 0.0016852900269441304,
+        "p99": 0.0020763740933034563
       },
       "observation_samples": 9602,
       "period_ticks": 1,
@@ -242,25 +242,25 @@
       "prediction_age_distribution": {
         "0": 9602
       },
-      "predictor_cpu_total_seconds": 3.335349392145872,
+      "predictor_cpu_total_seconds": 3.368783503654413,
       "predictor_refreshes": 9602,
       "predictor_seconds": {
-        "max": 0.03204309998545796,
-        "mean": 0.00034735986171067194,
-        "p50": 0.0003966999938711524,
-        "p95": 0.0009824750304687762,
-        "p99": 0.0010386979929171503
+        "max": 0.023327399976551533,
+        "mean": 0.00035084185624395054,
+        "p50": 0.00039569998625665903,
+        "p95": 0.0009954850131180133,
+        "p99": 0.0011242739472072565
       },
-      "process_cpu_seconds": 13.046875,
+      "process_cpu_seconds": 13.15625,
       "simulated_game_seconds": 40.0,
-      "simulated_game_seconds_per_wall_second": 3.039230308858308,
-      "single_process_cpu_utilization_percent": 99.13114483971435,
-      "state_trajectory_sha256": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
-      "wall_seconds": 13.161226999945939
+      "simulated_game_seconds_per_wall_second": 3.0088513788059723,
+      "single_process_cpu_utilization_percent": 98.96300238104018,
+      "state_trajectory_sha256": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
+      "wall_seconds": 13.294109600014053
     },
     "2": {
       "agent_steps": 9600,
-      "agent_steps_per_second": 838.0783335229562,
+      "agent_steps_per_second": 867.0573482574895,
       "episode_resets": 1,
       "fresh_period1_observation_comparison": {
         "all_observation_max_abs": 1.9631766080856323,
@@ -277,13 +277,13 @@
         "reference_period_ticks": 1
       },
       "nonfinite_observation_ticks": 0,
-      "observation_build_cpu_total_seconds": 8.260139594669454,
+      "observation_build_cpu_total_seconds": 7.989995095296763,
       "observation_build_seconds": {
-        "max": 0.029503000085242093,
-        "mean": 0.0008602519886137736,
-        "p50": 0.0007316000410355628,
-        "p95": 0.0014819349918980137,
-        "p99": 0.001740995100699365
+        "max": 0.023522299947217107,
+        "mean": 0.00083211779788552,
+        "p50": 0.0006664000102318823,
+        "p95": 0.0014076450082939106,
+        "p99": 0.0017226769623812283
       },
       "observation_samples": 9602,
       "period_ticks": 2,
@@ -292,25 +292,25 @@
         "0": 4800,
         "1": 4802
       },
-      "predictor_cpu_total_seconds": 1.6863433021353558,
+      "predictor_cpu_total_seconds": 1.6462901964550838,
       "predictor_refreshes": 4800,
       "predictor_seconds": {
-        "max": 0.028734699939377606,
-        "mean": 0.00035132152127819913,
-        "p50": 0.0003989000106230378,
-        "p95": 0.0009935249981936067,
-        "p99": 0.0010490020702127367
+        "max": 0.022778599988669157,
+        "mean": 0.0003429771242614758,
+        "p50": 0.00039739999920129776,
+        "p95": 0.0009673400258179756,
+        "p99": 0.0010443070356268437
       },
-      "process_cpu_seconds": 11.390625,
+      "process_cpu_seconds": 11.03125,
       "simulated_game_seconds": 40.0,
-      "simulated_game_seconds_per_wall_second": 3.4919930563456507,
-      "single_process_cpu_utilization_percent": 99.43995851859295,
-      "state_trajectory_sha256": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
-      "wall_seconds": 11.454776500002481
+      "simulated_game_seconds_per_wall_second": 3.6127389510728727,
+      "single_process_cpu_utilization_percent": 99.63256638505656,
+      "state_trajectory_sha256": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
+      "wall_seconds": 11.071931999991648
     },
     "4": {
       "agent_steps": 9600,
-      "agent_steps_per_second": 732.6740447371558,
+      "agent_steps_per_second": 924.6933581964543,
       "episode_resets": 1,
       "fresh_period1_observation_comparison": {
         "all_observation_max_abs": 1.508828341960907,
@@ -327,13 +327,13 @@
         "reference_period_ticks": 1
       },
       "nonfinite_observation_ticks": 0,
-      "observation_build_cpu_total_seconds": 9.279952500364743,
+      "observation_build_cpu_total_seconds": 7.286084697465412,
       "observation_build_seconds": {
-        "max": 0.03697279992047697,
-        "mean": 0.000966460372876978,
-        "p50": 0.0009706000564619899,
-        "p95": 0.0016803799953777339,
-        "p99": 0.0023896910354960707
+        "max": 0.024106500088237226,
+        "mean": 0.0007588090707629048,
+        "p50": 0.0006388999754562974,
+        "p95": 0.0012004899443127212,
+        "p99": 0.001684397020144388
       },
       "observation_samples": 9602,
       "period_ticks": 4,
@@ -344,21 +344,21 @@
         "2": 2400,
         "3": 2400
       },
-      "predictor_cpu_total_seconds": 1.1063314030179754,
+      "predictor_cpu_total_seconds": 0.8635008020792156,
       "predictor_refreshes": 2400,
       "predictor_seconds": {
-        "max": 0.035868800012394786,
-        "mean": 0.0004609714179241564,
-        "p50": 0.00040184997487813234,
-        "p95": 0.0013001700048334893,
-        "p99": 0.001382106045493856
+        "max": 0.023206799989566207,
+        "mean": 0.0003597920008663399,
+        "p50": 0.00039820000529289246,
+        "p95": 0.0009832050302065903,
+        "p99": 0.0010572080174461006
       },
-      "process_cpu_seconds": 13.0625,
+      "process_cpu_seconds": 10.359375,
       "simulated_game_seconds": 40.0,
-      "simulated_game_seconds_per_wall_second": 3.052808519738149,
-      "single_process_cpu_utilization_percent": 99.69327822269894,
+      "simulated_game_seconds_per_wall_second": 3.852888992485226,
+      "single_process_cpu_utilization_percent": 99.78380476631659,
       "state_trajectory_sha256": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
-      "wall_seconds": 13.10268879996147
+      "wall_seconds": 10.381820000009611
     }
   },
   "runtime": {

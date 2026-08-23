@@ -40,9 +40,9 @@
   ],
   "hidden_controller_synthesis": false,
   "lookup_table": false,
-  "parser_source_sha256": "f026432fae0c8d9652b133fcbb4836d98f444334fde4df9ef07301c4f5e3308a",
+  "parser_source_sha256": "8b16ae694969f2bf950888f8a9dd02e9b6cea42dada82abc5b20c52a06a04e55",
   "physics_hz": 120,
-  "policy_action_head_source_sha256": "f026432fae0c8d9652b133fcbb4836d98f444334fde4df9ef07301c4f5e3308a",
+  "policy_action_head_source_sha256": "8b16ae694969f2bf950888f8a9dd02e9b6cea42dada82abc5b20c52a06a04e55",
   "policy_decisions_per_physics_tick": 1,
   "policy_hz": 120,
   "repeat_action": false,
@@ -50,6 +50,13 @@
   "state_dependent_action_mask": false,
   "stored_action": "physical_controller_float32",
   "timing_delay_version": "RivalOneTickDelayV1",
+  "timing_state": {
+    "applied": "prior pending row that advanced the current physics transition",
+    "missed_selection": "preserve and re-emit the prior pending controller",
+    "observation_history_source": "rival_v9_applied_actions",
+    "pending": "selected row installed after RocketSim advances the current tick",
+    "selected": "controller row returned by the policy on the current tick"
+  },
   "transport_shape": [
     8
   ],

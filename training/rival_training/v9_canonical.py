@@ -531,7 +531,11 @@ class RocketSimCanonicalAdapterV1:
         has_jumped = bool(getattr(car, "has_jumped", False))
         has_double = bool(getattr(car, "has_double_jumped", False))
         has_dodged = bool(getattr(car, "has_flipped", False))
-        jump_held = bool(getattr(car, "is_holding_jump", controller[5] > 0.5))
+        # RocketSimEngine(rlbot_delay=True) exposes the newly installed pending
+        # controls through ``car.is_holding_jump`` before those controls have
+        # advanced physics. The actor history must match RLBot's packet
+        # ``last_input`` semantics, so use the separately tracked applied row.
+        jump_held = bool(controller[5] > 0.5)
         can_dodge = bool(getattr(car, "can_flip", False))
         air_time_since_jump = max(0.0, _safe_float(getattr(car, "air_time_since_jump", 0.0)))
         if can_dodge and not has_jumped:

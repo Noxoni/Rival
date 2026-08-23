@@ -126,12 +126,32 @@ class RivalActionV1Parser(
         shared_info: dict[str, Any],
     ) -> None:
         del initial_state
-        shared_info["previous_actions"] = {
+        zero_actions = {
             agent: np.zeros(ACTION_DIM, dtype=np.float32) for agent in agents
+        }
+        shared_info["rival_v9_pending_actions"] = {
+            agent: value.copy() for agent, value in zero_actions.items()
+        }
+        shared_info["rival_v9_applied_actions"] = {
+            agent: value.copy() for agent, value in zero_actions.items()
+        }
+        shared_info["rival_v9_selected_actions"] = {
+            agent: value.copy() for agent, value in zero_actions.items()
+        }
+        # Compatibility aliases deliberately point at the actually applied row,
+        # never the newly selected/pending row.
+        shared_info["previous_actions"] = {
+            agent: value.copy() for agent, value in zero_actions.items()
+        }
+        shared_info["rival_action_last_applied"] = {
+            agent: value.copy() for agent, value in zero_actions.items()
         }
         shared_info["cadence_ticks"] = 1
         shared_info["rival_action_version"] = ACTION_VERSION
         shared_info["rival_action_state_mask"] = False
+        shared_info["rival_v9_policy_decision_index"] = 0
+        shared_info["rival_v9_last_decision_index"] = None
+        shared_info["rival_v9_missed_action_selections"] = 0
 
     def parse_actions(
         self,
@@ -140,20 +160,42 @@ class RivalActionV1Parser(
         shared_info: dict[str, Any],
     ) -> dict[AgentID, np.ndarray]:
         del state
+        pending = shared_info.get("rival_v9_pending_actions")
+        if not isinstance(pending, dict) or not pending:
+            raise RuntimeError("RivalActionV1Parser must be reset before parsing actions")
+        unknown = set(actions) - set(pending)
+        if unknown:
+            raise KeyError(f"RivalActionV1 received actions for unknown agents: {unknown}")
         parsed: dict[AgentID, np.ndarray] = {}
-        previous = shared_info.setdefault("previous_actions", {})
-        for agent, raw_action in actions.items():
+        applied: dict[AgentID, np.ndarray] = {}
+        selected: dict[AgentID, np.ndarray] = {}
+        for agent, prior_pending in pending.items():
+            raw_action = actions.get(agent)
+            if raw_action is None:
+                # A missed policy packet preserves the previous physical row.
+                raw_action = prior_pending
+                shared_info["rival_v9_missed_action_selections"] += 1
             controller = validate_physical_actions(np.asarray(raw_action))
             if controller.shape != (1, ACTION_DIM):
                 raise ValueError(
                     f"RivalActionV1 requires one controller row per policy step; got "
                     f"{controller.shape} for {agent!r}"
                 )
-            previous[agent] = controller[0].copy()
+            applied[agent] = np.asarray(prior_pending, dtype=np.float32).copy()
+            selected[agent] = controller[0].copy()
+            pending[agent] = controller[0].copy()
             parsed[agent] = controller
-        shared_info["rival_action_last_applied"] = {
-            agent: rows[0].copy() for agent, rows in parsed.items()
+        shared_info["rival_v9_applied_actions"] = applied
+        shared_info["rival_v9_selected_actions"] = selected
+        shared_info["previous_actions"] = {
+            agent: row.copy() for agent, row in applied.items()
         }
+        shared_info["rival_action_last_applied"] = {
+            agent: row.copy() for agent, row in applied.items()
+        }
+        decision_index = int(shared_info["rival_v9_policy_decision_index"])
+        shared_info["rival_v9_last_decision_index"] = decision_index
+        shared_info["rival_v9_policy_decision_index"] = decision_index + 1
         return parsed
 
 
@@ -352,6 +394,13 @@ def action_metadata() -> dict[str, Any]:
         },
         "state_dependent_action_mask": False,
         "timing_delay_version": TIMING_VERSION,
+        "timing_state": {
+            "selected": "controller row returned by the policy on the current tick",
+            "pending": "selected row installed after RocketSim advances the current tick",
+            "applied": "prior pending row that advanced the current physics transition",
+            "missed_selection": "preserve and re-emit the prior pending controller",
+            "observation_history_source": "rival_v9_applied_actions",
+        },
         "stored_action": "physical_controller_float32",
         "lookup_table": False,
         "hidden_controller_synthesis": False,

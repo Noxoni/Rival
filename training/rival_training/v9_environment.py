@@ -35,7 +35,7 @@ from .v9_observations import (
 )
 
 
-V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV1"
+V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV2OneTickDelay"
 
 
 class RivalV9DeterministicKickoffMutator(StateMutator[GameState]):

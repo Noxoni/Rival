@@ -1,0 +1,215 @@
+{
+  "checks": {
+    "action_schema_current": true,
+    "all_button_combos_exercised": true,
+    "missed_selection_preserves_previous_controller": true,
+    "native_capture_is_1x": true,
+    "native_controller_stream_changes_naturally": true,
+    "native_corpus_hash_matches_capture": true,
+    "native_has_at_least_4000_one_tick_pairs": true,
+    "native_initial_startup_gap_is_explicitly_uncertified": true,
+    "native_one_tick_relation_exact": true,
+    "native_post_initial_startup_gap_preserves_previous_controller": true,
+    "native_sequence_is_contiguous_by_record": true,
+    "no_repeat_action_contract": true,
+    "physics_probe_first_transition_is_noop": true,
+    "physics_probe_selected_row_applies_on_second_transition": true,
+    "rocketsim_histories_record_applied_rows": true,
+    "rocketsim_physics_advances_exactly_one_tick": true,
+    "rocketsim_policy_decision_every_tick": true,
+    "rocketsim_selected_pending_applied_exact": true
+  },
+  "commands": {
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_timing_parity_gate.py",
+    "unit_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_actions.py training/tests/test_v9_environment.py -q"
+  },
+  "contract": {
+    "action_schema_sha256": "7dd367793bdf18e3381e472a4fc98b6a8ae45a1384b06b68765c55ea529f5457",
+    "action_source_sha256": "8b16ae694969f2bf950888f8a9dd02e9b6cea42dada82abc5b20c52a06a04e55",
+    "action_version": "RivalActionV1",
+    "environment_version": "RivalScratch1v1RocketSimV2OneTickDelay",
+    "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+    "observation_version": "RivalObsV1",
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "timing_version": "RivalOneTickDelayV1"
+  },
+  "gate": 5,
+  "gate_name": "one_tick_timing_parity",
+  "gate_semantics": {
+    "native_rate_source": "frozen RLBot v5 1x packet/callback corpus",
+    "score_used": false,
+    "training_budget_used": false,
+    "win_loss_used": false
+  },
+  "generated_at_utc": "2026-08-23T17:34:11.567708+00:00",
+  "milestone": 9,
+  "native_rlbot_v5_trace": {
+    "adjacent_record_pairs": 5999,
+    "capture_console_observation": "RLBotServer printed outbound-queue-full warnings for both bot sessions during Countdown. The runner manifest does not capture server-console warnings. The raw corpus independently records two startup frame gaps (28 and 52); neither is interpolated, and the subsequent 5,998-record run is contiguous.",
+    "frame_gap_details": [
+      {
+        "current_frame": 40,
+        "current_last_input": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "current_phase": "Countdown",
+        "current_sequence": 1,
+        "exact": false,
+        "frame_delta": 28,
+        "previous_frame": 12,
+        "previous_phase": "Countdown",
+        "previous_returned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "previous_sequence": 0
+      },
+      {
+        "current_frame": 92,
+        "current_last_input": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "current_phase": "Countdown",
+        "current_sequence": 2,
+        "exact": true,
+        "frame_delta": 52,
+        "previous_frame": 40,
+        "previous_phase": "Countdown",
+        "previous_returned": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        "previous_sequence": 1
+      }
+    ],
+    "frame_gap_pairs": 2,
+    "frame_gap_previous_controller_preserved": 1,
+    "game_speed": {
+      "all_native_1x": true,
+      "maximum": 1.0,
+      "minimum": 1.0
+    },
+    "initial_startup_gap_interpretation": "The first logged callback returned throttle+boost, but after the first documented Countdown outbound-queue gap the server still reported zero last_input. This pre-handshake/startup discontinuity is not certified as an applied controller transition. The later startup gap preserves the previous row exactly, and all 5,997 delivered one-tick transitions are exact.",
+    "match_phase_counts": {
+      "Active": 4933,
+      "Countdown": 760,
+      "Kickoff": 307
+    },
+    "maximum_abs_controller_error": 1.0,
+    "next_packet_last_input_matches_previous_returned": 5998,
+    "one_tick_exact_matches": 5997,
+    "one_tick_maximum_abs_controller_error": 0.0,
+    "one_tick_pairs": 5997,
+    "post_initial_startup_gap_exact_matches": 1,
+    "post_initial_startup_gap_pairs": 1,
+    "records": 6000,
+    "returned_controller_changes": 499,
+    "same_packet_last_input_equals_current_returned": 5499,
+    "sequence_mismatches": 0,
+    "source": {
+      "capture_status": "passed",
+      "corpus_version": "RivalV9NativePacketCorpusV2",
+      "expected_sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+      "observed_sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+      "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+      "size_bytes": 49198958
+    },
+    "timing_relation": "For every delivered one-tick packet i+1, PlayerInfo.last_input equals the physical controller returned on packet i. The one post-initial-startup frame gap also preserves the row; the first pre-handshake queue gap is reported separately and is not represented as a certified transition."
+  },
+  "rocketsim_physics_delay_probe": {
+    "first_transition_applied_controller": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "forward_speed_after_delayed_application": 1.093940258026123,
+    "forward_speed_after_selection_before_application": -5.764630259363912e-05,
+    "forward_speed_delta": 1.0939979043287167,
+    "second_transition_applied_controller": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "selected_controller": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "rocketsim_trace": {
+    "decision_index_mismatches": 0,
+    "environment_version": "RivalScratch1v1RocketSimV2OneTickDelay",
+    "episode_done_ticks": [],
+    "maximum_applied_controller_error": 0.0,
+    "maximum_opponent_history_error": 0.0,
+    "maximum_opponent_latest_error": 0.0,
+    "maximum_pending_controller_error": 0.0,
+    "maximum_selected_controller_error": 0.0,
+    "maximum_self_history_error": 0.0,
+    "missed_selection_ticks": [
+      127,
+      255,
+      383
+    ],
+    "missed_selections_verified": 3,
+    "observed_button_combos": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "parser_missed_selection_counter": 3,
+    "physics_hz": 120,
+    "tick_increment_mismatches": 0,
+    "timing_relation": "At selected tick t, RocketSim advances physics with pending row t-1, installs selected row t afterward, and RivalObsV1 records only row t-1 as the applied controller for the resulting state.",
+    "trace_ticks": 512
+  },
+  "schema_version": 1,
+  "status": "passed"
+}
