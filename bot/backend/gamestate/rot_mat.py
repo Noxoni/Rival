@@ -10,7 +10,7 @@ class RotMat:
             assert vals.shape == (3, 3)
             self.vals = vals.astype(np.float32)
         elif isinstance(vals, list):
-            if len(vals) == 3 and all(type(row) == Vec for row in vals):
+            if len(vals) == 3 and all(isinstance(row, Vec) for row in vals):
                 self.vals = np.array([row.vals.copy() for row in vals], dtype=np.float32)
             elif len(vals) == 3 and all(len(row) == 3 for row in vals):
                 self.vals = np.array(vals, dtype=np.float32)
@@ -66,10 +66,15 @@ class RotMat:
     def __setitem__(self, i, value):
         self.vals[i] = Vec(value).vals
 
-    def __eq__(self):
-        return self.vals == other.vals
-    def __ne__(self):
-        return not (self == other)
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, RotMat):
+            return NotImplemented
+        return bool(np.array_equal(self.vals, other.vals))
+    def __ne__(self, other: object) -> bool:
+        eq_result = self.__eq__(other)
+        if eq_result is NotImplemented:
+            return NotImplemented
+        return not eq_result
 
     def __str__(self):
         return "RotMat" + self.vals.tolist().__str__()

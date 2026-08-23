@@ -3,8 +3,12 @@ import math
 import rlbot.flat
 from numba import jit
 
-from backend.gamestate.common_values import CAR_MAX_SPEED, CAR_MAX_THROTTLE_SPEED, BOOST_ACCELERATION, TICK_TIME, \
-    BALL_RADIUS
+from backend.gamestate.common_values import (
+    BALL_RADIUS,
+    BOOST_ACCELERATION,
+    CAR_MAX_SPEED,
+    CAR_MAX_THROTTLE_SPEED,
+)
 from backend.gamestate.player import Player
 from backend.rlbot_conversion import convert_vec3
 from utils import my_min
