@@ -1,0 +1,462 @@
+{
+  "aggregate_mechanics": {
+    "decisions": 42769,
+    "deterministic_override_rate": 0.0,
+    "deterministic_overrides": 0
+  },
+  "candidate_export": {
+    "mechanics_model_path": "training/artifacts/milestone08/001m/mechanics_actor.ts",
+    "mechanics_model_sha256": "41c8ac38dfaee86d8bb22cd678e0fe8972a41ca0d686893f9a82f5b59120da55",
+    "path": "training/results/milestone08/candidate_export_001m.json",
+    "sha256": "532654a25acc93a8ae04e026874698d05f1d58e457fbeb78f8a705b0778d448b",
+    "source_checkpoint": "training/checkpoints/milestone08/000999822"
+  },
+  "candidate_outcome_context": {
+    "complete": 4,
+    "completed_match_results": 4,
+    "games": 4,
+    "goal_differential": -4,
+    "goals_against": 16,
+    "goals_for": 12,
+    "losses": 4,
+    "runtime_clean": 4,
+    "ties": 0,
+    "wins": 0
+  },
+  "decision_rule": {
+    "cadence_collapse_is_technical_not_score_based": true,
+    "score_use_is_limited_to_explicit_severe_transfer_regression_gate": true,
+    "technical_cadence_checks": [
+      "strategic modal interval is 8 physics ticks",
+      "mechanics modal interval is 4 physics ticks",
+      "decision sequences and two-to-one clock ratio remain contiguous",
+      "runtime identity, mechanics model, frozen hashes and mappings are exact"
+    ],
+    "wins_do_not_prove_mechanics_learning": true
+  },
+  "forced_pass_baseline_outcome_context": {
+    "complete": 4,
+    "completed_match_results": 4,
+    "games": 4,
+    "goal_differential": -4,
+    "goals_against": 22,
+    "goals_for": 18,
+    "losses": 3,
+    "runtime_clean": 4,
+    "ties": 0,
+    "wins": 1
+  },
+  "passed": true,
+  "production_promoted": false,
+  "purpose": "milestone08_candidate_rlbot_transfer_gate",
+  "schema_version": 1,
+  "sessions": [
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5355
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 10708,
+        "mechanics_interval_ticks_histogram": {
+          "1": 7,
+          "3": 5,
+          "4": 10681,
+          "5": 6
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9996265870052278,
+        "mechanics_within_one_tick_of_mode_rate": 0.9993457332460978,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 4792
+          },
+          {
+            "classification": "terminal",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 5356
+          }
+        ],
+        "strategic_decisions": 5356,
+        "strategic_interval_ticks_histogram": {
+          "1": 2,
+          "7": 3,
+          "8": 5338,
+          "9": 4
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9996259584813915
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 10708
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9704905821231038,
+        "override_count": 0,
+        "pass_count": 10708
+      },
+      "opponent": "nexto",
+      "outcome_context": {
+        "opponent_goals": 4,
+        "outcome": "loss",
+        "rival_goals": 3
+      },
+      "passed": true,
+      "rival_side": "blue",
+      "session_id": "rival-v8-natural-nexto-blue-20260823T055535Z-3dafaf6f",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-nexto-blue-20260823T055535Z-3dafaf6f/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 10708,
+          "rival_policy_decision": 5356,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "5918a16fd3e18490acc5e6f7ca15f0bceddc430035dbb58571ede6dad00e85a5",
+        "size_bytes": 85446798,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5255
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 10509,
+        "mechanics_interval_ticks_histogram": {
+          "1": 5,
+          "3": 1,
+          "4": 10495,
+          "5": 1
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9997146118721462,
+        "mechanics_within_one_tick_of_mode_rate": 0.9995239002094839,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "terminal",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 5256
+          }
+        ],
+        "strategic_decisions": 5256,
+        "strategic_interval_ticks_histogram": {
+          "1": 1,
+          "8": 5248
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9998094875214326
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 10509
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9704476198921853,
+        "override_count": 0,
+        "pass_count": 10509
+      },
+      "opponent": "nexto",
+      "outcome_context": {
+        "opponent_goals": 3,
+        "outcome": "loss",
+        "rival_goals": 2
+      },
+      "passed": true,
+      "rival_side": "orange",
+      "session_id": "rival-v8-natural-nexto-orange-20260823T060214Z-c90e3fb0",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-nexto-orange-20260823T060214Z-c90e3fb0/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 10509,
+          "rival_policy_decision": 5256,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "cfc0c5623bcbce5a942dd896ee822d05589af6f36554cc8c0d4913fd7ab44ca8",
+        "size_bytes": 83955981,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5556
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 11110,
+        "mechanics_interval_ticks_histogram": {
+          "1": 8,
+          "36": 1,
+          "4": 11086,
+          "5": 2,
+          "52": 1,
+          "6": 1
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9996400935756703,
+        "mechanics_within_one_tick_of_mode_rate": 0.9990089197224975,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 3
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 4910
+          }
+        ],
+        "strategic_decisions": 5557,
+        "strategic_interval_ticks_histogram": {
+          "1": 2,
+          "10": 1,
+          "36": 1,
+          "52": 1,
+          "8": 5539,
+          "9": 2
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9990984493328525
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 11110
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9703463324494023,
+        "override_count": 0,
+        "pass_count": 11110
+      },
+      "opponent": "wisp",
+      "outcome_context": {
+        "opponent_goals": 6,
+        "outcome": "loss",
+        "rival_goals": 5
+      },
+      "passed": true,
+      "rival_side": "blue",
+      "session_id": "rival-v8-natural-wisp-blue-20260823T060841Z-e5217187",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-wisp-blue-20260823T060841Z-e5217187/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 11110,
+          "rival_policy_decision": 5557,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "e9eea24153c4decf7ecfd2c2fc0552a7c61b128b55979ec9fa01a48aea100501",
+        "size_bytes": 88375903,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5221
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 10442,
+        "mechanics_interval_ticks_histogram": {
+          "1": 3,
+          "2": 1,
+          "3": 3,
+          "4": 10424,
+          "5": 4
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9998085024894676,
+        "mechanics_within_one_tick_of_mode_rate": 0.9996166746526114,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          }
+        ],
+        "strategic_decisions": 5222,
+        "strategic_interval_ticks_histogram": {
+          "2": 1,
+          "7": 1,
+          "8": 5211,
+          "9": 2
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9998082454458294
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 10442
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9703859514522041,
+        "override_count": 0,
+        "pass_count": 10442
+      },
+      "opponent": "wisp",
+      "outcome_context": {
+        "opponent_goals": 3,
+        "outcome": "loss",
+        "rival_goals": 2
+      },
+      "passed": true,
+      "rival_side": "orange",
+      "session_id": "rival-v8-natural-wisp-orange-20260823T061549Z-935528a9",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-wisp-orange-20260823T061549Z-935528a9/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 10442,
+          "rival_policy_decision": 5222,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "92227a6a3942a83d2aa596ccf7de1e4ef5552c2b45c880481f8757016ea94720",
+        "size_bytes": 83485939,
+        "wrong_session_records": 0
+      }
+    }
+  ],
+  "status": "passed",
+  "technical_checks": {
+    "all_live_candidate_cadence_sessions_passed": true,
+    "candidate_export_passed": true,
+    "candidate_model_file_hash_exact": true,
+    "four_balanced_full_games_present": true
+  },
+  "transfer_safety": {
+    "baseline_goal_differential": -4,
+    "candidate_goal_differential": -4,
+    "goal_differential_change": 0,
+    "maximum_allowed_drop": 10,
+    "no_severe_goal_differential_regression": true
+  }
+}

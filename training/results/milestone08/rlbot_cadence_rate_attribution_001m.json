@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "passed_native_rate_with_accelerated_stress_limit",
+  "purpose": "milestone08_001m_rlbot_candidate_cadence_rate_attribution",
+  "checkpoint": "training/checkpoints/milestone08/000999822",
+  "candidate_model": {
+    "path": "training/artifacts/milestone08/001m/mechanics_actor.ts",
+    "sha256": "41c8ac38dfaee86d8bb22cd678e0fe8972a41ca0d686893f9a82f5b59120da55"
+  },
+  "decision_rule": {
+    "cadence_is_decided_by_technical_telemetry": true,
+    "wins_losses_used_to_decide_cadence": false,
+    "native_physics_tick_rate_hz": 120,
+    "strict_session_requirements": [
+      "strategic modal interval is 8 physics ticks with at least 95 percent within one tick",
+      "mechanics modal interval is 4 physics ticks with at least 95 percent within one tick",
+      "mechanics to expected two-per-strategic ratio is at least 0.999",
+      "decision sequences, runtime identity, model path, hashes and action mappings are exact",
+      "partial mechanics windows occur only at startup, Countdown or terminal boundaries"
+    ]
+  },
+  "accelerated_five_x_stress": {
+    "matrix": {
+      "path": "training/results/milestone08/rlbot_001m.json",
+      "size_bytes": 6994,
+      "sha256": "7946bd989647b8415a7544ad28f9d0ee4cbbc24a9406a3fb77689b6a0c8e6f80"
+    },
+    "gate": {
+      "path": "training/results/milestone08/rlbot_gate_001m.json",
+      "size_bytes": 17880,
+      "sha256": "97a914f76ad7ff9794c20dd5105745a1cf0c0ecedc183b99f5668db592e2ada1"
+    },
+    "game_speed": 5.0,
+    "strict_gate_passed": false,
+    "minimum_session_mechanics_within_one_tick_rate": 0.9398096018016173,
+    "invalid_in_play_partial_windows": 1,
+    "localized_trace": {
+      "session_id": "rival-v8-natural-nexto-blue-20260823T054453Z-e93b442b",
+      "strategic_policy_tick": 1241,
+      "previous_mechanics_game_time": 90.4749984741211,
+      "observed_mechanics_game_time": 90.5500030517578,
+      "next_mechanics_game_time": 90.591667175293,
+      "interpretation": "one 9-tick mechanics interval was followed by a 5-tick catch-up interval during accelerated wall-time execution"
+    },
+    "retained_classification": "failed_strict_accelerated_stress_gate"
+  },
+  "native_rate_deployment_cadence": {
+    "matrix": {
+      "path": "training/results/milestone08/rlbot_001m_native_rate.json",
+      "size_bytes": 7011,
+      "sha256": "96ce3a0c1ab7d562dccde3baa8d04a6efdb6fa336c89fb280720b1168961ea3d"
+    },
+    "gate": {
+      "path": "training/results/milestone08/rlbot_gate_001m_native_rate.json",
+      "size_bytes": 15602,
+      "sha256": "3df725b7e25921d87cd8e2b097373ecdff8c9da9dc070156d5fabc38fae8c5a9"
+    },
+    "game_speed": 1.0,
+    "strict_gate_passed": true,
+    "minimum_session_mechanics_within_one_tick_rate": 0.9990089197224975,
+    "minimum_session_strategic_within_one_tick_rate": 0.9990984493328525,
+    "minimum_mechanics_to_expected_two_per_strategic_ratio": 0.9996265870052278,
+    "invalid_in_play_partial_windows": 0,
+    "all_four_balanced_sessions_passed": true,
+    "retained_classification": "passed_strict_native_120hz_deployment_gate"
+  },
+  "behavioral_context": {
+    "accelerated_candidate_goal_differential": 8,
+    "native_candidate_goal_differential": -4,
+    "forced_pass_baseline_goal_differential": -4,
+    "native_goal_differential_change_from_forced_pass_baseline": 0,
+    "severe_regression_threshold": -10,
+    "severe_regression_observed": false,
+    "candidate_deterministic_override_count_across_both_matrices": 0,
+    "interpretation": "scores neither pass nor fail cadence and do not demonstrate learned mechanics"
+  },
+  "boundary_decision": {
+    "native_deployment_cadence_gate_passed": true,
+    "accelerated_stress_limitation_retained": true,
+    "severe_real_game_regression_observed": false,
+    "continue_to_2m_boundary": true,
+    "reason": "the strict 120-Hz deployment cadence passed every session while the separate 5x wall-time stress limitation remains explicitly failed and documented"
+  },
+  "production_promoted": false
+}

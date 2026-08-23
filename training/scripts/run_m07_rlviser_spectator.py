@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
         default="frozen-wisp",
         help=(
             "frozen-wisp, current, a campaign checkpoint directory, a portable actor "
-            "checkpoint, or a TorchScript actor export"
+            "checkpoint, an M08 checkpoint directory, or a TorchScript actor export"
         ),
     )
     parser.add_argument(

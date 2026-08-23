@@ -222,6 +222,7 @@ def build_dual_rate_env(
     mechanics_disabled: bool = False,
     force_pass: bool = False,
     anchor_team: int | None = None,
+    renderer: Any | None = None,
 ) -> RLGym:
     """Build the explicit 8-tick strategic/4-tick mechanics environment."""
     config = load_milestone08_config()
@@ -253,7 +254,7 @@ def build_dual_rate_env(
             TimeoutCondition(float(config["environment"]["episode_timeout_seconds"])),
         ),
         shared_info_provider=None,
-        renderer=None,
+        renderer=renderer,
     )
 
 

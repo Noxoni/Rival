@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "purpose": "milestone08_opt_in_dual_rate_rlbot_candidate",
+  "label": "001m",
+  "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+  "source_checkpoint": "training/checkpoints/milestone08/000999822",
+  "source_state": {
+    "format": "rival-milestone08-full-ppo-v1",
+    "schema_version": 1,
+    "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+    "campaign_id": "rival-milestone08-dual-rate-mechanics-v1",
+    "completed_iterations": 20,
+    "cumulative_agent_steps": 999822,
+    "requested_boundary_agent_steps": 1000000,
+    "cumulative_model_updates": 54,
+    "worker_count": 56,
+    "policy_average_reward": 0.002477697470976655,
+    "source_checkpoint": "training/checkpoints/milestone08/000499748",
+    "mechanics_prior": {
+      "version": "RivalMechanicsPolicyV1",
+      "action_count": 69,
+      "pass_index": 0,
+      "pass_output_bias": 7.718852996826172
+    },
+    "worker_transition_history": [
+      {
+        "evidence_path": "training/results/milestone08/worker_fallback_000500000.json",
+        "evidence_sha256": "ae1bc136a4301759a575c8e6efc068be7965b03d6838683ab09d8333210c8b6c",
+        "from_worker_count": 64,
+        "to_worker_count": 56,
+        "source_checkpoint_agent_steps": 499748,
+        "checks": {
+          "status_authorized": true,
+          "source_steps_match": true,
+          "from_workers_match": true,
+          "to_workers_match": true,
+          "no_steps_collected_during_failed_launch": true
+        }
+      }
+    ]
+  },
+  "source_files": {
+    "PPO_POLICY.pt": {
+      "size_bytes": 786037,
+      "sha256": "7de1d1657c4ab71663518cc56330989aa8a719ac16bd8c6c59548de880c63b14"
+    },
+    "PPO_POLICY_OPTIMIZER.pt": {
+      "size_bytes": 1572829,
+      "sha256": "487f0e97d348dc678c8d3c70043a59dc8472d6251d9983d76128f03ac6dff135"
+    },
+    "PPO_VALUE_NET.pt": {
+      "size_bytes": 710813,
+      "sha256": "dae03cb0a8210ecb8707d8b2dafe7a6c5fede34de1fd817d136c1ca4d009575c"
+    },
+    "PPO_VALUE_NET_OPTIMIZER.pt": {
+      "size_bytes": 1421805,
+      "sha256": "9fe296cc69ccfca6c3270f1b3ddcfae8dc5ee33e0b88bac958007b75be88232d"
+    },
+    "RIVAL_M08_STATE.json": {
+      "size_bytes": 1254,
+      "sha256": "77e930752a66849523afd0f0d9da2c6d8ae8bd386f83fd04dd69bb315ae69005"
+    }
+  },
+  "mechanics_actor_state_sha256": "66940a71e587cc243db4214ab4c7cbf9d3b0be398c61fb77df76f98fa3f7469a",
+  "torchscript_export": {
+    "path": "training/artifacts/milestone08/001m/mechanics_actor.ts",
+    "size_bytes": 797733,
+    "sha256": "41c8ac38dfaee86d8bb22cd678e0fe8972a41ca0d686893f9a82f5b59120da55",
+    "state_sha256": "66940a71e587cc243db4214ab4c7cbf9d3b0be398c61fb77df76f98fa3f7469a",
+    "fresh_reload_exact_logits": true,
+    "output_shape": [
+      4,
+      69
+    ]
+  },
+  "randomized_logit_parity": {
+    "sample_count": 256,
+    "input_shape": [
+      256,
+      432
+    ],
+    "output_shape": [
+      256,
+      69
+    ],
+    "checkpoint_policy_to_actor_exact": true,
+    "actor_to_torchscript_exact": true,
+    "actor_to_torchscript_max_abs_error": 0.0,
+    "all_logits_finite": true,
+    "passed": true
+  },
+  "action_contract": {
+    "schema_version": 1,
+    "action_table_version": "RivalExpandedActionV1",
+    "controller_fields": [
+      "throttle",
+      "steer",
+      "pitch",
+      "yaw",
+      "roll",
+      "jump",
+      "boost",
+      "handbrake"
+    ],
+    "serialization": "row-major little-endian float32 bytes",
+    "wisp_prefix_count": 90,
+    "advanced_candidate_count": 156,
+    "appended_unique_count": 68,
+    "expanded_action_count": 158,
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "advanced_parameters": {
+      "torque_subdivisions": 3,
+      "flip_bins": 16,
+      "include_stalls": true
+    },
+    "cadence_modes": {
+      "legacy8": 8,
+      "mechanics4": 4
+    }
+  },
+  "action_table": {
+    "path": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "size_bytes": 5184,
+    "file_sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "shape": [
+      158,
+      8
+    ],
+    "exact_generated_reload": true,
+    "wisp_prefix_exact": true,
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "expected_wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expected_expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "mechanics_mapping": {
+      "pass_choice": 0,
+      "choice_1_global_action": 90,
+      "choice_68_global_action": 157
+    },
+    "passed": true
+  },
+  "strategic_branch": {
+    "artifacts": {
+      "wisp_policy": {
+        "path": "bot/models/POLICY.lt",
+        "sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "unchanged": true
+      },
+      "wisp_shared_head": {
+        "path": "bot/models/SHARED_HEAD.lt",
+        "sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "unchanged": true
+      },
+      "zero_step_torchscript": {
+        "path": "training/artifacts/milestone07/zero_step_actor.ts",
+        "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "expected_sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+        "unchanged": true
+      }
+    },
+    "all_unchanged": true,
+    "optimizer_contains_strategic_parameters": false,
+    "architecture_reason": "The strategic actor is instantiated only inside environment workers; the central PPO policy contains MechanicsActor parameters exclusively."
+  },
+  "cadence_contract": {
+    "strategic_ticks": 8,
+    "mechanics_ticks": 4,
+    "strategic_schedule": [
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "new",
+      "new",
+      "new"
+    ],
+    "mechanics_schedule": [
+      "previous",
+      "new",
+      "new",
+      "new"
+    ]
+  },
+  "runtime_mode": "opt_in_candidate_only",
+  "rlbot_environment": {
+    "RIVAL_M08_DUAL_RATE_ENABLED": "1",
+    "RIVAL_M08_MECHANICS_FORCE_PASS": "0",
+    "RIVAL_M08_MECHANICS_MODEL_PATH": "training/artifacts/milestone08/001m/mechanics_actor.ts",
+    "RIVAL_M08_ACTION_TABLE_PATH": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "RIVAL_M08_MECHANICS_DETERMINISTIC": "1",
+    "RIVAL_TICK_SKIP": "8"
+  },
+  "gates": {
+    "source_checkpoint_config_exact": true,
+    "mechanics_output_count_exact": true,
+    "randomized_export_reload_exact": true,
+    "action_table_and_prefix_exact": true,
+    "strategic_branch_unchanged": true,
+    "production_promotion_forbidden": true
+  },
+  "production_default": "frozen_wisp_unchanged",
+  "production_promoted": false
+}

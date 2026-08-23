@@ -1,0 +1,563 @@
+{
+  "aggregate_mechanics": {
+    "decisions": 42179,
+    "deterministic_override_rate": 0.0,
+    "deterministic_overrides": 0
+  },
+  "candidate_export": {
+    "mechanics_model_path": "training/artifacts/milestone08/001m/mechanics_actor.ts",
+    "mechanics_model_sha256": "41c8ac38dfaee86d8bb22cd678e0fe8972a41ca0d686893f9a82f5b59120da55",
+    "path": "training/results/milestone08/candidate_export_001m.json",
+    "sha256": "532654a25acc93a8ae04e026874698d05f1d58e457fbeb78f8a705b0778d448b",
+    "source_checkpoint": "training/checkpoints/milestone08/000999822"
+  },
+  "candidate_outcome_context": {
+    "complete": 4,
+    "completed_match_results": 4,
+    "games": 4,
+    "goal_differential": 8,
+    "goals_against": 12,
+    "goals_for": 20,
+    "losses": 0,
+    "runtime_clean": 4,
+    "ties": 0,
+    "wins": 4
+  },
+  "decision_rule": {
+    "cadence_collapse_is_technical_not_score_based": true,
+    "score_use_is_limited_to_explicit_severe_transfer_regression_gate": true,
+    "technical_cadence_checks": [
+      "strategic modal interval is 8 physics ticks",
+      "mechanics modal interval is 4 physics ticks",
+      "decision sequences and two-to-one clock ratio remain contiguous",
+      "runtime identity, mechanics model, frozen hashes and mappings are exact"
+    ],
+    "wins_do_not_prove_mechanics_learning": true
+  },
+  "forced_pass_baseline_outcome_context": {
+    "complete": 4,
+    "completed_match_results": 4,
+    "games": 4,
+    "goal_differential": -4,
+    "goals_against": 22,
+    "goals_for": 18,
+    "losses": 3,
+    "runtime_clean": 4,
+    "ties": 0,
+    "wins": 1
+  },
+  "passed": false,
+  "production_promoted": false,
+  "purpose": "milestone08_candidate_rlbot_transfer_gate",
+  "schema_version": 1,
+  "sessions": [
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5137
+        },
+        "invalid_partial_mechanics_windows": [
+          {
+            "classification": "in_play",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 1241
+          }
+        ],
+        "mechanics_decisions": 10272,
+        "mechanics_interval_ticks_histogram": {
+          "1": 18,
+          "10": 1,
+          "11": 2,
+          "15": 1,
+          "2": 54,
+          "29": 1,
+          "3": 401,
+          "31": 1,
+          "33": 1,
+          "4": 9201,
+          "5": 424,
+          "6": 98,
+          "7": 50,
+          "8": 8,
+          "9": 3
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9996107434799533,
+        "mechanics_within_one_tick_of_mode_rate": 0.9768121590023383,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "in_play",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 1241
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1418
+          }
+        ],
+        "strategic_decisions": 5138,
+        "strategic_interval_ticks_histogram": {
+          "1": 1,
+          "10": 49,
+          "11": 32,
+          "12": 4,
+          "15": 2,
+          "16": 1,
+          "31": 1,
+          "34": 1,
+          "35": 1,
+          "5": 3,
+          "6": 12,
+          "7": 46,
+          "8": 4842,
+          "9": 135
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9791423001949318
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": false,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 10272
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9707402993585462,
+        "override_count": 0,
+        "pass_count": 10272
+      },
+      "opponent": "nexto",
+      "outcome_context": {
+        "opponent_goals": 2,
+        "outcome": "win",
+        "rival_goals": 4
+      },
+      "passed": false,
+      "rival_side": "blue",
+      "session_id": "rival-v8-natural-nexto-blue-20260823T054453Z-e93b442b",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-nexto-blue-20260823T054453Z-e93b442b/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 10272,
+          "rival_policy_decision": 5138,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "b411dd563c3bd4ae187277e957bf29d5d666f7c3746ed28b293c454bf8065948",
+        "size_bytes": 82027634,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 4888
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 9775,
+        "mechanics_interval_ticks_histogram": {
+          "1": 26,
+          "10": 1,
+          "11": 2,
+          "12": 1,
+          "14": 1,
+          "2": 140,
+          "3": 901,
+          "31": 1,
+          "4": 7292,
+          "5": 988,
+          "6": 282,
+          "7": 101,
+          "8": 23,
+          "9": 10
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9996931887911639,
+        "mechanics_within_one_tick_of_mode_rate": 0.9398096018016173,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "terminal",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 4889
+          }
+        ],
+        "strategic_decisions": 4889,
+        "strategic_interval_ticks_histogram": {
+          "10": 121,
+          "11": 56,
+          "12": 9,
+          "13": 5,
+          "14": 3,
+          "16": 1,
+          "3": 1,
+          "35": 1,
+          "5": 2,
+          "6": 10,
+          "7": 82,
+          "8": 4201,
+          "9": 391
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9571984435797666
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": false,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 9775
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.970396673478129,
+        "override_count": 0,
+        "pass_count": 9775
+      },
+      "opponent": "nexto",
+      "outcome_context": {
+        "opponent_goals": 2,
+        "outcome": "win",
+        "rival_goals": 3
+      },
+      "passed": false,
+      "rival_side": "orange",
+      "session_id": "rival-v8-natural-nexto-orange-20260823T054643Z-71187310",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-nexto-orange-20260823T054643Z-71187310/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 9775,
+          "rival_policy_decision": 4889,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "307bfef9b620ef61c351160b92ae419ee2219928b8130dd8cf92f68b08997296",
+        "size_bytes": 78233348,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5757
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 11511,
+        "mechanics_interval_ticks_histogram": {
+          "1": 23,
+          "10": 1,
+          "2": 41,
+          "29": 1,
+          "3": 248,
+          "30": 1,
+          "31": 1,
+          "4": 10804,
+          "5": 263,
+          "6": 65,
+          "7": 38,
+          "8": 7,
+          "9": 3
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9995658214657868,
+        "mechanics_within_one_tick_of_mode_rate": 0.9842553931802366,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2392
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 3535
+          },
+          {
+            "classification": "terminal",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 5758
+          }
+        ],
+        "strategic_decisions": 5758,
+        "strategic_interval_ticks_histogram": {
+          "1": 2,
+          "10": 43,
+          "11": 24,
+          "12": 1,
+          "13": 1,
+          "31": 1,
+          "33": 2,
+          "5": 5,
+          "6": 9,
+          "7": 45,
+          "8": 5523,
+          "9": 87
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9846769980846247
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 11511
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9704786527478905,
+        "override_count": 0,
+        "pass_count": 11511
+      },
+      "opponent": "wisp",
+      "outcome_context": {
+        "opponent_goals": 6,
+        "outcome": "win",
+        "rival_goals": 7
+      },
+      "passed": true,
+      "rival_side": "blue",
+      "session_id": "rival-v8-natural-wisp-blue-20260823T054827Z-154d8cdf",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-wisp-blue-20260823T054827Z-154d8cdf/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 11511,
+          "rival_policy_decision": 5758,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "7c0cc85575fa71230e8c254e007f0cf3d9826060481373905f5d4891140b1af9",
+        "size_bytes": 91479898,
+        "wrong_session_records": 0
+      }
+    },
+    {
+      "cadence": {
+        "controller_sources": {
+          "strategic": 1,
+          "strategic_pass_through": 5312
+        },
+        "invalid_partial_mechanics_windows": [],
+        "mechanics_decisions": 10621,
+        "mechanics_interval_ticks_histogram": {
+          "1": 21,
+          "10": 1,
+          "2": 48,
+          "29": 2,
+          "3": 290,
+          "30": 1,
+          "4": 9834,
+          "5": 291,
+          "6": 75,
+          "7": 36,
+          "8": 10,
+          "9": 2
+        },
+        "mechanics_modal_interval_ticks": 4,
+        "mechanics_to_expected_two_per_strategic_ratio": 0.9995294560511951,
+        "mechanics_within_one_tick_of_mode_rate": 0.9815286023937423,
+        "partial_mechanics_windows": [
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 1
+          },
+          {
+            "classification": "startup",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 2
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 3197
+          },
+          {
+            "classification": "countdown_boundary",
+            "mechanics_decisions": 1,
+            "phase": "Countdown",
+            "strategic_policy_tick": 5196
+          },
+          {
+            "classification": "terminal",
+            "mechanics_decisions": 1,
+            "phase": "Active",
+            "strategic_policy_tick": 5313
+          }
+        ],
+        "strategic_decisions": 5313,
+        "strategic_interval_ticks_histogram": {
+          "1": 2,
+          "10": 47,
+          "11": 22,
+          "12": 4,
+          "13": 3,
+          "32": 1,
+          "33": 2,
+          "5": 2,
+          "6": 19,
+          "7": 41,
+          "8": 5096,
+          "9": 64
+        },
+        "strategic_modal_interval_ticks": 8,
+        "strategic_within_one_tick_of_mode_rate": 0.9807656043748821
+      },
+      "checks": {
+        "controller_sources_are_dual_rate_contract_values": true,
+        "mechanics_choice_mapping_and_probabilities_exact": true,
+        "mechanics_clock_mode_is_4_ticks": true,
+        "mechanics_decision_sequence_contiguous": true,
+        "no_invalid_or_cross_session_records": true,
+        "one_start_and_end_record": true,
+        "partial_windows_are_lifecycle_only": true,
+        "reported_record_counts_exact": true,
+        "runner_completed_cleanly": true,
+        "runtime_identity_model_path_and_hashes_exact": true,
+        "strategic_action_mask_and_frozen_choice_exact": true,
+        "strategic_clock_mode_is_8_ticks": true,
+        "strategic_decision_sequence_contiguous": true,
+        "strategic_runtime_flags_exact": true,
+        "two_to_one_clock_ratio_sustained": true
+      },
+      "mechanics": {
+        "choice_counts": {
+          "0": 10621
+        },
+        "deterministic_override_rate": 0.0,
+        "mean_pass_probability": 0.9705662394229913,
+        "override_count": 0,
+        "pass_count": 10621
+      },
+      "opponent": "wisp",
+      "outcome_context": {
+        "opponent_goals": 2,
+        "outcome": "win",
+        "rival_goals": 6
+      },
+      "passed": true,
+      "rival_side": "orange",
+      "session_id": "rival-v8-natural-wisp-orange-20260823T055048Z-8fe927cf",
+      "telemetry": {
+        "invalid_json_records": 0,
+        "path": "evidence/raw/rival-v8-natural-wisp-orange-20260823T055048Z-8fe927cf/decisions.jsonl",
+        "record_counts": {
+          "rival_mechanics_decision": 10621,
+          "rival_policy_decision": 5313,
+          "rival_session_end": 1,
+          "rival_session_start": 1
+        },
+        "sha256": "2eb17d8e74b4309182e5e26bb6e9b7ddae6f15b8f98570e512e8050bc8503a7c",
+        "size_bytes": 84753011,
+        "wrong_session_records": 0
+      }
+    }
+  ],
+  "status": "failed",
+  "technical_checks": {
+    "all_live_candidate_cadence_sessions_passed": false,
+    "candidate_export_passed": true,
+    "candidate_model_file_hash_exact": true,
+    "four_balanced_full_games_present": true
+  },
+  "transfer_safety": {
+    "baseline_goal_differential": -4,
+    "candidate_goal_differential": 8,
+    "goal_differential_change": 12,
+    "maximum_allowed_drop": 10,
+    "no_severe_goal_differential_regression": true
+  }
+}

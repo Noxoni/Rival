@@ -13,6 +13,7 @@ from rival_training.m08_campaign import (
     make_m08_ppo,
     verify_m08_checkpoint,
 )
+from rival_training.m08_deployment_candidate import export_m08_candidate
 from rival_training.mechanics import mechanics_state_sha256
 from rival_training.policy import (
     MechanicsActor,
@@ -116,3 +117,12 @@ def test_worker_transition_requires_exact_prospective_evidence(tmp_path) -> None
     assert transition["from_worker_count"] == 64
     assert transition["to_worker_count"] == 56
     assert all(transition["checks"].values())
+
+
+def test_m08_candidate_export_requires_safe_label() -> None:
+    try:
+        export_m08_candidate("missing", label="unsafe label")
+    except ValueError as exc:
+        assert "label" in str(exc).lower()
+    else:
+        raise AssertionError("Unsafe candidate label was accepted")

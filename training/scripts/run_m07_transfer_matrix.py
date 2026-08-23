@@ -408,6 +408,12 @@ def main() -> int:
     )
     parser.add_argument("--games-per-mode", type=int, choices=(4, 8), default=4)
     parser.add_argument(
+        "--game-speed",
+        type=float,
+        default=5.0,
+        help="RLBot desired game speed; 1.0 is the native 120-Hz wall-time cadence",
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=REPOSITORY_ROOT / "training/results/milestone07/transfer_matrix.json",
@@ -423,6 +429,8 @@ def main() -> int:
     parser.add_argument("--runtime-label")
     parser.add_argument("--mechanics-model", type=Path)
     args = parser.parse_args()
+    if not 0.1 <= args.game_speed <= 5.0:
+        parser.error("--game-speed must be between 0.1 and 5.0")
     definitions = _mode_definitions(args.mechanics_model)
     if "M8C" in args.modes and "M8C" not in definitions:
         parser.error("M8C requires --mechanics-model")
@@ -442,7 +450,7 @@ def main() -> int:
             "status": "in_progress",
             "evaluation": args.evaluation_label,
             "rlbot_version_family": "RLBot v5",
-            "game_speed": 5.0,
+            "game_speed": args.game_speed,
             "full_five_minute_soccar": True,
             "balanced_sides": True,
             "rocket_league_process_regime": "fresh_process_per_game",
@@ -498,7 +506,7 @@ def main() -> int:
                         rival_team=item["rival_team"],
                         launcher="steam",
                         timeout=900.0,
-                        game_speed=5.0,
+                        game_speed=args.game_speed,
                         challenge_mode="off",
                         lane_id=args.lane_id,
                         execution_regime="sequential_fresh_process_per_game",

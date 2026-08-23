@@ -46,6 +46,20 @@ checkpoint directory, or TorchScript `.ts` export. `--opponent selected` renders
 self-play, `--legacy-only` masks actions 90 through 157, and `--playback-speed` adjusts
 wall-clock pacing. Stop an unbounded viewer with Ctrl+C.
 
+For the Milestone 08 dual-rate policy, pass either an M08 checkpoint directory or its
+69-logit mechanics TorchScript export. The isolated spectator keeps the internal Wisp
+strategic branch at eight ticks, evaluates mechanics at four ticks, and reports PASS
+versus override controller-source counts when it exits:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py `
+  --checkpoint training/artifacts/milestone08/001m/mechanics_actor.ts `
+  --opponent frozen-wisp --tick-skip 4
+```
+
+Rendering remains optional and disabled by default; this command launches exactly one
+spectator-owned environment and never attaches a renderer to PPO workers.
+
 `rlviser-py==0.6.13` is pinned intentionally: 0.6.14 requires NumPy 2.x, while the
 RLGym 2.0.1 Rocket League package requires NumPy below 2. The optional installer uses
 `--no-deps`, verifies that the headless environment remains on NumPy 1.26.4, and
