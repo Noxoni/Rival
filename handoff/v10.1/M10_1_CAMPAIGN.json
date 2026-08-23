@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "milestone": "10.1",
+  "campaign_id": "rival-v10-1-agency-bootstrap",
+  "activation": {
+    "required_prior_boundary": "m10_plus_025h_complete_and_pushed",
+    "resume_checkpoint": "exact_m10_plus_025h_checkpoint",
+    "do_not_modify_running_m10_in_place": true,
+    "stop_original_m10_after_plus_025h": true
+  },
+  "immutable_versions": {
+    "policy": "RivalPolicyV1",
+    "critic": "RivalCriticV1",
+    "observation": "RivalObsV1",
+    "action": "RivalActionV1",
+    "canonical_state": "RivalCanonicalStateV1"
+  },
+  "bootstrap_versions": {
+    "reward": "RivalAgencyBootstrapRewardV1",
+    "curriculum": "RivalAgencyBootstrapCurriculumV1",
+    "environment": "RivalAgencyBootstrapEnvV1"
+  },
+  "runtime": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "repeat_action": false,
+    "observation_standardization": false,
+    "worker_count_start": 56,
+    "no_touch_timeout_seconds": 10.0,
+    "episode_timeout_seconds": 120.0
+  },
+  "ppo": {
+    "keep_m10_values_exact": true,
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 192000,
+    "experience_buffer_capacity_agent_steps": 600000,
+    "ppo_batch_agent_steps": 192000,
+    "minibatch_agent_steps": 48000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0
+  },
+  "reward": {
+    "goal": 10.0,
+    "concede": -10.0,
+    "combined_non_outcome_absolute_episode_budget": 7.5,
+    "components": {
+      "useful_speed_rate": {"absolute_episode_budget": 1.0, "max_rate_per_second": 0.015},
+      "ball_approach_potential": {"absolute_episode_budget": 1.0, "starting_weight": 0.20},
+      "ball_touch_event": {"absolute_episode_budget": 2.0, "base_per_distinct_touch": 0.30},
+      "aerial_touch_event": {"absolute_episode_budget": 1.5, "bonus_per_aerial_touch": 0.45, "minimum_ball_z": 180.0},
+      "touch_chain_event": {"absolute_episode_budget": 1.5, "bonuses": [0.0, 0.10, 0.20, 0.35, 0.50], "fifth_and_later_bonus": 0.50, "chain_timeout_seconds": 2.5},
+      "ball_progress_potential": {"absolute_episode_budget": 0.5, "starting_weight": 0.05}
+    },
+    "touch_debounce_native_ticks": 8,
+    "direct_action_press_rewards_forbidden": true,
+    "recovery_reward_during_bootstrap": 0.0,
+    "boost_waste_penalty_during_bootstrap": 0.0,
+    "dodge_resource_reward_during_bootstrap": 0.0
+  },
+  "curriculum_phases": {
+    "A": {
+      "hard_review_ceiling_total_bootstrap_hours": 10.0,
+      "weights": {"ground_acquisition": 0.30, "moving_ball_chase": 0.20, "touch_chain": 0.20, "easy_aerial_contact": 0.15, "easy_finish": 0.10, "natural": 0.05}
+    },
+    "B": {
+      "hard_review_ceiling_total_bootstrap_hours": 15.0,
+      "weights": {"ground_acquisition": 0.20, "moving_ball_chase": 0.15, "touch_chain": 0.20, "easy_aerial_contact": 0.15, "easy_finish": 0.10, "natural": 0.20}
+    },
+    "C": {
+      "hard_review_ceiling_total_bootstrap_hours": 25.0,
+      "weights": {"ground_acquisition": 0.15, "moving_ball_chase": 0.10, "touch_chain": 0.15, "easy_aerial_contact": 0.10, "easy_finish": 0.10, "natural": 0.40}
+    }
+  },
+  "evaluation_boundaries_added_bootstrap_hours": [2.5, 5.0, 10.0, 15.0, 20.0, 25.0],
+  "maximum_additional_bootstrap_simulated_game_hours": 25.0,
+  "maximum_additional_bootstrap_agent_steps": 21600000,
+  "production_promotion_authorized": false
+}
