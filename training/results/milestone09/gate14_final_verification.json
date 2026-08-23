@@ -1,0 +1,369 @@
+{
+  "checks": {
+    "all_committed_result_json_parsed": true,
+    "all_required_gate_results_passed": true,
+    "compile_passed": true,
+    "final_checkpoint_actor_matches_gate13": true,
+    "final_checkpoint_manifest_matches_gate13": true,
+    "final_checkpoint_outputs_finite": true,
+    "final_checkpoint_second_reload_exact": true,
+    "frozen_wisp_hashes_unchanged": true,
+    "frozen_wisp_selftest_passed": true,
+    "gate12_export_artifacts_match_evidence": true,
+    "gate12_export_independent_parity_passed": true,
+    "gate13_no_additional_training_or_promotion": true,
+    "geometry_authority_checks_passed": true,
+    "git_diff_check_passed": true,
+    "historical_stash_preserved": true,
+    "hygiene_scan_passed": true,
+    "large_artifacts_present_ignored_and_untracked": true,
+    "m08_final_boundary_preserved": true,
+    "main_aligned_with_origin_before_final_commit": true,
+    "no_training_process_running": true,
+    "only_gate14_files_uncommitted": true,
+    "production_default_remains_frozen_wisp": true,
+    "production_suite_90_passed": true,
+    "ruff_passed": true,
+    "scratch_v9_suite_78_passed": true
+  },
+  "commands": {
+    "compile": {
+      "command": "training\\.venv\\Scripts\\python.exe -m compileall -q training/rival_training training/scripts training/tests",
+      "name": "compileall",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 0.11547330010216683
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "name": "git_diff_check",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 0.0333091999636963
+    },
+    "production_tests": {
+      "command": ".venv\\Scripts\\python.exe -m pytest --basetemp .pytest_tmp/m09_gate14_evidence_production tests -q",
+      "name": "production_pytest",
+      "passed": true,
+      "pytest_passed_count": 90,
+      "pytest_warning_count": 2,
+      "return_code": 0,
+      "wall_seconds": 26.073992599966004
+    },
+    "ruff": {
+      "command": "training\\.venv\\Scripts\\python.exe -m ruff check training\\rival_training\\v9_actions.py training\\rival_training\\v9_benchmark.py training\\rival_training\\v9_canonical.py training\\rival_training\\v9_checkpoint.py training\\rival_training\\v9_curriculum.py training\\rival_training\\v9_deployment.py training\\rival_training\\v9_environment.py training\\rival_training\\v9_metrics.py training\\rival_training\\v9_observations.py training\\rival_training\\v9_policy.py training\\rival_training\\v9_rewards.py training\\rival_training\\v9_rlbot_corpus.py training\\rival_training\\v9_soccar_geometry.py training\\rival_training\\v9_spectator.py training\\rival_training\\v9_symmetry.py training\\rival_training\\v9_trainer.py training\\rival_training\\v9_transition_audit.py training\\scripts\\run_m09_action_gate.py training\\scripts\\run_m09_backend_decision_gate.py training\\scripts\\run_m09_canonical_gate.py training\\scripts\\run_m09_environment_stress_gate.py training\\scripts\\run_m09_export_gate.py training\\scripts\\run_m09_export_runtime_probe.py training\\scripts\\run_m09_hybrid_ppo_gate.py training\\scripts\\run_m09_hybrid_ppo_phase.py training\\scripts\\run_m09_native_corpus_capture.py training\\scripts\\run_m09_observation_parity_gate.py training\\scripts\\run_m09_pilot_evaluation.py training\\scripts\\run_m09_prediction_cadence_gate.py training\\scripts\\run_m09_reward_cadence_gate.py training\\scripts\\run_m09_rlbot_v5_geometry_authority.py training\\scripts\\run_m09_rlviser_spectator.py training\\scripts\\run_m09_scratch_live_smoke.py training\\scripts\\run_m09_scratch_pilot_phase.py training\\scripts\\run_m09_timing_parity_gate.py training\\scripts\\run_m09_transition_gate.py training\\scripts\\run_m09_worker_sweep_gate.py training\\scripts\\finalize_m09_gate13.py training\\scripts\\finalize_m09_gate14.py training\\tests\\test_v9_actions.py training\\tests\\test_v9_canonical_observation.py training\\tests\\test_v9_deployment.py training\\tests\\test_v9_environment.py training\\tests\\test_v9_pilot.py training\\tests\\test_v9_policy.py training\\tests\\test_v9_rewards.py training\\tests\\test_v9_rlbot_corpus.py training\\tests\\test_v9_symmetry.py training\\tests\\test_v9_trainer.py training\\tests\\test_v9_transition_audit.py training\\tests\\test_v9_worker_benchmark.py",
+      "name": "ruff",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 0.10492690000683069
+    },
+    "scratch_tests": {
+      "command": "training\\.venv\\Scripts\\python.exe -m pytest --basetemp .pytest_tmp/m09_gate14_evidence_scratch training\\tests\\test_v9_actions.py training\\tests\\test_v9_canonical_observation.py training\\tests\\test_v9_deployment.py training\\tests\\test_v9_environment.py training\\tests\\test_v9_pilot.py training\\tests\\test_v9_policy.py training\\tests\\test_v9_rewards.py training\\tests\\test_v9_rlbot_corpus.py training\\tests\\test_v9_symmetry.py training\\tests\\test_v9_trainer.py training\\tests\\test_v9_transition_audit.py training\\tests\\test_v9_worker_benchmark.py -q",
+      "name": "scratch_v9_pytest",
+      "passed": true,
+      "pytest_passed_count": 78,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 10.241225400008261
+    },
+    "wisp_selftest": {
+      "collision_mesh_count": 16,
+      "command": ".venv\\Scripts\\python.exe bot/bot.py --self-test",
+      "compatibility_action_index": 16,
+      "finite_logits": true,
+      "models": {
+        "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+      },
+      "name": "frozen_wisp_selftest",
+      "observation_shape": [
+        432
+      ],
+      "passed": true,
+      "policy_output_shape": [
+        90
+      ],
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "selected_action_index": 16,
+      "status": "pass",
+      "wall_seconds": 1.6480994999874383
+    }
+  },
+  "conclusion": {
+    "all_gates_0_through_14_passed": true,
+    "final_checkpoint_agent_steps": 1680214,
+    "final_checkpoint_simulated_game_hours": 1.9446921296296296,
+    "production_default": "frozen_wisp_production",
+    "promotion_decision": "not_authorized_not_promoted",
+    "remaining_required_action": "Commit/push this compact Gate 14 result and documentation, then read back origin/main and report the final SHA.",
+    "scratch_candidate_promoted": false
+  },
+  "documentation": {
+    "final_remote_sha_recorded_in_completion_handoff": true,
+    "path": "docs/MILESTONE_09_RESULTS.md",
+    "sha256": "7b7e89f1657a358b8c042f29e2365181aae24d0a4d0ea2509fbe7f5f3211085f"
+  },
+  "gate": 14,
+  "gate_name": "repository and final verification",
+  "gate_results": [
+    {
+      "path": "training/results/milestone09/gate01_action_contract.json",
+      "sha256": "cc9aef89547d2adcb4cdb7c35cdc1c0671cf65e7b688e6b1ff9b95fd67d9108d",
+      "size_bytes": 4814,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate02_canonical_schema.json",
+      "sha256": "3ccf10b1bf4b2a8b19f5c21aa25ba8c2b13a01a296e4d6aba2b8490219cdd3e3",
+      "size_bytes": 6342,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate03_native_capture.json",
+      "sha256": "26f0e066fea25383a2c95c5e9100424cf3e1e6aa1deeac440e3833b00ebc4ec4",
+      "size_bytes": 4851,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate03_observation_parity.json",
+      "sha256": "e578682eab04efe0ee601dc6a1063bf56f798792b812449865ccdf79f8a63bb3",
+      "size_bytes": 37967,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate04_prediction_cadence.json",
+      "sha256": "bd010c10ceded11a70cc635c04249d0d3ff714e3ea69c79234c4fcc24ae859c1",
+      "size_bytes": 14115,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate05_timing_parity.json",
+      "sha256": "d41b674b48469f2453c0660ee58faed1210db763d4291c6755c8d351a6d5ad7b",
+      "size_bytes": 7450,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate06_transition_audit.json",
+      "sha256": "7a1452c60f7b2d64b4ac4078a061a94b650c7a8fb33b69b4a38c57c2a6bd84b8",
+      "size_bytes": 507989,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate07_reward_cadence.json",
+      "sha256": "9c3caacdf93301f755ee30095e2727aae288a0bcc045216ed01c97c008305e2b",
+      "size_bytes": 36994,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate08_environment_stress.json",
+      "sha256": "9d2d9c989dcba966eb018ffb9a82cb13b90df24286264b767f82f5663b579fb7",
+      "size_bytes": 28749,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate09_worker_sweep.json",
+      "sha256": "ce086f4c5bd3947f2bb8995088486507911680613ef27dfe3467b86badf5a4eb",
+      "size_bytes": 129011,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate10_backend_decision.json",
+      "sha256": "f75c7c8d7478f85e35eefe7a816e2a75372f4951b42ff14437c5320a2597339a",
+      "size_bytes": 5854,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate11_hybrid_ppo.json",
+      "sha256": "e3f065ad20c88e4b3a48c6daa86561b454cf9276322fe9c66a3a262e17a34224",
+      "size_bytes": 282258,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate12_cpu_runtime_probe.json",
+      "sha256": "497991eb1f4aabbdfa402d59189a3714c0488bc8a0a2ed6a5b5d00353d69c777",
+      "size_bytes": 6114,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate12_export_live_inference.json",
+      "sha256": "f2355608c5b8931a954a44036779e9e40a04435cf241d679fb1560ea7760b40d",
+      "size_bytes": 22415,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate12_scratch_live_smoke.json",
+      "sha256": "0c43a3db6b07cf1dfd29f76adf13bb6fca5cc2e54aa1dc1d6ebd02a082939992",
+      "size_bytes": 7764,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/gate13_scratch_pilot.json",
+      "sha256": "e828a3a8a30a69caf60762b0c82440e374bc8bdddfcdc014d0b0ef4276244b81",
+      "size_bytes": 81917,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone09/rlbot_v5_geometry_authority.json",
+      "sha256": "6eed1e148e269470bddf53f922069153fc6ff36fdb028875661984e30ddb7109",
+      "size_bytes": 14120,
+      "status": "passed"
+    }
+  ],
+  "generated_at_utc": "2026-08-23T20:27:28.979047+00:00",
+  "independent_artifact_reload": {
+    "final_gate13_checkpoint": {
+      "actor_optimizer_state_entries": 46,
+      "actor_sha256": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5",
+      "critic_optimizer_state_entries": 43,
+      "cumulative_agent_steps": 1680214,
+      "directory": "training/checkpoints/milestone09/gate13-20260823T200008Z/phase2/1680214",
+      "held_output_shape": {
+        "analog_log_std": [
+          32,
+          5
+        ],
+        "analog_mean": [
+          32,
+          5
+        ],
+        "button_logits": [
+          32,
+          8
+        ]
+      },
+      "held_outputs_finite": true,
+      "manifest_sha256": "9b08b454f587248ed184a194aac9b57d904fe1c5ba5b8efe8e5b9e84c9ae469e",
+      "second_reload_maximum_parameter_error": 0.0,
+      "simulated_game_hours": 1.9446921296296296
+    },
+    "selected_gate12_export": {
+      "all_outputs_finite": true,
+      "artifact": {
+        "matches_committed_evidence": true,
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+        "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+        "size_bytes": 7881248
+      },
+      "held_observations": 32,
+      "held_reference": {
+        "matches_committed_evidence": true,
+        "path": "training/artifacts/milestone09/gate12/held_export_reference.npz",
+        "sha256": "1c0815ad92af96e8fc95ec00376da035f3adbcf0aefac187c0abf808ecced822",
+        "size_bytes": 96022
+      },
+      "maximum_absolute_errors": {
+        "analog_log_std": 0.0,
+        "analog_mean": 1.1920928955078125e-07,
+        "button_logits": 1.3783574104309082e-07,
+        "controller": 1.1920928955078125e-07
+      },
+      "metadata": {
+        "matches_committed_evidence": true,
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+        "sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+        "size_bytes": 3771
+      },
+      "parity_passed": true,
+      "tolerance": 1e-05
+    }
+  },
+  "milestone": 9,
+  "production": {
+    "actual_model_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "default_probe": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "expected_model_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "promoted": false
+  },
+  "repository_hygiene": {
+    "allowed_precommit_worktree_scope": [
+      {
+        "path": "docs/MILESTONE_09_RESULTS.md",
+        "status": "??"
+      },
+      {
+        "path": "training/scripts/finalize_m09_gate14.py",
+        "status": "??"
+      }
+    ],
+    "branch": "main",
+    "content_scan": {
+      "absolute_path_hits": [],
+      "apparent_secret_hits": [],
+      "files_scanned": 20,
+      "passed": true
+    },
+    "historical_stash_entry": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "ignored_artifacts": [
+      {
+        "exists": true,
+        "ignored": true,
+        "passed": true,
+        "path": "training/checkpoints/milestone09/gate13-20260823T200008Z/phase2/1680214/actor.pt",
+        "tracked": false
+      },
+      {
+        "exists": true,
+        "ignored": true,
+        "passed": true,
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+        "tracked": false
+      },
+      {
+        "exists": true,
+        "ignored": true,
+        "passed": true,
+        "path": "training/artifacts/milestone09/gate12/held_export_reference.npz",
+        "tracked": false
+      },
+      {
+        "exists": true,
+        "ignored": true,
+        "passed": true,
+        "path": "training/tools/rlviser/rlviser.exe",
+        "tracked": false
+      },
+      {
+        "exists": true,
+        "ignored": true,
+        "passed": true,
+        "path": "evidence/raw/rival-v9-gate12-live-20260823T193500Z/native_packets.jsonl",
+        "tracked": false
+      }
+    ],
+    "pre_final_commit_head": "3639fdbe47c78e4e7e61576b25e23b7088b9fba2",
+    "pre_final_commit_origin_main": "3639fdbe47c78e4e7e61576b25e23b7088b9fba2",
+    "running_training_processes": [],
+    "unexpected_worktree_status": []
+  },
+  "reproduction_commands": {
+    "finalize": "training/.venv/Scripts/python.exe training/scripts/finalize_m09_gate14.py",
+    "production_tests": ".venv/Scripts/python.exe -m pytest --basetemp .pytest_tmp/m09_gate14_evidence_production tests -q",
+    "ruff": "training/.venv/Scripts/python.exe -m ruff check training/rival_training/v9_*.py training/scripts/run_m09_*.py training/scripts/finalize_m09_*.py training/tests/test_v9_*.py",
+    "scratch_tests": "training/.venv/Scripts/python.exe -m pytest --basetemp .pytest_tmp/m09_gate14_evidence_scratch training/tests/test_v9_*.py -q",
+    "selftest": ".venv/Scripts/python.exe bot/bot.py --self-test"
+  },
+  "schema_version": 1,
+  "status": "passed"
+}
