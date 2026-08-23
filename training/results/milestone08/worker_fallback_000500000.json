@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "purpose": "milestone08_campaign_worker_restart_fallback",
+  "source_checkpoint_agent_steps": 499748,
+  "source_checkpoint_directory": "training/checkpoints/milestone08/000499748",
+  "from_worker_count": 64,
+  "to_worker_count": 56,
+  "failed_launch_collected_agent_steps": 0,
+  "failed_launch_error": {
+    "type": "OSError",
+    "windows_error": 1455,
+    "summary": "Windows commit/paging capacity was exhausted while worker processes concurrently loaded Torch CUDA DLLs during the 1M resume launch. The learner did not initialize and no PPO iteration began."
+  },
+  "checkpoint_integrity_after_abort": {
+    "cumulative_agent_steps": 499748,
+    "cumulative_model_updates": 27,
+    "checkpoint_directory_count": 2,
+    "unexpected_new_checkpoint": false
+  },
+  "measurement_context": {
+    "milestone06_measured_optimum_workers": 56,
+    "milestone06_agent_steps_per_second": 12039.091910850184,
+    "milestone08_short_sanity": {
+      "56": {
+        "mean_agent_steps_per_second": 1197.2951988617824,
+        "coefficient_of_variation": 0.05491631600840871,
+        "worker_rss_mib": 31389.207540760868,
+        "stable": true
+      },
+      "64": {
+        "mean_agent_steps_per_second": 1208.196974479411,
+        "coefficient_of_variation": 0.052126117178100694,
+        "worker_rss_mib": 35888.88332201087,
+        "stable": true
+      }
+    },
+    "apparent_64_over_56_throughput_gain_fraction": 0.009104840742962538,
+    "additional_64_worker_rss_mib": 4499.67578125
+  },
+  "decision": {
+    "selected_worker_count": 56,
+    "reason": "The short M08 means differ by less than one percent while 56 is the prior measured optimum, uses about 4.5 GiB less worker RSS, and avoids the observed 64-worker restart-time commit failure.",
+    "user_steering": "Use the established 56-worker optimum rather than treating the noisy sub-one-percent 64-worker mean as decisive.",
+    "architecture_reward_policy_or_objective_changed": false
+  },
+  "production_promoted": false
+}

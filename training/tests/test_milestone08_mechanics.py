@@ -9,6 +9,7 @@ from rival_training.config import canonical_config_sha256, load_milestone08_conf
 from rival_training.m08_campaign import (
     M08_CHECKPOINT_FORMAT,
     M08_STATE_FILE,
+    _validate_worker_transition,
     make_m08_ppo,
     verify_m08_checkpoint,
 )
@@ -87,3 +88,31 @@ def test_full_ppo_checkpoint_reloads_exact_mechanics_logits(tmp_path) -> None:
     assert proof["exact_logits"] is True
     assert proof["max_abs_logit_error"] == 0.0
     assert proof["state_file_parse_passed"] is True
+
+
+def test_worker_transition_requires_exact_prospective_evidence(tmp_path) -> None:
+    restored = {"worker_count": 64, "cumulative_agent_steps": 499_748}
+    evidence_path = tmp_path / "worker_transition.json"
+    evidence_path.write_text(
+        json.dumps(
+            {
+                "status": "authorized",
+                "source_checkpoint_agent_steps": 499_748,
+                "from_worker_count": 64,
+                "to_worker_count": 56,
+                "failed_launch_collected_agent_steps": 0,
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    transition = _validate_worker_transition(
+        evidence_path,
+        restored=restored,
+        requested_workers=56,
+    )
+
+    assert transition is not None
+    assert transition["from_worker_count"] == 64
+    assert transition["to_worker_count"] == 56
+    assert all(transition["checks"].values())

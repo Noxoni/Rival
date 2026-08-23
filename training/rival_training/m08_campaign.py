@@ -312,11 +312,53 @@ def _optimizer_ownership(ppo: PPOLearner) -> dict[str, Any]:
     }
 
 
+def _validate_worker_transition(
+    evidence_path: str | Path | None,
+    *,
+    restored: dict[str, Any],
+    requested_workers: int,
+) -> dict[str, Any] | None:
+    previous_workers = int(restored["worker_count"])
+    if previous_workers == requested_workers:
+        return None
+    if evidence_path is None:
+        raise ValueError(
+            "Changing M08 workers across a checkpoint requires prospective "
+            "--worker-transition-evidence"
+        )
+    path = Path(evidence_path).resolve()
+    evidence = json.loads(path.read_text(encoding="utf-8"))
+    checks = {
+        "status_authorized": evidence.get("status") == "authorized",
+        "source_steps_match": int(evidence.get("source_checkpoint_agent_steps", -1))
+        == int(restored["cumulative_agent_steps"]),
+        "from_workers_match": int(evidence.get("from_worker_count", -1))
+        == previous_workers,
+        "to_workers_match": int(evidence.get("to_worker_count", -1))
+        == requested_workers,
+        "no_steps_collected_during_failed_launch": evidence.get(
+            "failed_launch_collected_agent_steps"
+        )
+        == 0,
+    }
+    if not all(checks.values()):
+        raise ValueError(f"M08 worker transition evidence failed: {checks}")
+    return {
+        "evidence_path": _portable(path),
+        "evidence_sha256": sha256_file(path),
+        "from_worker_count": previous_workers,
+        "to_worker_count": requested_workers,
+        "source_checkpoint_agent_steps": int(restored["cumulative_agent_steps"]),
+        "checks": checks,
+    }
+
+
 def run_m08_training_boundary(
     target_agent_steps: int,
     *,
     resume_directory: str | Path | None = None,
     worker_count: int | None = None,
+    worker_transition_evidence: str | Path | None = None,
     device: str = "cuda:0",
 ) -> dict[str, Any]:
     config = load_milestone08_config()
@@ -337,6 +379,8 @@ def run_m08_training_boundary(
     iteration_reports: list[dict[str, Any]] = []
     started = time.perf_counter()
     source_checkpoint = None
+    worker_transition = None
+    worker_transition_history: list[dict[str, Any]] = []
     try:
         if resume_directory is None:
             initial_state = {
@@ -348,6 +392,7 @@ def run_m08_training_boundary(
                 "policy_average_reward": None,
                 "source_checkpoint": None,
                 "mechanics_prior": orchestrator.ppo_learner.policy.prior_state(),
+                "worker_transition_history": [],
             }
             checkpoint_manifests.append(
                 save_m08_checkpoint(orchestrator.ppo_learner, initial_state, config)
@@ -358,8 +403,16 @@ def run_m08_training_boundary(
             restored = _load_full_checkpoint(source, orchestrator, config)
             if int(restored["cumulative_agent_steps"]) >= target:
                 raise ValueError("Resume checkpoint already reached requested boundary")
-            if int(restored["worker_count"]) != workers:
-                raise ValueError("Worker count may change only through prospective evidence")
+            worker_transition_history = list(
+                restored.get("worker_transition_history", [])
+            )
+            worker_transition = _validate_worker_transition(
+                worker_transition_evidence,
+                restored=restored,
+                requested_workers=workers,
+            )
+            if worker_transition is not None:
+                worker_transition_history.append(worker_transition)
 
         ownership = _optimizer_ownership(orchestrator.ppo_learner)
         if not ownership["optimizer_exactly_matches_policy_parameters"] or ownership[
@@ -458,6 +511,7 @@ def run_m08_training_boundary(
             "policy_average_reward": float(iteration_reports[-1]["mean_reward"]),
             "source_checkpoint": source_checkpoint,
             "mechanics_prior": orchestrator.ppo_learner.policy.prior_state(),
+            "worker_transition_history": worker_transition_history,
         }
         checkpoint_manifests.append(
             save_m08_checkpoint(orchestrator.ppo_learner, trainer_state, config)
@@ -484,6 +538,8 @@ def run_m08_training_boundary(
             ),
             "iterations_this_invocation": len(iteration_reports),
             "worker_count": workers,
+            "worker_transition": worker_transition,
+            "worker_transition_history": worker_transition_history,
             "config_sha256": canonical_config_sha256(config),
             "optimizer_ownership": ownership,
             "strategic_branch_before": strategic_before,

@@ -24,11 +24,13 @@ def main() -> int:
     )
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--workers", type=int, choices=(48, 56, 64), default=56)
+    parser.add_argument("--worker-transition-evidence", type=Path)
     args = parser.parse_args()
     report = run_m08_training_boundary(
         args.target,
         resume_directory=args.resume,
         worker_count=args.workers,
+        worker_transition_evidence=args.worker_transition_evidence,
     )
     print(json.dumps(report, indent=2))
     return 0 if report["health"]["passed"] else 2
