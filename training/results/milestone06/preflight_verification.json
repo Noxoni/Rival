@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "production_tests": {
+    "portable_command": ".venv/Scripts/python.exe -m pytest -q --basetemp .pytest_tmp/m06-root-20260822b",
+    "passed": 72,
+    "failed": 0,
+    "warnings": 2,
+    "warning_summary": "TorchScript load deprecation warnings only"
+  },
+  "training_tests": {
+    "portable_command": "training/.venv/Scripts/python.exe -m pytest training/tests -q --basetemp .pytest_tmp/m06-training-20260822b",
+    "passed": 19,
+    "failed": 0,
+    "warnings": 19,
+    "warning_summary": "TorchScript script/save/load deprecation warnings only"
+  },
+  "targeted_lint": {
+    "portable_command": "training/.venv/Scripts/python.exe -m ruff check <all M06-modified Python files>",
+    "status": "passed"
+  },
+  "compile": {
+    "portable_command": "training/.venv/Scripts/python.exe -m compileall -q bot scripts training/rival_training training/scripts",
+    "status": "passed"
+  },
+  "gates": {
+    "action_prefix_and_fingerprint_parity": "passed",
+    "config_serialization": "passed",
+    "ppo_consistent_prior_and_log_probability": "passed",
+    "checkpoint_fresh_reload_and_optimizer_state": "passed",
+    "reward_v2_finiteness_and_contribution": "passed",
+    "weighted_curriculum_distribution": "passed",
+    "headless_frozen_wisp_100_game_smoke": "passed",
+    "exact_checkpoint_policy_export": "passed",
+    "production_runtime_candidate_load": "passed",
+    "frozen_production_default_unchanged": "passed"
+  },
+  "known_non_failure_warnings": [
+    "rlgym-ppo prints one extra reset warning per spawned worker while discovering spaces",
+    "PyTorch 2.13 reports TorchScript APIs as deprecated; the pinned production and training runtimes both loaded finite 158-logit exports"
+  ]
+}

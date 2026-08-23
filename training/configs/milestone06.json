@@ -1,0 +1,155 @@
+{
+  "schema_version": 2,
+  "campaign_id": "rival-milestone06-serious-v1",
+  "campaign_ceiling_agent_steps": 100000000,
+  "environment": {
+    "version": "RivalCurriculum1v1RocketSimV2",
+    "workers": 56,
+    "worker_selection": {
+      "method": "highest stable sustained agent-steps/sec",
+      "evidence": "training/results/milestone06/throughput_sweep.json",
+      "required_candidates": [24, 32, 40, 48, 56, 64],
+      "selected_agent_steps_per_second": 12039.091910850184,
+      "selected_simulated_game_seconds_per_second": 200.65153184750307
+    },
+    "cadence": "mechanics4",
+    "cadence_ticks": 4,
+    "physics_tick_rate_hz": 120,
+    "renderer": null,
+    "rlbot_action_delay": true,
+    "goal_terminates_episode": true,
+    "no_touch_timeout_seconds": 30.0,
+    "episode_timeout_seconds": 300.0
+  },
+  "ppo": {
+    "agent_steps_per_iteration": 50000,
+    "experience_buffer_size": 150000,
+    "batch_size": 48000,
+    "minibatch_size": 12000,
+    "epochs": 1,
+    "policy_learning_rate": 1e-6,
+    "critic_learning_rate": 1e-4,
+    "clip_range": 0.2,
+    "entropy_coefficient": 0.001,
+    "gamma": 0.99498743710662,
+    "gamma_rationale": "sqrt(0.99) preserves the physical discount horizon when moving from 8 ticks per action to 4",
+    "gae_lambda": 0.95,
+    "standardize_observations": false,
+    "standardize_returns": false
+  },
+  "checkpointing": {
+    "interval_agent_steps": 1000000,
+    "evaluation_interval_agent_steps": 5000000,
+    "verify_fresh_reload": true,
+    "large_artifacts_git_ignored": true
+  },
+  "stages": [
+    {
+      "name": "stage_a",
+      "start_agent_steps": 0,
+      "end_agent_steps": 5000000,
+      "appended_logit_offset": "calibrated",
+      "curriculum_weights": {
+        "natural": 0.90,
+        "aerial_wall_possession": 0.04,
+        "recovery": 0.03,
+        "low_resource_aerial": 0.03
+      }
+    },
+    {
+      "name": "stage_b",
+      "start_agent_steps": 5000000,
+      "end_agent_steps": 20000000,
+      "appended_logit_offset_ceiling": -4.0,
+      "curriculum_weights": {
+        "natural": 0.80,
+        "aerial_wall_possession": 0.08,
+        "recovery": 0.06,
+        "low_resource_aerial": 0.06
+      }
+    },
+    {
+      "name": "stage_c",
+      "start_agent_steps": 20000000,
+      "end_agent_steps": 50000000,
+      "appended_logit_offset_ceiling": -2.0,
+      "curriculum_weights": {
+        "natural": 0.78,
+        "aerial_wall_possession": 0.09,
+        "recovery": 0.07,
+        "low_resource_aerial": 0.06
+      }
+    },
+    {
+      "name": "stage_d",
+      "start_agent_steps": 50000000,
+      "end_agent_steps": 100000000,
+      "appended_logit_offset_ceiling": 0.0,
+      "curriculum_weights": {
+        "natural": 0.76,
+        "aerial_wall_possession": 0.10,
+        "recovery": 0.08,
+        "low_resource_aerial": 0.06
+      }
+    }
+  ],
+  "action_exploration": {
+    "version": "RivalAppendedActionPriorV1",
+    "legacy_action_count": 90,
+    "expanded_action_count": 158,
+    "bootstrap_appended_bias": -12.0,
+    "normalized_actor_appended_bias": 0.0,
+    "candidate_offsets": [-10.0, -8.0, -6.0, -4.0, -2.0],
+    "calibration_natural_agent_observations": 100000,
+    "minimum_appended_probability_mass": 0.001,
+    "maximum_appended_probability_mass": 0.05,
+    "minimum_sampled_appended_share": 0.001,
+    "maximum_deterministic_appended_share": 0.005,
+    "minimum_legacy_top1_retention": 0.995,
+    "changes_only_at_stage_boundaries": true,
+    "export_policy": "bake checkpointed offset into appended actor biases and verify exact logits"
+  },
+  "reward": {
+    "version": "RivalRewardV2",
+    "goal": 10.0,
+    "concede": -10.0,
+    "possession_touch": 0.05,
+    "possession_control": 0.10,
+    "possession_progress": 0.10,
+    "progress": 0.02,
+    "airborne_boost_spend": -0.01,
+    "useful_airborne_boost_spend": 0.01,
+    "recovery_completion": 0.02,
+    "dodge_resource_acquisition": 0.005,
+    "productive_resource_followup": 0.01,
+    "wavedash_like_event": 0.003,
+    "useful_aerial_touch": 0.003,
+    "mechanics_component_absolute_step_cap": 0.02,
+    "named_mechanic_rewards_enabled": false
+  },
+  "evaluation": {
+    "headless_games": 100,
+    "headless_teacher_cadence_ticks": 8,
+    "headless_student_cadence_ticks": 4,
+    "deterministic": true,
+    "balanced_sides": true,
+    "rlbot_stage_games": 8,
+    "rlbot_final_games": 16,
+    "rlbot_game_speed": 5.0,
+    "headless_collapse_win_rate_drop": 0.20,
+    "maximum_appended_action_share_for_health": 0.35
+  },
+  "seeds": {
+    "training": 20260824,
+    "calibration": 20260823,
+    "evaluation": 20260825,
+    "audit": 20260826
+  },
+  "frozen_fingerprints": {
+    "wisp_prefix_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "expanded_table_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "wisp_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "wisp_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "bootstrap_actor_sha256": "0ae817b0dd15330c3a4e8ee469803c01ad4bde4fbe07d42a606d1ac513015a37"
+  }
+}

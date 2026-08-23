@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import copy
 from typing import Any
 
 import numpy as np
@@ -11,6 +12,29 @@ import torch
 from .actions import build_expanded_action_table
 from .checkpoint import load_actor_checkpoint, portable_path
 from .teacher import WispStudentActor, sha256_file
+from .teacher import TEACHER_ACTION_COUNT
+
+
+class ExactPolicyExport(torch.nn.Module):
+    """Inference-only actor plus prior with the same addition order as PPO."""
+
+    def __init__(self, actor: WispStudentActor, appended_logit_offset: float) -> None:
+        super().__init__()
+        self.actor = copy.deepcopy(actor).to("cpu").eval()
+        self.action_count = actor.action_count
+        prior = torch.zeros(self.action_count, dtype=torch.float32)
+        prior[TEACHER_ACTION_COUNT:] = float(appended_logit_offset)
+        self.register_buffer("action_logit_prior", prior)
+
+    def forward(self, observations: torch.Tensor) -> torch.Tensor:
+        return self.actor(observations) + self.action_logit_prior
+
+
+def make_exact_policy_export(policy) -> ExactPolicyExport:
+    return ExactPolicyExport(
+        policy.actor,
+        float(policy.appended_logit_offset.detach().cpu().item()),
+    )
 
 
 class RivalInferenceSession:
@@ -58,7 +82,7 @@ class RivalInferenceSession:
 
 
 def export_torchscript(
-    actor: WispStudentActor,
+    actor: torch.nn.Module,
     path: str | Path,
 ) -> dict[str, Any]:
     destination = Path(path)

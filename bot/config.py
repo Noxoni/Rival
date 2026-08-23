@@ -7,16 +7,48 @@ from backend.model import ActivationType, ModelInfo
 
 RLBOT_AGENT_ID = "noxoni/rival/dev-v1"  # Must match rival.bot.toml
 
-TICK_SKIP = 8
-ACTION_DELAY = TICK_SKIP - 1
 MAX_PLAYERS_PER_TEAM = 3
 
 _BASE_DIR = Path(__file__).resolve().parent
 _MODELS_DIR = _BASE_DIR / "models"
 
-MODEL_INFO_POLICY = ModelInfo(_MODELS_DIR / "POLICY.lt", ActivationType.RELU)
-MODEL_INFO_SHARED_HEAD = ModelInfo(_MODELS_DIR / "SHARED_HEAD.lt", ActivationType.RELU)
-#                         ^ Set to None if you don't have a shared head export
+_candidate_model_raw = os.environ.get("RIVAL_CANDIDATE_MODEL_PATH", "").strip()
+CANDIDATE_POLICY_ENABLED = bool(_candidate_model_raw)
+CANDIDATE_MODEL_PATH = (
+    Path(_candidate_model_raw).expanduser().resolve()
+    if CANDIDATE_POLICY_ENABLED
+    else None
+)
+CANDIDATE_ACTION_TABLE_PATH = (
+    Path(
+        os.environ.get(
+            "RIVAL_CANDIDATE_ACTION_TABLE_PATH",
+            str(_MODELS_DIR / "RIVAL_ACTIONS_V1.npy"),
+        )
+    )
+    .expanduser()
+    .resolve()
+    if CANDIDATE_POLICY_ENABLED
+    else None
+)
+
+if CANDIDATE_POLICY_ENABLED:
+    MODEL_INFO_POLICY = ModelInfo(CANDIDATE_MODEL_PATH, ActivationType.RELU)
+    MODEL_INFO_SHARED_HEAD = None
+    POLICY_RUNTIME_MODE = "milestone06_trained_candidate"
+else:
+    MODEL_INFO_POLICY = ModelInfo(_MODELS_DIR / "POLICY.lt", ActivationType.RELU)
+    MODEL_INFO_SHARED_HEAD = ModelInfo(_MODELS_DIR / "SHARED_HEAD.lt", ActivationType.RELU)
+    POLICY_RUNTIME_MODE = "frozen_wisp_production"
+
+TICK_SKIP = int(
+    os.environ.get("RIVAL_TICK_SKIP", "4" if CANDIDATE_POLICY_ENABLED else "8")
+)
+if CANDIDATE_POLICY_ENABLED and TICK_SKIP != 4:
+    raise ValueError("Milestone 06 candidate deployment requires RIVAL_TICK_SKIP=4")
+if not CANDIDATE_POLICY_ENABLED and TICK_SKIP != 8:
+    raise ValueError("Frozen Wisp production deployment requires tick skip 8")
+ACTION_DELAY = TICK_SKIP - 1
 
 MODEL_DEVICE = "cpu"
 

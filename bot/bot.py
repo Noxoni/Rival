@@ -68,7 +68,10 @@ class RivalBot(rlbot.managers.Bot):
         """ Action chosen this step, applied AFTER the action delay """
 
         self.obs_builder = CustomObs()
-        self.action_parser = XMirroredActionParser()
+        self.action_parser = XMirroredActionParser(
+            config.CANDIDATE_ACTION_TABLE_PATH,
+            allow_all_actions=config.CANDIDATE_POLICY_ENABLED,
+        )
 
         self.models: ModelSet | None = None
         """ Model storage"""
@@ -111,6 +114,12 @@ class RivalBot(rlbot.managers.Bot):
         self.last_tactical_metrics = None
         session_metadata = {
             **config.TELEMETRY_SESSION_METADATA,
+            "policy_runtime": {
+                "mode": config.POLICY_RUNTIME_MODE,
+                "candidate_enabled": config.CANDIDATE_POLICY_ENABLED,
+                "tick_skip": config.TICK_SKIP,
+                "action_count": len(self.action_parser.actions),
+            },
             "challenge_calibration": {
                 "mode": self.challenge_calibration.mode.value,
                 "treatment_enabled": (
@@ -165,7 +174,11 @@ class RivalBot(rlbot.managers.Bot):
         self.state_adapter = RocketSimStateAdapter(config.ROCKETSIM_COLLISION_DIR)
 
         self.logger.info(
-            "Rival policy inspection ready (top_n=%d, telemetry=%s, logits=%s)",
+            "Rival policy inspection ready (mode=%s, actions=%d, tick_skip=%d, "
+            "top_n=%d, telemetry=%s, logits=%s)",
+            config.POLICY_RUNTIME_MODE,
+            len(self.action_parser.actions),
+            config.TICK_SKIP,
             config.POLICY_TOP_N,
             config.TELEMETRY_ENABLED,
             config.TELEMETRY_INCLUDE_LOGITS,

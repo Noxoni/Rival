@@ -273,6 +273,9 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         self._prediction_tick: int | None = None
         self._prediction: list[tuple[np.ndarray, np.ndarray]] = []
 
+    def seed(self, seed: int) -> None:
+        self._rng = np.random.default_rng(int(seed))
+
     def get_obs_space(self, agent: AgentID) -> tuple[str, int]:
         return "real", OBSERVATION_SIZE
 

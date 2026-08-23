@@ -1,3 +1,6 @@
+from pathlib import Path
+
+import numpy as np
 import torch
 from backend.gamestate.action import Action
 from backend.gamestate.gamestate import GameState
@@ -7,7 +10,12 @@ from backend.gamestate.team import Team
 
 # DefaultAction
 class DefaultAction:
-    def __init__(self):
+    def __init__(
+        self,
+        action_table_path: str | Path | None = None,
+        *,
+        allow_all_actions: bool = False,
+    ):
         # Build lookup table
 
         R_B = [0, 1]
@@ -66,6 +74,21 @@ class DefaultAction:
                                 )
                             )
 
+        frozen_prefix = np.stack([action.get_np() for action in self.actions])
+        if action_table_path is not None:
+            table = np.load(Path(action_table_path), allow_pickle=False)
+            table = np.asarray(table, dtype=np.float32)
+            if table.shape != (158, 8):
+                raise ValueError(
+                    f"Milestone 06 action table must have shape (158, 8), got {table.shape}"
+                )
+            if not np.array_equal(table[: len(frozen_prefix)], frozen_prefix):
+                raise ValueError("Milestone 06 action table changed the frozen 90-action prefix")
+            if len(np.unique(table, axis=0)) != len(table):
+                raise ValueError("Milestone 06 action table contains duplicate rows")
+            self.actions = [Action(row) for row in table]
+        self.allow_all_actions = bool(allow_all_actions)
+
         ### BUILD MASKS ###
 
         n = len(self.actions)
@@ -104,6 +127,8 @@ class DefaultAction:
             result &= ~mask
 
     def get_action_mask(self, player: Player, state: GameState) -> torch.Tensor:
+        if self.allow_all_actions:
+            return torch.ones(len(self.actions), dtype=torch.bool)
         result = torch.zeros(len(self.actions), dtype=torch.bool)
 
         if player.is_on_ground:

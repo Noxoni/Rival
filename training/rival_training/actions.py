@@ -75,6 +75,21 @@ def action_metadata() -> dict[str, Any]:
     }
 
 
+def action_family(index: int, table: np.ndarray | None = None) -> str:
+    """Classify appended controls generically for diagnostics, not rewards."""
+    if index < WISP_ACTION_COUNT:
+        return "legacy_wisp"
+    selected_table = build_expanded_action_table() if table is None else table
+    row = selected_table[index]
+    if row[5] > 0.5:
+        return "appended_jump_dodge_control"
+    if row[6] > 0.5:
+        return "appended_boosted_air_control"
+    if np.any(np.abs(row[2:5]) > 0.5):
+        return "appended_unboosted_air_control"
+    return "appended_ground_recovery_control"
+
+
 class RivalActionParser(ActionParser[AgentID, np.ndarray, np.ndarray, GameState, tuple[str, int]]):
     """Discrete action parser with live-Wisp X mirroring and selectable cadence."""
 

@@ -1,0 +1,589 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "one configured serious PPO iteration; excluded from campaign budget",
+  "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+  "worker_count": 56,
+  "selected_appended_logit_offset": -6.0,
+  "ppo_configuration": {
+    "agent_steps_per_iteration": 50000,
+    "experience_buffer_size": 150000,
+    "batch_size": 48000,
+    "minibatch_size": 12000,
+    "epochs": 1,
+    "policy_learning_rate": 1e-06,
+    "critic_learning_rate": 0.0001,
+    "clip_range": 0.2,
+    "entropy_coefficient": 0.001,
+    "gamma": 0.99498743710662,
+    "gamma_rationale": "sqrt(0.99) preserves the physical discount horizon when moving from 8 ticks per action to 4",
+    "gae_lambda": 0.95,
+    "standardize_observations": false,
+    "standardize_returns": false
+  },
+  "timing": {
+    "worker_count": 56,
+    "target_agent_steps": 50000,
+    "collected_agent_steps": 50008,
+    "experience_records": 50008,
+    "experience_buffer_records": 50008,
+    "package_collection_seconds": 4.624969800002873,
+    "collection_wall_seconds": 5.042437799973413,
+    "ppo_update_wall_seconds": 0.43775479996111244,
+    "iteration_wall_seconds": 5.753021899960004,
+    "agent_steps_per_collection_second": 10812.611143962267,
+    "agent_steps_per_iteration_wall_second": 8692.475166894057
+  },
+  "reward_summary": {
+    "count": 50008,
+    "mean": 0.0017786189215582603,
+    "minimum": -10.001771926879883,
+    "maximum": 10.004055976867676
+  },
+  "actions": {
+    "sampled_action_count": 50008,
+    "legacy_action_count": 49941,
+    "appended_action_count": 67,
+    "appended_action_share": 0.0013397856342985122,
+    "mean_appended_probability_mass": 0.0012565420474857092,
+    "full_action_counts": [
+      544,
+      709,
+      528,
+      634,
+      574,
+      669,
+      826,
+      743,
+      702,
+      690,
+      708,
+      707,
+      1290,
+      898,
+      643,
+      428,
+      1006,
+      742,
+      667,
+      368,
+      1284,
+      830,
+      603,
+      395,
+      370,
+      552,
+      811,
+      531,
+      711,
+      477,
+      683,
+      511,
+      198,
+      262,
+      648,
+      501,
+      176,
+      162,
+      686,
+      502,
+      224,
+      146,
+      700,
+      492,
+      644,
+      469,
+      595,
+      535,
+      741,
+      484,
+      744,
+      552,
+      678,
+      466,
+      199,
+      150,
+      158,
+      140,
+      607,
+      501,
+      210,
+      124,
+      710,
+      446,
+      612,
+      510,
+      659,
+      653,
+      772,
+      798,
+      714,
+      726,
+      607,
+      717,
+      154,
+      123,
+      628,
+      674,
+      172,
+      122,
+      670,
+      579,
+      169,
+      153,
+      722,
+      623,
+      675,
+      683,
+      662,
+      680,
+      1,
+      3,
+      0,
+      0,
+      2,
+      1,
+      1,
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      2,
+      1,
+      0,
+      0,
+      2,
+      5,
+      3,
+      0,
+      1,
+      3,
+      1,
+      3,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      0,
+      1,
+      0,
+      2,
+      0,
+      3,
+      0,
+      2,
+      1,
+      1,
+      2,
+      0,
+      0,
+      1,
+      0,
+      2,
+      0,
+      0,
+      1,
+      2,
+      0,
+      1,
+      0,
+      0,
+      0,
+      2,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "top_action_counts": [
+      {
+        "action_index": 12,
+        "count": 1290
+      },
+      {
+        "action_index": 20,
+        "count": 1284
+      },
+      {
+        "action_index": 16,
+        "count": 1006
+      },
+      {
+        "action_index": 13,
+        "count": 898
+      },
+      {
+        "action_index": 21,
+        "count": 830
+      },
+      {
+        "action_index": 6,
+        "count": 826
+      },
+      {
+        "action_index": 26,
+        "count": 811
+      },
+      {
+        "action_index": 69,
+        "count": 798
+      },
+      {
+        "action_index": 68,
+        "count": 772
+      },
+      {
+        "action_index": 50,
+        "count": 744
+      },
+      {
+        "action_index": 7,
+        "count": 743
+      },
+      {
+        "action_index": 17,
+        "count": 742
+      }
+    ]
+  },
+  "rollout_metrics": {
+    "schema_version": 1,
+    "metric_vector_count": 25004,
+    "reward_components": {
+      "outcome": {
+        "count": 50008,
+        "mean": 0.0,
+        "absolute_mean": 0.007198848184290513,
+        "minimum": -10.0,
+        "maximum": 10.0,
+        "cumulative_signed": 0.0,
+        "cumulative_absolute": 360.0,
+        "share_of_total_absolute_shaping": 0.0
+      },
+      "possession": {
+        "count": 50008,
+        "mean": 0.0015921405714122633,
+        "absolute_mean": 0.0015921405714122633,
+        "minimum": 0.0,
+        "maximum": 0.1569029539823532,
+        "cumulative_signed": 79.61976569518447,
+        "cumulative_absolute": 79.61976569518447,
+        "share_of_total_absolute_shaping": 0.731837444512844
+      },
+      "progress": {
+        "count": 50008,
+        "mean": 0.0,
+        "absolute_mean": 0.0003878937403682904,
+        "minimum": -0.0020373091101646423,
+        "maximum": 0.0020373091101646423,
+        "cumulative_signed": 0.0,
+        "cumulative_absolute": 19.397790168337465,
+        "share_of_total_absolute_shaping": 0.17829780158284314
+      },
+      "boost_efficiency": {
+        "count": 50008,
+        "mean": -4.5129156056924505e-06,
+        "absolute_mean": 4.5129156056924505e-06,
+        "minimum": -0.00011100005940534174,
+        "maximum": 0.0,
+        "cumulative_signed": -0.22568188360946806,
+        "cumulative_absolute": 0.22568188360946806,
+        "share_of_total_absolute_shaping": 0.0020743900905951487
+      },
+      "recovery": {
+        "count": 50008,
+        "mean": 0.0001690348334952538,
+        "absolute_mean": 0.0001690348334952538,
+        "minimum": 0.0,
+        "maximum": 0.02950388938188553,
+        "cumulative_signed": 8.453093953430653,
+        "cumulative_absolute": 8.453093953430653,
+        "share_of_total_absolute_shaping": 0.07769792617563329
+      },
+      "mechanics_resource": {
+        "count": 50008,
+        "mean": 2.1956487125004197e-05,
+        "absolute_mean": 2.1956487125004197e-05,
+        "minimum": 0.0,
+        "maximum": 0.017999999225139618,
+        "cumulative_signed": 1.0980000081472099,
+        "cumulative_absolute": 1.0980000081472099,
+        "share_of_total_absolute_shaping": 0.01009243763808434
+      }
+    },
+    "mechanics_recovery": {
+      "airborne_dodge_uses": {
+        "count": 50008,
+        "mean": 0.01183810590305551,
+        "absolute_mean": 0.01183810590305551,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 592.0,
+        "cumulative_absolute": 592.0
+      },
+      "dodge_resource_acquisitions": {
+        "count": 50008,
+        "mean": 9.998400255959046e-05,
+        "absolute_mean": 9.998400255959046e-05,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 5.0,
+        "cumulative_absolute": 5.0
+      },
+      "productive_resource_followups": {
+        "count": 50008,
+        "mean": 3.9993601023836184e-05,
+        "absolute_mean": 3.9993601023836184e-05,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 2.0,
+        "cumulative_absolute": 2.0
+      },
+      "wavedash_like_events": {
+        "count": 50008,
+        "mean": 0.0007598784194528875,
+        "absolute_mean": 0.0007598784194528875,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 38.0,
+        "cumulative_absolute": 38.0
+      },
+      "wall_speed_recovery_events": {
+        "count": 50008,
+        "mean": 0.00013997760358342665,
+        "absolute_mean": 0.00013997760358342665,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 7.0,
+        "cumulative_absolute": 7.0
+      },
+      "aerial_boost_spent": {
+        "count": 50008,
+        "mean": 0.0014646956376107546,
+        "absolute_mean": 0.0014646956376107546,
+        "minimum": 0.0,
+        "maximum": 0.01110000628978014,
+        "cumulative_signed": 73.24649944563862,
+        "cumulative_absolute": 73.24649944563862
+      },
+      "aerial_useful_distance": {
+        "count": 50008,
+        "mean": 13.240332529156175,
+        "absolute_mean": 13.240332529156175,
+        "minimum": 0.0,
+        "maximum": 175.91802978515625,
+        "cumulative_signed": 662122.549118042,
+        "cumulative_absolute": 662122.549118042
+      },
+      "aerial_useful_touches": {
+        "count": 50008,
+        "mean": 0.006258998560230363,
+        "absolute_mean": 0.006258998560230363,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 313.0,
+        "cumulative_absolute": 313.0
+      },
+      "aerial_commitment_ends": {
+        "count": 50008,
+        "mean": 0.01311790113581827,
+        "absolute_mean": 0.01311790113581827,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 656.0,
+        "cumulative_absolute": 656.0
+      },
+      "aerial_end_boost": {
+        "count": 50008,
+        "mean": 0.2876033485174141,
+        "absolute_mean": 0.2876033485174141,
+        "minimum": 0.0,
+        "maximum": 100.0,
+        "cumulative_signed": 14382.468252658844,
+        "cumulative_absolute": 14382.468252658844
+      },
+      "recovery_window_starts": {
+        "count": 50008,
+        "mean": 0.007738761798112302,
+        "absolute_mean": 0.007738761798112302,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 387.0,
+        "cumulative_absolute": 387.0
+      },
+      "recovery_completions": {
+        "count": 50008,
+        "mean": 0.006758918573028316,
+        "absolute_mean": 0.006758918573028316,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 338.0,
+        "cumulative_absolute": 338.0
+      },
+      "recovery_time_seconds": {
+        "count": 50008,
+        "mean": 0.008442649208223785,
+        "absolute_mean": 0.008442649208223785,
+        "minimum": 0.0,
+        "maximum": 7.4666666984558105,
+        "cumulative_signed": 422.20000160485506,
+        "cumulative_absolute": 422.20000160485506
+      },
+      "recovery_concessions": {
+        "count": 50008,
+        "mean": 0.0002999520076787714,
+        "absolute_mean": 0.0002999520076787714,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "cumulative_signed": 15.0,
+        "cumulative_absolute": 15.0
+      }
+    },
+    "curriculum_reset_counts": {
+      "natural": 68,
+      "aerial_wall_possession": 2,
+      "recovery": 2,
+      "low_resource_aerial": 2
+    },
+    "curriculum_reset_shares": {
+      "natural": 0.918918918918919,
+      "aerial_wall_possession": 0.02702702702702703,
+      "recovery": 0.02702702702702703,
+      "low_resource_aerial": 0.02702702702702703
+    },
+    "goals": {
+      "blue": 12,
+      "orange": 6
+    }
+  },
+  "ppo": {
+    "PPO Batch Consumption Time": 0.43010878562927246,
+    "Cumulative Model Updates": 1,
+    "Policy Entropy": 3.7009653449058533,
+    "Mean KL Divergence": -1.4548810767234244e-09,
+    "Value Function Loss": 0.6952973157167435,
+    "SB3 Clip Fraction": 0.0,
+    "Policy Update Magnitude": 0.001778970705345273,
+    "Value Function Update Magnitude": 0.03734646365046501
+  },
+  "checkpoint": {
+    "directory": "training/checkpoints/milestone06_preflight/000050008_preflight_m6p0",
+    "files": {
+      "PPO_POLICY.pt": {
+        "sha256": "367926e5192d4e0a42e78dd1f2c7376c2c80ac453380b9de3bb8a7aa7b071462",
+        "size_bytes": 13707893
+      },
+      "PPO_POLICY_OPTIMIZER.pt": {
+        "sha256": "5e0a3fc37a3364115292abc4f26c3edef0911b3207a57418be28f1857e4a7455",
+        "size_bytes": 27419709
+      },
+      "PPO_VALUE_NET.pt": {
+        "sha256": "1d65914a70f673a3009446c866d5aa7f1309c473bc2faf1077e26ef75faf948e",
+        "size_bytes": 710813
+      },
+      "PPO_VALUE_NET_OPTIMIZER.pt": {
+        "sha256": "5d5f74864f131e95c8eaf6dfc35a0db6c6b8d451e75d62326bd81233c2137ca6",
+        "size_bytes": 1421805
+      },
+      "RIVAL_CAMPAIGN_STATE.json": {
+        "sha256": "bb4d563fba0aa73bbd30a1878b55b4b8d4d0893b3d49fb8cf27152c5cf1e3e51",
+        "size_bytes": 880
+      }
+    },
+    "trainer_state": {
+      "format": "rival-milestone06-full-ppo-v1",
+      "schema_version": 1,
+      "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+      "campaign_id": "rival-milestone06-serious-v1",
+      "stage": "preflight",
+      "completed_iterations": 1,
+      "cumulative_agent_steps": 50008,
+      "cumulative_model_updates": 1,
+      "worker_count": 56,
+      "policy_average_reward": 0.0017786189215582603,
+      "action_exploration_prior": {
+        "version": "RivalAppendedActionPriorV1",
+        "legacy_action_count": 90,
+        "expanded_action_count": 158,
+        "appended_logit_offset": -6.0
+      },
+      "prior_history": [
+        {
+          "cumulative_agent_steps": 0,
+          "stage": "preflight",
+          "appended_logit_offset": -6.0,
+          "reason": "measured natural-observation calibration"
+        }
+      ],
+      "source_checkpoint": null,
+      "preflight_only_not_campaign_steps": true
+    },
+    "fresh_reload_proof": {
+      "fresh_instance": true,
+      "exact_logits": true,
+      "max_abs_logit_error": 0.0,
+      "policy_optimizer_state_loaded": true,
+      "critic_optimizer_state_loaded": true,
+      "prior_state_reloaded": {
+        "version": "RivalAppendedActionPriorV1",
+        "legacy_action_count": 90,
+        "expanded_action_count": 158,
+        "appended_logit_offset": -6.0
+      },
+      "state_file_parse_passed": true
+    }
+  },
+  "actor_checkpoint": {
+    "path": "training/artifacts/milestone06/preflight_actor.pt",
+    "sha256": "3e6d8d1171b713910ec2778cf4091cd4ec60b2473cc3a417bbb14b469f8ec31b",
+    "size_bytes": 13706965,
+    "format": "rival-student-actor-v1",
+    "action_count": 158
+  },
+  "torchscript_export": {
+    "path": "training/artifacts/milestone06/preflight_actor.ts",
+    "sha256": "673b27739c2758a111acd1a0fd0b6bacd5e0c9242cbd90d3c19b0ecb12c70406",
+    "size_bytes": 13726336,
+    "input_shape": [
+      1,
+      432
+    ],
+    "output_shape": [
+      1,
+      158
+    ]
+  },
+  "deployment_parity": {
+    "sample_shape": [
+      128,
+      432
+    ],
+    "actor_checkpoint_exact": true,
+    "checkpoint_policy_to_exact_export_exact": true,
+    "exact_export_to_torchscript_exact": true,
+    "actor_checkpoint_max_abs_error": 0.0,
+    "checkpoint_policy_to_exact_export_max_abs_error": 0.0,
+    "exact_export_to_torchscript_max_abs_error": 0.0,
+    "all_logits_finite": true,
+    "actor_metadata": {
+      "source": "milestone06_serious_ppo_preflight",
+      "config_sha256": "aeba31a45824ed493588e3e7e6314fabd7437665d6624284055e8a96af718a23",
+      "appended_prior_baked_into_actor": -6.0,
+      "campaign_steps_counted": false
+    },
+    "passed": true
+  },
+  "all_metrics_finite": true,
+  "wall_seconds": 6.180566499941051
+}

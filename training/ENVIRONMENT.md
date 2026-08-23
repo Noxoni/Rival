@@ -2,7 +2,15 @@
 
 `RivalNatural1v1RocketSimV1` uses `RocketSimEngine` with one blue and one orange Octane, kickoff resets, goal termination, a 30-second no-touch truncation, a 300-second episode cap, RLBot-like one-tick action delay, and no renderer.
 
-The default state distribution is ordinary play. Broad wall, aerial, recovery, replay, and opponent-diversity curricula are deliberately deferred until the natural self-play foundation earns a longer run.
+Milestone 05 used ordinary play only. Milestone 06 keeps natural 1v1 as the majority and
+adds seeded minority families for broadly randomized aerial/wall possession, recovery,
+and low-resource aerial states. No fixed named-mechanic drill defines the distribution.
+Configured natural shares are 90%, 80%, 78%, and 76% across Stages A through D.
+
+The serious campaign uses 56 RocketSim environments. This is not a guessed maximum: a
+sustained 24/32/40/48/56/64 sweep selected the highest stable agent-step throughput at
+56, while 64 remained stable but was 1.25% slower. CPU peaks at 100% were accepted when
+the run remained stable, per the throughput objective.
 
 ## Actions
 
@@ -28,12 +36,18 @@ These differences retain the teacher's expected interface without making a false
 
 ## Reward
 
-`RivalOutcomeRewardV1` emits and accumulates five independent components:
+`RivalOutcomeRewardV1` remains the Milestone 05 reference. The serious campaign uses
+`RivalRewardV2`, which emits and accumulates six independent components:
 
 - signed goal/concede outcome at +10/-10;
 - useful-touch/possession proxy;
 - small signed offensive progress;
 - small boost-efficiency accounting;
 - small stateful recovery value.
+- separately bounded low-weight mechanics/resource shaping.
 
-There are no named-mechanic bonuses. Advanced controls are structurally possible, while winning, possession quality, resource use, and recovery determine value.
+Reward V2 tracks airborne dodge use, generic dodge-resource acquisition and productive
+follow-up, wavedash-like and wall-speed recovery events, aerial boost/usefulness, and
+recovery windows. There are no named-musty/breezi/Meeri/zap-dash/wall-dash rewards.
+Advanced controls are structurally possible, while winning, possession quality,
+resource use, and recovery determine value.

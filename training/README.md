@@ -42,7 +42,41 @@ The production `.venv` is used only for the direct `bot/action_parser.py` prefix
 - `rival_training/ppo_smoke.py`: real `rlgym-ppo` rollout/update/checkpoint integration.
 - `rival_training/deploy.py`: single-observation inference and TorchScript export seam.
 - `configs/milestone05.json`: committed initial configuration.
+- `configs/milestone06.json`: serious staged 100M-ceiling campaign configuration.
+- `rival_training/campaign.py`: <=1M checkpointed campaign loop with a deterministic
+  100-game frozen-Wisp health gate every 5M agent-steps.
+- `rival_training/curriculum.py`: seeded majority-natural broad reset families.
+- `rival_training/evaluation.py`: balanced deterministic headless Wisp evaluation.
+- `rival_training/deployment_candidate.py`: exact opt-in candidate export; it never
+  replaces the frozen production default.
 - `results/`: compact measured evidence.
+
+## Milestone 06 campaign
+
+The required preflight order is throughput sweep, action-prior calibration, reward and
+curriculum audit, headless baseline, one full-size PPO iteration, and export/runtime
+parity. The committed preflight report records the measured 56-worker optimum and the
+Stage A `-6` appended-action offset.
+
+Start Stage A only after the preflight report passes:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py `
+  --stage stage_a --appended-offset -6
+```
+
+Resume commands are written into each compact stage report. Prior changes are accepted
+only at stage boundaries. Candidate export and RLBot evaluation remain opt-in:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/export_m06_candidate.py `
+  --checkpoint <checkpoint-directory> --label <boundary-label> `
+  --output training/results/milestone06/candidate_export_<boundary-label>.json
+
+.venv/Scripts/python.exe training/scripts/run_m06_rlbot_stage_eval.py `
+  --export-report training/results/milestone06/candidate_export_<boundary-label>.json `
+  --games 8 --output training/results/milestone06/rlbot_<boundary-label>.json
+```
 
 ## Generated artifacts
 
@@ -56,4 +90,7 @@ Large files remain intentionally ignored:
 
 Their relative paths, sizes, SHA-256 hashes, formats, and reproduction commands are recorded in committed result manifests. The direct reconstruction passed, so Milestone 05 generated no behavior-distillation dataset.
 
-This milestone is a training-system proof, not a trained gameplay release. The live bot remains frozen Wisp with both rejected Milestone 04 intervention modes off.
+Milestone 05 was a training-system proof. Milestone 06 counts only the staged campaign
+steps, never the bounded preflight iteration. The live bot remains frozen Wisp unless a
+trained checkpoint passes the explicit final 16-game promotion battery and deployment
+review; merely exporting or evaluating a candidate does not promote it.
