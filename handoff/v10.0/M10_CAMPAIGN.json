@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "milestone": "10",
+  "campaign_id": "rival-v10-first-serious-scratch-training",
+  "starting_authority_commit": "824e328f6bbf4fe9a47b8e54706b5fcf645fd409",
+  "resume": {
+    "required": true,
+    "expected_cumulative_agent_steps": 1680214,
+    "expected_simulated_game_hours": 1.9446921296,
+    "expected_actor_sha256": "12770f082c6cbe1fbab8809580dc775d1d78071825eb9481df4a16d9ee85fbe5"
+  },
+  "additional_budget": {
+    "simulated_game_hours": 100.0,
+    "agent_steps": 86400000,
+    "nominal_cumulative_agent_steps": 88080214,
+    "nominal_cumulative_simulated_game_hours": 101.9446921296
+  },
+  "immutable_versions": {
+    "policy": "RivalPolicyV1",
+    "critic": "RivalCriticV1",
+    "observation": "RivalObsV1",
+    "action": "RivalActionV1",
+    "canonical_state": "RivalCanonicalStateV1",
+    "reward": "RivalScratchRewardV1"
+  },
+  "runtime": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "workers": 56,
+    "repeat_action": false,
+    "observation_standardization": false
+  },
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 192000,
+    "experience_buffer_capacity_agent_steps": 600000,
+    "ppo_batch_agent_steps": 192000,
+    "minibatch_agent_steps": 48000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0
+  },
+  "curriculum": {
+    "natural": 0.70,
+    "ground_possession_challenge": 0.10,
+    "wall_aerial_ceiling_possession": 0.08,
+    "awkward_recovery_landing": 0.08,
+    "low_resource": 0.04
+  },
+  "evaluation_boundaries_added_simulated_hours": [5, 10, 25, 50, 100],
+  "native_rlbot_boundaries_added_simulated_hours": [25, 100],
+  "production_promotion_authorized": false
+}
