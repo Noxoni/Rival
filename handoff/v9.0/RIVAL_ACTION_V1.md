@@ -68,16 +68,21 @@ Experience storage and the environment use the actual 8-value controller row:
 
 During PPO backprop, the three bits are converted back to the canonical combo index so the exact categorical log probability is recovered.
 
-## Physical-effect masks
+## No state-dependent action mask in v1
 
-Do not shrink the controller vocabulary because a mechanic looks uncommon. A small state-dependent categorical mask is allowed only where an input is physically ineffective:
+`RivalActionV1` keeps the native controller vocabulary legal on every frame.
 
-- if boost is exactly empty, mask button combos that press boost;
-- jump remains legal while grounded, during the first-jump hold window, or while a dodge/double jump is available;
-- when jump can have no physical effect, mask jump-pressed combos;
-- do **not** mask handbrake merely because the car is airborne, because holding it through a landing can be useful for recoveries.
+That means it may emit boost while boost is empty or jump while no new jump/dodge impulse is currently available. Those are still valid controller states; they are simply ineffective on that frame. The policy can learn not to waste them.
 
-The mask implementation must be shared by training and deployment and covered by parity tests. If there is uncertainty about whether an input can matter, keep it legal.
+This is intentional:
+
+- it keeps rollout and deployment distributions identical and simple;
+- it avoids another state-derived masking seam that can disagree between RocketSim and RLBot;
+- it preserves button-hold/release sequences across changing physical states;
+- it does not silently prevent an input one frame before or during a narrow mechanic window;
+- it makes the action contract literally equal to the native Soccar controller space.
+
+If a future measured experiment demonstrates that a particular mask materially improves learning without removing any useful sequence, that requires a new versioned action contract. It is not part of `RivalActionV1`.
 
 ## One-tick temporal semantics
 
@@ -129,7 +134,7 @@ Before PPO, implement tests proving:
 4. action parser emits shape `(1,8)` for one policy step;
 5. one-tick delayed RocketSim action traces match the live RLBot timing contract;
 6. known controller traces representative of speedflip/flip-cancel, wavedash, stall, reset follow-up, wall dash and aerial air-roll sequences are representable without quantization or parser alteration;
-7. no action-row lookup, nearest-neighbor quantization or hidden controller synthesis remains in the scratch path.
+7. no action-row lookup, nearest-neighbor quantization, state mask or hidden controller synthesis remains in the scratch path.
 
 The representative traces are capability tests only. They are not macros exposed to the policy and are not scripted training scenarios.
 
@@ -153,7 +158,7 @@ The action contract must have a machine-readable metadata file containing:
 - 120-Hz cadence;
 - analog distribution type and bounds;
 - button-combo encoding;
-- physical-effect mask rules/version;
+- explicit `state_dependent_action_mask=false`;
 - timing/delay version;
 - parser source hash;
 - policy action-head source hash.
