@@ -1,6 +1,6 @@
 # Rival
 
-Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The deployed bot remains the verified frozen Wisp v2-75B baseline while the project trains and validates a new Rival policy through **RLGym + RocketSim**.
+Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The deployed bot remains the verified frozen Wisp v2-75B baseline while a new Rival policy is trained from scratch through **RLGym + RocketSim**.
 
 Rival is for offline RLBot play only. It must not be used to cheat or otherwise break Rocket League's terms of service.
 
@@ -8,72 +8,63 @@ Rival is for offline RLBot play only. It must not be used to cheat or otherwise 
 
 - RLBot display name: `Rival Dev`
 - Default agent id: `noxoni/rival/dev-v1`
-- Frozen Wisp-equivalent gameplay baseline: `4f2b21c00e2fcb7108ab1006fd950b066fbd0484`
-- Wisp `POLICY.lt` / `SHARED_HEAD.lt` unchanged
-- Challenge calibration: `off`
-- Natural adjustment: `off`
-- Completed v4.1 natural benchmark: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
+- Production policy: frozen Wisp v2-75B
+- Production tick skip: 8
+- Wisp `POLICY.lt` / `SHARED_HEAD.lt`: unchanged
+- Scratch candidate promotion: **not authorized**
 
-The runtime gameplay-adjustment experiments were rejected and remain disabled. Production was not replaced by any trained candidate.
+Previous runtime adjustment and Wisp-overlay training experiments were rejected or retained only as research history. Production has not been replaced by a trained candidate.
 
-## Milestone 05 — training foundation complete
-
-Completed boundary:
-
-`4c9aa6f596b3231856107b3a1e59d9a7c4f663db`
-
-Milestone 05 established the isolated RLGym/RocketSim training stack under `training/`: natural headless 1v1, exact Wisp teacher reconstruction, 158-action mechanics-capable student, CUDA PPO training/checkpointing, measured multiprocess rollout throughput, and an export seam back to RLBot.
-
-See `docs/MILESTONE_05_RESULTS.md` and `training/` for exact evidence and reproduction commands.
-
-## Milestone 06 — serious training campaign stopped at 20M
-
-Completed rollback boundary:
-
-`652395a9f512ce835830bfc5bc3a7cb078f6105e`
-
-M06 reached 20,000,016 agent-steps. RocketSim/headless evaluation against frozen Wisp improved from 42–58 preflight to 59–41 at 20M, but the required RLBot v5 boundary battery regressed severely: the trained candidate went 0–8 against installed Nexto/Wisp with a 27–56 goal line. Stage C/D were correctly stopped and production remained frozen Wisp.
-
-See `docs/MILESTONE_06_RESULTS.md` and `training/results/milestone06/`.
-
-## Milestone 07 — transfer diagnosis complete
+## Milestone 09 — scratch foundation complete
 
 Completed boundary:
 
-`10c41f708d6e8145bf719f8f322041e7753f6c3f`
+`824e328f6bbf4fe9a47b8e54706b5fcf645fd409`
 
-M07 isolated the failure instead of resuming training.
+M09 replaced the Wisp-derived training architecture with a true scratch-policy foundation and passed validation Gates 0–14.
 
-Key findings:
+The proven scratch stack is:
 
-- the same zero-step reconstructed Wisp moved from 2–2 / +4 at tick 8 to 0–4 / −11 at tick 4 before any learning, proving a primary strategic cadence mismatch;
-- the rejected 20M actor drifted materially within legacy actions 0–89, reaching only 68.0% masked top-1 agreement with frozen Wisp on held live observations;
-- the old training-style 432 observation changed frozen-Wisp top-1 on more than half of held live states, with ETA and touch/handbrake/player-state semantics as the dominant mismatch;
-- spatial action parsing/mirroring was exact;
-- the generic RocketSim legacy8 delay did not reproduce production Wisp's real eight-tick temporal schedule;
-- short-horizon RocketSim physics was close initially but accumulated secondary orientation divergence.
+- `RivalPolicyV1`, no Wisp actor/trunk parameters;
+- `RivalObsV1`, one shared train/deploy canonical observation, 714 floats;
+- `RivalActionV1`, five continuous analog controller axes plus a joint eight-way jump/boost/handbrake categorical;
+- one policy decision per Rocket League physics tick at native 120 Hz;
+- no action lookup table, RepeatAction, state-dependent action mask, or mechanics macros;
+- independent actor/critic networks;
+- cadence-safe outcome-dominant reward;
+- majority-natural 70/10/8/8/4 reset curriculum;
+- native-120-Hz RLBot deployment/export path and isolated RLViser spectator.
 
-The optional RLViser spectator was also added as a separate process so selected checkpoints can be watched without entering the training hot path.
+The bounded M09 pilot reached 1,680,214 cumulative agent-steps / 1.9446921296 simulated game-hours. It showed measurable learning (including first deterministic touch behavior and improved recovery/contact metrics) but intentionally stopped before serious training.
 
-See `docs/MILESTONE_07_RESULTS.md` and `training/results/milestone07/`.
+See `docs/MILESTONE_09_RESULTS.md` and `training/results/milestone09/`.
 
-## Current Codex handoff — v8.0
+## Current Codex handoff — v10.0
 
 Start here:
 
-`handoff/v8.0/CODEX_START_PROMPT.md`
+`handoff/v10.0/CODEX_START_PROMPT.md`
 
-Milestone 08 implements the corrective architecture supported by M07 rather than resuming the rejected M06 actor.
+Milestone 10 is the **first serious scratch training campaign**. It resumes the exact final M09 checkpoint instead of resetting or redesigning the architecture.
 
-Architecture:
+Authorized M10 budget:
 
-`frozen 8-tick Wisp strategic branch + separate 4-tick PASS-or-mechanics branch`
+- 100 additional simulated game-hours;
+- 86,400,000 additional agent-steps;
+- nominal cumulative target 88,080,214 agent-steps;
+- immutable evaluation boundaries at approximately +5, +10, +25, +50, and +100 simulated hours.
 
-The strategic branch keeps the exact zero-step Wisp policy and legacy actions 0–89. The mechanics/recovery branch is separately trainable and initially chooses only PASS or appended actions 90–157. With mechanics disabled or forced PASS, the complete agent must reduce to the verified tick-8 strategic path.
+M10 intentionally keeps the M09 policy, observation, action, reward, PPO hyperparameters, native 120-Hz cadence, 56-worker selection, and 70/10/8/8/4 curriculum unchanged. The primary variable is experience volume.
 
-Before PPO, M08 must repair the live/training Wisp observation contract, especially ETA and touch/handbrake/player-state semantics, and reproduce production Wisp's true eight-tick temporal execution in RocketSim. Frozen-Wisp policy agreement between live and training representations has a 97% hard floor and 99% target before learning is allowed.
+Production promotion is not authorized.
 
-If those gates pass, M08 authorizes at most 5M agent-steps of mechanics-head-only PPO with RLBot transfer checks at bounded checkpoints. Strategic Wisp weights remain frozen throughout. Production promotion is not authorized in M08.
+## Earlier milestone history
+
+- M05 (`4c9aa6f596b3231856107b3a1e59d9a7c4f663db`): RLGym/RocketSim training foundation and exact Wisp reconstruction.
+- M06 (`652395a9f512ce835830bfc5bc3a7cb078f6105e`): monolithic 4-tick Wisp-derived campaign stopped at 20M after severe RLBot transfer regression.
+- M07 (`10c41f708d6e8145bf719f8f322041e7753f6c3f`): isolated cadence, observation-domain, and legacy-policy-drift causes.
+- M08 (`0b8f31351930e0e756c59349360b9c0b8dbda4c6`): frozen-Wisp + mechanics-overlay architecture transferred correctly but learned to prefer PASS; final deterministic mechanics usage remained zero.
+- M09 (`824e328f6bbf4fe9a47b8e54706b5fcf645fd409`): completed and validated the native-120-Hz scratch architecture.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
@@ -83,7 +74,7 @@ For another Windows PC, do not distribute only `bot/`: the development TOML depe
 
 ## Local RLBot references
 
-Installed RLBot v5 bots used as read-only benchmark/teacher references are under:
+Installed RLBot v5 bots used as read-only benchmark references are under:
 
 `C:\Users\patri\AppData\Local\RLBot5\bots`
 
