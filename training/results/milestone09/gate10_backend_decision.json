@@ -1,0 +1,114 @@
+{
+  "checks": {
+    "exact_hybrid_actor_used_in_selected_path": true,
+    "gate09_actual_v9_rlgym_ppo_path_passed": true,
+    "gate09_real_cuda_ppo_iterations_passed": true,
+    "rlgym_learn_spike_was_bounded": true,
+    "rlgym_learn_windows_wheels_imported_in_isolation": true,
+    "selected_path_windows_restart_and_cleanup_passed": true,
+    "trainer_neutral_action_and_observation_contracts_preserved": true,
+    "unqualified_backend_not_selected": true
+  },
+  "commands": {
+    "download": "training/.venv/Scripts/python.exe -m pip download --no-deps --dest .tmp/rlgym-learn-gate10 rlgym-learn==1.0.5 rlgym-learn-algos==0.2.6",
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_backend_decision_gate.py --rlgym-learn-wheel .tmp/rlgym-learn-gate10/rlgym_learn-1.0.5-cp312-cp312-win_amd64.whl --rlgym-learn-algos-wheel .tmp/rlgym-learn-gate10/rlgym_learn_algos-0.2.6-cp312-cp312-win_amd64.whl"
+  },
+  "gate": 10,
+  "gate_name": "trainer_backend_decision",
+  "gate_semantics": {
+    "losses_used": false,
+    "scores_used": false,
+    "technical_and_operational_evidence_only": true,
+    "wins_used": false
+  },
+  "generated_at_utc": "2026-08-23T14:44:34.833674-04:00",
+  "milestone": 9,
+  "optional_rlgym_learn_spike": {
+    "algorithms_wheel": {
+      "filename": "rlgym_learn_algos-0.2.6-cp312-cp312-win_amd64.whl",
+      "name": "rlgym-learn-algos",
+      "requires_python": ">=3.8, <3.13",
+      "sha256": "db685e57fdcf269b2e663b7504d7f38a9820b6f01367a5d6a4060c14b3d6ec5a",
+      "size_bytes": 206253,
+      "version": "0.2.6",
+      "windows_cp312_wheel": true
+    },
+    "api_audit": {
+      "bounded_spike_conclusion": "api_viable_but_not_repository_integrated",
+      "default_learner_has_one_scalar_entropy_coefficient": true,
+      "generic_actor_accepts_physical_actions_and_rollout_log_probs": true,
+      "head_to_head_iteration_benchmark_required_now": false,
+      "head_to_head_reason": "Only the rlgym-ppo path is fully integrated and Gate-9-qualified; comparing it against an API-only rlgym-learn spike would not be an equal backend test.",
+      "isolated_import": {
+        "actor_get_action_signature": "(self, agent_id_list: List[~AgentID], obs_list: List[~ObsType], **kwargs) -> Tuple[Iterable[~ActionType], torch.Tensor]",
+        "actor_get_backprop_data_signature": "(self, agent_id_list: List[~AgentID], obs_list: List[~ObsType], acts: List[~ActionType], **kwargs) -> Tuple[torch.Tensor, torch.Tensor]",
+        "agent_controller_save_checkpoint": true,
+        "imports_passed": true,
+        "ppo_learner_save_checkpoint": true,
+        "return_code": 0,
+        "stderr": "<isolated-wheel-root>\\rlgym_learn_algos\\util\\torch_pydantic.py:45: SyntaxWarning: invalid escape sequence '\\d'\n  + \")(:\\d+)?\""
+      },
+      "learner_checkpoint_sources_present": true,
+      "remaining_work_before_qualification": [
+        "add and pin two new binary package dependencies",
+        "implement and test a Rival hybrid Actor adapter over RivalPolicyV1",
+        "integrate Rival canonical environment serialization and worker lifecycle",
+        "extend metrics for separate analog and categorical exploration diagnostics",
+        "extend checkpoint metadata with observation, action, reward, and config hashes",
+        "prove save/reload/resume and Windows sustained iteration stability"
+      ],
+      "windows_wheels_available": true
+    },
+    "core_wheel": {
+      "filename": "rlgym_learn-1.0.5-cp312-cp312-win_amd64.whl",
+      "name": "rlgym-learn",
+      "requires_python": ">=3.8, <3.14",
+      "sha256": "aa9f1bba43fd4e7fe7955f5037dcfacfc9580268ddfdd6afc64e6ae864e81dca",
+      "size_bytes": 734985,
+      "version": "1.0.5",
+      "windows_cp312_wheel": true
+    },
+    "future_reconsideration": "Reconsider prospectively after a complete contract-equivalent adapter exists; then compare total iteration throughput and operational stability.",
+    "rejected_as_incapable": false,
+    "selected": false
+  },
+  "schema_version": 1,
+  "selected_backend_qualification": {
+    "checkpoint_reload_resume": "must_pass_gate11",
+    "exact_rival_action_v1_hybrid_log_probabilities": true,
+    "exact_rival_obs_v1": true,
+    "metrics_and_evaluation_hooks": "implemented_in_rival_trainer_for_gate11",
+    "windows_stability": true
+  },
+  "selection": {
+    "integration_shape": "rlgym-ppo BatchedAgentManager plus Rival-owned exact hybrid PPO trainer",
+    "measured_ppo_candidates": [
+      {
+        "agent_steps_per_second": 4744.03089475428,
+        "iteration_wall_seconds": 11.170206899987534,
+        "status": "passed",
+        "workers": 56
+      },
+      {
+        "agent_steps_per_second": 4911.012502564291,
+        "iteration_wall_seconds": 10.454633900080808,
+        "status": "passed",
+        "workers": 64
+      }
+    ],
+    "measured_rollout_agent_steps_per_second": 5072.971197020638,
+    "reason": "This is the only backend proven on the actual v9 environment and hybrid actor with CUDA updates, Windows worker restart, cleanup, and measured full-iteration timing.",
+    "selected_backend": "rlgym-ppo",
+    "selected_source_commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea",
+    "selected_version": "1.3.13",
+    "selected_worker_count": 56
+  },
+  "source_hashes": {
+    "gate09_evidence_sha256": "ce086f4c5bd3947f2bb8995088486507911680613ef27dfe3467b86badf5a4eb",
+    "requirements_sha256": "95c28c7f971358432fab86f8a2f130fe3db1f328a0fe30a3ab9e5650eedcfbb4",
+    "script_sha256": "768a242bf029917cd2dd5c9ef17e382d8c7cc26a343104b5e3f084ac9681f32d",
+    "v9_action_sha256": "8b16ae694969f2bf950888f8a9dd02e9b6cea42dada82abc5b20c52a06a04e55",
+    "v9_policy_sha256": "37aa8e2b79ddc4637eee99ff7c57aabb00c3eb9de17b170aef4e21b5d559f04e"
+  },
+  "status": "passed"
+}
