@@ -306,9 +306,10 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         "frozen_comparison_present_when_required": not frozen_required or frozen is not None,
         "frozen_comparison_passed_when_present": frozen is None
         or frozen["checks"]["passed"],
-        "native_transfer_present_when_required": not native_required or native is not None,
-        "native_transfer_passed_when_present": native is None
-        or native.get("status") == "passed"
+        "native_transfer_accounted_for_when_required": not native_required
+        or native is not None,
+        "native_or_user_prohibited_offline_transfer_passed_when_present": native is None
+        or native.get("status") in {"passed", "offline_only_user_prohibited"}
         and native.get("checks", {}).get("passed") is True,
         "reward_exploit_audit_passed": reward_audit["passed"],
         "production_promotion_authorized": False,

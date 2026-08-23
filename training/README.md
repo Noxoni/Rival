@@ -104,6 +104,10 @@ Subsequent invocations pass the previous immutable M10 boundary as
 iteration/evaluation reports remain ignored; compact boundary evidence is committed
 under `training/results/milestone10/`. The +25h and +100h boundaries use
 `run_m10_native_boundary.py` for the bounded RLBot v5 native-1x transfer check.
+If the operator explicitly prohibits touching RLBot or Rocket League, use
+`run_m10_offline_transfer_boundary.py` instead; it validates reload, export, schema,
+controller legality, parity, and CPU actor latency while recording that native packet
+continuity and full-pipeline cadence were not tested.
 
 The policy, critic, observation, action, reward, PPO values, 56-worker selection,
 native 120-Hz cadence, one-tick transport, and 70/10/8/8/4 reset curriculum are frozen.
