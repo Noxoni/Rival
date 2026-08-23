@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gym
 import numpy as np
 from rlgym.rocket_league.sim import RocketSimEngine
 from rlgym.rocket_league.state_mutators import FixedTeamSizeMutator
@@ -62,6 +63,8 @@ def test_pilot_metric_transport_is_finite_and_diagnostic_only() -> None:
     wrapper = RivalV9PilotGymWrapper(build_v9_pilot_env(seed=20260913, forced_mirror=False))
     try:
         observations = wrapper.reset()
+        assert type(wrapper.action_space) is gym.spaces.Box
+        assert wrapper.is_discrete is False
         _, _, _, _, info = wrapper.step(np.zeros((len(observations), 8), dtype=np.float32))
     finally:
         wrapper.close()

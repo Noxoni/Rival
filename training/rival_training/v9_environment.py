@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import math
 import multiprocessing
-import random
 from typing import Any, Mapping
 
 import gym
@@ -56,42 +55,21 @@ V9_PILOT_ENVIRONMENT_VERSION = (
 )
 
 
-class RivalV9SeededBox(gym.spaces.Box):
-    """Forward rlgym-ppo's process seed into reset and symmetry components."""
-
-    def __init__(self, *, seed_callback) -> None:
-        self._seed_callback = seed_callback
-        super().__init__(
-            low=np.asarray([-1.0] * 5 + [0.0] * 3, dtype=np.float32),
-            high=np.ones(8, dtype=np.float32),
-            dtype=np.float32,
-        )
-
-    def seed(self, seed: int | None = None):
-        if seed is not None:
-            self._seed_callback(int(seed))
-        return super().seed(seed)
-
-
 class RivalV9ContinuousGymWrapper(RLGymV2GymWrapper):
     """Repair rlgym-ppo's discrete-only v2 wrapper action-space discovery."""
 
     def __init__(self, rlgym_env: RLGym) -> None:
         super().__init__(rlgym_env)
         self.is_discrete = False
-        self.action_space = RivalV9SeededBox(seed_callback=self._seed_components)
-
-    def _seed_components(self, seed: int) -> None:
-        random.seed(seed)
-        np.random.seed(seed)
-        mutators = getattr(self.rlgym_env.state_mutator, "mutators", ())
-        for mutator in mutators:
-            seed_method = getattr(mutator, "seed", None)
-            if callable(seed_method):
-                seed_method(seed)
-        action_seed = getattr(self.rlgym_env.action_parser, "seed", None)
-        if callable(action_seed):
-            action_seed(seed)
+        # rlgym-ppo 1.3.13 uses an exact type(Box) comparison when reporting
+        # action-space kind. Keep this as the concrete Gym Box; worker-specific
+        # curriculum/symmetry seeds come from the process identity in the
+        # pickle-safe factories below.
+        self.action_space = gym.spaces.Box(
+            low=np.asarray([-1.0] * 5 + [0.0] * 3, dtype=np.float32),
+            high=np.ones(8, dtype=np.float32),
+            dtype=np.float32,
+        )
 
 
 class RivalV9PilotGymWrapper(RivalV9ContinuousGymWrapper):
