@@ -1,0 +1,1444 @@
+{
+  "block_slices": {
+    "ball_goal": {
+      "end": 190,
+      "start": 146
+    },
+    "boost_pads": {
+      "end": 568,
+      "start": 262
+    },
+    "controller_history": {
+      "end": 696,
+      "start": 568
+    },
+    "match_control": {
+      "end": 15,
+      "start": 0
+    },
+    "motion_delta": {
+      "end": 714,
+      "start": 696
+    },
+    "opponent_car": {
+      "end": 146,
+      "start": 76
+    },
+    "prediction": {
+      "end": 262,
+      "start": 190
+    },
+    "self_car": {
+      "end": 76,
+      "start": 15
+    }
+  },
+  "builder_source_sha256": "ba49b265e4bb3dd1cd15b5c7d5ac58d0b92cee25bfe9de4a8a8fa1c1ff0c7501",
+  "canonical_adapter_version": "RivalCanonicalAdapterV1",
+  "canonical_source_sha256": "a4756302094b6084cf5430fafd3b6138655d42ed804b0dca1fed5818b426f291",
+  "canonical_state_version": "RivalCanonicalStateV1",
+  "dtype": "float32",
+  "entity_shapes": {
+    "boost_pads": [
+      34,
+      9
+    ],
+    "motion_deltas": [
+      3,
+      6
+    ],
+    "opponent_controller_history": [
+      8,
+      8
+    ],
+    "prediction": [
+      6,
+      12
+    ],
+    "self_controller_history": [
+      8,
+      8
+    ]
+  },
+  "fields": [
+    {
+      "block": "match_control",
+      "canonical_source": "score_diff",
+      "coordinate_frame": "Rival perspective",
+      "dtype": "float32",
+      "end": 1,
+      "name": "match.score_diff",
+      "normalization": "clip[-5,5]/5",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 0,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "game_time_remaining",
+      "coordinate_frame": "match",
+      "dtype": "float32",
+      "end": 2,
+      "name": "match.time_remaining",
+      "normalization": "clip[0,300]/300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 1,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "overtime",
+      "coordinate_frame": "match",
+      "dtype": "float32",
+      "end": 3,
+      "name": "match.overtime",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 2,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "kickoff",
+      "coordinate_frame": "match",
+      "dtype": "float32",
+      "end": 4,
+      "name": "match.kickoff",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 3,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "active_play",
+      "coordinate_frame": "match",
+      "dtype": "float32",
+      "end": 5,
+      "name": "match.active_play",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 4,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "gravity_z",
+      "coordinate_frame": "world Z",
+      "dtype": "float32",
+      "end": 6,
+      "name": "match.gravity",
+      "normalization": "gravity_z/650",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 5,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "self_touch_age",
+      "coordinate_frame": "match time",
+      "dtype": "float32",
+      "end": 7,
+      "name": "touch.self_age",
+      "normalization": "clip[0,10]/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 6,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "opponent_touch_age",
+      "coordinate_frame": "match time",
+      "dtype": "float32",
+      "end": 8,
+      "name": "touch.opponent_age",
+      "normalization": "clip[0,10]/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 7,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "last_toucher",
+      "coordinate_frame": "Rival perspective",
+      "dtype": "float32",
+      "end": 11,
+      "name": "touch.last_toucher",
+      "normalization": "one-hot",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 8,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "shared predictor cache",
+      "coordinate_frame": "physics ticks",
+      "dtype": "float32",
+      "end": 12,
+      "name": "prediction.age",
+      "normalization": "clip[0,4]/4 ticks",
+      "reset_semantics": "zero/empty on episode reset",
+      "shape": [
+        1
+      ],
+      "start": 11,
+      "update_cadence": "every tick; predictor refresh configurable"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "shared pure intercept proxy",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 13,
+      "name": "intercept.self",
+      "normalization": "clip[0,10]/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 12,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "shared pure intercept proxy",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 14,
+      "name": "intercept.opponent",
+      "normalization": "clip[0,10]/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 13,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "match_control",
+      "canonical_source": "opponent minus self",
+      "coordinate_frame": "Rival perspective",
+      "dtype": "float32",
+      "end": 15,
+      "name": "intercept.advantage",
+      "normalization": "clip[-10,10]/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 14,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.physics.position",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 18,
+      "name": "self.position",
+      "normalization": "divide field XYZ extents",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 15,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.physics.forward",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 21,
+      "name": "self.forward",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 18,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.physics.up",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 24,
+      "name": "self.up",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 21,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.physics.linear_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 27,
+      "name": "self.linear_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 24,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.physics.angular_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 30,
+      "name": "self.angular_velocity",
+      "normalization": "divide 5.5",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 27,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared rotation transform",
+      "coordinate_frame": "car local",
+      "dtype": "float32",
+      "end": 33,
+      "name": "self.local_linear_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 30,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared rotation transform",
+      "coordinate_frame": "car local",
+      "dtype": "float32",
+      "end": 36,
+      "name": "self.local_angular_velocity",
+      "normalization": "divide 5.5",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 33,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "linear_velocity norm",
+      "coordinate_frame": "scalar",
+      "dtype": "float32",
+      "end": 37,
+      "name": "self.speed",
+      "normalization": "clip[0,2300]/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 36,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "velocity dot forward",
+      "coordinate_frame": "car forward",
+      "dtype": "float32",
+      "end": 38,
+      "name": "self.signed_forward_speed",
+      "normalization": "clip[-2300,2300]/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 37,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.boost",
+      "coordinate_frame": "scalar",
+      "dtype": "float32",
+      "end": 39,
+      "name": "self.boost",
+      "normalization": "clip[0,100]/100",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 38,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.demo_time_remaining",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 40,
+      "name": "self.demo_time",
+      "normalization": "clip[0,3]/3",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 39,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.surface_contact",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 41,
+      "name": "self.surface_contact",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 40,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.boosting",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 42,
+      "name": "self.boosting",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 41,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.supersonic",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 43,
+      "name": "self.supersonic",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 42,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.handbrake",
+      "coordinate_frame": "controller",
+      "dtype": "float32",
+      "end": 44,
+      "name": "self.handbrake",
+      "normalization": "clip[0,1]",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 43,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.air_state",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 49,
+      "name": "self.air_state",
+      "normalization": "one-hot",
+      "reset_semantics": "stateless",
+      "shape": [
+        5
+      ],
+      "start": 44,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.jump_held",
+      "coordinate_frame": "controller",
+      "dtype": "float32",
+      "end": 50,
+      "name": "self.jump_held",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 49,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.has_jumped",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 51,
+      "name": "self.has_jumped",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 50,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.has_double_jumped",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 52,
+      "name": "self.has_double_jumped",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 51,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.has_dodged",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 53,
+      "name": "self.has_dodged",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 52,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.can_dodge",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 54,
+      "name": "self.can_dodge",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 53,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.air_time",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 55,
+      "name": "self.air_time",
+      "normalization": "clip[0,5]/5",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 54,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.jump_hold_elapsed",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 56,
+      "name": "self.jump_hold_elapsed",
+      "normalization": "clip[0,0.2]/0.2",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 55,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.dodge_window_remaining",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 57,
+      "name": "self.dodge_window_remaining",
+      "normalization": "clip[0,1.45]/1.45",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 56,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.dodge_elapsed",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 58,
+      "name": "self.dodge_elapsed",
+      "normalization": "clip[0,0.95]/0.95",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 57,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "self_car.dodge_direction",
+      "coordinate_frame": "canonical flip frame",
+      "dtype": "float32",
+      "end": 60,
+      "name": "self.dodge_direction",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        2
+      ],
+      "start": 58,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 65,
+      "name": "self.surface_distances",
+      "normalization": "floor/ceiling/side/back/corner scales",
+      "reset_semantics": "stateless",
+      "shape": [
+        5
+      ],
+      "start": 60,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "car local",
+      "dtype": "float32",
+      "end": 68,
+      "name": "self.nearest_surface_normal",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 65,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "car local",
+      "dtype": "float32",
+      "end": 69,
+      "name": "self.surface_up_alignment",
+      "normalization": "dot product",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 68,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "nearest surface normal",
+      "dtype": "float32",
+      "end": 70,
+      "name": "self.surface_signed_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 69,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "self_car",
+      "canonical_source": "shared standard goals",
+      "coordinate_frame": "car local",
+      "dtype": "float32",
+      "end": 76,
+      "name": "self.goal_centers_local",
+      "normalization": "divide 6000",
+      "reset_semantics": "stateless",
+      "shape": [
+        2,
+        3
+      ],
+      "start": 70,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.physics.position",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 79,
+      "name": "opponent.position",
+      "normalization": "divide field XYZ extents",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 76,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.physics.forward",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 82,
+      "name": "opponent.forward",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 79,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.physics.up",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 85,
+      "name": "opponent.up",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 82,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.physics.linear_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 88,
+      "name": "opponent.linear_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 85,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.physics.angular_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 91,
+      "name": "opponent.angular_velocity",
+      "normalization": "divide 5.5",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 88,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared relative transform",
+      "coordinate_frame": "Rival car local",
+      "dtype": "float32",
+      "end": 94,
+      "name": "opponent.relative_position",
+      "normalization": "divide 6000",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 91,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared relative transform",
+      "coordinate_frame": "Rival car local",
+      "dtype": "float32",
+      "end": 97,
+      "name": "opponent.relative_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 94,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "linear_velocity norm",
+      "coordinate_frame": "scalar",
+      "dtype": "float32",
+      "end": 98,
+      "name": "opponent.speed",
+      "normalization": "clip[0,2300]/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 97,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "velocity dot forward",
+      "coordinate_frame": "opponent forward",
+      "dtype": "float32",
+      "end": 99,
+      "name": "opponent.signed_forward_speed",
+      "normalization": "clip[-2300,2300]/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 98,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.boost",
+      "coordinate_frame": "scalar",
+      "dtype": "float32",
+      "end": 100,
+      "name": "opponent.boost",
+      "normalization": "clip[0,100]/100",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 99,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.demo_time_remaining",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 101,
+      "name": "opponent.demo_time",
+      "normalization": "clip[0,3]/3",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 100,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.surface_contact",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 102,
+      "name": "opponent.surface_contact",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 101,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.boosting",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 103,
+      "name": "opponent.boosting",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 102,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.supersonic",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 104,
+      "name": "opponent.supersonic",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 103,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.handbrake",
+      "coordinate_frame": "controller",
+      "dtype": "float32",
+      "end": 105,
+      "name": "opponent.handbrake",
+      "normalization": "clip[0,1]",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 104,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.air_state",
+      "coordinate_frame": "car",
+      "dtype": "float32",
+      "end": 110,
+      "name": "opponent.air_state",
+      "normalization": "one-hot",
+      "reset_semantics": "stateless",
+      "shape": [
+        5
+      ],
+      "start": 105,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.jump_held",
+      "coordinate_frame": "controller",
+      "dtype": "float32",
+      "end": 111,
+      "name": "opponent.jump_held",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 110,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.has_jumped",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 112,
+      "name": "opponent.has_jumped",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 111,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.has_double_jumped",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 113,
+      "name": "opponent.has_double_jumped",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 112,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.has_dodged",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 114,
+      "name": "opponent.has_dodged",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 113,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.can_dodge",
+      "coordinate_frame": "car resource",
+      "dtype": "float32",
+      "end": 115,
+      "name": "opponent.can_dodge",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 114,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.air_time",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 116,
+      "name": "opponent.air_time",
+      "normalization": "clip[0,5]/5",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 115,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.jump_hold_elapsed",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 117,
+      "name": "opponent.jump_hold_elapsed",
+      "normalization": "clip[0,0.2]/0.2",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 116,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.dodge_window_remaining",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 118,
+      "name": "opponent.dodge_window_remaining",
+      "normalization": "clip[0,1.45]/1.45",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 117,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.dodge_elapsed",
+      "coordinate_frame": "seconds",
+      "dtype": "float32",
+      "end": 119,
+      "name": "opponent.dodge_elapsed",
+      "normalization": "clip[0,0.95]/0.95",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 118,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.dodge_direction",
+      "coordinate_frame": "canonical flip frame",
+      "dtype": "float32",
+      "end": 121,
+      "name": "opponent.dodge_direction",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        2
+      ],
+      "start": 119,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "opponent_car.latest_controller",
+      "coordinate_frame": "physical controller",
+      "dtype": "float32",
+      "end": 129,
+      "name": "opponent.latest_controller",
+      "normalization": "native bounds",
+      "reset_semantics": "stateless",
+      "shape": [
+        8
+      ],
+      "start": 121,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared relative transform",
+      "coordinate_frame": "opponent car local",
+      "dtype": "float32",
+      "end": 135,
+      "name": "opponent.ball_local",
+      "normalization": "position/6000; velocity/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        2,
+        3
+      ],
+      "start": 129,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 140,
+      "name": "opponent.surface_distances",
+      "normalization": "floor/ceiling/side/back/corner scales",
+      "reset_semantics": "stateless",
+      "shape": [
+        5
+      ],
+      "start": 135,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "opponent car local",
+      "dtype": "float32",
+      "end": 143,
+      "name": "opponent.nearest_surface_normal",
+      "normalization": "unit vector",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 140,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "opponent car local",
+      "dtype": "float32",
+      "end": 144,
+      "name": "opponent.surface_up_alignment",
+      "normalization": "dot product",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 143,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared Soccar geometry",
+      "coordinate_frame": "nearest surface normal",
+      "dtype": "float32",
+      "end": 145,
+      "name": "opponent.surface_signed_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 144,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "opponent_car",
+      "canonical_source": "shared team-frame comparison",
+      "coordinate_frame": "Rival perspective",
+      "dtype": "float32",
+      "end": 146,
+      "name": "opponent.goal_side_of_ball",
+      "normalization": "boolean",
+      "reset_semantics": "stateless",
+      "shape": [
+        1
+      ],
+      "start": 145,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "ball.position",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 149,
+      "name": "ball.position",
+      "normalization": "divide field XYZ extents",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 146,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "ball.linear_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 152,
+      "name": "ball.linear_velocity",
+      "normalization": "divide 2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 149,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "ball.angular_velocity",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 155,
+      "name": "ball.angular_velocity",
+      "normalization": "divide 5.5",
+      "reset_semantics": "stateless",
+      "shape": [
+        3
+      ],
+      "start": 152,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "shared relative transform",
+      "coordinate_frame": "Rival car local",
+      "dtype": "float32",
+      "end": 161,
+      "name": "ball.self_local",
+      "normalization": "position/6000; velocity/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        2,
+        3
+      ],
+      "start": 155,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "shared relative transform",
+      "coordinate_frame": "opponent car local",
+      "dtype": "float32",
+      "end": 167,
+      "name": "ball.opponent_local",
+      "normalization": "position/6000; velocity/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        2,
+        3
+      ],
+      "start": 161,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "shared relative math",
+      "coordinate_frame": "scalar",
+      "dtype": "float32",
+      "end": 172,
+      "name": "ball.speed_distances_closing",
+      "normalization": "speed/2300; distances/6000; closing/2300",
+      "reset_semantics": "stateless",
+      "shape": [
+        5
+      ],
+      "start": 167,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "shared standard goals",
+      "coordinate_frame": "team relative",
+      "dtype": "float32",
+      "end": 178,
+      "name": "ball.goal_centers",
+      "normalization": "divide 6000",
+      "reset_semantics": "stateless",
+      "shape": [
+        2,
+        3
+      ],
+      "start": 172,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "ball_goal",
+      "canonical_source": "shared standard goals",
+      "coordinate_frame": "team relative",
+      "dtype": "float32",
+      "end": 190,
+      "name": "ball.goal_posts",
+      "normalization": "divide 6000",
+      "reset_semantics": "stateless",
+      "shape": [
+        4,
+        3
+      ],
+      "start": 178,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "prediction",
+      "canonical_source": "shared RocketSim BallPredictor",
+      "coordinate_frame": "team and Rival car local",
+      "dtype": "float32",
+      "end": 262,
+      "name": "prediction.horizons",
+      "normalization": "team position/field; team velocity/2300; local position/6000; local velocity/2300",
+      "reset_semantics": "cache cleared on episode/reset discontinuity",
+      "shape": [
+        6,
+        12
+      ],
+      "start": 190,
+      "update_cadence": "cached refresh every configured 1/2/4 ticks; age emitted every tick"
+    },
+    {
+      "block": "boost_pads",
+      "canonical_source": "canonical fixed-order pads",
+      "coordinate_frame": "team and Rival car local",
+      "dtype": "float32",
+      "end": 568,
+      "name": "boost_pads.entities",
+      "normalization": "XY/field; relative/6000; ball distance/6000; flags; time/10",
+      "reset_semantics": "stateless",
+      "shape": [
+        34,
+        9
+      ],
+      "start": 262,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "controller_history",
+      "canonical_source": "applied self controllers",
+      "coordinate_frame": "physical controller",
+      "dtype": "float32",
+      "end": 632,
+      "name": "history.self_controllers",
+      "normalization": "native controller bounds",
+      "reset_semantics": "zero-filled ring buffer on episode reset",
+      "shape": [
+        8,
+        8
+      ],
+      "start": 568,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "controller_history",
+      "canonical_source": "applied opponent controllers",
+      "coordinate_frame": "physical controller",
+      "dtype": "float32",
+      "end": 696,
+      "name": "history.opponent_controllers",
+      "normalization": "native controller bounds",
+      "reset_semantics": "zero-filled ring buffer on episode reset",
+      "shape": [
+        8,
+        8
+      ],
+      "start": 632,
+      "update_cadence": "every physics tick"
+    },
+    {
+      "block": "motion_delta",
+      "canonical_source": "shared previous canonical physics",
+      "coordinate_frame": "team",
+      "dtype": "float32",
+      "end": 714,
+      "name": "motion.one_tick_deltas",
+      "normalization": "linear delta/2300; angular delta/5.5",
+      "reset_semantics": "zero on reset/discontinuity",
+      "shape": [
+        3,
+        6
+      ],
+      "start": 696,
+      "update_cadence": "every physics tick"
+    }
+  ],
+  "float_count": 714,
+  "model_groups": {
+    "core_blocks": [
+      "match_control",
+      "self_car",
+      "opponent_car",
+      "ball_goal",
+      "motion_delta"
+    ],
+    "history_block": "controller_history",
+    "pad_block": "boost_pads",
+    "prediction_block": "prediction"
+  },
+  "observation_version": "RivalObsV1",
+  "running_standardization": false,
+  "schema_sha256": "69fc1bed552994bebc4942671bd52862d7dc9d12afae38f8ce504574a63bed85",
+  "schema_version": 1,
+  "team_frame": "Rival always attacks positive Y; no state-dependent X mirror"
+}

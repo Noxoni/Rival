@@ -1,0 +1,136 @@
+{
+  "checks": {
+    "adapter_version_frozen": true,
+    "all_34_pads_structured": true,
+    "canonical_version_frozen": true,
+    "eight_tick_histories_structured": true,
+    "every_field_documented": true,
+    "no_running_observation_standardization": true,
+    "no_state_dependent_x_mirror": true,
+    "production_runtime_passed": true,
+    "production_snapshot_bit_identical": true,
+    "same_shared_builder_after_canonicalization": true,
+    "schema_contiguous": true,
+    "schema_size_stable": true,
+    "shared_builder_version_frozen": true,
+    "six_prediction_horizons_structured": true,
+    "training_runtime_passed": true,
+    "training_snapshot_bit_identical": true
+  },
+  "commands": {
+    "generate": "training/.venv/Scripts/python.exe training/scripts/run_m09_canonical_gate.py",
+    "unit_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_canonical_observation.py -q"
+  },
+  "gate": 2,
+  "gate_name": "canonical_observation_schema",
+  "gate_scope": "Gate 2 freezes the canonical types and generated schema. Broad natural RLBot corpus/source-field parity remains Gate 3 and is not claimed here.",
+  "generated_at_utc": "2026-08-23T15:44:42.714535+00:00",
+  "milestone": 9,
+  "production_runtime_smoke": {
+    "adapter_version": "RivalCanonicalAdapterV1",
+    "canonical_state_version": "RivalCanonicalStateV1",
+    "observation_finite": true,
+    "observation_shape": [
+      714
+    ],
+    "observation_version": "RivalObsV1",
+    "pad0_time_until_active": 2.0,
+    "pad3_time_until_active": 7.0,
+    "pad_count": 34,
+    "prediction_refreshed": false,
+    "runtime": "production_rlbot_v5_virtual_environment",
+    "serialized_reproduction_bit_identical": true,
+    "status": "passed",
+    "used_generated_rlbot_flat_types": true
+  },
+  "schema": {
+    "block_slices": {
+      "ball_goal": {
+        "end": 190,
+        "start": 146
+      },
+      "boost_pads": {
+        "end": 568,
+        "start": 262
+      },
+      "controller_history": {
+        "end": 696,
+        "start": 568
+      },
+      "match_control": {
+        "end": 15,
+        "start": 0
+      },
+      "motion_delta": {
+        "end": 714,
+        "start": 696
+      },
+      "opponent_car": {
+        "end": 146,
+        "start": 76
+      },
+      "prediction": {
+        "end": 262,
+        "start": 190
+      },
+      "self_car": {
+        "end": 76,
+        "start": 15
+      }
+    },
+    "builder_source_sha256": "ba49b265e4bb3dd1cd15b5c7d5ac58d0b92cee25bfe9de4a8a8fa1c1ff0c7501",
+    "canonical_source_sha256": "a4756302094b6084cf5430fafd3b6138655d42ed804b0dca1fed5818b426f291",
+    "entity_shapes": {
+      "boost_pads": [
+        34,
+        9
+      ],
+      "motion_deltas": [
+        3,
+        6
+      ],
+      "opponent_controller_history": [
+        8,
+        8
+      ],
+      "prediction": [
+        6,
+        12
+      ],
+      "self_controller_history": [
+        8,
+        8
+      ]
+    },
+    "file_sha256": "a6ffd3978029673417f6b82fc4531709cf11fee351f96d9bcbdb4afb8b1c03e5",
+    "float_count": 714,
+    "path": "training/schemas/rival_obs_v1.json",
+    "schema_sha256": "69fc1bed552994bebc4942671bd52862d7dc9d12afae38f8ce504574a63bed85",
+    "size_bytes": 39123
+  },
+  "schema_version": 1,
+  "status": "passed",
+  "training_runtime_smoke": {
+    "adapter_modules": [
+      "rival_training.v9_canonical",
+      "rival_training.v9_canonical"
+    ],
+    "adapter_version": "RivalCanonicalAdapterV1",
+    "agents": 2,
+    "canonical_state_version": "RivalCanonicalStateV1",
+    "observation_shapes": [
+      [
+        714
+      ],
+      [
+        714
+      ]
+    ],
+    "observation_version": "RivalObsV1",
+    "observations_finite": true,
+    "runtime": "training_rlgym_rocketsim_virtual_environment",
+    "serialized_reproduction_bit_identical": true,
+    "shared_builder_module": "rival_training.v9_observations",
+    "status": "passed"
+  }
+}
