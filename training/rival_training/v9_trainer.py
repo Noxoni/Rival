@@ -13,7 +13,15 @@ from rlgym_ppo.batched_agents import BatchedAgentManager
 
 from .v9_actions import ANALOG_DIM, BUTTON_COMBO_COUNT, RivalHybridDistribution
 from .v9_checkpoint import load_v9_checkpoint
-from .v9_environment import make_v9_training_gym_env
+from .v9_environment import (
+    V9_PILOT_ENVIRONMENT_VERSION,
+    make_v9_pilot_gym_env,
+    make_v9_training_gym_env,
+)
+from .v9_metrics import (
+    aggregate_v9_pilot_metrics,
+    collect_v9_pilot_metric_vector,
+)
 from .v9_policy import (
     InstrumentedRivalHybridPolicy,
     RivalCriticV1,
@@ -172,9 +180,7 @@ def _action_diagnostics(actions: np.ndarray) -> dict[str, Any]:
         row.update(
             {
                 "field": name,
-                "absolute_over_0_95_share": float(
-                    np.mean(np.abs(analog[:, index]) > 0.95)
-                ),
+                "absolute_over_0_95_share": float(np.mean(np.abs(analog[:, index]) > 0.95)),
                 "nontrivial_range": bool(np.ptp(analog[:, index]) > 0.1),
             }
         )
@@ -203,18 +209,21 @@ def _gradient_rows(actor: RivalPolicyV1) -> dict[str, list[float]]:
     ):
         raise RuntimeError("One or more hybrid action heads received no gradient")
     return {
-        "analog_mean_abs_sum_by_axis":
-            head.analog_mean.weight.grad.detach().abs().sum(dim=1).cpu().tolist(),
-        "analog_log_std_abs_by_axis":
-            head.analog_log_std.grad.detach().abs().cpu().tolist(),
-        "button_logit_abs_sum_by_combo":
-            head.button_logits.weight.grad.detach().abs().sum(dim=1).cpu().tolist(),
+        "analog_mean_abs_sum_by_axis": head.analog_mean.weight.grad.detach()
+        .abs()
+        .sum(dim=1)
+        .cpu()
+        .tolist(),
+        "analog_log_std_abs_by_axis": head.analog_log_std.grad.detach().abs().cpu().tolist(),
+        "button_logit_abs_sum_by_combo": head.button_logits.weight.grad.detach()
+        .abs()
+        .sum(dim=1)
+        .cpu()
+        .tolist(),
     }
 
 
-def _add_gradient_rows(
-    aggregate: dict[str, np.ndarray], current: dict[str, list[float]]
-) -> None:
+def _add_gradient_rows(aggregate: dict[str, np.ndarray], current: dict[str, list[float]]) -> None:
     for key, values in current.items():
         aggregate[key] += np.asarray(values, dtype=np.float64)
 
@@ -232,7 +241,7 @@ class RivalV9PPOTrainer:
         actor_optimizer: torch.optim.Optimizer | None = None,
         critic_optimizer: torch.optim.Optimizer | None = None,
         trainer_state: dict[str, Any] | None = None,
-        env_factory: Callable = make_v9_training_gym_env,
+        env_factory: Callable | None = None,
     ) -> None:
         self.config = config
         self.device = torch.device(device)
@@ -252,7 +261,12 @@ class RivalV9PPOTrainer:
         self.completed_iterations = int(state.get("completed_iterations", 0))
         self.cumulative_agent_steps = int(state.get("cumulative_agent_steps", 0))
         self.cumulative_model_updates = int(state.get("cumulative_model_updates", 0))
-        self.env_factory = env_factory
+        self.pilot_metrics_enabled = (
+            config.get("environment_version") == V9_PILOT_ENVIRONMENT_VERSION
+        )
+        self.env_factory = env_factory or (
+            make_v9_pilot_gym_env if self.pilot_metrics_enabled else make_v9_training_gym_env
+        )
         self.manager: BatchedAgentManager | None = None
         self.worker_pids: list[int] = []
 
@@ -264,9 +278,7 @@ class RivalV9PPOTrainer:
         *,
         device: str | torch.device = "cuda:0",
     ) -> "RivalV9PPOTrainer":
-        loaded = load_v9_checkpoint(
-            directory, device=device, expected_config=config
-        )
+        loaded = load_v9_checkpoint(directory, device=device, expected_config=config)
         return cls(
             config,
             device=device,
@@ -294,6 +306,9 @@ class RivalV9PPOTrainer:
         shapes = self.manager.init_processes(
             n_processes=int(backend["worker_count"]),
             build_env_fn=self.env_factory,
+            collect_metrics_fn=(
+                collect_v9_pilot_metric_vector if self.pilot_metrics_enabled else None
+            ),
             spawn_delay=None,
             render=False,
             shm_buffer_size=8192,
@@ -326,21 +341,55 @@ class RivalV9PPOTrainer:
             "partial_experience_buffer_records": 0,
         }
 
-    def run_iteration(self) -> tuple[dict[str, Any], np.ndarray]:
+    def run_iteration(
+        self,
+        *,
+        rollout_target_agent_steps: int | None = None,
+        ppo_batch_agent_steps: int | None = None,
+        maximum_cumulative_agent_steps: int | None = None,
+    ) -> tuple[dict[str, Any], np.ndarray]:
         if self.manager is None:
             raise RuntimeError("start_workers must be called before PPO")
         ppo = self.config["ppo"]
-        rollout_target = int(ppo["rollout_agent_steps_per_iteration"])
-        nominal_batch_size = int(ppo["ppo_batch_agent_steps"])
+        rollout_target = int(
+            ppo["rollout_agent_steps_per_iteration"]
+            if rollout_target_agent_steps is None
+            else rollout_target_agent_steps
+        )
+        nominal_batch_size = int(
+            ppo["ppo_batch_agent_steps"] if ppo_batch_agent_steps is None else ppo_batch_agent_steps
+        )
         minibatch_size = int(ppo["minibatch_agent_steps"])
+        if rollout_target <= 0 or nominal_batch_size <= 0:
+            raise ValueError("Rollout and PPO batch targets must be positive")
+        if nominal_batch_size > rollout_target:
+            raise ValueError("PPO batch cannot exceed its clean-boundary rollout target")
+        worker_count = int(self.config["backend"]["worker_count"])
+        rollout_overshoot_reserve = 2 * worker_count
+        if maximum_cumulative_agent_steps is not None:
+            maximum = int(maximum_cumulative_agent_steps)
+            remaining = maximum - self.cumulative_agent_steps
+            if rollout_target > remaining - rollout_overshoot_reserve:
+                raise RuntimeError(
+                    "Requested rollout could breach the cumulative agent-step ceiling: "
+                    f"target={rollout_target}, remaining={remaining}, "
+                    f"overshoot_reserve={rollout_overshoot_reserve}"
+                )
         started = time.perf_counter()
         if torch.cuda.is_available():
             torch.cuda.synchronize()
             torch.cuda.reset_peak_memory_stats()
         rollout_started = time.perf_counter()
-        data, collected_metrics, collected, collection_seconds = (
-            self.manager.collect_timesteps(rollout_target)
+        data, collected_metrics, collected, collection_seconds = self.manager.collect_timesteps(
+            rollout_target
         )
+        if maximum_cumulative_agent_steps is not None and self.cumulative_agent_steps + int(
+            collected
+        ) > int(maximum_cumulative_agent_steps):
+            raise RuntimeError(
+                "rlgym-ppo exceeded the reserved Gate 13 collection ceiling before "
+                "the PPO update; stop without applying another update"
+            )
         rollout_wall = time.perf_counter() - rollout_started
         (
             observations,
@@ -357,7 +406,7 @@ class RivalV9PPOTrainer:
         batch_size, maximum_segment_shortfall = resolve_ppo_batch_size(
             len(observations),
             nominal_batch_size,
-            int(self.config["backend"]["worker_count"]),
+            worker_count,
         )
         rollout_log_probabilities = _rollout_log_probability_error(
             self.policy, observations, actions, old_log_probabilities
@@ -386,23 +435,15 @@ class RivalV9PPOTrainer:
             float(advantages.std()), float(ppo["advantage_epsilon"])
         )
 
-        rng = np.random.default_rng(
-            int(self.config["gate11"]["seed"]) + self.completed_iterations
-        )
+        rng = np.random.default_rng(int(self.config["gate11"]["seed"]) + self.completed_iterations)
         indices = rng.choice(len(observations), size=batch_size, replace=False)
         rng.shuffle(indices)
-        actor_before = torch.nn.utils.parameters_to_vector(
-            self.actor.parameters()
-        ).detach().cpu()
-        critic_before = torch.nn.utils.parameters_to_vector(
-            self.critic.parameters()
-        ).detach().cpu()
+        actor_before = torch.nn.utils.parameters_to_vector(self.actor.parameters()).detach().cpu()
+        critic_before = torch.nn.utils.parameters_to_vector(self.critic.parameters()).detach().cpu()
         gradient_aggregate = {
             "analog_mean_abs_sum_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
             "analog_log_std_abs_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
-            "button_logit_abs_sum_by_combo": np.zeros(
-                BUTTON_COMBO_COUNT, dtype=np.float64
-            ),
+            "button_logit_abs_sum_by_combo": np.zeros(BUTTON_COMBO_COUNT, dtype=np.float64),
         }
         actor_losses: list[float] = []
         critic_losses: list[float] = []
@@ -415,12 +456,8 @@ class RivalV9PPOTrainer:
         for _epoch in range(int(ppo["epochs"])):
             for start in range(0, batch_size, minibatch_size):
                 batch = indices[start : start + minibatch_size]
-                obs = torch.as_tensor(
-                    observations[batch], dtype=torch.float32, device=self.device
-                )
-                physical = torch.as_tensor(
-                    actions[batch], dtype=torch.float32, device=self.device
-                )
+                obs = torch.as_tensor(observations[batch], dtype=torch.float32, device=self.device)
+                physical = torch.as_tensor(actions[batch], dtype=torch.float32, device=self.device)
                 old_logp = torch.as_tensor(
                     old_log_probabilities[batch],
                     dtype=torch.float32,
@@ -431,24 +468,24 @@ class RivalV9PPOTrainer:
                     dtype=torch.float32,
                     device=self.device,
                 )
-                target = torch.as_tensor(
-                    returns[batch], dtype=torch.float32, device=self.device
-                )
+                target = torch.as_tensor(returns[batch], dtype=torch.float32, device=self.device)
 
                 distribution: RivalHybridDistribution = self.policy.distribution(obs)
                 logp = distribution.log_prob(physical)
                 entropy = distribution.entropy(physical)
                 ratio = torch.exp(logp - old_logp)
                 surrogate = ratio * advantage
-                clipped = torch.clamp(
-                    ratio,
-                    1.0 - float(ppo["clip_range"]),
-                    1.0 + float(ppo["clip_range"]),
-                ) * advantage
+                clipped = (
+                    torch.clamp(
+                        ratio,
+                        1.0 - float(ppo["clip_range"]),
+                        1.0 + float(ppo["clip_range"]),
+                    )
+                    * advantage
+                )
                 actor_loss = (
                     -torch.minimum(surrogate, clipped).mean()
-                    - float(ppo["analog_entropy_coefficient"])
-                    * entropy.analog_monte_carlo
+                    - float(ppo["analog_entropy_coefficient"]) * entropy.analog_monte_carlo
                     - float(ppo["button_entropy_coefficient"]) * entropy.button_exact
                 )
                 self.actor_optimizer.zero_grad(set_to_none=True)
@@ -472,21 +509,15 @@ class RivalV9PPOTrainer:
                 critic_losses.append(float(critic_loss.detach().cpu()))
                 analog_entropies.append(float(entropy.analog_monte_carlo.detach().cpu()))
                 button_entropies.append(float(entropy.button_exact.detach().cpu()))
-                mixed_log_ratio_maxima.append(
-                    float((logp - old_logp).detach().abs().max().cpu())
-                )
+                mixed_log_ratio_maxima.append(float((logp - old_logp).detach().abs().max().cpu()))
                 actor_gradient_norms.append(float(actor_norm.detach().cpu()))
                 critic_gradient_norms.append(float(critic_norm.detach().cpu()))
         if torch.cuda.is_available():
             torch.cuda.synchronize()
         update_seconds = time.perf_counter() - update_started
 
-        actor_after = torch.nn.utils.parameters_to_vector(
-            self.actor.parameters()
-        ).detach().cpu()
-        critic_after = torch.nn.utils.parameters_to_vector(
-            self.critic.parameters()
-        ).detach().cpu()
+        actor_after = torch.nn.utils.parameters_to_vector(self.actor.parameters()).detach().cpu()
+        critic_after = torch.nn.utils.parameters_to_vector(self.critic.parameters()).detach().cpu()
         actor_update = float(torch.linalg.vector_norm(actor_after - actor_before))
         critic_update = float(torch.linalg.vector_norm(critic_after - critic_before))
         gradients = {key: value.tolist() for key, value in gradient_aggregate.items()}
@@ -494,6 +525,24 @@ class RivalV9PPOTrainer:
             bool(np.all(np.asarray(value) > 0.0)) for value in gradients.values()
         )
         action_diagnostics = _action_diagnostics(actions)
+        pilot_metrics = (
+            aggregate_v9_pilot_metrics(collected_metrics) if self.pilot_metrics_enabled else None
+        )
+        inference_samples = self.policy.drain_inference_samples()
+        inference_per_agent = np.asarray(
+            [float(item["per_agent_microseconds"]) for item in inference_samples],
+            dtype=np.float64,
+        )
+        inference_diagnostics = {
+            "batches": int(len(inference_samples)),
+            "batch_size": _stats(
+                np.asarray(
+                    [float(item["batch_size"]) for item in inference_samples],
+                    dtype=np.float64,
+                )
+            ),
+            "per_agent_microseconds": _stats(inference_per_agent),
+        }
         final_log_std = self.actor.action_head.analog_log_std.detach().cpu().numpy()
         numeric_groups = (
             np.asarray(actor_losses),
@@ -530,6 +579,17 @@ class RivalV9PPOTrainer:
                 else 0.0
             ),
             "rlgym_ppo_metrics_records": int(len(collected_metrics)),
+            "pilot_metrics": pilot_metrics,
+            "rollout_inference": inference_diagnostics,
+            "authorized_collection": {
+                "requested_rollout_agent_steps": rollout_target,
+                "rlgym_ppo_maximum_overshoot_reserve_agent_steps": (rollout_overshoot_reserve),
+                "maximum_cumulative_agent_steps": maximum_cumulative_agent_steps,
+                "ceiling_not_exceeded": (
+                    maximum_cumulative_agent_steps is None
+                    or self.cumulative_agent_steps <= int(maximum_cumulative_agent_steps)
+                ),
+            },
             "rollout_log_probability_reproduction": rollout_log_probabilities,
             "reward": _stats(rewards),
             "gae": {
@@ -545,9 +605,7 @@ class RivalV9PPOTrainer:
             "ppo": {
                 "batch_agent_steps": batch_size,
                 "nominal_batch_agent_steps": nominal_batch_size,
-                "worker_segment_record_shortfall": max(
-                    0, nominal_batch_size - len(observations)
-                ),
+                "worker_segment_record_shortfall": max(0, nominal_batch_size - len(observations)),
                 "maximum_allowed_worker_segment_shortfall": maximum_segment_shortfall,
                 "minibatch_agent_steps": minibatch_size,
                 "epochs": int(ppo["epochs"]),
@@ -577,26 +635,27 @@ class RivalV9PPOTrainer:
                     np.isfinite(final_log_std).all() and np.all(np.exp(final_log_std) > 0)
                 ),
                 "button_entropy_finite_and_positive": bool(
-                    np.isfinite(button_entropies).all()
-                    and min(button_entropies) > 0.0
+                    np.isfinite(button_entropies).all() and min(button_entropies) > 0.0
                 ),
-                "all_button_combos_sampled": action_diagnostics[
-                    "all_eight_button_combos_sampled"
-                ],
+                "all_button_combos_sampled": action_diagnostics["all_eight_button_combos_sampled"],
                 "all_analog_axes_explored": all(
                     row["nontrivial_range"] for row in action_diagnostics["analog"]
                 ),
-                "rollout_workers_alive": len(health)
-                == int(self.config["backend"]["worker_count"])
+                "rollout_workers_alive": len(health) == worker_count
                 and all(item["alive"] for item in health),
                 "rollout_log_probabilities_reproduced": rollout_log_probabilities[
                     "within_tolerance"
                 ],
+                "pilot_metrics_finite": (pilot_metrics is None or bool(pilot_metrics["finite"])),
+                "authorized_agent_step_ceiling_respected": (
+                    maximum_cumulative_agent_steps is None
+                    or self.cumulative_agent_steps <= int(maximum_cumulative_agent_steps)
+                ),
             },
         }
         report["health"]["passed"] = all(report["health"].values())
         if not report["health"]["passed"]:
-            raise RuntimeError(f"Gate 11 PPO iteration failed health checks: {report}")
+            raise RuntimeError(f"Rival v9 PPO iteration failed health checks: {report}")
         held_count = int(self.config["gate11"]["held_reload_observation_count"])
         return report, observations[:held_count].copy()
 

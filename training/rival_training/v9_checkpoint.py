@@ -12,7 +12,15 @@ import torch
 
 from .v9_actions import ACTION_VERSION, action_metadata
 from .v9_canonical import CANONICAL_ADAPTER_VERSION, CANONICAL_STATE_VERSION
-from .v9_environment import V9_TRAINING_ENVIRONMENT_VERSION
+from .v9_curriculum import (
+    V9_PILOT_CURRICULUM_VERSION,
+    V9_PILOT_CURRICULUM_WEIGHTS,
+)
+from .v9_environment import (
+    V9_PILOT_ENVIRONMENT_VERSION,
+    V9_TRAINING_ENVIRONMENT_VERSION,
+)
+from .v9_metrics import V9_PILOT_METRICS_VERSION
 from .v9_observations import OBSERVATION_VERSION, observation_schema_manifest
 from .v9_policy import (
     CRITIC_VERSION,
@@ -25,6 +33,7 @@ from .v9_rewards import REWARD_SCHEDULE_VERSION, REWARD_VERSION
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = REPOSITORY_ROOT / "training/configs/milestone09.json"
+DEFAULT_PILOT_CONFIG_PATH = REPOSITORY_ROOT / "training/configs/milestone09_pilot.json"
 CHECKPOINT_FORMAT = "rival-v9-hybrid-ppo-checkpoint-v1"
 MANIFEST_NAME = "checkpoint_manifest.json"
 
@@ -68,7 +77,6 @@ def load_m09_config(path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
         "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
         "reward_version": REWARD_VERSION,
         "reward_schedule_version": REWARD_SCHEDULE_VERSION,
-        "environment_version": V9_TRAINING_ENVIRONMENT_VERSION,
     }
     mismatches = {
         key: {"config": config.get(key), "runtime": value}
@@ -77,6 +85,31 @@ def load_m09_config(path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
     }
     if mismatches:
         raise RuntimeError(f"Milestone 09 config/runtime contract mismatch: {mismatches}")
+    environment_version = str(config.get("environment_version"))
+    allowed_environments = {
+        V9_TRAINING_ENVIRONMENT_VERSION,
+        V9_PILOT_ENVIRONMENT_VERSION,
+    }
+    if environment_version not in allowed_environments:
+        raise RuntimeError(
+            f"Milestone 09 environment version is not implemented: {environment_version}"
+        )
+    if environment_version == V9_PILOT_ENVIRONMENT_VERSION:
+        curriculum = config.get("curriculum", {})
+        expected_curriculum = {
+            "version": V9_PILOT_CURRICULUM_VERSION,
+            "seed_base": 20260913,
+            "weights": V9_PILOT_CURRICULUM_WEIGHTS,
+            "natural_is_majority": True,
+            "metrics_version": V9_PILOT_METRICS_VERSION,
+        }
+        if curriculum != expected_curriculum:
+            raise RuntimeError(
+                "Milestone 09 pilot curriculum contract mismatch: "
+                f"expected {expected_curriculum}, got {curriculum}"
+            )
+    elif "curriculum" in config:
+        raise RuntimeError("The Gate 11 environment config cannot silently carry pilot curriculum")
     time_base = config["time_base"]
     if (
         time_base["physics_hz"] != 120
@@ -112,9 +145,55 @@ def checkpoint_contract(config: dict[str, Any]) -> dict[str, Any]:
         "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
         "reward_version": REWARD_VERSION,
         "reward_schedule_version": REWARD_SCHEDULE_VERSION,
-        "environment_version": V9_TRAINING_ENVIRONMENT_VERSION,
+        # Use the stored, loader-validated environment version so a later
+        # prospective environment does not make historical checkpoints
+        # unverifiable merely because the runtime gained a new implementation.
+        "environment_version": config["environment_version"],
         "backend": dict(config["backend"]),
     }
+
+
+def pilot_config_migration_report(source: dict[str, Any], target: dict[str, Any]) -> dict[str, Any]:
+    """Prove the Gate 11 -> Gate 13 change is reset/metrics-only."""
+
+    changed_keys = sorted(
+        key for key in set(source) | set(target) if source.get(key) != target.get(key)
+    )
+    allowed_changed_keys = ["config_version", "curriculum", "environment_version"]
+    frozen_keys = sorted((set(source) | set(target)) - set(allowed_changed_keys))
+    checks = {
+        "only_authorized_top_level_keys_changed": changed_keys == allowed_changed_keys,
+        "all_policy_action_observation_reward_ppo_backend_time_contracts_exact": all(
+            source.get(key) == target.get(key) for key in frozen_keys
+        ),
+        "source_environment_is_gate11_or_pilot": source.get("environment_version")
+        in {V9_TRAINING_ENVIRONMENT_VERSION, V9_PILOT_ENVIRONMENT_VERSION},
+        "target_environment_is_pilot": target.get("environment_version")
+        == V9_PILOT_ENVIRONMENT_VERSION,
+        "target_curriculum_matches_runtime": target.get("curriculum")
+        == {
+            "version": V9_PILOT_CURRICULUM_VERSION,
+            "seed_base": 20260913,
+            "weights": V9_PILOT_CURRICULUM_WEIGHTS,
+            "natural_is_majority": True,
+            "metrics_version": V9_PILOT_METRICS_VERSION,
+        },
+    }
+    if source.get("environment_version") == V9_PILOT_ENVIRONMENT_VERSION:
+        checks["only_authorized_top_level_keys_changed"] = changed_keys == []
+        allowed_changed_keys = []
+    report = {
+        "source_config_version": source.get("config_version"),
+        "target_config_version": target.get("config_version"),
+        "changed_top_level_keys": changed_keys,
+        "allowed_changed_top_level_keys": allowed_changed_keys,
+        "frozen_top_level_keys": frozen_keys,
+        "checks": checks,
+    }
+    report["passed"] = all(checks.values())
+    if not report["passed"]:
+        raise RuntimeError(f"Unauthorized Gate 13 config migration: {report}")
+    return report
 
 
 def _file_manifest(directory: Path) -> dict[str, dict[str, Any]]:
@@ -205,8 +284,7 @@ def verify_v9_checkpoint(
         actual = {"size_bytes": path.stat().st_size, "sha256": sha256_file(path)}
         if actual != expected:
             raise RuntimeError(
-                f"Checkpoint file verification failed for {name}: "
-                f"expected {expected}, got {actual}"
+                f"Checkpoint file verification failed for {name}: expected {expected}, got {actual}"
             )
     stored_config = json.loads((source / "training_config.json").read_text())
     if manifest["contract"] != checkpoint_contract(stored_config):
@@ -229,9 +307,7 @@ def load_v9_checkpoint(
     selected_device = torch.device(device)
     actor = RivalPolicyV1().to(selected_device)
     critic = RivalCriticV1().to(selected_device)
-    actor_payload = torch.load(
-        source / "actor.pt", map_location=selected_device, weights_only=True
-    )
+    actor_payload = torch.load(source / "actor.pt", map_location=selected_device, weights_only=True)
     critic_payload = torch.load(
         source / "critic.pt", map_location=selected_device, weights_only=True
     )
@@ -268,8 +344,6 @@ def load_v9_checkpoint(
         "critic_optimizer": critic_optimizer,
         "trainer_state": manifest["trainer_state"],
         "config": config,
-        "reload_observations": np.load(
-            source / "reload_observations.npy", allow_pickle=False
-        ),
+        "reload_observations": np.load(source / "reload_observations.npy", allow_pickle=False),
         "manifest": manifest,
     }

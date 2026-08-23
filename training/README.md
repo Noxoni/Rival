@@ -60,6 +60,25 @@ training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py 
 Rendering remains optional and disabled by default; this command launches exactly one
 spectator-owned environment and never attaches a renderer to PPO workers.
 
+Milestone 09 scratch checkpoints use a separate native-120-Hz viewer entry point. It
+loads `RivalObsV1`, `RivalActionV1`, and the selected hybrid checkpoint directly; both
+cars run the same scratch actor in self-play. `current` selects the highest-step local
+Gate 13 checkpoint. Check the exact seam headlessly, or launch the one-environment
+viewer at approximately real time:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m09_rlviser_spectator.py `
+  --checkpoint current --check
+
+training/.venv/Scripts/python.exe training/scripts/run_m09_rlviser_spectator.py `
+  --checkpoint current --playback-speed 1
+```
+
+The scratch viewer is opt-in and independent. It uses one policy decision per 120-Hz
+physics tick and never enables rendering in a rollout worker. The once-per-second
+console status shows checkpoint game-hours and the current physical controller row;
+use Ctrl+C to stop an unbounded viewer.
+
 `rlviser-py==0.6.13` is pinned intentionally: 0.6.14 requires NumPy 2.x, while the
 RLGym 2.0.1 Rocket League package requires NumPy below 2. The optional installer uses
 `--no-deps`, verifies that the headless environment remains on NumPy 1.26.4, and

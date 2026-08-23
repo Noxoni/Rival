@@ -17,6 +17,15 @@ sustained 24/32/40/48/56/64 sweep selected the highest stable agent-step through
 56, while 64 remained stable but was 1.25% slower. CPU peaks at 100% were accepted when
 the run remained stable, per the throughput objective.
 
+Milestone 09 keeps the Gate 11 diagnostic environment/version reproducible and adds a
+prospective Gate 13 pilot version with the authoritative 70/10/8/8/4 mixture: natural
+kickoffs, broad ground possession/challenges, wall/aerial/ceiling possession, awkward
+recovery/landing states, and low-resource states. The config migration changes only
+the reset/metric environment contract. `RivalPolicyV1`, `RivalObsV1`,
+`RivalActionV1`, cadence-safe reward, PPO settings, 56-worker selection, and native
+one-tick timing remain unchanged. Pilot mechanic-like detectors are diagnostics only
+and cannot affect reward or actions.
+
 ## Actions
 
 `RivalExpandedActionV1` has 158 unique rows in controller order:

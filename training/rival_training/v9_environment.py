@@ -8,7 +8,8 @@ from __future__ import annotations
 
 import math
 import multiprocessing
-from typing import Any
+import random
+from typing import Any, Mapping
 
 import gym
 import numpy as np
@@ -30,6 +31,11 @@ from rlgym_ppo.util import RLGymV2GymWrapper
 
 from .v9_actions import RivalActionV1Parser
 from .v9_canonical import RocketSimCanonicalAdapterV1
+from .v9_curriculum import (
+    V9_PILOT_CURRICULUM_WEIGHTS,
+    RivalV9PilotCurriculumMutator,
+)
+from .v9_metrics import RivalV9PilotMetricTracker
 from .v9_observations import (
     OBSERVATION_SIZE,
     OBSERVATION_VERSION,
@@ -44,9 +50,27 @@ from .v9_symmetry import (
 
 
 V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV2OneTickDelay"
-V9_TRAINING_ENVIRONMENT_VERSION = (
-    "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry"
+V9_TRAINING_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry"
+V9_PILOT_ENVIRONMENT_VERSION = (
+    "RivalScratch1v1RocketSimV4OneTickDelayEpisodeSymmetryPilotCurriculum"
 )
+
+
+class RivalV9SeededBox(gym.spaces.Box):
+    """Forward rlgym-ppo's process seed into reset and symmetry components."""
+
+    def __init__(self, *, seed_callback) -> None:
+        self._seed_callback = seed_callback
+        super().__init__(
+            low=np.asarray([-1.0] * 5 + [0.0] * 3, dtype=np.float32),
+            high=np.ones(8, dtype=np.float32),
+            dtype=np.float32,
+        )
+
+    def seed(self, seed: int | None = None):
+        if seed is not None:
+            self._seed_callback(int(seed))
+        return super().seed(seed)
 
 
 class RivalV9ContinuousGymWrapper(RLGymV2GymWrapper):
@@ -55,20 +79,45 @@ class RivalV9ContinuousGymWrapper(RLGymV2GymWrapper):
     def __init__(self, rlgym_env: RLGym) -> None:
         super().__init__(rlgym_env)
         self.is_discrete = False
-        self.action_space = gym.spaces.Box(
-            low=np.asarray([-1.0] * 5 + [0.0] * 3, dtype=np.float32),
-            high=np.ones(8, dtype=np.float32),
-            dtype=np.float32,
-        )
+        self.action_space = RivalV9SeededBox(seed_callback=self._seed_components)
+
+    def _seed_components(self, seed: int) -> None:
+        random.seed(seed)
+        np.random.seed(seed)
+        mutators = getattr(self.rlgym_env.state_mutator, "mutators", ())
+        for mutator in mutators:
+            seed_method = getattr(mutator, "seed", None)
+            if callable(seed_method):
+                seed_method(seed)
+        action_seed = getattr(self.rlgym_env.action_parser, "seed", None)
+        if callable(action_seed):
+            action_seed(seed)
+
+
+class RivalV9PilotGymWrapper(RivalV9ContinuousGymWrapper):
+    """Transport fixed diagnostic vectors without altering rollout behavior."""
+
+    def __init__(self, rlgym_env: RLGym) -> None:
+        self.metric_tracker = RivalV9PilotMetricTracker()
+        super().__init__(rlgym_env)
+        self.metric_tracker.reset(self.rlgym_env.state)
+
+    def reset(self):
+        observations = super().reset()
+        self.metric_tracker.reset(self.rlgym_env.state)
+        return observations
+
+    def step(self, actions):
+        observations, rewards, done, truncated, info = super().step(actions)
+        info["state"] = self.metric_tracker.build(self.rlgym_env.state, self.rlgym_env.shared_info)
+        return observations, rewards, done, truncated, info
 
 
 class RivalV9DeterministicKickoffMutator(StateMutator[GameState]):
     """Fixed standard 1v1 kickoff used to isolate diagnostic variables."""
 
     def apply(self, state: GameState, shared_info: dict[str, Any]) -> None:
-        state.ball.position = np.asarray(
-            [0.0, 0.0, BALL_RESTING_HEIGHT], dtype=np.float32
-        )
+        state.ball.position = np.asarray([0.0, 0.0, BALL_RESTING_HEIGHT], dtype=np.float32)
         state.ball.linear_velocity = np.zeros(3, dtype=np.float32)
         state.ball.angular_velocity = np.zeros(3, dtype=np.float32)
         for car in state.cars.values():
@@ -86,9 +135,7 @@ class RivalV9DeterministicKickoffMutator(StateMutator[GameState]):
         shared_info["kickoff"] = True
 
 
-class RivalObsV1RLGymBuilder(
-    ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, int]]
-):
+class RivalObsV1RLGymBuilder(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, int]]):
     """Training-only thin adapter around the shared canonical observation."""
 
     def __init__(
@@ -115,9 +162,7 @@ class RivalObsV1RLGymBuilder(
         del initial_state
         self.adapter.reset()
         self.builders = {
-            agent: RivalObsV1Builder(
-                prediction_refresh_ticks=self.prediction_refresh_ticks
-            )
+            agent: RivalObsV1Builder(prediction_refresh_ticks=self.prediction_refresh_ticks)
             for agent in agents
         }
         shared_info["rival_observation_version"] = OBSERVATION_VERSION
@@ -125,9 +170,7 @@ class RivalObsV1RLGymBuilder(
             "schema_sha256"
         ]
         shared_info["rival_prediction_refresh_ticks"] = self.prediction_refresh_ticks
-        shared_info["rival_v9_observation_episode_mirror_enabled"] = (
-            self.apply_episode_mirror
-        )
+        shared_info["rival_v9_observation_episode_mirror_enabled"] = self.apply_episode_mirror
 
     def build_obs(
         self,
@@ -161,9 +204,7 @@ class RivalV9ZeroReward(RewardFunction[AgentID, GameState, float]):
     ) -> None:
         del initial_state
         shared_info["rival_v9_reward_mode"] = "diagnostic_zero"
-        shared_info["reward_components"] = {
-            agent: {"diagnostic_zero": 0.0} for agent in agents
-        }
+        shared_info["reward_components"] = {agent: {"diagnostic_zero": 0.0} for agent in agents}
 
     def get_rewards(
         self,
@@ -192,9 +233,7 @@ def build_v9_diagnostic_env(
             FixedTeamSizeMutator(blue_size=1, orange_size=1),
             RivalV9DeterministicKickoffMutator(),
         ),
-        obs_builder=RivalObsV1RLGymBuilder(
-            prediction_refresh_ticks=prediction_refresh_ticks
-        ),
+        obs_builder=RivalObsV1RLGymBuilder(prediction_refresh_ticks=prediction_refresh_ticks),
         action_parser=RivalActionV1Parser(),
         reward_fn=RivalV9ZeroReward(),
         transition_engine=transition_engine,
@@ -217,6 +256,9 @@ def build_v9_training_env(
     mirror_probability: float = 0.5,
     symmetry_seed: int = 20260908,
     forced_mirror: bool | None = None,
+    curriculum_weights: Mapping[str, float] | None = None,
+    curriculum_seed: int = 20260913,
+    renderer: Any | None = None,
 ) -> RLGym:
     """Build the complete one-tick scratch path including Reward V1.
 
@@ -226,10 +268,15 @@ def build_v9_training_env(
     """
 
     transition_engine = RocketSimEngine(rlbot_delay=rlbot_delay)
+    reset_mutator: StateMutator[GameState] = (
+        RivalV9DeterministicKickoffMutator()
+        if curriculum_weights is None
+        else RivalV9PilotCurriculumMutator(curriculum_weights, seed=curriculum_seed)
+    )
     return RLGym(
         state_mutator=MutatorSequence(
             FixedTeamSizeMutator(blue_size=1, orange_size=1),
-            RivalV9DeterministicKickoffMutator(),
+            reset_mutator,
         ),
         obs_builder=RivalObsV1RLGymBuilder(
             prediction_refresh_ticks=prediction_refresh_ticks,
@@ -248,7 +295,24 @@ def build_v9_training_env(
             TimeoutCondition(episode_timeout_seconds),
         ),
         shared_info_provider=None,
-        renderer=None,
+        renderer=renderer,
+    )
+
+
+def build_v9_pilot_env(
+    *,
+    seed: int = 20260913,
+    forced_mirror: bool | None = None,
+    renderer: Any | None = None,
+) -> RLGym:
+    """Build the versioned majority-natural Gate 13 pilot distribution."""
+
+    return build_v9_training_env(
+        symmetry_seed=seed + 100_000,
+        forced_mirror=forced_mirror,
+        curriculum_weights=V9_PILOT_CURRICULUM_WEIGHTS,
+        curriculum_seed=seed,
+        renderer=renderer,
     )
 
 
@@ -266,3 +330,11 @@ def make_v9_training_gym_env() -> RivalV9ContinuousGymWrapper:
     return RivalV9ContinuousGymWrapper(
         build_v9_training_env(symmetry_seed=20260908 + worker_offset)
     )
+
+
+def make_v9_pilot_gym_env() -> RivalV9PilotGymWrapper:
+    """Pickle-safe Gate 13 worker with curriculum and metric transport."""
+
+    identity = multiprocessing.current_process()._identity  # noqa: SLF001
+    worker_offset = int(identity[-1]) if identity else 0
+    return RivalV9PilotGymWrapper(build_v9_pilot_env(seed=20260913 + worker_offset))

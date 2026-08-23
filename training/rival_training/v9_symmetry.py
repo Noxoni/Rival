@@ -30,12 +30,8 @@ from .v9_canonical import (
 SYMMETRY_VERSION = "RivalEpisodeLeftRightSymmetryV1"
 WORLD_REFLECTION = np.diag(np.asarray([-1.0, 1.0, 1.0], dtype=np.float32))
 AXIAL_REFLECTION = np.diag(np.asarray([1.0, -1.0, -1.0], dtype=np.float32))
-LOCAL_BASIS_REFLECTION = np.diag(
-    np.asarray([1.0, -1.0, 1.0], dtype=np.float32)
-)
-CONTROLLER_SIGN = np.asarray(
-    [1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0], dtype=np.float32
-)
+LOCAL_BASIS_REFLECTION = np.diag(np.asarray([1.0, -1.0, 1.0], dtype=np.float32))
+CONTROLLER_SIGN = np.asarray([1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0], dtype=np.float32)
 DODGE_DIRECTION_SIGN = np.asarray([1.0, -1.0], dtype=np.float32)
 
 
@@ -55,9 +51,7 @@ def _mirror_physics(physics: CanonicalPhysicsV1) -> CanonicalPhysicsV1:
     # column is also negated so the mirrored rotation remains right-handed.
     return CanonicalPhysicsV1(
         position=WORLD_REFLECTION @ physics.position,
-        rotation_mtx=(
-            WORLD_REFLECTION @ physics.rotation_mtx @ LOCAL_BASIS_REFLECTION
-        ),
+        rotation_mtx=(WORLD_REFLECTION @ physics.rotation_mtx @ LOCAL_BASIS_REFLECTION),
         linear_velocity=WORLD_REFLECTION @ physics.linear_velocity,
         angular_velocity=AXIAL_REFLECTION @ physics.angular_velocity,
     )
@@ -135,9 +129,17 @@ class RivalEpisodeSymmetryActionParser(
             raise ValueError("mirror_probability must be within [0, 1]")
         self.base = RivalActionV1Parser()
         self.mirror_probability = probability
-        self.seed = int(seed)
+        self._seed = int(seed)
         self.forced_mirror = forced_mirror
-        self.rng = np.random.default_rng(self.seed)
+        self.rng = np.random.default_rng(self._seed)
+        self.episode_index = 0
+        self.mirrored = False
+
+    def seed(self, seed: int) -> None:
+        """Reset only the episode-stable augmentation RNG."""
+
+        self._seed = int(seed)
+        self.rng = np.random.default_rng(self._seed)
         self.episode_index = 0
         self.mirrored = False
 
@@ -183,15 +185,11 @@ class RivalEpisodeSymmetryActionParser(
         physical_selected = shared_info["rival_v9_selected_actions"]
         physical_applied = shared_info["rival_v9_applied_actions"]
         shared_info["rival_v9_actor_selected_actions"] = {
-            agent: (
-                mirror_controller(row) if self.mirrored else np.asarray(row).copy()
-            )
+            agent: (mirror_controller(row) if self.mirrored else np.asarray(row).copy())
             for agent, row in physical_selected.items()
         }
         shared_info["rival_v9_actor_applied_actions"] = {
-            agent: (
-                mirror_controller(row) if self.mirrored else np.asarray(row).copy()
-            )
+            agent: (mirror_controller(row) if self.mirrored else np.asarray(row).copy())
             for agent, row in physical_applied.items()
         }
         return parsed
