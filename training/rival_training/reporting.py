@@ -207,9 +207,46 @@ def build_stage_report(
         )
     rlbot = _read(Path(rlbot_path)) if rlbot_path is not None else None
     latest = summary["latest_checkpoint"]
+    next_prior_decision = None
     if next_stage is not None:
         if next_offset is None:
             raise ValueError("A next stage requires an explicit health-gated offset")
+        if not summary["health"]["passed"]:
+            raise ValueError("Cannot advance the action prior after a failed stage gate")
+        calibration = _read(RESULTS_ROOT / "action_prior_calibration.json")
+        calibrated_candidate = next(
+            candidate
+            for candidate in calibration["candidate_results"]
+            if candidate["appended_logit_offset"] == next_offset
+        )
+        if not calibrated_candidate["safe_minority_exploration"]:
+            raise ValueError(
+                f"Requested next-stage offset {next_offset:g} failed calibration"
+            )
+        latest_headless = evaluations[-1] if evaluations else None
+        next_prior_decision = {
+            "decision": "advance_at_clean_health-passed_stage_boundary",
+            "next_stage": next_stage,
+            "selected_appended_logit_offset": next_offset,
+            "calibrated_candidate": calibrated_candidate,
+            "stage_health_passed": summary["health"]["passed"],
+            "aggregate_stage_appended_action_share": summary["aggregate_actions"][
+                "appended_action_share"
+            ],
+            "maximum_health_appended_action_share": config["evaluation"][
+                "maximum_appended_action_share_for_health"
+            ],
+            "latest_headless_baseline_comparison": (
+                latest_headless["baseline_comparison"]
+                if latest_headless is not None
+                else None
+            ),
+            "rationale": (
+                "The completed stage passed every numerical and headless health gate; "
+                "the requested next offset was separately safe in natural-observation "
+                "calibration, and the campaign action share remained controlled."
+            ),
+        }
         exact_resume = (
             "training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py "
             f"--stage {next_stage} --appended-offset {next_offset:g} "
@@ -265,6 +302,7 @@ def build_stage_report(
         "headless_frozen_wisp_evaluations": evaluations,
         "rlbot_evaluation": rlbot,
         "health": summary["health"],
+        "next_stage_prior_decision": next_prior_decision,
         "exact_resume_command": exact_resume,
         "production_policy": "frozen_wisp_unchanged",
         "production_promoted": False,

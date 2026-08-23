@@ -19,7 +19,12 @@ The frozen-Wisp headless baseline was 42-58-0 over 100 balanced games. Reward/cu
 
 ## Training boundaries
 
-No campaign steps have been counted yet.
+### 005m
+
+- Status: `completed_stage_boundary`; cumulative steps/updates: 5,000,010 / 297.
+- Aggregate appended-action share: 0.1449%.
+- Latest 100-game headless Wisp result: 43-57-0, goal differential -14; health `passed`.
+- Production: frozen Wisp unchanged. Resume: `training/.venv/Scripts/python.exe training/scripts/run_m06_campaign.py --stage stage_b --appended-offset -4 --resume training/checkpoints/milestone06/005000010_stage_a_m6p0`
 
 ## Promotion state
 
