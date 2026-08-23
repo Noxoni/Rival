@@ -33,7 +33,7 @@
       "start": 15
     }
   },
-  "builder_source_sha256": "4b2a49f54903024d5cfc10fc61342401ba499c2cebfcc5242eb5c2c5307839fa",
+  "builder_source_sha256": "6ba12efbc2478d894086d07c023602325cff80f45ce82408e42c894962ed128d",
   "canonical_adapter_version": "RivalCanonicalAdapterV1",
   "canonical_source_sha256": "146c390de1916a8a5525b0c377841c5622159f51d2c3532d8e7da7510dcd30ad",
   "canonical_state_version": "RivalCanonicalStateV1",
@@ -1439,8 +1439,34 @@
   },
   "observation_version": "RivalObsV1",
   "running_standardization": false,
-  "schema_sha256": "0ff6276fe80ba145bd8abb99eea863fdca3c194fe4be3b7a8bd64fa2a1a3bf31",
+  "schema_sha256": "3e42ba6b59bf971cc474210a51515e682f80426c46e8d22f2e1cc794f221715a",
   "schema_version": 1,
+  "shared_ball_prediction": {
+    "actor_age_field": "prediction.age",
+    "horizon_ticks": [
+      15,
+      30,
+      60,
+      120,
+      240,
+      480
+    ],
+    "horizons_seconds": [
+      0.125,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "provider_lifetime": "one RocketSim BallPredictor per RivalObsV1Builder",
+    "refresh_period_options_ticks": [
+      1,
+      2,
+      4
+    ],
+    "sparse_sample_interval_ticks": 15
+  },
   "standard_soccar_geometry": {
     "authority": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
     "surface_scope": "Exact documented planes, 45-degree corner segment, and rectangular goal recess; curved ramps/posts are not represented as exact mesh clearances.",

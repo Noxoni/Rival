@@ -1,0 +1,382 @@
+{
+  "checks": {
+    "all_observations_finite": true,
+    "all_periods_completed": true,
+    "native_corpus_hash_matches_gate3": true,
+    "native_replay_observations_finite": true,
+    "native_replay_record_counts_match": true,
+    "non_prediction_features_bit_identical": true,
+    "prediction_age_never_exceeds_period_minus_one": true,
+    "selected_period_is_measured_fastest_eligible_or_period1_fallback": true,
+    "selected_period_meets_prospective_freshness_bounds": true
+  },
+  "commands": {
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_prediction_cadence_gate.py",
+    "unit_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_environment.py -q"
+  },
+  "contract": {
+    "action_trace_seed": 20260904,
+    "action_trace_sha256": "98906d9f590b0255f21b1bcd57e54d991d425519ba031ee017fc24164fefc95d",
+    "agents": 2,
+    "diagnostic_reward": "identically_zero",
+    "environment_version": "RivalScratch1v1RocketSimV1",
+    "measured_agent_steps_per_period": 9600,
+    "measured_ticks_per_period": 4800,
+    "observation_schema_sha256": "3e42ba6b59bf971cc474210a51515e682f80426c46e8d22f2e1cc794f221715a",
+    "observation_version": "RivalObsV1",
+    "physics_hz": 120,
+    "prediction_periods_ticks": [
+      1,
+      2,
+      4
+    ],
+    "rlbot_delay": true,
+    "sacrificial_process_warmup_ticks": 600,
+    "shared_ball_prediction": {
+      "actor_age_field": "prediction.age",
+      "horizon_ticks": [
+        15,
+        30,
+        60,
+        120,
+        240,
+        480
+      ],
+      "horizons_seconds": [
+        0.125,
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        4.0
+      ],
+      "provider_lifetime": "one RocketSim BallPredictor per RivalObsV1Builder",
+      "refresh_period_options_ticks": [
+        1,
+        2,
+        4
+      ],
+      "sparse_sample_interval_ticks": 15
+    },
+    "warmup_ticks_per_period": 300
+  },
+  "gate": 4,
+  "gate_name": "prediction_update_cadence_benchmark",
+  "generated_at_utc": "2026-08-23T17:26:35.688650+00:00",
+  "interpretation": "This gate measures the complete canonical adapter plus shared RivalObsV1 workload at native one-tick environment cadence. It is not PPO throughput, worker-count evidence, or a policy-skill evaluation.",
+  "milestone": 9,
+  "natural_rlbot_freshness_replay": {
+    "periods": {
+      "1": {
+        "discontinuity_resets": 2,
+        "fresh_period1_observation_comparison": {
+          "all_observation_max_abs": 0.0,
+          "compared_observations": 6000,
+          "non_prediction_and_non_age_mismatched_floats": 0,
+          "prediction_block_max_abs": 0.0,
+          "prediction_block_per_observation_max_abs": {
+            "max": 0.0,
+            "mean": 0.0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          },
+          "reference_period_ticks": 1
+        },
+        "nonfinite_observations": 0,
+        "observation_build_seconds": {
+          "max": 0.023503400036133826,
+          "mean": 0.0010097913664843267,
+          "p50": 0.000979200005531311,
+          "p95": 0.0014378400053828956,
+          "p99": 0.0017195369396358737
+        },
+        "period_ticks": 1,
+        "prediction_age_distribution": {
+          "0": 6000
+        },
+        "predictor_refreshes": 6000,
+        "predictor_seconds": {
+          "max": 0.022711099940352142,
+          "mean": 0.0003048685166674356,
+          "p50": 0.00024580000899732113,
+          "p95": 0.000702129991259426,
+          "p99": 0.0008679119730368259
+        },
+        "records": 6000
+      },
+      "2": {
+        "discontinuity_resets": 2,
+        "fresh_period1_observation_comparison": {
+          "all_observation_max_abs": 1.9631766080856323,
+          "compared_observations": 6000,
+          "non_prediction_and_non_age_mismatched_floats": 0,
+          "prediction_block_max_abs": 1.9631766080856323,
+          "prediction_block_per_observation_max_abs": {
+            "max": 1.9631766080856323,
+            "mean": 0.007673221114223174,
+            "p50": 0.0,
+            "p95": 0.00578145794570446,
+            "p99": 0.12266203429550081
+          },
+          "reference_period_ticks": 1
+        },
+        "nonfinite_observations": 0,
+        "observation_build_seconds": {
+          "max": 0.023477000067941844,
+          "mean": 0.000861739267304074,
+          "p50": 0.0007740999571979046,
+          "p95": 0.0014231350040063264,
+          "p99": 0.0016283099423162642
+        },
+        "period_ticks": 2,
+        "prediction_age_distribution": {
+          "0": 3001,
+          "1": 2999
+        },
+        "predictor_refreshes": 3001,
+        "predictor_seconds": {
+          "max": 0.022613100009039044,
+          "mean": 0.0003129592133075823,
+          "p50": 0.00024200009647756815,
+          "p95": 0.0007415000582113862,
+          "p99": 0.0008619000436738133
+        },
+        "records": 6000
+      },
+      "4": {
+        "discontinuity_resets": 2,
+        "fresh_period1_observation_comparison": {
+          "all_observation_max_abs": 1.508828341960907,
+          "compared_observations": 6000,
+          "non_prediction_and_non_age_mismatched_floats": 0,
+          "prediction_block_max_abs": 1.508828341960907,
+          "prediction_block_per_observation_max_abs": {
+            "max": 1.508828341960907,
+            "mean": 0.021850972781516275,
+            "p50": 0.0034594815224409103,
+            "p95": 0.07150865864241505,
+            "p99": 0.5151015274226695
+          },
+          "reference_period_ticks": 1
+        },
+        "nonfinite_observations": 0,
+        "observation_build_seconds": {
+          "max": 0.02476670010946691,
+          "mean": 0.0007769576327409596,
+          "p50": 0.0006757999653927982,
+          "p95": 0.0012241050077136605,
+          "p99": 0.00147760295891203
+        },
+        "period_ticks": 4,
+        "prediction_age_distribution": {
+          "0": 1502,
+          "1": 1500,
+          "2": 1499,
+          "3": 1499
+        },
+        "predictor_refreshes": 1502,
+        "predictor_seconds": {
+          "max": 0.02385230001527816,
+          "mean": 0.00031974500601059607,
+          "p50": 0.0002443999983370304,
+          "p95": 0.0007250550494063646,
+          "p99": 0.0008555579965468497
+        },
+        "records": 6000
+      }
+    },
+    "source": {
+      "corpus_version": "RivalV9NativePacketCorpusV2",
+      "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+      "records": 6000,
+      "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+      "size_bytes": 49198958
+    }
+  },
+  "open_loop_environment_trajectory_diagnostic": {
+    "gate_use": "Diagnostic only. Cache freshness is compared on the identical frozen native corpus because independently created RocketSim arenas can have process-order variation unrelated to observation cadence.",
+    "hashes_by_period": {
+      "1": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
+      "2": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
+      "4": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd"
+    },
+    "unique_hashes": 2
+  },
+  "prospective_freshness_bounds": {
+    "interpretation": "Normalized actor-input bounds chosen before the benchmark; period 4 can be at most three physics ticks (25 ms) stale.",
+    "prediction_block_global_max_abs": 0.1,
+    "prediction_block_per_observation_max_abs_p95": 0.025
+  },
+  "results": {
+    "1": {
+      "agent_steps": 9600,
+      "agent_steps_per_second": 729.415274125994,
+      "episode_resets": 1,
+      "fresh_period1_observation_comparison": {
+        "all_observation_max_abs": 0.0,
+        "compared_observations": 6000,
+        "non_prediction_and_non_age_mismatched_floats": 0,
+        "prediction_block_max_abs": 0.0,
+        "prediction_block_per_observation_max_abs": {
+          "max": 0.0,
+          "mean": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "reference_period_ticks": 1
+      },
+      "nonfinite_observation_ticks": 0,
+      "observation_build_cpu_total_seconds": 9.949787302757613,
+      "observation_build_seconds": {
+        "max": 0.03325149999000132,
+        "mean": 0.001036220298141805,
+        "p50": 0.0010241999989375472,
+        "p95": 0.0016492949915118515,
+        "p99": 0.0017840950796380638
+      },
+      "observation_samples": 9602,
+      "period_ticks": 1,
+      "physics_ticks": 4800,
+      "prediction_age_distribution": {
+        "0": 9602
+      },
+      "predictor_cpu_total_seconds": 3.335349392145872,
+      "predictor_refreshes": 9602,
+      "predictor_seconds": {
+        "max": 0.03204309998545796,
+        "mean": 0.00034735986171067194,
+        "p50": 0.0003966999938711524,
+        "p95": 0.0009824750304687762,
+        "p99": 0.0010386979929171503
+      },
+      "process_cpu_seconds": 13.046875,
+      "simulated_game_seconds": 40.0,
+      "simulated_game_seconds_per_wall_second": 3.039230308858308,
+      "single_process_cpu_utilization_percent": 99.13114483971435,
+      "state_trajectory_sha256": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
+      "wall_seconds": 13.161226999945939
+    },
+    "2": {
+      "agent_steps": 9600,
+      "agent_steps_per_second": 838.0783335229562,
+      "episode_resets": 1,
+      "fresh_period1_observation_comparison": {
+        "all_observation_max_abs": 1.9631766080856323,
+        "compared_observations": 6000,
+        "non_prediction_and_non_age_mismatched_floats": 0,
+        "prediction_block_max_abs": 1.9631766080856323,
+        "prediction_block_per_observation_max_abs": {
+          "max": 1.9631766080856323,
+          "mean": 0.007673221114223174,
+          "p50": 0.0,
+          "p95": 0.00578145794570446,
+          "p99": 0.12266203429550081
+        },
+        "reference_period_ticks": 1
+      },
+      "nonfinite_observation_ticks": 0,
+      "observation_build_cpu_total_seconds": 8.260139594669454,
+      "observation_build_seconds": {
+        "max": 0.029503000085242093,
+        "mean": 0.0008602519886137736,
+        "p50": 0.0007316000410355628,
+        "p95": 0.0014819349918980137,
+        "p99": 0.001740995100699365
+      },
+      "observation_samples": 9602,
+      "period_ticks": 2,
+      "physics_ticks": 4800,
+      "prediction_age_distribution": {
+        "0": 4800,
+        "1": 4802
+      },
+      "predictor_cpu_total_seconds": 1.6863433021353558,
+      "predictor_refreshes": 4800,
+      "predictor_seconds": {
+        "max": 0.028734699939377606,
+        "mean": 0.00035132152127819913,
+        "p50": 0.0003989000106230378,
+        "p95": 0.0009935249981936067,
+        "p99": 0.0010490020702127367
+      },
+      "process_cpu_seconds": 11.390625,
+      "simulated_game_seconds": 40.0,
+      "simulated_game_seconds_per_wall_second": 3.4919930563456507,
+      "single_process_cpu_utilization_percent": 99.43995851859295,
+      "state_trajectory_sha256": "64c062e6058e9aa9c44d7626fd0423355d353f2fff26c91f9cc247ee50a8c539",
+      "wall_seconds": 11.454776500002481
+    },
+    "4": {
+      "agent_steps": 9600,
+      "agent_steps_per_second": 732.6740447371558,
+      "episode_resets": 1,
+      "fresh_period1_observation_comparison": {
+        "all_observation_max_abs": 1.508828341960907,
+        "compared_observations": 6000,
+        "non_prediction_and_non_age_mismatched_floats": 0,
+        "prediction_block_max_abs": 1.508828341960907,
+        "prediction_block_per_observation_max_abs": {
+          "max": 1.508828341960907,
+          "mean": 0.021850972781516275,
+          "p50": 0.0034594815224409103,
+          "p95": 0.07150865864241505,
+          "p99": 0.5151015274226695
+        },
+        "reference_period_ticks": 1
+      },
+      "nonfinite_observation_ticks": 0,
+      "observation_build_cpu_total_seconds": 9.279952500364743,
+      "observation_build_seconds": {
+        "max": 0.03697279992047697,
+        "mean": 0.000966460372876978,
+        "p50": 0.0009706000564619899,
+        "p95": 0.0016803799953777339,
+        "p99": 0.0023896910354960707
+      },
+      "observation_samples": 9602,
+      "period_ticks": 4,
+      "physics_ticks": 4800,
+      "prediction_age_distribution": {
+        "0": 2400,
+        "1": 2402,
+        "2": 2400,
+        "3": 2400
+      },
+      "predictor_cpu_total_seconds": 1.1063314030179754,
+      "predictor_refreshes": 2400,
+      "predictor_seconds": {
+        "max": 0.035868800012394786,
+        "mean": 0.0004609714179241564,
+        "p50": 0.00040184997487813234,
+        "p95": 0.0013001700048334893,
+        "p99": 0.001382106045493856
+      },
+      "process_cpu_seconds": 13.0625,
+      "simulated_game_seconds": 40.0,
+      "simulated_game_seconds_per_wall_second": 3.052808519738149,
+      "single_process_cpu_utilization_percent": 99.69327822269894,
+      "state_trajectory_sha256": "c5ece78e38b18bde62582caafd84562e9dba963e119f3ac8bab16f2a3c7613dd",
+      "wall_seconds": 13.10268879996147
+    }
+  },
+  "runtime": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "process_model": "single_process_headless_RocketSim",
+    "python": "3.12.13"
+  },
+  "schema_version": 1,
+  "selection": {
+    "fastest_eligible_period_ticks": 1,
+    "fastest_materially_better_than_period1_by_at_least_3_percent": false,
+    "freshness_acceptable": {
+      "1": true,
+      "2": false,
+      "4": false
+    },
+    "policy_behavior_comparison": "Not applicable: no meaningful scratch Rival policy exists before the ordered pre-PPO gates. Actor-input differences were measured on the identical frozen natural RLBot state sequence; the RocketSim runs use open-loop actions only for throughput and are not a skill evaluation.",
+    "selected_prediction_refresh_ticks": 1
+  },
+  "status": "passed"
+}

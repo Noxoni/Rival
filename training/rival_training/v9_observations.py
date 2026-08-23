@@ -41,6 +41,7 @@ OBSERVATION_SCHEMA_VERSION = 1
 PREDICTION_HORIZONS_SECONDS = (0.125, 0.25, 0.5, 1.0, 2.0, 4.0)
 PREDICTION_HORIZON_TICKS = tuple(round(value * 120) for value in PREDICTION_HORIZONS_SECONDS)
 PREDICTION_COUNT = len(PREDICTION_HORIZONS_SECONDS)
+PREDICTION_SAMPLE_INTERVAL_TICKS = math.gcd(*PREDICTION_HORIZON_TICKS)
 PREDICTION_FEATURES = 12
 PAD_COUNT = 34
 PAD_FEATURES = 9
@@ -301,6 +302,14 @@ def observation_schema_manifest() -> dict[str, Any]:
                 "recess; curved ramps/posts are not represented as exact mesh clearances."
             ),
         },
+        "shared_ball_prediction": {
+            "horizons_seconds": list(PREDICTION_HORIZONS_SECONDS),
+            "horizon_ticks": list(PREDICTION_HORIZON_TICKS),
+            "sparse_sample_interval_ticks": PREDICTION_SAMPLE_INTERVAL_TICKS,
+            "provider_lifetime": "one RocketSim BallPredictor per RivalObsV1Builder",
+            "refresh_period_options_ticks": [1, 2, 4],
+            "actor_age_field": "prediction.age",
+        },
         "fields": [asdict(field) for field in SCHEMA_FIELDS],
         "block_slices": block_slices,
         "entity_shapes": {
@@ -517,27 +526,33 @@ def _ensure_rocketsim(mesh_directory: str | Path | None) -> None:
         return
 
 
-def _default_prediction_provider(ball) -> tuple[np.ndarray, np.ndarray]:
-    predictor = rs.BallPredictor(rs.GameMode.SOCCAR)
-    ball_state = rs.BallState(
-        pos=rs.Vec(*ball.position),
-        rot_mat=rs.RotMat(*ball.rotation_mtx.transpose().flatten()),
-        vel=rs.Vec(*ball.linear_velocity),
-        ang_vel=rs.Vec(*ball.angular_velocity),
-    )
-    prediction = predictor.get_ball_prediction(
-        ball_state,
-        0,
-        max(PREDICTION_HORIZON_TICKS) + 1,
-        1,
-    )
-    positions = np.empty((PREDICTION_COUNT, 3), dtype=np.float32)
-    velocities = np.empty((PREDICTION_COUNT, 3), dtype=np.float32)
-    for index, tick in enumerate(PREDICTION_HORIZON_TICKS):
-        item = prediction[tick]
-        positions[index] = (item.pos.x, item.pos.y, item.pos.z)
-        velocities[index] = (item.vel.x, item.vel.y, item.vel.z)
-    return positions, velocities
+class _RocketSimPredictionProviderV1:
+    """Reuse one predictor and request only the exact shared horizon grid."""
+
+    def __init__(self) -> None:
+        self.predictor = rs.BallPredictor(rs.GameMode.SOCCAR)
+
+    def __call__(self, ball) -> tuple[np.ndarray, np.ndarray]:
+        ball_state = rs.BallState(
+            pos=rs.Vec(*ball.position),
+            rot_mat=rs.RotMat(*ball.rotation_mtx.transpose().flatten()),
+            vel=rs.Vec(*ball.linear_velocity),
+            ang_vel=rs.Vec(*ball.angular_velocity),
+        )
+        maximum_tick = max(PREDICTION_HORIZON_TICKS)
+        prediction = self.predictor.get_ball_prediction(
+            ball_state,
+            0,
+            maximum_tick // PREDICTION_SAMPLE_INTERVAL_TICKS + 1,
+            PREDICTION_SAMPLE_INTERVAL_TICKS,
+        )
+        positions = np.empty((PREDICTION_COUNT, 3), dtype=np.float32)
+        velocities = np.empty((PREDICTION_COUNT, 3), dtype=np.float32)
+        for index, tick in enumerate(PREDICTION_HORIZON_TICKS):
+            item = prediction[tick // PREDICTION_SAMPLE_INTERVAL_TICKS]
+            positions[index] = (item.pos.x, item.pos.y, item.pos.z)
+            velocities[index] = (item.vel.x, item.vel.y, item.vel.z)
+        return positions, velocities
 
 
 class RivalObsV1Builder:
@@ -554,7 +569,7 @@ class RivalObsV1Builder:
             raise ValueError("Prediction refresh must be one of 1, 2 or 4 physics ticks")
         self.prediction_refresh_ticks = int(prediction_refresh_ticks)
         _ensure_rocketsim(collision_mesh_directory)
-        self._prediction_provider = prediction_provider or _default_prediction_provider
+        self._prediction_provider = prediction_provider or _RocketSimPredictionProviderV1()
         self.last_timings: dict[str, float | bool] = {}
         self.reset()
 
@@ -792,6 +807,7 @@ class RivalObsV1Builder:
             "prediction_age_ticks": float(prediction_age),
         }
         return observation
+
 
     @staticmethod
     def _emit_self_car(emit, state: RivalCanonicalStateV1) -> None:

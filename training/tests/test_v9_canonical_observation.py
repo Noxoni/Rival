@@ -21,7 +21,10 @@ from rival_training.v9_observations import (
     OBSERVATION_SIZE,
     OBSERVATION_VERSION,
     PREDICTION_COUNT,
+    PREDICTION_HORIZON_TICKS,
+    PREDICTION_SAMPLE_INTERVAL_TICKS,
     RivalObsV1Builder,
+    _RocketSimPredictionProviderV1,
     _soccar_surface_distance,
     _surface_features,
     observation_schema_manifest,
@@ -308,6 +311,8 @@ def test_generated_schema_is_contiguous_complete_and_hashed() -> None:
     assert len(manifest["canonical_source_sha256"]) == 64
     assert len(manifest["geometry_source_sha256"]) == 64
     assert "curved ramps/posts" in manifest["standard_soccar_geometry"]["surface_scope"]
+    assert manifest["shared_ball_prediction"]["sparse_sample_interval_ticks"] == 15
+    assert manifest["shared_ball_prediction"]["refresh_period_options_ticks"] == [1, 2, 4]
     offset = 0
     names = set()
     for field in manifest["fields"]:
@@ -402,6 +407,40 @@ def test_default_shared_rocketsim_predictor_builds_finite_observation() -> None:
     assert builder.last_timings["prediction_refreshed"] is True
     assert float(builder.last_timings["predictor_seconds"]) > 0
     assert canonical.gravity_z == STANDARD_GRAVITY_Z
+
+
+def test_sparse_shared_predictor_matches_dense_horizons_exactly() -> None:
+    import RocketSim as rs
+
+    rlgym_state, shared, _, _ = _equivalent_sources()
+    canonical = RocketSimCanonicalAdapterV1().adapt(rlgym_state, "self", shared)
+    provider = _RocketSimPredictionProviderV1()
+    sparse_positions, sparse_velocities = provider(canonical.ball)
+    predictor_identity = id(provider.predictor)
+    provider(canonical.ball)
+    assert id(provider.predictor) == predictor_identity
+    assert PREDICTION_SAMPLE_INTERVAL_TICKS == 15
+
+    ball = canonical.ball
+    ball_state = rs.BallState(
+        pos=rs.Vec(*ball.position),
+        rot_mat=rs.RotMat(*ball.rotation_mtx.transpose().flatten()),
+        vel=rs.Vec(*ball.linear_velocity),
+        ang_vel=rs.Vec(*ball.angular_velocity),
+    )
+    dense = provider.predictor.get_ball_prediction(
+        ball_state, 0, max(PREDICTION_HORIZON_TICKS) + 1, 1
+    )
+    dense_positions = np.asarray(
+        [[dense[tick].pos.x, dense[tick].pos.y, dense[tick].pos.z] for tick in PREDICTION_HORIZON_TICKS],
+        dtype=np.float32,
+    )
+    dense_velocities = np.asarray(
+        [[dense[tick].vel.x, dense[tick].vel.y, dense[tick].vel.z] for tick in PREDICTION_HORIZON_TICKS],
+        dtype=np.float32,
+    )
+    np.testing.assert_array_equal(sparse_positions, dense_positions)
+    np.testing.assert_array_equal(sparse_velocities, dense_velocities)
 
 
 def test_shared_surface_geometry_is_goal_aware_and_nonnegative() -> None:

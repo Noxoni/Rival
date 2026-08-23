@@ -344,6 +344,7 @@ def _main_gate() -> int:
             "canonical_source_sha256": schema["canonical_source_sha256"],
             "geometry_source_sha256": schema["geometry_source_sha256"],
             "standard_soccar_geometry": schema["standard_soccar_geometry"],
+            "shared_ball_prediction": schema["shared_ball_prediction"],
         },
         "training_runtime_smoke": training_smoke,
         "production_runtime_smoke": production_smoke,
