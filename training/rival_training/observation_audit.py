@@ -167,7 +167,12 @@ def closest_rocketsim_observation(
     self_index = int(packet["self_index"])
     snapshots = _snapshot_by_packet_index(record)
     state = GameState()
-    state.tick_count = sample_index
+    match = packet.get("match") or {}
+    state.tick_count = int(
+        match.get("frame_num")
+        or round(float(match.get("seconds_elapsed") or 0.0) * 120.0)
+        or sample_index
+    )
     state.goal_scored = False
     state.config = None
     state.cars = {
@@ -189,17 +194,46 @@ def closest_rocketsim_observation(
     previous = _controller_array(
         ((record.get("state") or {}).get("self") or {}).get("previous_action")
     )
+    live_observation = (record.get("diagnostic") or {}).get(
+        "live_observation_432"
+    )
     shared_info = {
         "score_diff": int((record.get("state") or {}).get("score_diff", 0)),
         "previous_actions": {self_index: previous},
+        # The M07 packet format predates explicit temporal-adapter telemetry.
+        # These two directly representable values are nevertheless present in
+        # the exact tensor captured at the same decision.  Supplying them here
+        # audits the v2 contract rather than reintroducing the known V1 boolean
+        # surrogates.  Native RocketSim paths source the same semantics from
+        # ``Car.ball_touches`` and analog ``Car.handbrake``.
+        "wisp_player_flags": {
+            index: {
+                "on_ground": bool(snapshot.get("on_ground", False)),
+                "has_flip_or_jump": bool(snapshot.get("has_flip_or_jump", True)),
+                "is_jumping": bool(snapshot.get("is_jumping", False)),
+            }
+            for index, snapshot in snapshots.items()
+        },
+        "wisp_boost_pad_active": [
+            bool(item.get("is_active", False)) for item in packet["boost_pads"]
+        ],
     }
+    if live_observation is not None:
+        shared_info["wisp_ball_touched_step"] = {
+            self_index: float(live_observation[124])
+        }
+        shared_info["wisp_handbrake_values"] = {
+            self_index: float(live_observation[125])
+        }
     prediction = builder._ball_prediction(state)  # noqa: SLF001
     result = builder._build_one(  # noqa: SLF001
         self_index, state, shared_info, prediction
     )
-    return _align_1v1_opponent_slot(result, np.asarray(
-        record["diagnostic"]["live_observation_432"], dtype=np.float32
-    ))
+    if live_observation is None:
+        return result
+    return _align_1v1_opponent_slot(
+        result, np.asarray(live_observation, dtype=np.float32)
+    )
 
 
 def _align_1v1_opponent_slot(training: np.ndarray, live: np.ndarray) -> np.ndarray:
@@ -283,29 +317,75 @@ def _policy_metrics(logits: torch.Tensor, masks: np.ndarray) -> dict[str, np.nda
     }
 
 
-def _load_records(
-    matrix: dict[str, Any], max_samples: int | None
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    records = []
-    sources = []
+def _policy_divergence(
+    live_logits: torch.Tensor,
+    training_logits: torch.Tensor,
+    masks: np.ndarray,
+) -> dict[str, Any]:
+    mask = torch.from_numpy(masks)
+    live = torch.softmax(live_logits.masked_fill(~mask, -1e10), dim=-1).double()
+    training = torch.softmax(
+        training_logits.masked_fill(~mask, -1e10), dim=-1
+    ).double()
+    midpoint = 0.5 * (live + training)
+    live_safe = live.clamp_min(1e-300)
+    training_safe = training.clamp_min(1e-300)
+    midpoint_safe = midpoint.clamp_min(1e-300)
+    live_kl = torch.sum(live * (torch.log(live_safe) - torch.log(training_safe)), 1)
+    training_kl = torch.sum(
+        training * (torch.log(training_safe) - torch.log(live_safe)), 1
+    )
+    js = 0.5 * (
+        torch.sum(live * (torch.log(live_safe) - torch.log(midpoint_safe)), 1)
+        + torch.sum(
+            training * (torch.log(training_safe) - torch.log(midpoint_safe)), 1
+        )
+    )
+    return {
+        "mean_js_divergence_nats": float(js.mean().item()),
+        "p95_js_divergence_nats": float(torch.quantile(js, 0.95).item()),
+        "max_js_divergence_nats": float(js.max().item()),
+        "mean_live_to_training_kl_nats": float(live_kl.mean().item()),
+        "mean_training_to_live_kl_nats": float(training_kl.mean().item()),
+    }
+
+
+def _reconstruct_corpus(
+    matrix: dict[str, Any],
+    max_samples: int | None,
+    builder: WispCompatibleObs,
+) -> tuple[list[dict[str, Any]], np.ndarray, list[dict[str, Any]]]:
+    """Replay every decision so the production-style ETA cache is chronological."""
+    records: list[dict[str, Any]] = []
+    reconstructed: list[np.ndarray] = []
+    sources: list[dict[str, Any]] = []
+    decision_index = 0
     for game in matrix["modes"]["P0"]["games"]:
         path = RAW_ROOT / game["session_id"] / "decisions.jsonl"
-        count = 0
+        sample_count = 0
+        replayed_count = 0
+        builder.reset([], GameState(), {})
         with path.open("r", encoding="utf-8") as stream:
             for line in stream:
                 record = json.loads(line)
                 if record.get("record_type") != "rival_policy_decision":
                     continue
-                if not (record.get("diagnostic") or {}).get("live_observation_432"):
-                    continue
-                records.append(record)
-                count += 1
+                decision_index += 1
+                replayed_count += 1
+                observation = closest_rocketsim_observation(
+                    record, builder, decision_index
+                )
+                if (record.get("diagnostic") or {}).get("live_observation_432"):
+                    records.append(record)
+                    reconstructed.append(observation)
+                    sample_count += 1
                 if max_samples is not None and len(records) >= max_samples:
                     break
         sources.append(
             {
                 "session_id": game["session_id"],
-                "samples": count,
+                "samples": sample_count,
+                "decisions_replayed": replayed_count,
                 "path": portable_path(path),
                 "sha256": sha256_file(path),
                 "size_bytes": path.stat().st_size,
@@ -313,7 +393,7 @@ def _load_records(
         )
         if max_samples is not None and len(records) >= max_samples:
             break
-    return records, sources
+    return records, np.asarray(reconstructed, dtype=np.float32), sources
 
 
 def _indices(start: int, end: int) -> tuple[int, ...]:
@@ -379,24 +459,18 @@ def build_observation_audit_report(
 ) -> dict[str, Any]:
     matrix_path = Path(matrix_report_path)
     matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
-    records, sources = _load_records(matrix, max_samples)
-    if not records:
-        raise RuntimeError("No exact live observation records were found")
     # Initialize the packaged soccar collision meshes before BallPredictor.
     transition_engine = RocketSimEngine(rlbot_delay=True)
     builder = WispCompatibleObs(seed=20260822)
+    records, training, sources = _reconstruct_corpus(matrix, max_samples, builder)
+    if not records:
+        raise RuntimeError("No exact live observation records were found")
     live = np.asarray(
         [record["diagnostic"]["live_observation_432"] for record in records],
         dtype=np.float32,
     )
     masks = np.asarray(
         [record["decision"]["legal_mask"][:90] for record in records], dtype=bool
-    )
-    training = np.stack(
-        [
-            closest_rocketsim_observation(record, builder, index + 1)
-            for index, record in enumerate(records)
-        ]
     )
     if live.shape != training.shape or live.shape[1:] != (432,):
         raise AssertionError(f"Observation shapes differ: {live.shape} vs {training.shape}")
@@ -473,14 +547,45 @@ def build_observation_audit_report(
         "training_style_confidence": _distribution(training_policy["confidence"]),
         "live_margin": _distribution(live_policy["margin"]),
         "training_style_margin": _distribution(training_policy["margin"]),
+        **_policy_divergence(live_logits, training_logits, masks),
+    }
+    approximated_indices = set(range(16, 64)) | set(range(119, 122))
+    approximated_indices.update((174, 225, 276, 327, 378, 429))
+    directly_representable = tuple(
+        index for index in range(432) if index not in approximated_indices
+    )
+    direct_difference = np.abs(
+        live[:, directly_representable] - training[:, directly_representable]
+    )
+    direct_tolerance = 1e-5
+    direct_bad_columns = np.flatnonzero(
+        np.max(direct_difference, axis=0) > direct_tolerance
+    )
+    direct_bad_indices = [directly_representable[index] for index in direct_bad_columns]
+    maximum_group_materiality = max(
+        metrics["training_plus_live_group"]["top1_changed_from_training_share"]
+        for metrics in ablations.values()
+    )
+    gate_checks = {
+        "held_natural_samples_at_least_1000": len(records) >= 1000,
+        "masked_top1_agreement_at_least_97_percent": (
+            baseline["masked_top1_agreement"] >= 0.97
+        ),
+        "mean_js_divergence_at_most_0_002": (
+            baseline["mean_js_divergence_nats"] <= 0.002
+        ),
+        "single_group_substitution_materiality_at_most_5_percent": (
+            maximum_group_materiality <= 0.05
+        ),
+        "directly_representable_fields_within_tolerance": not direct_bad_indices,
     }
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "completed",
-        "purpose": "milestone07_observation_domain_audit",
+        "purpose": "milestone08_observation_contract_v2_gate",
         "matrix_report": portable_path(matrix_path),
         "corpus": {
-            "description": "exact live P0 tensors plus same-packet closest RLGym/RocketSim reconstruction",
+            "description": "exact live M07 P0 tensors plus chronological Wisp432ContractV2 RocketSim reconstruction",
             "samples": len(records),
             "live_shape": list(live.shape),
             "training_shape": list(training.shape),
@@ -490,10 +595,10 @@ def build_observation_audit_report(
         "conversion_contract": {
             "physical_source": "exact RLBot v5 packet snapshot at the live inference decision",
             "live_tensor": "exact 432 floats consumed by frozen production Wisp",
-            "training_tensor": "WispCompatible432RLGymV1 from a packet-mapped RLGym GameState",
+            "training_tensor": "Wisp432ContractV2 from a packet-mapped RLGym GameState",
             "ball_prediction": (
-                "RocketSim BallPredictor recomputed at ticks 22/66/198/594 from the "
-                "same current ball state; RLBot prediction slices were not copied"
+                "RocketSim BallPredictor source states 23/67/199/595 map to RLBot "
+                "slices 22/66/198/594; RLBot prediction slices were not copied"
             ),
             "slot_alignment": (
                 "the one non-padding opponent block is moved to the live tensor's random "
@@ -501,8 +606,8 @@ def build_observation_audit_report(
             ),
             "limitations": [
                 "Packet fields are mapped without a RocketSim settling step.",
-                "RLBot air/jump flags are mapped to the closest RLGym Car flags.",
-                "Live arena-SDF landing normal and cached Wisp ETA remain intentionally different approximations.",
+                "M07 predates explicit temporal-adapter fields, so its exact captured tensor supplies touch-step and analog handbrake at sampled decisions.",
+                "RocketSim remains the permitted ball-prediction source; rare long-horizon collision differences are retained rather than copied from live tensors.",
             ],
         },
         "whole_observation": _error_metrics(live, training),
@@ -513,6 +618,23 @@ def build_observation_audit_report(
             "group_substitution_ablations": ablations,
             "targeted_state_substitution_ablations": targeted_ablations,
             "sensitivity_ranking": sensitivity_ranking,
+        },
+        "observation_gate": {
+            "target_masked_top1_agreement": 0.99,
+            "hard_minimum_masked_top1_agreement": 0.97,
+            "hard_maximum_mean_js_divergence_nats": 0.002,
+            "hard_maximum_single_group_top1_materiality": 0.05,
+            "maximum_observed_single_group_top1_materiality": float(
+                maximum_group_materiality
+            ),
+            "directly_representable_tolerance": direct_tolerance,
+            "directly_representable_index_count": len(directly_representable),
+            "directly_representable_max_abs_error": float(
+                direct_difference.max()
+            ),
+            "directly_representable_failing_indices": direct_bad_indices,
+            "checks": gate_checks,
+            "passed": all(gate_checks.values()),
         },
         "production_modified_or_promoted": False,
         "diagnostic_transition_engine_initialized": type(transition_engine).__name__,

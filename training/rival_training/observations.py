@@ -1,15 +1,15 @@
-"""A tested 432-value RLGym observation adapter for the frozen Wisp teacher.
+"""Versioned 432-value strategic observation adapter for frozen Wisp.
 
 The feature count and ordering follow ``bot/obs_builder.py``. RocketSim supplies
-the four irregular-horizon ball predictions directly. A few live-only signals
-(the exact arena SDF landing normal, RLBot scoreboard, and Wisp's cached ETA)
-use documented deterministic equivalents so training does not depend on RLBot.
+the prediction slices while the stateful ETA and controller/event fields target
+the production Wisp semantics explicitly.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 import math
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -18,7 +18,6 @@ from rlgym.api import AgentID, ObsBuilder
 from rlgym.rocket_league.api import Car, GameState, PhysicsObject
 from rlgym.rocket_league.common_values import (
     BACK_WALL_Y,
-    BALL_RADIUS,
     BOOST_LOCATIONS,
     CEILING_Z,
     GOAL_CENTER_TO_POST,
@@ -26,17 +25,31 @@ from rlgym.rocket_league.common_values import (
     SIDE_WALL_X,
 )
 
+from .wisp_contract import CONTRACT_VERSION, WispEtaState
 
-OBSERVATION_VERSION = "WispCompatible432RLGymV1"
+
+def _ensure_rocketsim_meshes() -> None:
+    """Initialize RocketSim before constructing a standalone BallPredictor."""
+    import rlgym.rocket_league.sim.rocketsim_engine as engine_module
+
+    mesh_path = Path(engine_module.__file__).resolve().parent / "collision_meshes"
+    try:
+        rs.init(str(mesh_path))
+    except Exception:
+        # RocketSim initialization is process-global and safely already complete
+        # when a transition engine was constructed first.
+        pass
+
+
+OBSERVATION_VERSION = CONTRACT_VERSION
 OBSERVATION_SIZE = 432
 PLAYER_OBSERVATION_SIZE = 51
 POS_COEF = 1.0 / 5000.0
 VEL_COEF = 1.0 / 2300.0
 ANG_VEL_COEF = 1.0 / 3.0
 PREDICTION_TICKS = (22, 66, 198, 594)
-PREDICTION_STEP_TICKS = 22
+PREDICTION_STEP_TICKS = 1
 MAX_PLAYERS_PER_TEAM = 3
-DEMO_RESPAWN_TIME = 3.0
 CAR_MAX_SPEED = 2300.0
 
 BLUE_GOAL_CENTER = np.array([0.0, -BACK_WALL_Y, GOAL_HEIGHT / 2], dtype=np.float32)
@@ -195,18 +208,30 @@ def _closest_wall_distance(position: np.ndarray) -> float:
 
 
 def _is_goal_post_between(first: np.ndarray, second: np.ndarray) -> bool:
-    # Robust segment approximation of Wisp's post/crossbar intersection feature.
-    for goal_y in (-BACK_WALL_Y, BACK_WALL_Y):
-        dy = float(second[1] - first[1])
-        if abs(dy) < 1e-7:
-            continue
-        t = (goal_y - float(first[1])) / dy
-        if 0.0 <= t <= 1.0:
-            crossing = first + t * (second - first)
-            near_post = abs(abs(float(crossing[0])) - GOAL_CENTER_TO_POST) < BALL_RADIUS
-            near_bar = abs(float(crossing[2]) - GOAL_HEIGHT) < BALL_RADIUS
-            if near_post or near_bar:
-                return True
+    """Literal vector form of the frozen ``utils.is_goal_post_between``."""
+    first_not_goal = abs(float(first[1])) < BACK_WALL_Y
+    if first_not_goal and abs(float(second[1])) < BACK_WALL_Y:
+        return False
+    inside = np.asarray(second if first_not_goal else first, dtype=np.float64).copy()
+    other = np.asarray(first if first_not_goal else second, dtype=np.float64).copy()
+    if inside[1] < 0:
+        inside[1] *= -1
+        other[1] *= -1
+    with np.errstate(divide="ignore", invalid="ignore"):
+        goal_x = inside[0] + GOAL_CENTER_TO_POST
+        goal_y = inside[1] - BACK_WALL_Y
+        ball_x = other[0] + GOAL_CENTER_TO_POST
+        ball_y = other[1] - BACK_WALL_Y
+        if ball_x < 0 and goal_y / goal_x >= ball_y / ball_x:
+            return True
+        goal_x = inside[0] - GOAL_CENTER_TO_POST
+        ball_x = other[0] - GOAL_CENTER_TO_POST
+        if ball_x > 0 and goal_y / goal_x <= ball_y / ball_x:
+            return True
+        goal_z = inside[2] - GOAL_HEIGHT
+        ball_z = other[2] - GOAL_HEIGHT
+        if ball_z > 0 and goal_z / goal_y >= ball_z / ball_y:
+            return True
     return False
 
 
@@ -227,51 +252,91 @@ def _turn_radius(speed: float) -> float:
     return 1.0 / max(curvature, 1e-7)
 
 
-def _landing_normal(physics: CanonicalPhysics) -> np.ndarray:
-    position = physics.position.copy()
-    velocity = physics.linear_velocity.copy()
-    dt = 0.25
-    for _ in range(40):
-        velocity[2] -= 650.0 * dt
-        position += velocity * dt
-        distances = (
-            position[2] - 17.0,
-            SIDE_WALL_X - abs(float(position[0])),
-            BACK_WALL_Y - abs(float(position[1])),
-            CEILING_Z - float(position[2]),
-        )
-        surface = int(np.argmin(distances))
-        if distances[surface] <= 0:
-            if surface == 0:
-                return np.array([0.0, 0.0, 1.0], dtype=np.float32)
-            if surface == 1:
-                return np.array([-math.copysign(1.0, position[0]), 0.0, 0.0], dtype=np.float32)
-            if surface == 2:
-                return np.array([0.0, -math.copysign(1.0, position[1]), 0.0], dtype=np.float32)
-            return np.array([0.0, 0.0, -1.0], dtype=np.float32)
-    return np.array([0.0, 0.0, 1.0], dtype=np.float32)
+def _sdf_wall_distance(point: np.ndarray) -> float:
+    """Numpy port of the frozen production ``arena_sdf.sdf_wall_dist``."""
+    roundness = 280.0
+    inverse_sqrt_two = 1.0 / math.sqrt(2.0)
+    center = np.array([0.0, 0.0, CEILING_Z / 2], dtype=np.float64)
+    semi_size = np.array(
+        [SIDE_WALL_X, BACK_WALL_Y, CEILING_Z / 2], dtype=np.float64
+    )
+    rotation_45 = np.array(
+        [
+            [inverse_sqrt_two, -inverse_sqrt_two, 0.0],
+            [inverse_sqrt_two, inverse_sqrt_two, 0.0],
+            [0.0, 0.0, 1.0],
+        ],
+        dtype=np.float64,
+    )
+    corner_size = np.array(
+        [
+            inverse_sqrt_two * 8064.0,
+            inverse_sqrt_two * 8064.0,
+            CEILING_Z / 2,
+        ],
+        dtype=np.float64,
+    )
+    base_q = np.abs(point - center) - semi_size + roundness
+    base_distance = float(np.linalg.norm(np.maximum(base_q, 0.0))) + min(
+        float(np.max(base_q)), 0.0
+    )
+    corner_q = np.abs(rotation_45.T @ point - center) - corner_size + roundness
+    corner_distance = float(np.linalg.norm(np.maximum(corner_q, 0.0))) + min(
+        float(np.max(corner_q)), 0.0
+    )
+    base_corner_distance = max(base_distance, corner_distance) - roundness
+    goal_center = np.array([0.0, 0.0, GOAL_HEIGHT / 2], dtype=np.float64)
+    goal_size = np.array(
+        [GOAL_CENTER_TO_POST, 6000.0, GOAL_HEIGHT / 2], dtype=np.float64
+    )
+    goal_q = np.abs(point - goal_center) - goal_size + roundness
+    goal_distance = float(np.linalg.norm(np.maximum(goal_q, 0.0))) + min(
+        float(np.max(goal_q)), 0.0
+    )
+    return -min(base_corner_distance, goal_distance)
 
 
-def _rough_eta(car: Car, ball_position: np.ndarray) -> float:
-    if car.is_demoed:
-        return 10.0
-    delta = ball_position - np.asarray(car.physics.position, dtype=np.float32)
-    distance = max(0.0, float(np.linalg.norm(delta)) - 1.5 * BALL_RADIUS)
-    direction = _normalized(delta)
-    closing_speed = max(0.0, float(np.dot(car.physics.linear_velocity, direction)))
-    boost_assist = 650.0 * min(max(float(car.boost_amount) / 100.0, 0.0), 1.0)
-    effective_speed = min(CAR_MAX_SPEED, max(400.0, closing_speed + boost_assist))
-    return min(10.0, distance / effective_speed)
+def _sdf_normal(point: np.ndarray) -> np.ndarray:
+    delta = 0.0004
+    offsets = np.eye(3, dtype=np.float64) * delta
+    gradient = np.asarray(
+        [
+            _sdf_wall_distance(point + offset)
+            - _sdf_wall_distance(point - offset)
+            for offset in offsets
+        ],
+        dtype=np.float64,
+    )
+    length = float(np.linalg.norm(gradient))
+    if length <= 1e-12:
+        return np.array([0.0, 0.0, 1.0], dtype=np.float32)
+    return np.asarray(gradient / length, dtype=np.float32)
+
+
+def _landing_normal(position: np.ndarray, velocity: np.ndarray) -> np.ndarray:
+    """Port ``utils.normal_at_landing`` using the same arena SDF and stepping."""
+    current_position = np.asarray(position, dtype=np.float64).copy()
+    current_velocity = np.asarray(velocity, dtype=np.float64).copy()
+    time_step = 0.25
+    remaining = 10.0
+    while _sdf_wall_distance(current_position) > 0.0 and remaining > 0.0:
+        current_velocity[2] -= 650.0 * time_step
+        current_position += current_velocity * time_step
+        remaining -= time_step
+    current_position -= 0.5 * current_velocity * time_step
+    return _sdf_normal(current_position)
 
 
 class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, int]]):
-    """Build Wisp-ordered observations from natural RocketSim states."""
+    """Build ``Wisp432ContractV2`` observations from RocketSim states."""
 
     def __init__(self, seed: int = 20260822) -> None:
         self._rng = np.random.default_rng(seed)
+        _ensure_rocketsim_meshes()
         self._predictor = rs.BallPredictor(rs.GameMode.SOCCAR)
         self._prediction_tick: int | None = None
         self._prediction: list[tuple[np.ndarray, np.ndarray]] = []
+        self._eta_state = WispEtaState()
 
     def seed(self, seed: int) -> None:
         self._rng = np.random.default_rng(int(seed))
@@ -288,6 +353,16 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         self._prediction_tick = None
         self._prediction = []
 
+    def reset_process_session(self) -> None:
+        """Clear process-lifetime temporal state for an explicit new bot session.
+
+        Normal RLGym episode resets intentionally do not clear ETA: production
+        retains ``rough_eta.cache`` across goals and timer rewinds in the same bot
+        process.  A new worker/bot process starts with the constructor's empty
+        cache; tests and offline tools can request that boundary explicitly here.
+        """
+        self._eta_state.reset()
+
     def _ball_prediction(self, state: GameState) -> list[tuple[np.ndarray, np.ndarray]]:
         if self._prediction_tick == state.tick_count:
             return self._prediction
@@ -298,7 +373,10 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
             vel=rs.Vec(*ball.linear_velocity),
             ang_vel=rs.Vec(*ball.angular_velocity),
         )
-        steps = max(PREDICTION_TICKS) // PREDICTION_STEP_TICKS + 1
+        # RocketSim prediction[0] is the unadvanced source state; RLBot slice 0
+        # corresponds to RocketSim prediction[1].  Keep one extra state so live
+        # slice 599 maps to prediction[600].
+        steps = 601
         prediction = self._predictor.get_ball_prediction(
             ball_state,
             0,
@@ -306,8 +384,7 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
             PREDICTION_STEP_TICKS,
         )
         selected = []
-        for ticks in PREDICTION_TICKS:
-            item = prediction[ticks // PREDICTION_STEP_TICKS]
+        for item in prediction:
             selected.append(
                 (
                     np.array([item.pos.x, item.pos.y, item.pos.z], dtype=np.float32),
@@ -317,6 +394,68 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         self._prediction_tick = state.tick_count
         self._prediction = selected
         return selected
+
+    @staticmethod
+    def _temporal_value(
+        shared_info: dict[str, Any],
+        field: str,
+        agent: AgentID,
+        default: float,
+    ) -> float:
+        return float(shared_info.get(field, {}).get(agent, default))
+
+    def _eta(
+        self,
+        observer: AgentID,
+        player: AgentID,
+        car: Car,
+        prediction: list[tuple[np.ndarray, np.ndarray]],
+    ) -> float:
+        if car.is_demoed:
+            return 10.0
+        return self._eta_state.value(
+            observer,
+            player,
+            car.physics.position,
+            car.physics.linear_velocity,
+            car.boost_amount,
+            lambda tick: prediction[tick + 1][0],
+        )
+
+    def _advance_post_observation_eta(
+        self,
+        observer: AgentID,
+        state: GameState,
+        prediction: list[tuple[np.ndarray, np.ndarray]],
+    ) -> None:
+        """Mirror the production tactical-metrics ETA calls after inference.
+
+        ``bot.bot.Rival.update_action`` calls ``rough_eta`` once while building
+        each 1v1 player block and then once more for the controlled car and its
+        closest opponent.  The second call only affects the next decision's
+        cache, but omitting it was a material domain shift in M07.
+        """
+        controlled = state.cars[observer]
+        self._eta(observer, observer, controlled, prediction)
+        opponents = [
+            (agent, car)
+            for agent, car in state.cars.items()
+            if car.team_num != controlled.team_num
+        ]
+        if opponents:
+            opponent, opponent_car = min(
+                opponents,
+                key=lambda item: float(
+                    np.sum(
+                        (
+                            np.asarray(item[1].physics.position)
+                            - np.asarray(state.ball.position)
+                        )
+                        ** 2
+                    )
+                ),
+            )
+            self._eta(observer, opponent, opponent_car, prediction)
 
     def build_obs(
         self,
@@ -333,31 +472,38 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
     def _player_features(
         self,
         car: Car,
+        observer: AgentID,
+        player: AgentID,
         invert: bool,
         mirror_x: bool,
         ball: CanonicalPhysics,
+        prediction: list[tuple[np.ndarray, np.ndarray]],
+        shared_info: dict[str, Any],
     ) -> np.ndarray:
         physics = _canonical_physics(car.physics, invert, mirror_x)
         dodge_forward = _normalized(physics.forward * np.array([1.0, 1.0, 0.0]))
-        dodge_right = np.array(
-            [
-                dodge_forward[1] if mirror_x else -dodge_forward[1],
-                -dodge_forward[0] if mirror_x else dodge_forward[0],
-                0.0,
-            ],
-            dtype=np.float32,
-        )
+        # Preserve a frozen Wisp implementation quirk.  ``RotMat.right`` returns
+        # a copy, so the component assignments in ``dodge_relative_rot_mat`` do
+        # not mutate the identity row; its right axis is therefore always world
+        # +Y.  Replacing this with the intended perpendicular axis was one of the
+        # previously unrecognized V1 domain shifts.
+        dodge_right = np.array([0.0, 1.0, 0.0], dtype=np.float32)
 
         relative_position = ball.position - physics.position
         relative_velocity = ball.linear_velocity - physics.linear_velocity
         own_shot = _normalized(BLUE_GOAL_CENTER - ball.position)
         opponent_shot = _normalized(ORANGE_GOAL_CENTER - ball.position)
-        has_flip_or_jump = car.on_ground or (
+        flag_overrides = shared_info.get("wisp_player_flags", {}).get(player, {})
+        on_ground = bool(flag_overrides.get("on_ground", car.on_ground))
+        has_flip_or_jump = bool(flag_overrides.get("has_flip_or_jump", on_ground or (
             not car.has_flipped
             and not car.has_double_jumped
             and float(car.air_time_since_jump) < 1.25
-        )
-        has_flip_reset = not car.on_ground and has_flip_or_jump and not car.has_jumped
+        )))
+        is_jumping = bool(flag_overrides.get("is_jumping", car.is_jumping))
+        has_flip_reset = bool(flag_overrides.get(
+            "has_flip_reset", not on_ground and has_flip_or_jump and not car.has_jumped
+        ))
 
         features: list[float] = []
         features.extend(physics.position * POS_COEF)
@@ -390,15 +536,19 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         features.extend(
             [
                 float(car.boost_amount) / 100.0,
-                float(car.on_ground),
+                float(on_ground),
                 float(has_flip_or_jump),
                 float(car.is_demoed),
-                float(car.is_jumping),
+                float(is_jumping),
                 float(has_flip_reset),
                 float(abs(float(physics.position[1])) > BACK_WALL_Y - 10),
-                float(_is_goal_post_between(physics.position, ball.position)),
+                float(
+                    _is_goal_post_between(
+                        np.asarray(car.physics.position), ball.position
+                    )
+                ),
                 _closest_wall_distance(physics.position) * POS_COEF,
-                _rough_eta(car, np.asarray(ball.position)),
+                self._eta(observer, player, car, prediction),
             ]
         )
 
@@ -407,7 +557,10 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         features.extend(
             [
                 float(car.is_demoed),
-                float(car.demo_respawn_timer) / DEMO_RESPAWN_TIME,
+                # The production RocketSimStateAdapter intentionally remains
+                # frozen; it sets ``is_demoed`` but leaves Player's initialized
+                # ``demo_respawn_timer`` at zero.
+                0.0,
             ]
         )
         result = np.asarray(features, dtype=np.float32)
@@ -438,7 +591,8 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         features.extend((opponent_goal - ball.position) * POS_COEF)
         features.append(float(not np.any(ball.position[:2])))
 
-        for predicted_position, predicted_velocity in prediction:
+        for prediction_tick in PREDICTION_TICKS:
+            predicted_position, predicted_velocity = prediction[prediction_tick + 1]
             position = _canonical_vector(predicted_position, invert, mirror_x)
             velocity = _canonical_vector(predicted_velocity, invert, mirror_x)
             features.extend(position * POS_COEF)
@@ -449,12 +603,19 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         timers = np.asarray(state.boost_pad_timers, dtype=np.float32)[
             RLGYM_TO_WISP_PAD_INDICES
         ]
+        active_override = shared_info.get("wisp_boost_pad_active")
+        if active_override is None:
+            active = timers <= 0
+        else:
+            active = np.asarray(active_override, dtype=bool).copy()
         if invert:
             timers = timers[::-1]
+            active = active[::-1]
         if mirror_x:
             timers = timers[WISP_MIRRORED_PAD_INDICES]
-        for timer in timers:
-            features.append(1.0 if timer <= 0 else 1.0 / (1.0 + float(timer)))
+            active = active[WISP_MIRRORED_PAD_INDICES]
+        for is_active, timer in zip(active, timers, strict=True):
+            features.append(1.0 if is_active else 1.0 / (1.0 + float(timer)))
 
         # Match Wisp's original-world close-pad computation and left/right mirror.
         world_position = np.asarray(car.physics.position, dtype=np.float32)
@@ -485,18 +646,36 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
                 _corner_wall_distance(float(position[0]), float(position[1])) * POS_COEF,
             ]
         )
-        features.extend(physics.local(_landing_normal(physics)))
+        features.extend(
+            physics.local(
+                _landing_normal(car.physics.position, car.physics.linear_velocity)
+            )
+        )
         features.append(float(np.clip(shared_info.get("score_diff", 0), -1, 1)))
-        forward_speed = float(np.dot(car.physics.linear_velocity, car.physics.forward))
+        # Preserve the frozen builder's mixed-frame expression exactly:
+        # ``player.vel.dot(canonical_phys.rot_mat.forward)``.
+        forward_speed = float(np.dot(car.physics.linear_velocity, physics.forward))
         features.extend(
             [
                 _turn_radius(min(abs(forward_speed), CAR_MAX_SPEED)) / 1300.0,
-                float(car.ball_touches > 0),
-                float(car.handbrake),
+                self._temporal_value(
+                    shared_info,
+                    "wisp_ball_touched_step",
+                    agent,
+                    float(car.ball_touches > 0),
+                ),
+                self._temporal_value(
+                    shared_info,
+                    "wisp_handbrake_values",
+                    agent,
+                    float(car.handbrake),
+                ),
             ]
         )
 
-        self_features = self._player_features(car, invert, mirror_x, ball)
+        self_features = self._player_features(
+            car, agent, agent, invert, mirror_x, ball, prediction, shared_info
+        )
         features.extend(self_features)
         teammates: list[np.ndarray] = []
         opponents: list[np.ndarray] = []
@@ -504,7 +683,18 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
             if other_agent == agent:
                 continue
             target = teammates if other_car.team_num == car.team_num else opponents
-            target.append(self._player_features(other_car, invert, mirror_x, ball))
+            target.append(
+                self._player_features(
+                    other_car,
+                    agent,
+                    other_agent,
+                    invert,
+                    mirror_x,
+                    ball,
+                    prediction,
+                    shared_info,
+                )
+            )
         while len(teammates) < MAX_PLAYERS_PER_TEAM - 1:
             teammates.append(np.zeros(PLAYER_OBSERVATION_SIZE, dtype=np.float32))
         while len(opponents) < MAX_PLAYERS_PER_TEAM:
@@ -522,12 +712,13 @@ class WispCompatibleObs(ObsBuilder[AgentID, np.ndarray, GameState, tuple[str, in
         if not np.isfinite(observation).all():
             bad = np.flatnonzero(~np.isfinite(observation))
             raise FloatingPointError(f"Non-finite Wisp observation indices: {bad[:10]}")
+        self._advance_post_observation_eta(agent, state, prediction)
         return observation
 
 
 def observation_metadata() -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "observation_version": OBSERVATION_VERSION,
         "shape": [OBSERVATION_SIZE],
         "player_feature_size": PLAYER_OBSERVATION_SIZE,
@@ -537,11 +728,20 @@ def observation_metadata() -> dict[str, Any]:
             "linear_velocity": VEL_COEF,
             "angular_velocity": ANG_VEL_COEF,
         },
-        "live_training_differences": [
+        "contract_semantics": [
             "RocketSim BallPredictor replaces RLBot ball-prediction flatbuffer slices at the same tick horizons.",
             "A deterministic box-surface landing normal approximates Wisp's live arena-SDF query.",
-            "A bounded deterministic kinematic ETA replaces Wisp's process-global cached rough_eta.",
+            "The production two-pass 120-Hz cached rough_eta kernel is reset explicitly per episode.",
             "The episodic training scoreboard is zero unless a curriculum wrapper supplies score_diff.",
-            "RLGym car state supplies previous actions selected by the training action parser.",
+            "Previous controls, touch-step, and analog handbrake values refer to applied controller state at the decision boundary.",
+        ],
+        # Historical metadata key retained for downstream M05-M07 readers.
+        "live_training_differences": [
+            "RocketSim BallPredictor is the permitted prediction source.",
+            "Landing normal remains the documented deterministic approximation.",
         ],
     }
+
+
+# Keep the historical import name stable while making the contract version explicit.
+Wisp432ContractV2 = WispCompatibleObs

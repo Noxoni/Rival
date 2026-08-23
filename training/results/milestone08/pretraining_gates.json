@@ -1,0 +1,367 @@
+{
+  "action_table": {
+    "expanded_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "expanded_shape": [
+      158,
+      8
+    ],
+    "wisp_prefix_exact": true,
+    "wisp_sha256": "86baa15c48c42c497f3ea0fe62efeb49e4a8241cb3191957822e453cd2d0b655",
+    "wisp_shape": [
+      90,
+      8
+    ]
+  },
+  "checks": {
+    "action_prefix": true,
+    "held_first_90_logit_parity": true,
+    "mechanics_disabled_forced_pass_fallback": true,
+    "observation_contract_v2": true,
+    "randomized_first_90_logit_parity": true,
+    "strategic_temporal_schedule": true,
+    "teacher_hashes": true
+  },
+  "dual_rate_contract": {
+    "compositor_version": "RivalDualRateCompositorV1",
+    "mechanics_actions": {
+      "count": 69,
+      "outputs_1_through_68_map_to_global": [
+        90,
+        157
+      ],
+      "pass": 0
+    },
+    "mechanics_override_window": [
+      "previous_emitted",
+      "selected",
+      "selected",
+      "selected"
+    ],
+    "mechanics_scheduler_version": "RivalMechanicsDelay4V1",
+    "mechanics_ticks": 4,
+    "schema_version": 1,
+    "strategic_scheduler_version": "RivalStrategicDelay8V1",
+    "strategic_ticks": 8,
+    "strategic_window": [
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "previous",
+      "selected",
+      "selected",
+      "selected"
+    ]
+  },
+  "fallback_invariant": {
+    "checks": {
+      "controller_trace_exact": true,
+      "first_90_logits_exact": true,
+      "legal_masks_exact": true,
+      "mechanics_observation_trace_exact": true,
+      "strategic_action_indices_exact": true,
+      "strategic_observations_exact": true
+    },
+    "controller_trace_sha256": "c78d2104e7346fdc983e84b1708c3dea2e94bf81b764b22f7d561b4a04e798d2",
+    "maximum_observation_abs_error": 0.0,
+    "mechanics_windows": 256,
+    "passed": true,
+    "physics_ticks_per_agent": 1024,
+    "strategic_agent_decisions": 256,
+    "synchronized_resets": 0
+  },
+  "held_live_logit_parity": {
+    "allclose_atol_1e_6_rtol_1e_6": true,
+    "max_abs_first_90_logit_error": 0.0,
+    "mean_abs_first_90_logit_error": 0.0,
+    "samples": 1276,
+    "sources": [
+      {
+        "invalid_json_records": 0,
+        "opponent": "nexto",
+        "raw_path": "evidence/raw/rival-v7-natural-nexto-blue-20260823T023634Z-3310b855/decisions.jsonl",
+        "raw_sha256": "b802216d3b60c45ef956fee55a4fce861476545b929bbc048fa5da2138189821",
+        "raw_size_bytes": 75079860,
+        "rival_side": "blue",
+        "samples": 320,
+        "session_id": "rival-v7-natural-nexto-blue-20260823T023634Z-3310b855"
+      },
+      {
+        "invalid_json_records": 0,
+        "opponent": "nexto",
+        "raw_path": "evidence/raw/rival-v7-natural-nexto-orange-20260823T023817Z-afbd75fc/decisions.jsonl",
+        "raw_sha256": "a5c9d0ba8ba3ff1fc66b2bd01a2fdceccb102cc9a331ae94347c901b52fb44d1",
+        "raw_size_bytes": 77379457,
+        "rival_side": "orange",
+        "samples": 330,
+        "session_id": "rival-v7-natural-nexto-orange-20260823T023817Z-afbd75fc"
+      },
+      {
+        "invalid_json_records": 0,
+        "opponent": "wisp",
+        "raw_path": "evidence/raw/rival-v7-natural-wisp-blue-20260823T023959Z-6406526f/decisions.jsonl",
+        "raw_sha256": "f10209831f56073f841efe6d461a29c48b15a63832ccc8b4275c29628e083e0f",
+        "raw_size_bytes": 72760604,
+        "rival_side": "blue",
+        "samples": 309,
+        "session_id": "rival-v7-natural-wisp-blue-20260823T023959Z-6406526f"
+      },
+      {
+        "invalid_json_records": 0,
+        "opponent": "wisp",
+        "raw_path": "evidence/raw/rival-v7-natural-wisp-orange-20260823T024132Z-c3033bef/decisions.jsonl",
+        "raw_sha256": "62e617ebc24e865a5e9db56076d3fa57c039c2eea9c4e769379de50356c1c016",
+        "raw_size_bytes": 74530960,
+        "rival_side": "orange",
+        "samples": 317,
+        "session_id": "rival-v7-natural-wisp-orange-20260823T024132Z-c3033bef"
+      }
+    ],
+    "top1_agreement": 1.0
+  },
+  "observation_gate": {
+    "path": "training/results/milestone08/observation_contract_v2.json",
+    "sha256": "7cc28f503c9e4d07371bc97db8602824e9b4efb5ee1e37325d68cc5d2ba36657",
+    "summary": {
+      "checks": {
+        "directly_representable_fields_within_tolerance": true,
+        "held_natural_samples_at_least_1000": true,
+        "masked_top1_agreement_at_least_97_percent": true,
+        "mean_js_divergence_at_most_0_002": true,
+        "single_group_substitution_materiality_at_most_5_percent": true
+      },
+      "directly_representable_failing_indices": [],
+      "directly_representable_index_count": 375,
+      "directly_representable_max_abs_error": 4.76837158203125e-07,
+      "directly_representable_tolerance": 1e-05,
+      "hard_maximum_mean_js_divergence_nats": 0.002,
+      "hard_maximum_single_group_top1_materiality": 0.05,
+      "hard_minimum_masked_top1_agreement": 0.97,
+      "maximum_observed_single_group_top1_materiality": 0.007836990595611285,
+      "passed": true,
+      "target_masked_top1_agreement": 0.99
+    }
+  },
+  "passed": true,
+  "production_modified_or_promoted": false,
+  "purpose": "milestone08_pretraining_software_gates",
+  "randomized_logit_parity": {
+    "allclose_atol_1e_6_rtol_1e_6": true,
+    "max_abs_first_90_logit_error": 0.0,
+    "mean_abs_first_90_logit_error": 0.0,
+    "samples": 4096,
+    "top1_agreement": 1.0
+  },
+  "schema_version": 1,
+  "status": "passed",
+  "teacher_hashes": {
+    "all_match": true,
+    "files": {
+      "bot/models/POLICY.lt": {
+        "actual_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "expected_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+        "matches": true,
+        "size_bytes": 7689613
+      },
+      "bot/models/SHARED_HEAD.lt": {
+        "actual_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "expected_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+        "matches": true,
+        "size_bytes": 5995907
+      }
+    }
+  },
+  "temporal_scheduler": {
+    "decisions": 12,
+    "exact": true,
+    "physics_ticks": 96,
+    "trace_sha256": "c2148160f228c99ec08a324a36691fad084d71eca52041594e1f5cff44801fc8",
+    "windows": [
+      {
+        "exact": true,
+        "previous": -1,
+        "selected": 0,
+        "symbols": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 0,
+        "selected": 1,
+        "symbols": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 1,
+        "selected": 2,
+        "symbols": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 2,
+        "selected": 3,
+        "symbols": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 3,
+        "selected": 4,
+        "symbols": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 4,
+        "selected": 5,
+        "symbols": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 5,
+        "selected": 6,
+        "symbols": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 6,
+        "selected": 7,
+        "symbols": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          7,
+          7
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 7,
+        "selected": 8,
+        "symbols": [
+          7,
+          7,
+          7,
+          7,
+          7,
+          8,
+          8,
+          8
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 8,
+        "selected": 9,
+        "symbols": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          9,
+          9,
+          9
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 9,
+        "selected": 10,
+        "symbols": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          10,
+          10,
+          10
+        ]
+      },
+      {
+        "exact": true,
+        "previous": 10,
+        "selected": 11,
+        "symbols": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          11,
+          11,
+          11
+        ]
+      }
+    ]
+  },
+  "zero_step_export": {
+    "path": "training/artifacts/milestone07/zero_step_actor.ts",
+    "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+    "size_bytes": 13724327
+  }
+}

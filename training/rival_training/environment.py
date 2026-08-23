@@ -23,7 +23,7 @@ from rlgym.rocket_league.state_mutators import (
 )
 from rlgym_ppo.util import RLGymV2GymWrapper
 
-from .actions import CADENCE_TICKS, RivalActionParser
+from .actions import CADENCE_TICKS, DualRateActionParser, RivalActionParser
 from .config import load_milestone06_config, stage_config
 from .curriculum import CURRICULUM_FAMILIES, RivalCurriculumMutator
 from .metrics import build_campaign_metric_vector
@@ -33,6 +33,7 @@ from .rewards import RivalRewardV1, RivalRewardV2, reward_v2_metadata
 
 ENVIRONMENT_VERSION = "RivalNatural1v1RocketSimV1"
 CAMPAIGN_ENVIRONMENT_VERSION = "RivalCurriculum1v1RocketSimV2"
+DUAL_RATE_ENVIRONMENT_VERSION = "RivalDualRate1v1RocketSimV1"
 
 
 def build_rlgym_env(
@@ -157,6 +158,56 @@ def make_campaign_gym_env(stage_name: str) -> CampaignGymWrapper:
 
 def make_natural_campaign_gym_env() -> CampaignGymWrapper:
     return CampaignGymWrapper(build_campaign_env("stage_a", natural_only=True))
+
+
+def build_dual_rate_env(
+    *,
+    seed: int = 20260823,
+    natural_only: bool = False,
+    mechanics_disabled: bool = False,
+    force_pass: bool = False,
+    anchor_team: int | None = None,
+) -> RLGym:
+    """Build the explicit 8-tick strategic/4-tick mechanics environment."""
+    config = load_milestone06_config()
+    weights = dict(stage_config(config, "stage_a")["curriculum_weights"])
+    if natural_only:
+        weights = {name: float(name == "natural") for name in CURRICULUM_FAMILIES}
+    # Controller rows already encode both temporal delays; the transition engine
+    # must apply each row before its physics tick without adding another delay.
+    transition_engine = RocketSimEngine(rlbot_delay=False)
+    return RLGym(
+        state_mutator=MutatorSequence(
+            FixedTeamSizeMutator(blue_size=1, orange_size=1),
+            RivalCurriculumMutator(weights, seed=seed),
+        ),
+        obs_builder=WispCompatibleObs(seed=seed + 1),
+        action_parser=DualRateActionParser(
+            mechanics_disabled=mechanics_disabled,
+            force_pass=force_pass,
+            anchor_team=anchor_team,
+            seed=seed + 2,
+        ),
+        reward_fn=RivalRewardV2(cadence_ticks=4),
+        transition_engine=transition_engine,
+        termination_cond=GoalCondition(),
+        truncation_cond=AnyCondition(
+            NoTouchTimeoutCondition(
+                float(config["environment"]["no_touch_timeout_seconds"])
+            ),
+            TimeoutCondition(float(config["environment"]["episode_timeout_seconds"])),
+        ),
+        shared_info_provider=None,
+        renderer=None,
+    )
+
+
+def make_dual_rate_gym_env() -> CampaignGymWrapper:
+    return CampaignGymWrapper(build_dual_rate_env())
+
+
+def make_dual_rate_pass_gym_env() -> CampaignGymWrapper:
+    return CampaignGymWrapper(build_dual_rate_env(force_pass=True))
 
 
 def campaign_environment_factory(stage_name: str):
