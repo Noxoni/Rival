@@ -1,6 +1,6 @@
 # Rival
 
-Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The current deployed gameplay remains the verified Wisp v2-75B-derived baseline while a new Rival policy is trained with **RLGym + RocketSim**.
+Rival is a high-end offline Rocket League 1v1 bot project for **RLBot v5**. The deployed bot remains the verified frozen Wisp v2-75B baseline while the project trains and validates a new Rival policy through **RLGym + RocketSim**.
 
 Rival is for offline RLBot play only. It must not be used to cheat or otherwise break Rocket League's terms of service.
 
@@ -14,7 +14,7 @@ Rival is for offline RLBot play only. It must not be used to cheat or otherwise 
 - Natural adjustment: `off`
 - Completed v4.1 natural benchmark: `80f4a24e60c9c9613322b1f46612a30ebf5b2bb4`
 
-The two runtime gameplay-adjustment experiments were rejected and remain disabled. The v4.1 natural benchmark is now used as a deployment reference for trained Rival checkpoints.
+The runtime gameplay-adjustment experiments were rejected and remain disabled. Production was not replaced by any trained M06 candidate.
 
 ## Milestone 05 — training foundation complete
 
@@ -22,44 +22,44 @@ Completed boundary:
 
 `4c9aa6f596b3231856107b3a1e59d9a7c4f663db`
 
-Milestone 05 established a reproducible isolated training stack under `training/`:
+Milestone 05 established the isolated RLGym/RocketSim training stack under `training/`: natural headless 1v1, exact Wisp teacher reconstruction, 158-action mechanics-capable student, CUDA PPO training/checkpointing, measured multiprocess rollout throughput, and an export seam back to RLBot.
 
-- RLGym v2 + RocketSim + RLGym Tools + commit-pinned `rlgym-ppo`;
-- CUDA PyTorch training environment separate from production RLBot;
-- natural renderer-free 1v1 self-play;
-- 120 Hz simulation with `mechanics4` 4-tick student cadence;
-- 432-value Wisp-compatible observation path;
-- `RivalExpandedActionV1`: exact Wisp actions 0–89 plus 68 mechanics-capable actions for 158 total;
-- directly reconstructed trainable Wisp actor with exact first-90 logit parity;
-- resumable PPO/checkpoint/export path;
-- measured 24-worker throughput of ~14.5k agent-steps/s on the development machine;
-- deployment inference/TorchScript seam back to RLBot.
+See `docs/MILESTONE_05_RESULTS.md` and `training/` for exact evidence and reproduction commands.
 
-See `docs/MILESTONE_05_RESULTS.md` and `training/` for exact evidence, versions and reproduction commands.
+## Milestone 06 — serious training campaign stopped at 20M
 
-## Current Codex handoff — v6.0
+Completed rollback boundary:
+
+`652395a9f512ce835830bfc5bc3a7cb078f6105e`
+
+M06 reached 20,000,016 agent-steps. RocketSim/headless evaluation against frozen Wisp improved from 42–58 preflight to 59–41 at 20M, but the required RLBot v5 boundary battery regressed severely: the trained candidate went 0–8 against installed Nexto/Wisp with a 27–56 goal line. Stage C/D were correctly stopped and production remained frozen Wisp.
+
+The failure was not explained by appended-action overuse: the RLBot battery selected zero actions from indices 90–157. M06 evidence leaves three major unresolved causes: legacy-policy drift, the forced four-tick candidate deployment cadence, and RocketSim/RLGym-to-RLBot observation/transition mismatch.
+
+See `docs/MILESTONE_06_RESULTS.md` and `training/results/milestone06/`.
+
+## Current Codex handoff — v7.0
 
 Start here:
 
-`handoff/v6.0/CODEX_START_PROMPT.md`
+`handoff/v7.0/CODEX_START_PROMPT.md`
 
-Milestone 06 is Rival's **first serious training campaign**. It stops adding tactical patches around Wisp and spends compute on actual learning.
+Milestone 07 does **not** authorize more serious PPO training. It isolates the transfer failure first.
 
-Campaign architecture:
+The diagnostic uses the RLGym-style decomposition:
 
-`Wisp warm start -> natural RLGym/RocketSim 1v1 -> staged PPO training -> checkpoint evaluation -> RLBot Nexto/Wisp benchmark -> promotion only if earned`
+`state s -> observation O(s) -> policy pi(o) -> action function I -> action a -> transition T(s'|s,a)`
 
-Key rules:
+It separately audits:
 
-- campaign ceiling: 100M agent-steps, staged and resumable rather than one opaque run;
-- natural 1v1 remains the majority training distribution;
-- broad randomized aerial/wall/recovery state families may be a minority curriculum;
-- actions 90–157 are opened gradually from the conservative Wisp warm start rather than unsuppressed all at once;
-- winning remains dominant while boost efficiency, recovery and mechanics/resource signals stay low-weight and independently logged;
-- checkpoints are evaluated against frozen Wisp throughout and against installed Wisp/Nexto at major healthy boundaries;
-- the production RLBot policy remains frozen Wisp until a trained checkpoint passes the explicit promotion battery.
+- zero-step reconstructed Wisp in RLBot at tick 8 versus tick 4;
+- the rejected 20M actor at tick 8 versus tick 4 with appended actions hard-masked;
+- same-live-observation policy/logit parity and legacy-action drift;
+- feature-group differences between training and live 432-value observations;
+- action parser, mirroring, repeat and delay semantics;
+- bounded short-horizon RocketSim versus RLBot physical divergence on natural states.
 
-The action/training system is intended to allow Rival to learn useful flip/ceiling resets, better aerial possession, momentum-preserving aerial flips, wavedash/zap-dash/wall-dash-like recovery, sidewall recovery, and mechanically creative outplays when those behaviors improve 1v1 outcomes.
+The goal is a ranked causal diagnosis and a concrete corrective architecture for the next training milestone. Do not resume the 20M checkpoint until the transfer seam is understood.
 
 Previous handoffs remain under `handoff/` as recoverable project history.
 
