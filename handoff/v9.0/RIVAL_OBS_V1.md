@@ -19,7 +19,7 @@ Two thin adapters populate it:
 - `RocketSim -> RivalCanonicalStateV1`
 - `RLBot v5 GamePacket/FieldInfo -> RivalCanonicalStateV1`
 
-All normalization, coordinate transforms, relative features, surface geometry, histories, prediction features, timers and masks run *after* this canonicalization in shared code.
+All normalization, coordinate transforms, relative features, surface geometry, histories, prediction features and timers run *after* this canonicalization in shared code.
 
 A canonical snapshot serialized to disk must produce bit-identical `RivalObsV1` whether invoked from the training or deployment path.
 
@@ -78,18 +78,19 @@ Physics/state:
 
 Jump/dodge state:
 
+- canonical 5-way air-state one-hot: `OnGround`, `Jumping`, `DoubleJumping`, `Dodging`, `InAir`;
 - jump currently held;
 - has jumped;
 - has double-jumped;
 - has dodged/flipped;
 - dodge currently available;
-- currently in first-jump force phase;
-- currently in dodge/flip phase;
-- air time since first jump/takeoff where defined;
+- air time / time since last surface contact;
 - first-jump hold elapsed;
 - dodge window remaining;
 - dodge elapsed;
 - dodge direction XY in the canonical car/flip frame.
+
+The air-state one-hot is intentional even though some values are redundant with booleans. It distinguishes *a historical resource-use fact* such as `has_double_jumped` from *the current force phase* such as the brief `DoubleJumping` state.
 
 Surface/recovery geometry from the shared standard-Soccar geometry helper:
 
@@ -115,8 +116,9 @@ Include the same deployable mechanical state where useful, plus relational conte
 - Rival-local relative position and relative velocity;
 - normalized speed and signed forward speed;
 - boost, demo time, surface contact, boosting, supersonic, handbrake;
-- jump-held, has-jumped, has-double-jumped, has-dodged, can-dodge, jumping, dodging;
-- air/jump/dodge timing fields and dodge direction when canonical parity supports them;
+- canonical 5-way air-state one-hot;
+- jump-held, has-jumped, has-double-jumped, has-dodged, can-dodge;
+- air/time-since-surface-contact, jump-hold and dodge-window/elapsed timing fields plus dodge direction when canonical parity supports them;
 - opponent's latest RL controller input (8 fields);
 - ball position and relative velocity in the opponent's local frame;
 - the same shared surface-distance/nearest-normal/recovery geometry used for Rival;
@@ -275,7 +277,7 @@ Before serious PPO:
 3. run the exact same `RivalObsV1` builder used by RocketSim training and RLBot deployment on those snapshots;
 4. require bit-identical results where all inputs are identical;
 5. separately audit canonical adapter fields against their source values;
-6. verify prediction, boost timer, touch history, dodge timing and surface features explicitly;
+6. verify prediction, boost timer, touch history, air-state/dodge timing and surface features explicitly;
 7. no actor training is authorized while a material unexplained train/deploy feature mismatch remains.
 
 ## Schema artifact
