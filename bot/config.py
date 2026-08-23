@@ -227,6 +227,24 @@ TELEMETRY_PATH = Path(
     )
 ).expanduser()
 
+# Bounded native-tick telemetry used only by the Rival v9 observation/timing
+# gates.  It is intentionally independent from normal decision telemetry and
+# disabled by default.
+V9_NATIVE_CORPUS_ENABLED = _environment_flag(
+    "RIVAL_V9_NATIVE_CORPUS_ENABLED", False
+)
+V9_NATIVE_CORPUS_MAX_RECORDS = _environment_int(
+    "RIVAL_V9_NATIVE_CORPUS_MAX_RECORDS", 6000
+)
+if V9_NATIVE_CORPUS_MAX_RECORDS < 1:
+    raise ValueError("RIVAL_V9_NATIVE_CORPUS_MAX_RECORDS must be at least 1")
+V9_NATIVE_CORPUS_PATH = Path(
+    os.environ.get(
+        "RIVAL_V9_NATIVE_CORPUS_PATH",
+        str(_BASE_DIR.parent / "telemetry" / "rival_v9_native_packets.jsonl"),
+    )
+).expanduser()
+
 
 def _load_session_metadata() -> dict[str, Any]:
     raw_path = os.environ.get("RIVAL_SESSION_METADATA_PATH")

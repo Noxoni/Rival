@@ -177,6 +177,20 @@ def _boost_pads(packet: Any, field_info: Any) -> list[dict[str, Any]]:
     return result
 
 
+def _goals(field_info: Any) -> list[dict[str, Any]]:
+    goals = list(getattr(field_info, "goals", None) or []) if field_info else []
+    return [
+        {
+            "team_num": _number(getattr(goal, "team_num", None)),
+            "location": _vector(getattr(goal, "location", None)),
+            "direction": _vector(getattr(goal, "direction", None)),
+            "width": _number(getattr(goal, "width", None)),
+            "height": _number(getattr(goal, "height", None)),
+        }
+        for goal in goals
+    ]
+
+
 def extract_packet_snapshot(
     packet: Any,
     self_index: int,
@@ -206,6 +220,7 @@ def extract_packet_snapshot(
         "opponent_indices": opponent_indices,
         "players": player_records,
         "ball": None if ball is None else {"physics": _physics(getattr(ball, "physics", None))},
+        "goals": _goals(field_info),
         "boost_pads": _boost_pads(packet, field_info),
         "match": {
             "seconds_elapsed": _number(getattr(match_info, "seconds_elapsed", None)),
@@ -216,6 +231,9 @@ def extract_packet_snapshot(
             "phase": _enum(getattr(match_info, "match_phase", None)),
             "is_overtime": bool(getattr(match_info, "is_overtime", False)),
             "game_speed": _number(getattr(match_info, "game_speed", None)),
+            "world_gravity_z": _number(
+                getattr(match_info, "world_gravity_z", None)
+            ),
             "scores": [
                 {
                     "team": _number(getattr(team, "team_index", index)),

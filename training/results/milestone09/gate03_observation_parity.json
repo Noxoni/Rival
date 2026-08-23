@@ -1,0 +1,1279 @@
+{
+  "checks": {
+    "all_required_natural_categories_observed": true,
+    "both_controller_streams_change_naturally": true,
+    "broad_replay_sample_has_several_thousand_ticks": true,
+    "canonical_serialization_replay_bit_identical": true,
+    "four_complete_balanced_m08_breadth_sources": true,
+    "native_corpus_has_at_least_4000_one_tick_transitions": true,
+    "native_corpus_has_long_contiguous_run": true,
+    "native_corpus_version_exact": true,
+    "native_field_info_goal_metadata_captured": true,
+    "native_field_info_goals_audited": true,
+    "native_history_corpus_has_at_least_4096_ticks": true,
+    "observations_have_no_nonfinite_values": true,
+    "one_tick_motion_deltas_exact": true,
+    "prediction_cache_values_replay_exact": true,
+    "raw_sources_hash_and_record_counts_match": true,
+    "self_and_opponent_histories_exact": true,
+    "source_adapter_field_audits_pass": true
+  },
+  "commands": {
+    "capture": ".venv/Scripts/python.exe training/scripts/run_m09_native_corpus_capture.py",
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_observation_parity_gate.py",
+    "unit_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_rlbot_corpus.py -q"
+  },
+  "corpus": {
+    "coverage": {
+      "airborne_reset_resource": {
+        "observed": true,
+        "required": false,
+        "samples": 5
+      },
+      "awkward_recovery": {
+        "observed": true,
+        "required": true,
+        "samples": 2885
+      },
+      "ball_contact": {
+        "observed": true,
+        "required": true,
+        "samples": 253
+      },
+      "ceiling_contact": {
+        "observed": true,
+        "required": true,
+        "samples": 2
+      },
+      "demolition_respawn": {
+        "observed": true,
+        "required": false,
+        "samples": 31
+      },
+      "directional_dodge": {
+        "observed": true,
+        "required": true,
+        "samples": 2352
+      },
+      "double_jump": {
+        "observed": true,
+        "required": true,
+        "samples": 42
+      },
+      "first_jump_hold": {
+        "observed": true,
+        "required": true,
+        "samples": 461
+      },
+      "first_jump_release": {
+        "observed": true,
+        "required": true,
+        "samples": 1532
+      },
+      "flip_cancel": {
+        "observed": true,
+        "required": true,
+        "samples": 1032
+      },
+      "high_boost": {
+        "observed": true,
+        "required": true,
+        "samples": 4345
+      },
+      "kickoff": {
+        "observed": true,
+        "required": true,
+        "samples": 1452
+      },
+      "late_clock": {
+        "observed": true,
+        "required": true,
+        "samples": 446
+      },
+      "low_boost": {
+        "observed": true,
+        "required": true,
+        "samples": 1290
+      },
+      "normal_ground_play": {
+        "observed": true,
+        "required": true,
+        "samples": 5774
+      },
+      "overtime": {
+        "observed": true,
+        "required": false,
+        "samples": 126
+      },
+      "wall_contact": {
+        "observed": true,
+        "required": true,
+        "samples": 686
+      }
+    },
+    "frame_delta_counts": {
+      "1": 5997,
+      "117": 1,
+      "137": 1,
+      "142": 1,
+      "146": 1,
+      "16": 10,
+      "24": 11,
+      "28": 1,
+      "32": 18,
+      "40": 9,
+      "401": 1,
+      "405": 1,
+      "410": 2,
+      "412": 2,
+      "413": 1,
+      "414": 1,
+      "415": 4,
+      "418": 1,
+      "423": 3,
+      "428": 1,
+      "429": 2,
+      "430": 1,
+      "431": 2,
+      "432": 1,
+      "48": 723,
+      "52": 1,
+      "56": 1119,
+      "57": 1,
+      "64": 621,
+      "65": 1,
+      "72": 476,
+      "73": 2,
+      "8": 23
+    },
+    "historical_breadth_samples": 3045,
+    "historical_source_records_verified": 21859,
+    "match_phase_counts": {
+      "Active": 7593,
+      "Countdown": 1007,
+      "Kickoff": 445
+    },
+    "native_tick_samples": 6000,
+    "sources": [
+      {
+        "all_expected_records_present": true,
+        "coverage_witness_indices": {
+          "airborne_reset_resource": 3076,
+          "awkward_recovery": 108,
+          "ball_contact": 215,
+          "directional_dodge": 105,
+          "double_jump": 210,
+          "first_jump_hold": 103,
+          "first_jump_release": 104,
+          "flip_cancel": 105,
+          "high_boost": 161,
+          "kickoff": 0,
+          "late_clock": 4359,
+          "low_boost": 113,
+          "normal_ground_play": 141,
+          "wall_contact": 569
+        },
+        "elapsed_wall_seconds": 74.8230756999692,
+        "expected_records": 4814,
+        "expected_sha256": "d4f053189c8b7c5c903bb08fca31acd95e989b23d3f109df76167a4f585498ce",
+        "kind": "historical_natural_breadth",
+        "opponent": "nexto",
+        "path": "evidence/raw/rival-v8-natural-nexto-blue-20260823T073901Z-4dfed99e/decisions.jsonl",
+        "records_audited": 759,
+        "rival_side": "blue",
+        "sample_selection": "750 uniform indices plus first natural coverage witnesses (759 unique total)",
+        "session_id": "rival-v8-natural-nexto-blue-20260823T073901Z-4dfed99e",
+        "sha256": "d4f053189c8b7c5c903bb08fca31acd95e989b23d3f109df76167a4f585498ce",
+        "size_bytes": 77041755,
+        "source_hash_matches": true,
+        "source_records_seen": 4814
+      },
+      {
+        "all_expected_records_present": true,
+        "coverage_witness_indices": {
+          "airborne_reset_resource": 1761,
+          "awkward_recovery": 107,
+          "ball_contact": 127,
+          "ceiling_contact": 2833,
+          "demolition_respawn": 3269,
+          "directional_dodge": 104,
+          "double_jump": 594,
+          "first_jump_hold": 102,
+          "first_jump_release": 103,
+          "flip_cancel": 106,
+          "high_boost": 242,
+          "kickoff": 0,
+          "late_clock": 4454,
+          "low_boost": 105,
+          "normal_ground_play": 145,
+          "wall_contact": 426
+        },
+        "elapsed_wall_seconds": 73.75566069991328,
+        "expected_records": 4942,
+        "expected_sha256": "1c44b68b1c682c9e233be1c33572f933fdb66203307cf0728fad7480c6ea6414",
+        "kind": "historical_natural_breadth",
+        "opponent": "nexto",
+        "path": "evidence/raw/rival-v8-natural-nexto-orange-20260823T074450Z-eed76dd0/decisions.jsonl",
+        "records_audited": 761,
+        "rival_side": "orange",
+        "sample_selection": "750 uniform indices plus first natural coverage witnesses (761 unique total)",
+        "session_id": "rival-v8-natural-nexto-orange-20260823T074450Z-eed76dd0",
+        "sha256": "1c44b68b1c682c9e233be1c33572f933fdb66203307cf0728fad7480c6ea6414",
+        "size_bytes": 79064691,
+        "source_hash_matches": true,
+        "source_records_seen": 4942
+      },
+      {
+        "all_expected_records_present": true,
+        "coverage_witness_indices": {
+          "awkward_recovery": 107,
+          "ball_contact": 125,
+          "demolition_respawn": 1342,
+          "directional_dodge": 104,
+          "double_jump": 3985,
+          "first_jump_hold": 102,
+          "first_jump_release": 103,
+          "flip_cancel": 105,
+          "high_boost": 226,
+          "kickoff": 0,
+          "late_clock": 4736,
+          "low_boost": 112,
+          "normal_ground_play": 138,
+          "overtime": 5408,
+          "wall_contact": 298
+        },
+        "elapsed_wall_seconds": 81.87134180008434,
+        "expected_records": 6487,
+        "expected_sha256": "ec527950267fd1ca6582bc79f0a8136900355b594a8ef0fabfbcb2503a61535b",
+        "kind": "historical_natural_breadth",
+        "opponent": "wisp",
+        "path": "evidence/raw/rival-v8-natural-wisp-blue-20260823T075050Z-4b88079e/decisions.jsonl",
+        "records_audited": 762,
+        "rival_side": "blue",
+        "sample_selection": "750 uniform indices plus first natural coverage witnesses (762 unique total)",
+        "session_id": "rival-v8-natural-wisp-blue-20260823T075050Z-4b88079e",
+        "sha256": "ec527950267fd1ca6582bc79f0a8136900355b594a8ef0fabfbcb2503a61535b",
+        "size_bytes": 103380039,
+        "source_hash_matches": true,
+        "source_records_seen": 6487
+      },
+      {
+        "all_expected_records_present": true,
+        "coverage_witness_indices": {
+          "awkward_recovery": 107,
+          "ball_contact": 124,
+          "demolition_respawn": 2590,
+          "directional_dodge": 103,
+          "double_jump": 4192,
+          "first_jump_hold": 101,
+          "first_jump_release": 102,
+          "flip_cancel": 104,
+          "high_boost": 179,
+          "kickoff": 0,
+          "late_clock": 4923,
+          "low_boost": 111,
+          "normal_ground_play": 140,
+          "wall_contact": 379
+        },
+        "elapsed_wall_seconds": 81.07506070006639,
+        "expected_records": 5616,
+        "expected_sha256": "37f2facd0145da86dcd4bfd57c2bcc48134976251d87f7ae8813716990ec19c9",
+        "kind": "historical_natural_breadth",
+        "opponent": "wisp",
+        "path": "evidence/raw/rival-v8-natural-wisp-orange-20260823T075853Z-8d471342/decisions.jsonl",
+        "records_audited": 763,
+        "rival_side": "orange",
+        "sample_selection": "750 uniform indices plus first natural coverage witnesses (763 unique total)",
+        "session_id": "rival-v8-natural-wisp-orange-20260823T075853Z-8d471342",
+        "sha256": "37f2facd0145da86dcd4bfd57c2bcc48134976251d87f7ae8813716990ec19c9",
+        "size_bytes": 89380961,
+        "source_hash_matches": true,
+        "source_records_seen": 5616
+      },
+      {
+        "all_expected_records_present": true,
+        "coverage_witness_indices": {},
+        "elapsed_wall_seconds": 167.9386411999585,
+        "expected_records": 6000,
+        "expected_sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+        "kind": "native_tick_history",
+        "opponent": "wisp",
+        "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+        "records_audited": 6000,
+        "rival_side": "blue",
+        "sample_selection": "all records",
+        "session_id": "rival-v9-speed-smoke-wisp-blue-20260823T163832Z-9b187d57",
+        "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+        "size_bytes": 49198958,
+        "source_hash_matches": true,
+        "source_records_seen": 6000
+      }
+    ],
+    "total_samples": 9045
+  },
+  "evaluator_revision": {
+    "corrected_several_thousand_threshold": 3000,
+    "initial_dry_run_threshold": 20000,
+    "reason": "Revision 1 accidentally retained an all-record aspirational threshold after the prospective uniform-plus-rare-witness sampling contract was selected. No observed metric or numerical acceptance condition changed.",
+    "revision": 2
+  },
+  "gate": 3,
+  "gate_name": "observation_parity_corpus",
+  "generated_at_utc": "2026-08-23T17:01:41.343944+00:00",
+  "interpretation": "Technical parity only. Scores and match outcomes are excluded from every Gate 3 decision. Historical eight-frame telemetry supplies state breadth; only the separate native corpus is allowed to certify one-tick histories and deltas.",
+  "milestone": 9,
+  "observation_schema": {
+    "builder_source_sha256": "4b2a49f54903024d5cfc10fc61342401ba499c2cebfcc5242eb5c2c5307839fa",
+    "canonical_source_sha256": "146c390de1916a8a5525b0c377841c5622159f51d2c3532d8e7da7510dcd30ad",
+    "float_count": 714,
+    "schema_sha256": "0ff6276fe80ba145bd8abb99eea863fdca3c194fe4be3b7a8bd64fa2a1a3bf31",
+    "version": "RivalObsV1"
+  },
+  "sampling_contract": {
+    "historical": "At least 750 uniformly spaced records from each of four complete natural matches, plus the first naturally observed witness for every coverage category. All source records are streamed for count verification and the entire source file hash is verified.",
+    "native": "Every record in the bounded native-tick capture is audited.",
+    "reason": "The handoff prefers several thousand sampled ticks. Replaying every one of the 21,859 historical records would add repeated predictor work without increasing the predetermined state-coverage contract.",
+    "several_thousand_threshold": 3000
+  },
+  "schema_version": 1,
+  "serialization_parity": {
+    "bit_identical_samples": 9045,
+    "maximum_abs_error": 0.0,
+    "mismatched_samples": 0,
+    "serialized_payload_includes": [
+      "RivalCanonicalStateV1",
+      "RivalObsV1Builder runtime/history/prediction state before build"
+    ]
+  },
+  "source_adapter_audits": {
+    "ball_physics": {
+      "comparisons": 81405,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "boost_pads": {
+      "comparisons": 922590,
+      "maximum_abs_error": 9.5367431640625e-07,
+      "mismatches": 0,
+      "passed": true
+    },
+    "goals": {
+      "comparisons": 120000,
+      "maximum_abs_error": 8.742277657347586e-08,
+      "mismatches": 0,
+      "passed": true
+    },
+    "match": {
+      "comparisons": 63315,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "opponent_air_dodge": {
+      "comparisons": 81405,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "opponent_controller": {
+      "comparisons": 72360,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "opponent_physics": {
+      "comparisons": 135675,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "opponent_resources": {
+      "comparisons": 18090,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "self_air_dodge": {
+      "comparisons": 81405,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "self_controller": {
+      "comparisons": 72360,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "self_physics": {
+      "comparisons": 135675,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "self_resources": {
+      "comparisons": 18090,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    },
+    "touch": {
+      "comparisons": 27135,
+      "maximum_abs_error": 0.0,
+      "mismatches": 0,
+      "passed": true
+    }
+  },
+  "special_audits": {
+    "boost_pad_timer_conversion": {
+      "inactive_pad_samples": 22838,
+      "rlbot_source_semantics": "active -> 0; inactive -> max(0, respawn_seconds - elapsed_timer), using 4 seconds small and 10 seconds full",
+      "source_audit": {
+        "comparisons": 922590,
+        "maximum_abs_error": 9.5367431640625e-07,
+        "mismatches": 0,
+        "passed": true
+      },
+      "time_until_active_maximum": 19.683204650878906,
+      "time_until_active_minimum": 0.008333206176757812
+    },
+    "controller_histories": {
+      "history_mismatches": 0,
+      "longest_contiguous_native_run": 5998,
+      "native_samples": 6000,
+      "one_tick_motion_delta_mismatches": 0,
+      "one_tick_transitions": 5997,
+      "opponent_controller_changes": 2941,
+      "self_controller_changes": 3098
+    },
+    "field_info_goals": {
+      "captured_runtime_metadata": [
+        {
+          "direction": {
+            "x": -8.742277657347586e-08,
+            "y": 1.0,
+            "z": 0.0
+          },
+          "height": 752.000244140625,
+          "location": {
+            "x": 0.0,
+            "y": -5120.0,
+            "z": 312.0
+          },
+          "samples": 6000,
+          "team_num": 0,
+          "width": 1920.0001220703125
+        },
+        {
+          "direction": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "height": 752.000244140625,
+          "location": {
+            "x": 0.0,
+            "y": 5120.0,
+            "z": 312.0001220703125
+          },
+          "samples": 6000,
+          "team_num": 1,
+          "width": 1920.0030517578125
+        }
+      ],
+      "physical_opening_contract": {
+        "authority": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
+        "centers": [
+          [
+            0.0,
+            -5120.0,
+            321.3875
+          ],
+          [
+            0.0,
+            5120.0,
+            321.3875
+          ]
+        ],
+        "height": 642.775,
+        "width": 1785.51
+      },
+      "runtime_semantics": "The observed RLBot v5 beta FieldInfo dimensions describe a larger goal/scoring volume than the documented physical opening. Rival records and audits that metadata, but canonical actor goal centers/posts use the shared documented physical standard-Soccar opening in both RocketSim and RLBot.",
+      "source_audit": {
+        "comparisons": 120000,
+        "maximum_abs_error": 8.742277657347586e-08,
+        "mismatches": 0,
+        "passed": true
+      }
+    },
+    "intercept_proxy": {
+      "implementation": "shared deterministic_intercept_time pure function",
+      "opponent_seconds": {
+        "maximum": 4.499699186727732,
+        "minimum": 0.0910114227265796,
+        "samples": 9045
+      },
+      "self_seconds": {
+        "maximum": 4.350589085432302,
+        "minimum": 0.06644547952646661,
+        "samples": 9045
+      }
+    },
+    "jump_air_dodge_mapping": {
+      "coverage": {
+        "airborne_reset_resource": {
+          "observed": true,
+          "required": false,
+          "samples": 5
+        },
+        "directional_dodge": {
+          "observed": true,
+          "required": true,
+          "samples": 2352
+        },
+        "double_jump": {
+          "observed": true,
+          "required": true,
+          "samples": 42
+        },
+        "first_jump_hold": {
+          "observed": true,
+          "required": true,
+          "samples": 461
+        },
+        "first_jump_release": {
+          "observed": true,
+          "required": true,
+          "samples": 1532
+        },
+        "flip_cancel": {
+          "observed": true,
+          "required": true,
+          "samples": 1032
+        }
+      },
+      "maximum_dodge_elapsed_seconds": 4.75,
+      "maximum_dodge_window_remaining_seconds": 1.45,
+      "opponent_source_audit": {
+        "comparisons": 81405,
+        "maximum_abs_error": 0.0,
+        "mismatches": 0,
+        "passed": true
+      },
+      "self_source_audit": {
+        "comparisons": 81405,
+        "maximum_abs_error": 0.0,
+        "mismatches": 0,
+        "passed": true
+      }
+    },
+    "match": {
+      "late_clock_samples": 446,
+      "overtime_samples": 126,
+      "phase_counts": {
+        "Active": 7593,
+        "Countdown": 1007,
+        "Kickoff": 445
+      },
+      "source_audit": {
+        "comparisons": 63315,
+        "maximum_abs_error": 0.0,
+        "mismatches": 0,
+        "passed": true
+      }
+    },
+    "native_callback_latency": {
+      "maximum": 658447700,
+      "minimum": 101800,
+      "p50": 112600.0,
+      "p95": 3793315.0000000014,
+      "p95_milliseconds": 3.7933150000000015,
+      "samples": 6000
+    },
+    "normalization": {
+      "field_extrema": {
+        "ball.angular_velocity": {
+          "maximum": 1.089201807975769,
+          "maximum_abs": 1.0906563997268677,
+          "minimum": -1.0906563997268677,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "ball.goal_centers": {
+          "maximum": 1.7160699367523193,
+          "maximum_abs": 1.7160699367523193,
+          "minimum": -1.6986899375915527,
+          "nonfinite": 0,
+          "values": 54270
+        },
+        "ball.goal_posts": {
+          "maximum": 1.7160699367523193,
+          "maximum_abs": 1.7160699367523193,
+          "minimum": -1.6986899375915527,
+          "nonfinite": 0,
+          "values": 108540
+        },
+        "ball.linear_velocity": {
+          "maximum": 1.7688003778457642,
+          "maximum_abs": 1.7688003778457642,
+          "minimum": -1.564535140991211,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "ball.opponent_local": {
+          "maximum": 1.8233531713485718,
+          "maximum_abs": 2.100207805633545,
+          "minimum": -2.100207805633545,
+          "nonfinite": 0,
+          "values": 54270
+        },
+        "ball.position": {
+          "maximum": 0.9906522631645203,
+          "maximum_abs": 1.0110194683074951,
+          "minimum": -1.0110194683074951,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "ball.self_local": {
+          "maximum": 1.6047126054763794,
+          "maximum_abs": 1.721518635749817,
+          "minimum": -1.721518635749817,
+          "nonfinite": 0,
+          "values": 54270
+        },
+        "ball.speed_distances_closing": {
+          "maximum": 2.209642171859741,
+          "maximum_abs": 2.209642171859741,
+          "minimum": -1.970094084739685,
+          "nonfinite": 0,
+          "values": 45225
+        },
+        "boost_pads.entities": {
+          "maximum": 1.8226203918457031,
+          "maximum_abs": 1.8226203918457031,
+          "minimum": -1.7661913633346558,
+          "nonfinite": 0,
+          "values": 2767770
+        },
+        "history.opponent_controllers": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 578880
+        },
+        "history.self_controllers": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 578880
+        },
+        "intercept.advantage": {
+          "maximum": 0.4294406473636627,
+          "maximum_abs": 0.4294406473636627,
+          "minimum": -0.35045933723449707,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "intercept.opponent": {
+          "maximum": 0.44996991753578186,
+          "maximum_abs": 0.44996991753578186,
+          "minimum": 0.009101142175495625,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "intercept.self": {
+          "maximum": 0.43505892157554626,
+          "maximum_abs": 0.43505892157554626,
+          "minimum": 0.006644547916948795,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.active_play": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.gravity": {
+          "maximum": -1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.kickoff": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.overtime": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.score_diff": {
+          "maximum": 0.4000000059604645,
+          "maximum_abs": 0.6000000238418579,
+          "minimum": -0.6000000238418579,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "match.time_remaining": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "motion.one_tick_deltas": {
+          "maximum": 1.9154034852981567,
+          "maximum_abs": 2.276353120803833,
+          "minimum": -2.276353120803833,
+          "nonfinite": 0,
+          "values": 162810
+        },
+        "opponent.air_state": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 45225
+        },
+        "opponent.air_time": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.angular_velocity": {
+          "maximum": 0.9998926520347595,
+          "maximum_abs": 0.9999290704727173,
+          "minimum": -0.9999290704727173,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.ball_local": {
+          "maximum": 1.8233531713485718,
+          "maximum_abs": 2.100207805633545,
+          "minimum": -2.100207805633545,
+          "nonfinite": 0,
+          "values": 54270
+        },
+        "opponent.boost": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.boosting": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.can_dodge": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.demo_time": {
+          "maximum": 0.9888889193534851,
+          "maximum_abs": 0.9888889193534851,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.dodge_direction": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 18090
+        },
+        "opponent.dodge_elapsed": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.dodge_window_remaining": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.forward": {
+          "maximum": 0.9999747276306152,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.goal_side_of_ball": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.handbrake": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.has_dodged": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.has_double_jumped": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.has_jumped": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.jump_held": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.jump_hold_elapsed": {
+          "maximum": 0.9583333134651184,
+          "maximum_abs": 0.9583333134651184,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.latest_controller": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 72360
+        },
+        "opponent.linear_velocity": {
+          "maximum": 0.9962612390518188,
+          "maximum_abs": 0.9993656873703003,
+          "minimum": -0.9993656873703003,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.nearest_surface_normal": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.9999747276306152,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.position": {
+          "maximum": 1.1680371761322021,
+          "maximum_abs": 1.1680371761322021,
+          "minimum": -1.1387031078338623,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.relative_position": {
+          "maximum": 1.5360000133514404,
+          "maximum_abs": 1.5360000133514404,
+          "minimum": -1.0720102787017822,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.relative_velocity": {
+          "maximum": 1.9953891038894653,
+          "maximum_abs": 1.9953891038894653,
+          "minimum": -1.9782018661499023,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "opponent.signed_forward_speed": {
+          "maximum": 0.9999645352363586,
+          "maximum_abs": 0.9999645352363586,
+          "minimum": -0.9477929472923279,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.speed": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.supersonic": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.surface_contact": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.surface_distances": {
+          "maximum": 1.3811421394348145,
+          "maximum_abs": 1.3811421394348145,
+          "minimum": 0.002514677122235298,
+          "nonfinite": 0,
+          "values": 45225
+        },
+        "opponent.surface_signed_velocity": {
+          "maximum": 0.516322135925293,
+          "maximum_abs": 0.6554699540138245,
+          "minimum": -0.6554699540138245,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.surface_up_alignment": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.9995007514953613,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "opponent.up": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.9999791383743286,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "prediction.age": {
+          "maximum": 0.75,
+          "maximum_abs": 0.75,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "prediction.horizons": {
+          "maximum": 1.7620785236358643,
+          "maximum_abs": 1.7620785236358643,
+          "minimum": -1.6811808347702026,
+          "nonfinite": 0,
+          "values": 651240
+        },
+        "self.air_state": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 45225
+        },
+        "self.air_time": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.angular_velocity": {
+          "maximum": 0.9999473094940186,
+          "maximum_abs": 0.9999473094940186,
+          "minimum": -0.9997290968894958,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.boost": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.boosting": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.can_dodge": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.demo_time": {
+          "maximum": 0.8805555701255798,
+          "maximum_abs": 0.8805555701255798,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.dodge_direction": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -1.0,
+          "nonfinite": 0,
+          "values": 18090
+        },
+        "self.dodge_elapsed": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.dodge_window_remaining": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.forward": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.9999833703041077,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.goal_centers_local": {
+          "maximum": 1.7618966102600098,
+          "maximum_abs": 1.7618966102600098,
+          "minimum": -1.7141644954681396,
+          "nonfinite": 0,
+          "values": 54270
+        },
+        "self.handbrake": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.has_dodged": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.has_double_jumped": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.has_jumped": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.jump_held": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.jump_hold_elapsed": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.linear_velocity": {
+          "maximum": 0.9999960660934448,
+          "maximum_abs": 0.9999960660934448,
+          "minimum": -0.9996569156646729,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.local_angular_velocity": {
+          "maximum": 0.9999992251396179,
+          "maximum_abs": 0.9999992251396179,
+          "minimum": -0.9999979138374329,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.local_linear_velocity": {
+          "maximum": 0.9999517202377319,
+          "maximum_abs": 0.9999517202377319,
+          "minimum": -0.9994285106658936,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.nearest_surface_normal": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.999943733215332,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.position": {
+          "maximum": 1.1147617101669312,
+          "maximum_abs": 1.1555116176605225,
+          "minimum": -1.1555116176605225,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "self.signed_forward_speed": {
+          "maximum": 0.9999517798423767,
+          "maximum_abs": 0.9999517798423767,
+          "minimum": -0.9390910267829895,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.speed": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.supersonic": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.surface_contact": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.surface_distances": {
+          "maximum": 1.3798059225082397,
+          "maximum_abs": 1.3798059225082397,
+          "minimum": 0.0016878668684512377,
+          "nonfinite": 0,
+          "values": 45225
+        },
+        "self.surface_signed_velocity": {
+          "maximum": 0.5880395770072937,
+          "maximum_abs": 0.6990221738815308,
+          "minimum": -0.6990221738815308,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.surface_up_alignment": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.999943733215332,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "self.up": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": -0.9999909996986389,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "touch.last_toucher": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 27135
+        },
+        "touch.opponent_age": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        },
+        "touch.self_age": {
+          "maximum": 1.0,
+          "maximum_abs": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0,
+          "values": 9045
+        }
+      },
+      "nonfinite_values": 0
+    },
+    "prediction_cache": {
+      "age_distribution": {
+        "0": 4547,
+        "1": 1500,
+        "2": 1499,
+        "3": 1499
+      },
+      "refresh_ticks": 4,
+      "replay_value_mismatches": 0
+    },
+    "surface_geometry": {
+      "awkward_recovery_samples": 2885,
+      "ceiling_contact_samples": 2,
+      "opponent_distance_extrema": {
+        "maximum": 1.3811421394348145,
+        "maximum_abs": 1.3811421394348145,
+        "minimum": 0.002514677122235298,
+        "nonfinite": 0,
+        "values": 45225
+      },
+      "self_distance_extrema": {
+        "maximum": 1.3798059225082397,
+        "maximum_abs": 1.3798059225082397,
+        "minimum": 0.0016878668684512377,
+        "nonfinite": 0,
+        "values": 45225
+      },
+      "wall_contact_samples": 686
+    },
+    "touch": {
+      "ball_contact_samples": 253,
+      "opponent_age_seconds": {
+        "maximum": 35.191680908203125,
+        "minimum": 0.0,
+        "samples": 2
+      },
+      "self_age_seconds": {
+        "maximum": 18.433349609375,
+        "minimum": 0.0,
+        "samples": 2
+      },
+      "source_audit": {
+        "comparisons": 27135,
+        "maximum_abs_error": 0.0,
+        "mismatches": 0,
+        "passed": true
+      }
+    }
+  },
+  "status": "passed"
+}

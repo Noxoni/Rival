@@ -33,9 +33,9 @@
       "start": 15
     }
   },
-  "builder_source_sha256": "ba49b265e4bb3dd1cd15b5c7d5ac58d0b92cee25bfe9de4a8a8fa1c1ff0c7501",
+  "builder_source_sha256": "4b2a49f54903024d5cfc10fc61342401ba499c2cebfcc5242eb5c2c5307839fa",
   "canonical_adapter_version": "RivalCanonicalAdapterV1",
-  "canonical_source_sha256": "a4756302094b6084cf5430fafd3b6138655d42ed804b0dca1fed5818b426f291",
+  "canonical_source_sha256": "146c390de1916a8a5525b0c377841c5622159f51d2c3532d8e7da7510dcd30ad",
   "canonical_state_version": "RivalCanonicalStateV1",
   "dtype": "float32",
   "entity_shapes": {
@@ -648,12 +648,12 @@
     },
     {
       "block": "self_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper; curved ramps/posts approximated",
       "coordinate_frame": "team",
       "dtype": "float32",
       "end": 65,
       "name": "self.surface_distances",
-      "normalization": "floor/ceiling/side/back/corner scales",
+      "normalization": "nonnegative floor/ceiling/side/goal-aware-back/corner clearances divided by physical extents",
       "reset_semantics": "stateless",
       "shape": [
         5
@@ -663,7 +663,7 @@
     },
     {
       "block": "self_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "car local",
       "dtype": "float32",
       "end": 68,
@@ -678,7 +678,7 @@
     },
     {
       "block": "self_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "car local",
       "dtype": "float32",
       "end": 69,
@@ -693,7 +693,7 @@
     },
     {
       "block": "self_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "nearest surface normal",
       "dtype": "float32",
       "end": 70,
@@ -708,7 +708,7 @@
     },
     {
       "block": "self_car",
-      "canonical_source": "shared standard goals",
+      "canonical_source": "shared documented physical standard-Soccar goal centers",
       "coordinate_frame": "car local",
       "dtype": "float32",
       "end": 76,
@@ -1145,12 +1145,12 @@
     },
     {
       "block": "opponent_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper; curved ramps/posts approximated",
       "coordinate_frame": "team",
       "dtype": "float32",
       "end": 140,
       "name": "opponent.surface_distances",
-      "normalization": "floor/ceiling/side/back/corner scales",
+      "normalization": "nonnegative floor/ceiling/side/goal-aware-back/corner clearances divided by physical extents",
       "reset_semantics": "stateless",
       "shape": [
         5
@@ -1160,7 +1160,7 @@
     },
     {
       "block": "opponent_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "opponent car local",
       "dtype": "float32",
       "end": 143,
@@ -1175,7 +1175,7 @@
     },
     {
       "block": "opponent_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "opponent car local",
       "dtype": "float32",
       "end": 144,
@@ -1190,7 +1190,7 @@
     },
     {
       "block": "opponent_car",
-      "canonical_source": "shared Soccar geometry",
+      "canonical_source": "shared RLBot-v5 planar standard-Soccar helper",
       "coordinate_frame": "nearest surface normal",
       "dtype": "float32",
       "end": 145,
@@ -1312,7 +1312,7 @@
     },
     {
       "block": "ball_goal",
-      "canonical_source": "shared standard goals",
+      "canonical_source": "shared documented physical standard-Soccar goal centers",
       "coordinate_frame": "team relative",
       "dtype": "float32",
       "end": 178,
@@ -1328,7 +1328,7 @@
     },
     {
       "block": "ball_goal",
-      "canonical_source": "shared standard goals",
+      "canonical_source": "shared documented physical standard-Soccar goal centers and widths",
       "coordinate_frame": "team relative",
       "dtype": "float32",
       "end": 190,
@@ -1424,6 +1424,7 @@
     }
   ],
   "float_count": 714,
+  "geometry_source_sha256": "6b818bcd3052f83d55cea372f127788e9c6ef21696e04d900ecedc434b195e53",
   "model_groups": {
     "core_blocks": [
       "match_control",
@@ -1438,7 +1439,12 @@
   },
   "observation_version": "RivalObsV1",
   "running_standardization": false,
-  "schema_sha256": "69fc1bed552994bebc4942671bd52862d7dc9d12afae38f8ce504574a63bed85",
+  "schema_sha256": "0ff6276fe80ba145bd8abb99eea863fdca3c194fe4be3b7a8bd64fa2a1a3bf31",
   "schema_version": 1,
+  "standard_soccar_geometry": {
+    "authority": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
+    "surface_scope": "Exact documented planes, 45-degree corner segment, and rectangular goal recess; curved ramps/posts are not represented as exact mesh clearances.",
+    "version": "RLBotV5StandardSoccarGeometryV1"
+  },
   "team_frame": "Rival always attacks positive Y; no state-dependent X mirror"
 }

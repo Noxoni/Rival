@@ -1,0 +1,540 @@
+{
+  "authority_manifest": {
+    "authority": {
+      "exact_collision_mesh_guidance": "https://wiki.rlbot.org/v5/miscellaneous/extracting-map-meshes/",
+      "runtime_data": "https://wiki.rlbot.org/v5/botmaking/game-data/",
+      "runtime_schema": "https://github.com/RLBot/flatbuffers-schema/blob/main/schema/gamedata.fbs",
+      "standard_values": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/"
+    },
+    "boost_pads": {
+      "big_boost": 100.0,
+      "big_count": 6,
+      "big_respawn_seconds": 10.0,
+      "canonical_order": "RLBot FieldInfo: ascending y, then x",
+      "count": 34,
+      "field_info_anchor_positions": [
+        [
+          0.0,
+          -4240.0,
+          0.0820000022649765
+        ],
+        [
+          -1792.0,
+          -4184.0,
+          0.0820000022649765
+        ],
+        [
+          1792.0,
+          -4184.0,
+          0.0820000022649765
+        ],
+        [
+          -3072.0,
+          -4096.0,
+          8.0
+        ],
+        [
+          3072.0,
+          -4096.0,
+          8.0
+        ],
+        [
+          -940.0,
+          -3308.0,
+          0.0820000022649765
+        ],
+        [
+          940.0,
+          -3308.0,
+          0.0820000022649765
+        ],
+        [
+          0.0,
+          -2816.0,
+          0.0820000022649765
+        ],
+        [
+          -3584.0,
+          -2484.0,
+          0.0820000022649765
+        ],
+        [
+          3584.0,
+          -2484.0,
+          0.0820000022649765
+        ],
+        [
+          -1788.0,
+          -2302.0,
+          0.0820000022649765
+        ],
+        [
+          1788.0,
+          -2302.0,
+          0.0820000022649765
+        ],
+        [
+          -2048.0,
+          -1036.0,
+          0.0820000022649765
+        ],
+        [
+          2048.0,
+          -1036.0,
+          0.0820000022649765
+        ],
+        [
+          0.0,
+          -1024.0,
+          0.0820000022649765
+        ],
+        [
+          -3584.0,
+          0.0,
+          8.0
+        ],
+        [
+          -1024.0,
+          0.0,
+          0.0820000022649765
+        ],
+        [
+          1024.0,
+          0.0,
+          0.0820000022649765
+        ],
+        [
+          3584.0,
+          0.0,
+          8.0
+        ],
+        [
+          0.0,
+          1024.0,
+          0.0820000022649765
+        ],
+        [
+          -2048.0,
+          1036.0,
+          0.0820000022649765
+        ],
+        [
+          2048.0,
+          1036.0,
+          0.0820000022649765
+        ],
+        [
+          -1788.0,
+          2302.0,
+          0.0820000022649765
+        ],
+        [
+          1788.0,
+          2302.0,
+          0.0820000022649765
+        ],
+        [
+          -3584.0,
+          2484.0,
+          0.0820000022649765
+        ],
+        [
+          3584.0,
+          2484.0,
+          0.0820000022649765
+        ],
+        [
+          0.0,
+          2816.0,
+          0.0820000022649765
+        ],
+        [
+          -940.0,
+          3308.0,
+          0.0820000022649765
+        ],
+        [
+          940.0,
+          3308.0,
+          0.0820000022649765
+        ],
+        [
+          -3072.0,
+          4096.0,
+          8.0
+        ],
+        [
+          3072.0,
+          4096.0,
+          8.0
+        ],
+        [
+          -1792.0,
+          4184.0,
+          0.0820000022649765
+        ],
+        [
+          1792.0,
+          4184.0,
+          0.0820000022649765
+        ],
+        [
+          0.0,
+          4240.0,
+          0.0820000022649765
+        ]
+      ],
+      "small_boost": 12.0,
+      "small_count": 28,
+      "small_respawn_seconds": 4.0
+    },
+    "coordinate_convention": {
+      "axes": "X is left; Y is longitudinal; Z is up",
+      "blue_goal_direction": "negative Y",
+      "units": "unreal units (uu)",
+      "yaw_positive": "clockwise",
+      "yaw_zero": "positive X"
+    },
+    "derived_standard_goal_centers": {
+      "basis": "documented physical back-wall opening and half goal height",
+      "blue": [
+        0.0,
+        -5120.0,
+        321.38751220703125
+      ],
+      "field_info_caveat": "RLBot v5 beta may report a larger goal/scoring volume; captured runtime metadata is audited separately and is not treated as physical post geometry.",
+      "orange": [
+        0.0,
+        5120.0,
+        321.38751220703125
+      ]
+    },
+    "geometry_version": "RLBotV5StandardSoccarGeometryV1",
+    "physics_values_used_by_rival": {
+      "ball_max_angular_speed": 6.0,
+      "ball_max_speed": 6000.0,
+      "ball_radius": 91.25,
+      "boost_consumption_per_second": 33.3,
+      "car_max_angular_speed": 5.5,
+      "car_max_no_boost_speed": 1410.0,
+      "car_max_speed": 2300.0,
+      "car_supersonic_threshold": 2200.0,
+      "standard_gravity_magnitude": 650.0
+    },
+    "scope_limit": "Planar walls, 45-degree corner segment, and rectangular goal recess only; curved ramps/posts require collision-mesh queries for exact clearance.",
+    "standard_soccar": {
+      "back_wall_abs_y": 5120.0,
+      "back_wall_length": 5888.0,
+      "ceiling_z": 2044.0,
+      "corner_plane_axis_intercept": 8064.0,
+      "corner_plane_per_quadrant": "abs(x) + abs(y) = 8064",
+      "corner_wall_length": 1629.174,
+      "floor_z": 0.0,
+      "goal_back_abs_y_derived": 6000.0,
+      "goal_depth": 880.0,
+      "goal_half_width": 892.755,
+      "goal_height": 642.775,
+      "goal_width_derived": 1785.51,
+      "side_wall_abs_x": 4096.0,
+      "side_wall_length": 7936.0,
+      "wall_bottom_ramp_exact": false,
+      "wall_bottom_ramp_radius_approximate": 256.0
+    },
+    "standard_spawns": {
+      "demolished": {
+        "blue_xy": [
+          [
+            -2304.0,
+            -4608.0
+          ],
+          [
+            -2688.0,
+            -4608.0
+          ],
+          [
+            2304.0,
+            -4608.0
+          ],
+          [
+            2688.0,
+            -4608.0
+          ]
+        ],
+        "blue_yaw_pi": 0.5,
+        "orange_xy": [
+          [
+            2304.0,
+            4608.0
+          ],
+          [
+            2688.0,
+            4608.0
+          ],
+          [
+            -2304.0,
+            4608.0
+          ],
+          [
+            -2688.0,
+            4608.0
+          ]
+        ],
+        "orange_yaw_pi": -0.5
+      },
+      "kickoff": {
+        "blue": {
+          "back_left": {
+            "xy": [
+              256.0,
+              -3840.0
+            ],
+            "yaw_pi": 0.5
+          },
+          "back_right": {
+            "xy": [
+              -256.0,
+              -3840.0
+            ],
+            "yaw_pi": 0.5
+          },
+          "far_back_center": {
+            "xy": [
+              0.0,
+              -4608.0
+            ],
+            "yaw_pi": 0.5
+          },
+          "left_corner": {
+            "xy": [
+              2048.0,
+              -2560.0
+            ],
+            "yaw_pi": 0.75
+          },
+          "right_corner": {
+            "xy": [
+              -2048.0,
+              -2560.0
+            ],
+            "yaw_pi": 0.25
+          }
+        },
+        "orange": {
+          "back_left": {
+            "xy": [
+              -256.0,
+              3840.0
+            ],
+            "yaw_pi": -0.5
+          },
+          "back_right": {
+            "xy": [
+              256.0,
+              3840.0
+            ],
+            "yaw_pi": -0.5
+          },
+          "far_back_center": {
+            "xy": [
+              0.0,
+              4608.0
+            ],
+            "yaw_pi": -0.5
+          },
+          "left_corner": {
+            "xy": [
+              -2048.0,
+              2560.0
+            ],
+            "yaw_pi": -0.25
+          },
+          "right_corner": {
+            "xy": [
+              2048.0,
+              2560.0
+            ],
+            "yaw_pi": -0.75
+          }
+        }
+      }
+    }
+  },
+  "boost_pad_audit": {
+    "canonical_max_abs_coordinate_error": 2.2649764980231524e-09,
+    "representation_note": "RLBot canonical positions use FieldInfo pickup anchors; RLGym source positions use orb centers and a different order. Identity is mapped by bounded XY distance.",
+    "rlgym_to_rlbot_index_map": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      13,
+      15,
+      16,
+      17,
+      18,
+      20,
+      19,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "rlgym_to_rlbot_max_xy_error": 2.0,
+    "scraped_rows": 34
+  },
+  "checks": {
+    "all_34_scraped_pad_rows_match_canonical_table": true,
+    "all_scraped_values_match_frozen_constants": true,
+    "curved_ramp_is_not_claimed_exact": true,
+    "field_info_exposes_boost_pads": true,
+    "field_info_exposes_goals": true,
+    "live_field_info_goal_metadata_captured": true,
+    "rlgym_source_table_maps_uniquely_to_rlbot_order": true,
+    "rlgym_source_xy_differences_are_bounded": true,
+    "schema_http_200": true,
+    "useful_values_http_200": true
+  },
+  "clearance_policy": {
+    "exact_from_wiki": "floor, ceiling, planar walls, 45-degree corner plane, rectangular goal opening/depth",
+    "not_exact_from_wiki": "curved bottom ramps, rounded posts, full collision mesh",
+    "rival_feature_claim": "Planar walls, 45-degree corner segment, and rectangular goal recess only; curved ramps/posts require collision-mesh queries for exact clearance."
+  },
+  "frozen_value_absolute_errors": {
+    "back_wall_abs_y": 0.0,
+    "back_wall_length": 0.0,
+    "ball_max_speed": 0.0,
+    "ball_radius": 0.0,
+    "car_max_angular_speed": 0.0,
+    "car_max_no_boost_speed": 0.0,
+    "car_max_speed": 0.0,
+    "car_supersonic_threshold": 0.0,
+    "ceiling_z": 0.0,
+    "corner_plane_axis_intercept": 0.0,
+    "corner_wall_length": 0.0,
+    "floor_z": 0.0,
+    "goal_depth": 0.0,
+    "goal_half_width": 0.0,
+    "goal_height": 0.0,
+    "side_wall_abs_x": 0.0,
+    "side_wall_length": 0.0,
+    "standard_gravity_magnitude": 0.0,
+    "wall_bottom_ramp_radius_approximate": 0.0
+  },
+  "generated_at_utc": "2026-08-23T16:43:48.921939+00:00",
+  "goal_authority": {
+    "live_observation_conclusion": "The captured v5 beta values are approximately 1920 x 752 at z=312, so Rival keeps them as runtime goal/scoring-volume evidence and does not substitute them for the documented 1785.51 x 642.775 physical opening.",
+    "live_stadium_p_field_info": [
+      {
+        "direction": {
+          "x": -8.742277657347586e-08,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "height": 752.000244140625,
+        "location": {
+          "x": 0.0,
+          "y": -5120.0,
+          "z": 312.0
+        },
+        "samples": 6000,
+        "team_num": 0,
+        "width": 1920.0001220703125
+      },
+      {
+        "direction": {
+          "x": 0.0,
+          "y": -1.0,
+          "z": 0.0
+        },
+        "height": 752.000244140625,
+        "location": {
+          "x": 0.0,
+          "y": 5120.0,
+          "z": 312.0001220703125
+        },
+        "samples": 6000,
+        "team_num": 1,
+        "width": 1920.0030517578125
+      }
+    ],
+    "rival_standard_goal_centers_are_derived": {
+      "basis": "documented physical back-wall opening and half goal height",
+      "blue": [
+        0.0,
+        -5120.0,
+        321.38751220703125
+      ],
+      "field_info_caveat": "RLBot v5 beta may report a larger goal/scoring volume; captured runtime metadata is audited separately and is not treated as physical post geometry.",
+      "orange": [
+        0.0,
+        5120.0,
+        321.38751220703125
+      ]
+    },
+    "runtime_schema": "FieldInfo.goals: team_num, location, direction, width, height",
+    "semantic_caveat": "FieldInfo is captured and audited, but a live v5 beta may expose a larger goal/scoring volume rather than the physical opening/post dimensions.",
+    "wiki_defines_standard_opening_and_depth": true,
+    "wiki_does_not_publish_every_runtime_goal_tuple": true
+  },
+  "milestone": 9,
+  "purpose": "RLBot v5 standard-Soccar geometry and runtime FieldInfo authority audit",
+  "scraped_values": {
+    "back_wall_abs_y": 5120.0,
+    "back_wall_length": 5888.0,
+    "ball_max_speed": 6000.0,
+    "ball_radius": 91.25,
+    "car_max_angular_speed": 5.5,
+    "car_max_no_boost_speed": 1410.0,
+    "car_max_speed": 2300.0,
+    "car_supersonic_threshold": 2200.0,
+    "ceiling_z": 2044.0,
+    "corner_plane_axis_intercept": 8064.0,
+    "corner_wall_length": 1629.174,
+    "floor_z": 0.0,
+    "goal_depth": 880.0,
+    "goal_half_width": 892.755,
+    "goal_height": 642.775,
+    "side_wall_abs_x": 4096.0,
+    "side_wall_length": 7936.0,
+    "standard_gravity_magnitude": 650.0,
+    "wall_bottom_ramp_radius_approximate": 256.0
+  },
+  "sources": {
+    "flatbuffer_schema_documentation": "https://github.com/RLBot/flatbuffers-schema/blob/main/schema/gamedata.fbs",
+    "flatbuffer_schema_raw": {
+      "bytes": 16504,
+      "http_status": 200,
+      "requested_url": "https://raw.githubusercontent.com/RLBot/flatbuffers-schema/main/schema/gamedata.fbs",
+      "resolved_url": "https://raw.githubusercontent.com/RLBot/flatbuffers-schema/main/schema/gamedata.fbs",
+      "sha256": "0bf0a54ffa92794bcf7685a188173b6cf77701a86fffa4a94166f7546486d94b"
+    },
+    "game_data_documentation": "https://wiki.rlbot.org/v5/botmaking/game-data/",
+    "useful_game_values": {
+      "bytes": 89389,
+      "http_status": 200,
+      "requested_url": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
+      "resolved_url": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
+      "sha256": "cbb09232a4a9dc9a2f12df3bd71f48c82dd9d750ace699320466670d847ef1c4"
+    }
+  },
+  "status": "passed"
+}

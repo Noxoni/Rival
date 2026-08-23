@@ -33,6 +33,11 @@ from rival_training.v9_observations import (  # noqa: E402
     RivalObsV1Builder,
     observation_schema_manifest,
 )
+from rival_training.v9_soccar_geometry import (  # noqa: E402
+    STANDARD_GOAL_CENTERS,
+    STANDARD_GOAL_HEIGHTS,
+    STANDARD_GOAL_WIDTHS,
+)
 
 
 SCHEMA_PATH = TRAINING_ROOT / "schemas" / "rival_obs_v1.json"
@@ -152,7 +157,17 @@ def _rlbot_runtime_smoke() -> dict[str, Any]:
                 is_full_boost=bool(STANDARD_PAD_IS_BIG[index]),
             )
             for index, position in enumerate(STANDARD_PAD_POSITIONS)
-        ]
+        ],
+        goals=[
+            flat.GoalInfo(
+                team_num=team,
+                location=flat.Vector3(*STANDARD_GOAL_CENTERS[team]),
+                direction=flat.Vector3(0.0, 1.0 if team == 0 else -1.0, 0.0),
+                width=float(STANDARD_GOAL_WIDTHS[team]),
+                height=float(STANDARD_GOAL_HEIGHTS[team]),
+            )
+            for team in range(2)
+        ],
     )
     canonical = RLBotCanonicalAdapterV1().adapt(packet, 0, field_info)
     builder = RivalObsV1Builder(
@@ -183,6 +198,9 @@ def _rlbot_runtime_smoke() -> dict[str, Any]:
         "pad_count": len(canonical.pad_positions),
         "pad0_time_until_active": float(canonical.pad_time_until_active[0]),
         "pad3_time_until_active": float(canonical.pad_time_until_active[3]),
+        "goal_centers": canonical.goal_centers.tolist(),
+        "goal_widths": canonical.goal_widths.tolist(),
+        "goal_heights": canonical.goal_heights.tolist(),
         "prediction_refreshed": bool(builder.last_timings["prediction_refreshed"]),
     }
 
@@ -196,12 +214,20 @@ def _training_runtime_smoke() -> dict[str, Any]:
         state = environment.state
         observations: list[np.ndarray] = []
         parity: list[bool] = []
+        goal_contracts: list[dict[str, Any]] = []
         for agent in state.cars:
             adapter = RocketSimCanonicalAdapterV1()
             canonical = adapter.adapt(state, agent, environment.shared_info)
             builder = RivalObsV1Builder(prediction_refresh_ticks=4)
             observation = builder.build(canonical)
             observations.append(observation)
+            goal_contracts.append(
+                {
+                    "centers": canonical.goal_centers.tolist(),
+                    "widths": canonical.goal_widths.tolist(),
+                    "heights": canonical.goal_heights.tolist(),
+                }
+            )
             runtime = builder.export_runtime_state()
             serialized = json.dumps(canonical.to_payload(), sort_keys=True)
             restored = RivalCanonicalStateV1.from_payload(json.loads(serialized))
@@ -218,6 +244,7 @@ def _training_runtime_smoke() -> dict[str, Any]:
             "adapter_version": CANONICAL_ADAPTER_VERSION,
             "observation_version": OBSERVATION_VERSION,
             "observation_shapes": [list(value.shape) for value in observations],
+            "goal_contracts": goal_contracts,
             "observations_finite": all(bool(np.isfinite(value).all()) for value in observations),
             "serialized_reproduction_bit_identical": all(parity),
             "shared_builder_module": RivalObsV1Builder.__module__,
@@ -286,6 +313,15 @@ def _main_gate() -> int:
         ),
         "no_running_observation_standardization": schema["running_standardization"] is False,
         "no_state_dependent_x_mirror": "no state-dependent X mirror" in schema["team_frame"],
+        "geometry_source_hash_frozen": len(schema["geometry_source_sha256"]) == 64,
+        "physical_goal_contract_matches_in_both_runtimes": (
+            all(
+                contract["centers"] == production_smoke["goal_centers"]
+                and contract["widths"] == production_smoke["goal_widths"]
+                and contract["heights"] == production_smoke["goal_heights"]
+                for contract in training_smoke["goal_contracts"]
+            )
+        ),
     }
     status = "passed" if all(checks.values()) else "failed"
     report = {
@@ -306,6 +342,8 @@ def _main_gate() -> int:
             "entity_shapes": schema["entity_shapes"],
             "builder_source_sha256": schema["builder_source_sha256"],
             "canonical_source_sha256": schema["canonical_source_sha256"],
+            "geometry_source_sha256": schema["geometry_source_sha256"],
+            "standard_soccar_geometry": schema["standard_soccar_geometry"],
         },
         "training_runtime_smoke": training_smoke,
         "production_runtime_smoke": production_smoke,

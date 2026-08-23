@@ -1,0 +1,147 @@
+{
+  "checks": {
+    "at_least_4000_contiguous_ticks": true,
+    "at_least_4000_one_tick_transitions": true,
+    "end_record_present": true,
+    "exact_corpus_version": true,
+    "field_info_goals_captured": true,
+    "frame_gaps_measured_and_not_interpolated": true,
+    "native_game_speed_requested": true,
+    "native_record_bound_reached": true,
+    "natural_smoke_completed": true,
+    "no_invalid_json": true,
+    "no_manifest_runtime_warnings": true
+  },
+  "gate": 3,
+  "gate_semantics": {
+    "capture_policy": "frozen production Wisp for natural state generation only",
+    "gap_policy": "Every non-unit frame delta is reported; downstream history replay resets rather than interpolating across a gap.",
+    "m08_training_budget_used": false,
+    "native_tick_requirement": "RLBot packet frame_num increments by exactly one",
+    "score_used": false,
+    "win_loss_used": false
+  },
+  "generated_at_utc": "2026-08-23T16:39:58.702528+00:00",
+  "console_observation": "RLBotServer printed outbound-queue-full warnings for both bot sessions during Countdown. The runner manifest does not capture server-console warnings. The raw corpus independently records two startup frame gaps (28 and 52); neither is interpolated, and the subsequent 5,998-record run is contiguous.",
+  "milestone": 9,
+  "native_corpus": {
+    "callback_wall_milliseconds": {
+      "maximum": 658.4477,
+      "p50": 0.1126,
+      "p95": 3.7929,
+      "p99": 4.6005,
+      "samples": 6000
+    },
+    "end_record": {
+      "complete_bound_reached": true,
+      "corpus_version": "RivalV9NativePacketCorpusV2",
+      "duplicates_ignored": 0,
+      "maximum_records": 6000,
+      "out_of_order_frames": 0,
+      "record_type": "rival_v9_native_corpus_end",
+      "records": 6000,
+      "schema_version": 2,
+      "skipped_source_frames": 78,
+      "wall_seconds": 69.4068917
+    },
+    "end_record_present": true,
+    "field_info_goal_metadata": [
+      {
+        "direction": {
+          "x": -8.742277657347586e-08,
+          "y": 1.0,
+          "z": 0.0
+        },
+        "height": 752.000244140625,
+        "location": {
+          "x": 0.0,
+          "y": -5120.0,
+          "z": 312.0
+        },
+        "samples": 6000,
+        "team_num": 0,
+        "width": 1920.0001220703125
+      },
+      {
+        "direction": {
+          "x": 0.0,
+          "y": -1.0,
+          "z": 0.0
+        },
+        "height": 752.000244140625,
+        "location": {
+          "x": 0.0,
+          "y": 5120.0,
+          "z": 312.0001220703125
+        },
+        "samples": 6000,
+        "team_num": 1,
+        "width": 1920.0030517578125
+      }
+    ],
+    "first_frame": 12,
+    "frame_delta_counts": {
+      "1": 5997,
+      "28": 1,
+      "52": 1
+    },
+    "invalid_json_records": 0,
+    "last_frame": 6089,
+    "longest_contiguous_run": 5998,
+    "one_tick_transitions": 5997,
+    "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+    "records": 6000,
+    "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+    "size_bytes": 49198958,
+    "version": "RivalV9NativePacketCorpusV2",
+    "version_counts": {
+      "RivalV9NativePacketCorpusV2": 6000
+    }
+  },
+  "natural_match_manifest": {
+    "execution": {
+      "active_observation_wall_seconds": 70.03200000000652,
+      "decision_records_per_wall_second": 12.280185849555961,
+      "effective_game_seconds_per_wall_second": 1.0000190316526805,
+      "game_seconds_advanced": 70.03333282470703,
+      "lane_id": "m09-gate03-native-corpus",
+      "natural_match_clock": "FiveMinutes",
+      "natural_state_setting_scope": "none",
+      "observed_game_speed_all_active": {
+        "maximum": 1.0,
+        "median": 1.0,
+        "minimum": 1.0,
+        "samples": 1394
+      },
+      "observed_game_speed_sustained": {
+        "maximum": 1.0,
+        "median": 1.0,
+        "minimum": 1.0,
+        "samples": 1394
+      },
+      "requested_game_speed": 1.0,
+      "requested_speed_reached": true,
+      "rlbot_server_pid": 29792,
+      "rlbot_server_port": 23234,
+      "sequential_or_parallel": "sequential_single_match",
+      "session_wall_duration_seconds": 85.0,
+      "state_setting_apply_count": 0
+    },
+    "runtime_warnings": [],
+    "status": "complete",
+    "termination_reason": "speed_integrity_window_complete",
+    "wall_duration_seconds": 85.015
+  },
+  "opponent": "wisp",
+  "production_model_hashes": {
+    "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "purpose": "bounded_native_tick_observation_corpus_capture",
+  "rival_side": "blue",
+  "rival_team": 0,
+  "schema_version": 2,
+  "session_id": "rival-v9-speed-smoke-wisp-blue-20260823T163832Z-9b187d57",
+  "status": "passed",
+  "stopped_prior_rocket_league_processes": []
+}

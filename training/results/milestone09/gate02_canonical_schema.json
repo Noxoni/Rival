@@ -5,8 +5,10 @@
     "canonical_version_frozen": true,
     "eight_tick_histories_structured": true,
     "every_field_documented": true,
+    "geometry_source_hash_frozen": true,
     "no_running_observation_standardization": true,
     "no_state_dependent_x_mirror": true,
+    "physical_goal_contract_matches_in_both_runtimes": true,
     "production_runtime_passed": true,
     "production_snapshot_bit_identical": true,
     "same_shared_builder_after_canonicalization": true,
@@ -24,11 +26,31 @@
   "gate": 2,
   "gate_name": "canonical_observation_schema",
   "gate_scope": "Gate 2 freezes the canonical types and generated schema. Broad natural RLBot corpus/source-field parity remains Gate 3 and is not claimed here.",
-  "generated_at_utc": "2026-08-23T15:44:42.714535+00:00",
+  "generated_at_utc": "2026-08-23T16:44:16.525878+00:00",
   "milestone": 9,
   "production_runtime_smoke": {
     "adapter_version": "RivalCanonicalAdapterV1",
     "canonical_state_version": "RivalCanonicalStateV1",
+    "goal_centers": [
+      [
+        0.0,
+        -5120.0,
+        321.38751220703125
+      ],
+      [
+        0.0,
+        5120.0,
+        321.38751220703125
+      ]
+    ],
+    "goal_heights": [
+      642.7750244140625,
+      642.7750244140625
+    ],
+    "goal_widths": [
+      1785.510009765625,
+      1785.510009765625
+    ],
     "observation_finite": true,
     "observation_shape": [
       714
@@ -78,8 +100,8 @@
         "start": 15
       }
     },
-    "builder_source_sha256": "ba49b265e4bb3dd1cd15b5c7d5ac58d0b92cee25bfe9de4a8a8fa1c1ff0c7501",
-    "canonical_source_sha256": "a4756302094b6084cf5430fafd3b6138655d42ed804b0dca1fed5818b426f291",
+    "builder_source_sha256": "4b2a49f54903024d5cfc10fc61342401ba499c2cebfcc5242eb5c2c5307839fa",
+    "canonical_source_sha256": "146c390de1916a8a5525b0c377841c5622159f51d2c3532d8e7da7510dcd30ad",
     "entity_shapes": {
       "boost_pads": [
         34,
@@ -102,11 +124,17 @@
         8
       ]
     },
-    "file_sha256": "a6ffd3978029673417f6b82fc4531709cf11fee351f96d9bcbdb4afb8b1c03e5",
+    "file_sha256": "f6ba9641552968aae657545d96b92c8e8891a2d98003a31a468a591cd18e1270",
     "float_count": 714,
+    "geometry_source_sha256": "6b818bcd3052f83d55cea372f127788e9c6ef21696e04d900ecedc434b195e53",
     "path": "training/schemas/rival_obs_v1.json",
-    "schema_sha256": "69fc1bed552994bebc4942671bd52862d7dc9d12afae38f8ce504574a63bed85",
-    "size_bytes": 39123
+    "schema_sha256": "0ff6276fe80ba145bd8abb99eea863fdca3c194fe4be3b7a8bd64fa2a1a3bf31",
+    "size_bytes": 40029,
+    "standard_soccar_geometry": {
+      "authority": "https://wiki.rlbot.org/v5/botmaking/useful-game-values/",
+      "surface_scope": "Exact documented planes, 45-degree corner segment, and rectangular goal recess; curved ramps/posts are not represented as exact mesh clearances.",
+      "version": "RLBotV5StandardSoccarGeometryV1"
+    }
   },
   "schema_version": 1,
   "status": "passed",
@@ -118,6 +146,52 @@
     "adapter_version": "RivalCanonicalAdapterV1",
     "agents": 2,
     "canonical_state_version": "RivalCanonicalStateV1",
+    "goal_contracts": [
+      {
+        "centers": [
+          [
+            0.0,
+            -5120.0,
+            321.38751220703125
+          ],
+          [
+            0.0,
+            5120.0,
+            321.38751220703125
+          ]
+        ],
+        "heights": [
+          642.7750244140625,
+          642.7750244140625
+        ],
+        "widths": [
+          1785.510009765625,
+          1785.510009765625
+        ]
+      },
+      {
+        "centers": [
+          [
+            0.0,
+            -5120.0,
+            321.38751220703125
+          ],
+          [
+            0.0,
+            5120.0,
+            321.38751220703125
+          ]
+        ],
+        "heights": [
+          642.7750244140625,
+          642.7750244140625
+        ],
+        "widths": [
+          1785.510009765625,
+          1785.510009765625
+        ]
+      }
+    ],
     "observation_shapes": [
       [
         714

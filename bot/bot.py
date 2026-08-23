@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import sys
 from time import sleep
+import time
 
 try:
     import torch
@@ -48,6 +49,7 @@ from strategy import (
 )
 from telemetry.decision_logger import DecisionTelemetryLogger
 from telemetry.packet_snapshot import extract_packet_snapshot
+from telemetry.native_packet_corpus import NativePacketCorpusLogger
 
 
 class RivalBot(rlbot.managers.Bot):
@@ -184,7 +186,42 @@ class RivalBot(rlbot.managers.Bot):
             include_logits=config.TELEMETRY_INCLUDE_LOGITS,
             session_metadata=session_metadata,
         )
+        self.v9_native_corpus = NativePacketCorpusLogger(
+            config.V9_NATIVE_CORPUS_PATH,
+            enabled=config.V9_NATIVE_CORPUS_ENABLED,
+            maximum_records=config.V9_NATIVE_CORPUS_MAX_RECORDS,
+            metadata={
+                "purpose": "milestone09_observation_and_timing_parity",
+                "policy_runtime_mode": config.POLICY_RUNTIME_MODE,
+                "diagnostic_only": True,
+                "session_id": config.TELEMETRY_SESSION_METADATA.get("session_id"),
+            },
+        )
         self._latest_packet_score: dict[str, int | None] | None = None
+
+    def _return_controller(
+        self,
+        packet: rlbot.flat.GamePacket,
+        controller: rlbot.flat.ControllerState,
+        callback_started_ns: int,
+    ) -> rlbot.flat.ControllerState:
+        if self.v9_native_corpus.enabled:
+            try:
+                self.v9_native_corpus.log(
+                    packet,
+                    self_index=self.index,
+                    field_info=getattr(self, "field_info", None),
+                    controller_output=controller,
+                    callback_started_ns=callback_started_ns,
+                    callback_finished_ns=time.perf_counter_ns(),
+                )
+            except (OSError, TypeError, ValueError) as exc:
+                self.logger.warning(
+                    "Disabling Rival v9 native corpus capture after write failure: %s",
+                    exc,
+                )
+                self.v9_native_corpus.enabled = False
+        return controller
 
     def initialize(self):
         self.logger.info(f"{self.name} index {self.index} team {self.team}: Initializing...")
@@ -508,6 +545,7 @@ class RivalBot(rlbot.managers.Bot):
         self.policy_tick += 1
 
     def get_output(self, packet: rlbot.flat.GamePacket) -> rlbot.flat.ControllerState:
+        callback_started_ns = time.perf_counter_ns()
         if len(packet.teams) >= 2:
             self._latest_packet_score = {
                 "blue": int(packet.teams[0].score),
@@ -525,12 +563,18 @@ class RivalBot(rlbot.managers.Bot):
         ]
         ball_exists = len(packet.balls) > 0
         if (not is_active_game_phase) or (not ball_exists):
-            return self.celebrate(packet) or rlbot.flat.ControllerState()  # No output given
+            return self._return_controller(
+                packet,
+                self.celebrate(packet) or rlbot.flat.ControllerState(),
+                callback_started_ns,
+            )
 
         player_count = len(packet.players)
         if player_count == 0:
             self.prev_actions = []
-            return rlbot.flat.ControllerState()
+            return self._return_controller(
+                packet, rlbot.flat.ControllerState(), callback_started_ns
+            )
 
         seconds_elapsed = (
             packet.match_info.seconds_elapsed if packet.match_info else None
@@ -574,7 +618,9 @@ class RivalBot(rlbot.managers.Bot):
         self.cached_state = state
 
         if self.index >= len(state.players):
-            return rlbot.flat.ControllerState()
+            return self._return_controller(
+                packet, rlbot.flat.ControllerState(), callback_started_ns
+            )
 
         player_state = state.players[self.index]
 
@@ -645,7 +691,7 @@ class RivalBot(rlbot.managers.Bot):
             self.ticks = 0
             self.update_action_flag = True
 
-        return controller_state
+        return self._return_controller(packet, controller_state, callback_started_ns)
 
     def celebrate(self, packet: rlbot.flat.GamePacket) -> Optional[rlbot.flat.ControllerState]:
         phase = packet.match_info.match_phase
@@ -675,6 +721,7 @@ class RivalBot(rlbot.managers.Bot):
             final_score=self._latest_packet_score,
         )
         self.telemetry.close(finalize=False)
+        self.v9_native_corpus.close()
         super().retire()
 
 

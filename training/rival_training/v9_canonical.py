@@ -15,6 +15,16 @@ from typing import Any, Hashable, Mapping, Sequence
 
 import numpy as np
 
+from .v9_soccar_geometry import (
+    ROCKETSIM_PAD_ORB_POSITIONS,
+    STANDARD_GRAVITY_MAGNITUDE,
+    STANDARD_GOAL_CENTERS,
+    STANDARD_GOAL_HEIGHTS,
+    STANDARD_GOAL_WIDTHS,
+    STANDARD_PAD_IS_BIG,
+    STANDARD_PAD_POSITIONS,
+)
+
 
 CANONICAL_STATE_VERSION = "RivalCanonicalStateV1"
 CANONICAL_ADAPTER_VERSION = "RivalCanonicalAdapterV1"
@@ -22,50 +32,7 @@ PHYSICS_HZ = 120
 AIR_STATES = ("OnGround", "Jumping", "DoubleJumping", "Dodging", "InAir")
 AIR_STATE_INDEX = {name: index for index, name in enumerate(AIR_STATES)}
 TEAM_INVERSION = np.asarray([-1.0, -1.0, 1.0], dtype=np.float32)
-STANDARD_GRAVITY_Z = -650.0
-
-# Fixed standard-Soccar order.  This is intentionally owned by the canonical
-# contract rather than imported from either source domain.
-STANDARD_PAD_POSITIONS = np.asarray(
-    [
-        (0.0, -4240.0, 70.0),
-        (-1792.0, -4184.0, 70.0),
-        (1792.0, -4184.0, 70.0),
-        (-3072.0, -4096.0, 73.0),
-        (3072.0, -4096.0, 73.0),
-        (-940.0, -3308.0, 70.0),
-        (940.0, -3308.0, 70.0),
-        (0.0, -2816.0, 70.0),
-        (-3584.0, -2484.0, 70.0),
-        (3584.0, -2484.0, 70.0),
-        (-1788.0, -2300.0, 70.0),
-        (1788.0, -2300.0, 70.0),
-        (-2048.0, -1036.0, 70.0),
-        (0.0, -1024.0, 70.0),
-        (2048.0, -1036.0, 70.0),
-        (-3584.0, 0.0, 73.0),
-        (-1024.0, 0.0, 70.0),
-        (1024.0, 0.0, 70.0),
-        (3584.0, 0.0, 73.0),
-        (-2048.0, 1036.0, 70.0),
-        (0.0, 1024.0, 70.0),
-        (2048.0, 1036.0, 70.0),
-        (-1788.0, 2300.0, 70.0),
-        (1788.0, 2300.0, 70.0),
-        (-3584.0, 2484.0, 70.0),
-        (3584.0, 2484.0, 70.0),
-        (0.0, 2816.0, 70.0),
-        (-940.0, 3310.0, 70.0),
-        (940.0, 3308.0, 70.0),
-        (-3072.0, 4096.0, 73.0),
-        (3072.0, 4096.0, 73.0),
-        (-1792.0, 4184.0, 70.0),
-        (1792.0, 4184.0, 70.0),
-        (0.0, 4240.0, 70.0),
-    ],
-    dtype=np.float32,
-)
-STANDARD_PAD_IS_BIG = STANDARD_PAD_POSITIONS[:, 2] > 71.0
+STANDARD_GRAVITY_Z = -STANDARD_GRAVITY_MAGNITUDE
 
 
 def _array(value: Any, shape: tuple[int, ...], name: str) -> np.ndarray:
@@ -334,6 +301,9 @@ class RivalCanonicalStateV1:
     self_car: CanonicalCarV1
     opponent_car: CanonicalCarV1
     ball: CanonicalPhysicsV1
+    goal_centers: np.ndarray
+    goal_widths: np.ndarray
+    goal_heights: np.ndarray
     pad_positions: np.ndarray
     pad_is_big: np.ndarray
     pad_active: np.ndarray
@@ -346,6 +316,15 @@ class RivalCanonicalStateV1:
             raise ValueError(f"Unexpected canonical state version {self.version!r}")
         if not 0 <= int(self.last_toucher) <= 2:
             raise ValueError("last_toucher must be self=0, opponent=1 or none=2")
+        object.__setattr__(
+            self, "goal_centers", _array(self.goal_centers, (2, 3), "goal_centers")
+        )
+        object.__setattr__(
+            self, "goal_widths", _array(self.goal_widths, (2,), "goal_widths")
+        )
+        object.__setattr__(
+            self, "goal_heights", _array(self.goal_heights, (2,), "goal_heights")
+        )
         object.__setattr__(
             self, "pad_positions", _array(self.pad_positions, (34, 3), "pad_positions")
         )
@@ -379,6 +358,9 @@ class RivalCanonicalStateV1:
             "self_car": self.self_car.to_payload(),
             "opponent_car": self.opponent_car.to_payload(),
             "ball": self.ball.to_payload(),
+            "goal_centers": self.goal_centers.tolist(),
+            "goal_widths": self.goal_widths.tolist(),
+            "goal_heights": self.goal_heights.tolist(),
             "pad_positions": self.pad_positions.tolist(),
             "pad_is_big": self.pad_is_big.tolist(),
             "pad_active": self.pad_active.tolist(),
@@ -404,6 +386,9 @@ class RivalCanonicalStateV1:
             self_car=CanonicalCarV1.from_payload(payload["self_car"]),
             opponent_car=CanonicalCarV1.from_payload(payload["opponent_car"]),
             ball=CanonicalPhysicsV1.from_payload(payload["ball"]),
+            goal_centers=payload["goal_centers"],
+            goal_widths=payload["goal_widths"],
+            goal_heights=payload["goal_heights"],
             pad_positions=payload["pad_positions"],
             pad_is_big=payload["pad_is_big"],
             pad_active=payload["pad_active"],
@@ -485,17 +470,25 @@ def _pad_mapping(source_positions: np.ndarray, invert: bool) -> np.ndarray:
     transformed = np.asarray(source_positions, dtype=np.float32).copy()
     if invert:
         transformed *= TEAM_INVERSION
+    # RLBot v5 FieldInfo exposes pickup-volume anchors while RLGym's standard
+    # table uses floating-orb centers and a slightly different source order.
+    # Pad identity is therefore defined by XY.  The canonical representation is
+    # the RLBot v5 FieldInfo anchor table from the useful-values authority page.
     mapping: list[int] = []
     used: set[int] = set()
     for target in STANDARD_PAD_POSITIONS:
-        distances = np.sum((transformed - target) ** 2, axis=1)
+        distances = np.sum((transformed[:, :2] - target[:2]) ** 2, axis=1)
         for index in np.argsort(distances):
             candidate = int(index)
             if candidate not in used:
+                # The two public tables also differ by up to two units on a
+                # handful of asymmetric pad Y coordinates (for example
+                # 3308/3310).  Five units is a bounded identity tolerance, far
+                # below the distance between distinct pads.
                 if float(distances[candidate]) > 25.0:
                     raise ValueError(
                         f"Unable to map canonical boost pad {target.tolist()}; "
-                        f"nearest squared error is {float(distances[candidate])}"
+                        f"nearest XY squared error is {float(distances[candidate])}"
                     )
                 mapping.append(candidate)
                 used.add(candidate)
@@ -638,7 +631,7 @@ class RocketSimCanonicalAdapterV1:
         timers = np.asarray(getattr(state, "boost_pad_timers", np.zeros(34)), dtype=np.float32)
         if timers.shape != (34,):
             raise ValueError(f"RocketSim boost-pad timers must have shape (34,), got {timers.shape}")
-        pad_map = _pad_mapping(STANDARD_PAD_POSITIONS, invert)
+        pad_map = _pad_mapping(ROCKETSIM_PAD_ORB_POSITIONS, invert)
         canonical_timers = np.maximum(0.0, timers[pad_map]).astype(np.float32)
         pad_active = (canonical_timers <= 1e-6).astype(np.float32)
 
@@ -676,6 +669,9 @@ class RocketSimCanonicalAdapterV1:
                 controller=opponent_controller,
             ),
             ball=_canonical_physics_from_rlgym(state.ball, invert),
+            goal_centers=STANDARD_GOAL_CENTERS,
+            goal_widths=STANDARD_GOAL_WIDTHS,
+            goal_heights=STANDARD_GOAL_HEIGHTS,
             pad_positions=STANDARD_PAD_POSITIONS,
             pad_is_big=STANDARD_PAD_IS_BIG.astype(np.float32),
             pad_active=pad_active,
@@ -803,6 +799,36 @@ class RLBotCanonicalAdapterV1:
         balls = list(getattr(packet, "balls", None) or [])
         if not balls or getattr(balls[0], "physics", None) is None:
             raise ValueError("RLBot GamePacket is missing the Soccar ball physics")
+        source_goals = list(getattr(field_info, "goals", None) or [])
+        if source_goals:
+            goals_by_team = {
+                int(getattr(goal, "team_num", -1)): goal for goal in source_goals
+            }
+            if self_team not in goals_by_team or 1 - self_team not in goals_by_team:
+                raise ValueError(
+                    "RLBot standard-Soccar FieldInfo must expose one goal for each team"
+                )
+            blue_location = _vec3(getattr(goals_by_team[0], "location", None))
+            orange_location = _vec3(getattr(goals_by_team[1], "location", None))
+            expected_xy = STANDARD_GOAL_CENTERS[:, :2]
+            actual_xy = np.stack((blue_location[:2], orange_location[:2]))
+            if not np.allclose(actual_xy, expected_xy, atol=1.0, rtol=0.0):
+                raise ValueError(
+                    "RivalObsV1 supports standard Soccar goals at x=0, y=+/-5120; "
+                    f"FieldInfo reported {actual_xy.tolist()}"
+                )
+
+        # RLBot v5 beta currently reports the map's goal/scoring volume
+        # (observed on Stadium_P as roughly 1920 x 752 at z=312), while the
+        # useful-values authority and RocketSim define the physical opening as
+        # 1785.51 x 642.775. Rival's actor fields are explicitly physical
+        # opening/post geometry, so both source adapters canonicalize to the
+        # same documented standard-Soccar values. Raw FieldInfo goal metadata
+        # remains captured and independently audited as a separate runtime
+        # source rather than silently masquerading as physical posts.
+        goal_centers = STANDARD_GOAL_CENTERS
+        goal_widths = STANDARD_GOAL_WIDTHS
+        goal_heights = STANDARD_GOAL_HEIGHTS
         static_pads = list(getattr(field_info, "boost_pads", None) or [])
         dynamic_pads = list(getattr(packet, "boost_pads", None) or [])
         if static_pads:
@@ -857,6 +883,9 @@ class RLBotCanonicalAdapterV1:
                 opponent_index, opponent_player, tick=tick, invert=invert
             ),
             ball=_canonical_physics_from_rlbot(balls[0].physics, invert),
+            goal_centers=goal_centers,
+            goal_widths=goal_widths,
+            goal_heights=goal_heights,
             pad_positions=STANDARD_PAD_POSITIONS,
             pad_is_big=canonical_big.astype(np.float32),
             pad_active=pad_active,

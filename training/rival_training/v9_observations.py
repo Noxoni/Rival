@@ -20,6 +20,20 @@ from .v9_canonical import (
     CANONICAL_STATE_VERSION,
     RivalCanonicalStateV1,
 )
+from .v9_soccar_geometry import (
+    BACK_NET_Y,
+    BACK_WALL_Y,
+    BALL_MAX_SPEED,
+    CEILING_Z,
+    CAR_MAX_ANGULAR_SPEED,
+    CAR_MAX_SPEED,
+    CORNER_ENDPOINT_OFFSET,
+    GOAL_HALF_WIDTH,
+    GOAL_HEIGHT,
+    GEOMETRY_VERSION,
+    SIDE_WALL_X,
+    USEFUL_GAME_VALUES_URL,
+)
 
 
 OBSERVATION_VERSION = "RivalObsV1"
@@ -33,23 +47,9 @@ PAD_FEATURES = 9
 HISTORY_TICKS = 8
 CONTROLLER_SIZE = 8
 
-SIDE_WALL_X = 4096.0
-BACK_WALL_Y = 5120.0
-CEILING_Z = 2044.0
-GOAL_HALF_WIDTH = 892.755
-GOAL_CENTER_Z = 321.3875
-CAR_MAX_SPEED = 2300.0
-ANGULAR_SPEED_SCALE = 5.5
+ANGULAR_SPEED_SCALE = CAR_MAX_ANGULAR_SPEED
 FIELD_SCALE = np.asarray([SIDE_WALL_X, BACK_WALL_Y, CEILING_Z], dtype=np.float32)
-VECTOR_SCALE = 6000.0
-OWN_GOAL = np.asarray([0.0, -BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-OPPONENT_GOAL = np.asarray([0.0, BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-OWN_LEFT_POST = np.asarray([-GOAL_HALF_WIDTH, -BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-OWN_RIGHT_POST = np.asarray([GOAL_HALF_WIDTH, -BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-OPPONENT_LEFT_POST = np.asarray([-GOAL_HALF_WIDTH, BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-OPPONENT_RIGHT_POST = np.asarray([GOAL_HALF_WIDTH, BACK_WALL_Y, GOAL_CENTER_Z], dtype=np.float32)
-
-
+VECTOR_SCALE = BALL_MAX_SPEED
 @dataclass(frozen=True)
 class ObservationFieldV1:
     name: str
@@ -154,11 +154,11 @@ def _build_schema_fields() -> list[ObservationFieldV1]:
         ("self.dodge_window_remaining", (1,), "clip[0,1.45]/1.45", "seconds", "self_car.dodge_window_remaining"),
         ("self.dodge_elapsed", (1,), "clip[0,0.95]/0.95", "seconds", "self_car.dodge_elapsed"),
         ("self.dodge_direction", (2,), "unit vector", "canonical flip frame", "self_car.dodge_direction"),
-        ("self.surface_distances", (5,), "floor/ceiling/side/back/corner scales", "team", "shared Soccar geometry"),
-        ("self.nearest_surface_normal", (3,), "unit vector", "car local", "shared Soccar geometry"),
-        ("self.surface_up_alignment", (1,), "dot product", "car local", "shared Soccar geometry"),
-        ("self.surface_signed_velocity", (1,), "divide 2300", "nearest surface normal", "shared Soccar geometry"),
-        ("self.goal_centers_local", (2, 3), "divide 6000", "car local", "shared standard goals"),
+        ("self.surface_distances", (5,), "nonnegative floor/ceiling/side/goal-aware-back/corner clearances divided by physical extents", "team", "shared RLBot-v5 planar standard-Soccar helper; curved ramps/posts approximated"),
+        ("self.nearest_surface_normal", (3,), "unit vector", "car local", "shared RLBot-v5 planar standard-Soccar helper"),
+        ("self.surface_up_alignment", (1,), "dot product", "car local", "shared RLBot-v5 planar standard-Soccar helper"),
+        ("self.surface_signed_velocity", (1,), "divide 2300", "nearest surface normal", "shared RLBot-v5 planar standard-Soccar helper"),
+        ("self.goal_centers_local", (2, 3), "divide 6000", "car local", "shared documented physical standard-Soccar goal centers"),
     ):
         schema.add(name, block, shape, normalization, frame, source)
 
@@ -192,10 +192,10 @@ def _build_schema_fields() -> list[ObservationFieldV1]:
         ("opponent.dodge_direction", (2,), "unit vector", "canonical flip frame", "opponent_car.dodge_direction"),
         ("opponent.latest_controller", (8,), "native bounds", "physical controller", "opponent_car.latest_controller"),
         ("opponent.ball_local", (2, 3), "position/6000; velocity/2300", "opponent car local", "shared relative transform"),
-        ("opponent.surface_distances", (5,), "floor/ceiling/side/back/corner scales", "team", "shared Soccar geometry"),
-        ("opponent.nearest_surface_normal", (3,), "unit vector", "opponent car local", "shared Soccar geometry"),
-        ("opponent.surface_up_alignment", (1,), "dot product", "opponent car local", "shared Soccar geometry"),
-        ("opponent.surface_signed_velocity", (1,), "divide 2300", "nearest surface normal", "shared Soccar geometry"),
+        ("opponent.surface_distances", (5,), "nonnegative floor/ceiling/side/goal-aware-back/corner clearances divided by physical extents", "team", "shared RLBot-v5 planar standard-Soccar helper; curved ramps/posts approximated"),
+        ("opponent.nearest_surface_normal", (3,), "unit vector", "opponent car local", "shared RLBot-v5 planar standard-Soccar helper"),
+        ("opponent.surface_up_alignment", (1,), "dot product", "opponent car local", "shared RLBot-v5 planar standard-Soccar helper"),
+        ("opponent.surface_signed_velocity", (1,), "divide 2300", "nearest surface normal", "shared RLBot-v5 planar standard-Soccar helper"),
         ("opponent.goal_side_of_ball", (1,), "boolean", "Rival perspective", "shared team-frame comparison"),
     ):
         schema.add(name, block, shape, normalization, frame, source)
@@ -208,8 +208,8 @@ def _build_schema_fields() -> list[ObservationFieldV1]:
         ("ball.self_local", (2, 3), "position/6000; velocity/2300", "Rival car local", "shared relative transform"),
         ("ball.opponent_local", (2, 3), "position/6000; velocity/2300", "opponent car local", "shared relative transform"),
         ("ball.speed_distances_closing", (5,), "speed/2300; distances/6000; closing/2300", "scalar", "shared relative math"),
-        ("ball.goal_centers", (2, 3), "divide 6000", "team relative", "shared standard goals"),
-        ("ball.goal_posts", (4, 3), "divide 6000", "team relative", "shared standard goals"),
+        ("ball.goal_centers", (2, 3), "divide 6000", "team relative", "shared documented physical standard-Soccar goal centers"),
+        ("ball.goal_posts", (4, 3), "divide 6000", "team relative", "shared documented physical standard-Soccar goal centers and widths"),
     ):
         schema.add(name, block, shape, normalization, frame, source)
 
@@ -283,6 +283,7 @@ def observation_schema_manifest() -> dict[str, Any]:
             block_slices[field.block]["end"] = field.end
     source = Path(__file__)
     canonical_source = source.with_name("v9_canonical.py")
+    geometry_source = source.with_name("v9_soccar_geometry.py")
     payload: dict[str, Any] = {
         "schema_version": OBSERVATION_SCHEMA_VERSION,
         "observation_version": OBSERVATION_VERSION,
@@ -292,6 +293,14 @@ def observation_schema_manifest() -> dict[str, Any]:
         "dtype": "float32",
         "running_standardization": False,
         "team_frame": "Rival always attacks positive Y; no state-dependent X mirror",
+        "standard_soccar_geometry": {
+            "version": GEOMETRY_VERSION,
+            "authority": USEFUL_GAME_VALUES_URL,
+            "surface_scope": (
+                "Exact documented planes, 45-degree corner segment, and rectangular goal "
+                "recess; curved ramps/posts are not represented as exact mesh clearances."
+            ),
+        },
         "fields": [asdict(field) for field in SCHEMA_FIELDS],
         "block_slices": block_slices,
         "entity_shapes": {
@@ -309,6 +318,7 @@ def observation_schema_manifest() -> dict[str, Any]:
         },
         "builder_source_sha256": _canonical_source_sha256(source),
         "canonical_source_sha256": _canonical_source_sha256(canonical_source),
+        "geometry_source_sha256": _canonical_source_sha256(geometry_source),
     }
     serialized = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     payload["schema_sha256"] = hashlib.sha256(serialized).hexdigest()
@@ -339,42 +349,113 @@ def _closing_speed(
 
 
 def _corner_distance(position: np.ndarray) -> float:
+    return _corner_distance_and_normal(position)[0]
+
+
+def _corner_distance_and_normal(position: np.ndarray) -> tuple[float, np.ndarray]:
     point = np.abs(np.asarray(position[:2], dtype=np.float64))
-    start = np.asarray([SIDE_WALL_X - 1152.0, BACK_WALL_Y], dtype=np.float64)
-    end = np.asarray([SIDE_WALL_X, BACK_WALL_Y - 1152.0], dtype=np.float64)
+    start = np.asarray(
+        [SIDE_WALL_X - CORNER_ENDPOINT_OFFSET, BACK_WALL_Y], dtype=np.float64
+    )
+    end = np.asarray(
+        [SIDE_WALL_X, BACK_WALL_Y - CORNER_ENDPOINT_OFFSET], dtype=np.float64
+    )
     segment = end - start
-    parameter = float(np.clip(np.dot(point - start, segment) / np.dot(segment, segment), 0.0, 1.0))
+    raw_parameter = float(np.dot(point - start, segment) / np.dot(segment, segment))
+    parameter = float(np.clip(raw_parameter, 0.0, 1.0))
     closest = start + parameter * segment
-    return float(np.linalg.norm(point - closest))
+    inward = point - closest
+    length = float(np.linalg.norm(inward))
+    penetrates_corner_plane = (
+        0.0 <= raw_parameter <= 1.0
+        and float(point[0] + point[1]) >= SIDE_WALL_X + BACK_WALL_Y - CORNER_ENDPOINT_OFFSET
+    )
+    if penetrates_corner_plane or length <= 1e-9:
+        inward = np.asarray([-1.0, -1.0], dtype=np.float64) / math.sqrt(2.0)
+        if penetrates_corner_plane:
+            length = 0.0
+    else:
+        inward /= length
+    inward *= np.asarray(
+        [math.copysign(1.0, float(position[0]) or 1.0), math.copysign(1.0, float(position[1]) or 1.0)],
+        dtype=np.float64,
+    )
+    return max(0.0, length), np.asarray([inward[0], inward[1], 0.0], dtype=np.float32)
+
+
+def _surface_candidates(position: np.ndarray) -> list[tuple[float, np.ndarray]]:
+    """Analytic inward-facing standard-Soccar surfaces, including goal recesses."""
+
+    x, y, z = (float(value) for value in position)
+    sign_x = math.copysign(1.0, x or 1.0)
+    sign_y = math.copysign(1.0, y or 1.0)
+    corner_distance, corner_normal = _corner_distance_and_normal(position)
+    candidates = [
+        (max(0.0, z), np.asarray([0.0, 0.0, 1.0], dtype=np.float32)),
+        (
+            max(0.0, CEILING_Z - z),
+            np.asarray([0.0, 0.0, -1.0], dtype=np.float32),
+        ),
+        (
+            max(0.0, SIDE_WALL_X - abs(x)),
+            np.asarray([-sign_x, 0.0, 0.0], dtype=np.float32),
+        ),
+        (corner_distance, corner_normal),
+    ]
+    inside_goal_lane = abs(x) <= GOAL_HALF_WIDTH and z <= GOAL_HEIGHT
+    back_extent = BACK_NET_Y if inside_goal_lane else BACK_WALL_Y
+    candidates.append(
+        (
+            max(0.0, back_extent - abs(y)),
+            np.asarray([0.0, -sign_y, 0.0], dtype=np.float32),
+        )
+    )
+    if inside_goal_lane and abs(y) >= BACK_WALL_Y:
+        candidates.extend(
+            [
+                (
+                    max(0.0, GOAL_HALF_WIDTH - abs(x)),
+                    np.asarray([-sign_x, 0.0, 0.0], dtype=np.float32),
+                ),
+                (
+                    max(0.0, GOAL_HEIGHT - z),
+                    np.asarray([0.0, 0.0, -1.0], dtype=np.float32),
+                ),
+            ]
+        )
+    return candidates
+
+
+def _soccar_surface_distance(position: np.ndarray) -> float:
+    """Nonnegative clearance to the nearest shared standard-Soccar surface."""
+
+    return min(distance for distance, _normal in _surface_candidates(position))
+
+
+def _soccar_surface_normal(position: np.ndarray) -> np.ndarray:
+    """Inward normal of the nearest shared standard-Soccar surface."""
+
+    return min(_surface_candidates(position), key=lambda item: item[0])[1]
 
 
 def _surface_features(physics) -> tuple[np.ndarray, np.ndarray, float, float]:
     position = physics.position
+    inside_goal_lane = (
+        abs(float(position[0])) <= GOAL_HALF_WIDTH
+        and float(position[2]) <= GOAL_HEIGHT
+    )
+    back_extent = BACK_NET_Y if inside_goal_lane else BACK_WALL_Y
     distances = np.asarray(
         [
-            position[2],
-            CEILING_Z - position[2],
-            SIDE_WALL_X - abs(float(position[0])),
-            BACK_WALL_Y - abs(float(position[1])),
+            max(0.0, float(position[2])),
+            max(0.0, CEILING_Z - float(position[2])),
+            max(0.0, SIDE_WALL_X - abs(float(position[0]))),
+            max(0.0, back_extent - abs(float(position[1]))),
             _corner_distance(position),
         ],
         dtype=np.float32,
     )
-    normals = (
-        np.asarray([0.0, 0.0, 1.0], dtype=np.float32),
-        np.asarray([0.0, 0.0, -1.0], dtype=np.float32),
-        np.asarray([-math.copysign(1.0, float(position[0]) or 1.0), 0.0, 0.0], dtype=np.float32),
-        np.asarray([0.0, -math.copysign(1.0, float(position[1]) or 1.0), 0.0], dtype=np.float32),
-        np.asarray(
-            [
-                -math.copysign(1.0 / math.sqrt(2.0), float(position[0]) or 1.0),
-                -math.copysign(1.0 / math.sqrt(2.0), float(position[1]) or 1.0),
-                0.0,
-            ],
-            dtype=np.float32,
-        ),
-    )
-    normal_world = normals[int(np.argmin(distances))]
+    normal_world = _soccar_surface_normal(position)
     normal_local = physics.local(normal_world)
     alignment = float(np.dot(physics.up, normal_world))
     signed_velocity = float(np.dot(physics.linear_velocity, normal_world))
@@ -383,7 +464,7 @@ def _surface_features(physics) -> tuple[np.ndarray, np.ndarray, float, float]:
             distances[0] / CEILING_Z,
             distances[1] / CEILING_Z,
             distances[2] / SIDE_WALL_X,
-            distances[3] / BACK_WALL_Y,
+            distances[3] / back_extent,
             distances[4] / SIDE_WALL_X,
         ],
         dtype=np.float32,
@@ -752,8 +833,8 @@ class RivalObsV1Builder:
             "self.goal_centers_local",
             np.stack(
                 (
-                    physics.local(OWN_GOAL - physics.position) / VECTOR_SCALE,
-                    physics.local(OPPONENT_GOAL - physics.position) / VECTOR_SCALE,
+                    physics.local(state.goal_centers[0] - physics.position) / VECTOR_SCALE,
+                    physics.local(state.goal_centers[1] - physics.position) / VECTOR_SCALE,
                 )
             ),
         )
@@ -845,16 +926,35 @@ class RivalObsV1Builder:
         )
         emit(
             "ball.goal_centers",
-            np.stack(((OWN_GOAL - ball.position) / VECTOR_SCALE, (OPPONENT_GOAL - ball.position) / VECTOR_SCALE)),
+            np.stack(
+                (
+                    (state.goal_centers[0] - ball.position) / VECTOR_SCALE,
+                    (state.goal_centers[1] - ball.position) / VECTOR_SCALE,
+                )
+            ),
+        )
+        own_half_width = float(state.goal_widths[0]) / 2.0
+        opponent_half_width = float(state.goal_widths[1]) / 2.0
+        own_left_post = state.goal_centers[0] + np.asarray(
+            [-own_half_width, 0.0, 0.0], dtype=np.float32
+        )
+        own_right_post = state.goal_centers[0] + np.asarray(
+            [own_half_width, 0.0, 0.0], dtype=np.float32
+        )
+        opponent_left_post = state.goal_centers[1] + np.asarray(
+            [-opponent_half_width, 0.0, 0.0], dtype=np.float32
+        )
+        opponent_right_post = state.goal_centers[1] + np.asarray(
+            [opponent_half_width, 0.0, 0.0], dtype=np.float32
         )
         emit(
             "ball.goal_posts",
             np.stack(
                 (
-                    (OWN_LEFT_POST - ball.position) / VECTOR_SCALE,
-                    (OWN_RIGHT_POST - ball.position) / VECTOR_SCALE,
-                    (OPPONENT_LEFT_POST - ball.position) / VECTOR_SCALE,
-                    (OPPONENT_RIGHT_POST - ball.position) / VECTOR_SCALE,
+                    (own_left_post - ball.position) / VECTOR_SCALE,
+                    (own_right_post - ball.position) / VECTOR_SCALE,
+                    (opponent_left_post - ball.position) / VECTOR_SCALE,
+                    (opponent_right_post - ball.position) / VECTOR_SCALE,
                 )
             ),
         )

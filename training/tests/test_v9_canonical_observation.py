@@ -12,6 +12,7 @@ from rival_training.v9_canonical import (
     STANDARD_GRAVITY_Z,
     STANDARD_PAD_IS_BIG,
     STANDARD_PAD_POSITIONS,
+    CanonicalPhysicsV1,
     RLBotCanonicalAdapterV1,
     RivalCanonicalStateV1,
     RocketSimCanonicalAdapterV1,
@@ -21,7 +22,27 @@ from rival_training.v9_observations import (
     OBSERVATION_VERSION,
     PREDICTION_COUNT,
     RivalObsV1Builder,
+    _soccar_surface_distance,
+    _surface_features,
     observation_schema_manifest,
+)
+from rival_training.v9_soccar_geometry import (
+    BACK_NET_Y,
+    BACK_WALL_Y,
+    CEILING_Z,
+    CORNER_ENDPOINT_OFFSET,
+    CORNER_PLANE_INTERCEPT,
+    CORNER_WALL_LENGTH,
+    GOAL_DEPTH,
+    GOAL_HALF_WIDTH,
+    GOAL_HEIGHT,
+    ROCKETSIM_PAD_ORB_POSITIONS,
+    SIDE_WALL_X,
+    STANDARD_GOAL_CENTERS,
+    STANDARD_GOAL_HEIGHTS,
+    STANDARD_GOAL_WIDTHS,
+    STANDARD_PAD_POSITIONS as RLBOT_STANDARD_PAD_POSITIONS,
+    geometry_authority_manifest,
 )
 
 
@@ -187,7 +208,17 @@ def _equivalent_sources():
                 location=_flat_vec(position), is_full_boost=bool(STANDARD_PAD_IS_BIG[index])
             )
             for index, position in enumerate(STANDARD_PAD_POSITIONS)
-        ]
+        ],
+        goals=[
+            SimpleNamespace(
+                team_num=team,
+                location=_flat_vec(STANDARD_GOAL_CENTERS[team]),
+                direction=_flat_vec((0.0, 1.0 if team == 0 else -1.0, 0.0)),
+                width=float(STANDARD_GOAL_WIDTHS[team]),
+                height=float(STANDARD_GOAL_HEIGHTS[team]),
+            )
+            for team in range(2)
+        ],
     )
     return rlgym_state, shared, packet, field_info
 
@@ -226,8 +257,29 @@ def test_rocketsim_and_rlbot_thin_adapters_reach_same_canonical_state() -> None:
     assert training.version == CANONICAL_STATE_VERSION
     assert training.adapter_version == CANONICAL_ADAPTER_VERSION
     assert training.pad_positions.shape == (34, 3)
+    np.testing.assert_array_equal(training.goal_centers, STANDARD_GOAL_CENTERS)
     assert training.pad_time_until_active[0] == 2.0
     assert training.pad_time_until_active[3] == 7.0
+
+
+def test_rlbot_v5_goal_volume_metadata_does_not_replace_physical_opening() -> None:
+    rlgym_state, shared, packet, field_info = _equivalent_sources()
+    # Captured from RLBot v5 beta Stadium_P FieldInfo on 2026-08-23. These
+    # values are a larger runtime goal/scoring volume, not the physical posts
+    # documented by RLBot's useful-game-values page.
+    field_info.goals[0].location.z = 312.0
+    field_info.goals[0].width = 1920.0001220703125
+    field_info.goals[0].height = 752.000244140625
+    field_info.goals[1].location.z = 312.0001220703125
+    field_info.goals[1].width = 1920.0030517578125
+    field_info.goals[1].height = 752.000244140625
+
+    training = RocketSimCanonicalAdapterV1().adapt(rlgym_state, "self", shared)
+    deployment = RLBotCanonicalAdapterV1().adapt(packet, 0, field_info)
+    _assert_canonical_equal(training, deployment)
+    np.testing.assert_array_equal(deployment.goal_centers, STANDARD_GOAL_CENTERS)
+    np.testing.assert_array_equal(deployment.goal_widths, STANDARD_GOAL_WIDTHS)
+    np.testing.assert_array_equal(deployment.goal_heights, STANDARD_GOAL_HEIGHTS)
 
 
 def test_canonical_json_round_trip_is_observation_bit_identical() -> None:
@@ -254,6 +306,8 @@ def test_generated_schema_is_contiguous_complete_and_hashed() -> None:
     assert len(manifest["schema_sha256"]) == 64
     assert len(manifest["builder_source_sha256"]) == 64
     assert len(manifest["canonical_source_sha256"]) == 64
+    assert len(manifest["geometry_source_sha256"]) == 64
+    assert "curved ramps/posts" in manifest["standard_soccar_geometry"]["surface_scope"]
     offset = 0
     names = set()
     for field in manifest["fields"]:
@@ -348,3 +402,125 @@ def test_default_shared_rocketsim_predictor_builds_finite_observation() -> None:
     assert builder.last_timings["prediction_refreshed"] is True
     assert float(builder.last_timings["predictor_seconds"]) > 0
     assert canonical.gravity_z == STANDARD_GRAVITY_Z
+
+
+def test_shared_surface_geometry_is_goal_aware_and_nonnegative() -> None:
+    inside_goal = CanonicalPhysicsV1(
+        position=np.asarray([0.0, 5500.0, 100.0], dtype=np.float32),
+        rotation_mtx=np.eye(3, dtype=np.float32),
+        linear_velocity=np.asarray([0.0, 100.0, 0.0], dtype=np.float32),
+        angular_velocity=np.zeros(3, dtype=np.float32),
+    )
+    distances, normal, alignment, signed_velocity = _surface_features(inside_goal)
+    assert np.isfinite(distances).all()
+    assert np.all(distances >= 0.0)
+    np.testing.assert_allclose(distances[3], 500.0 / 6000.0, atol=1e-7, rtol=0)
+    np.testing.assert_allclose(np.linalg.norm(normal), 1.0, atol=1e-5, rtol=0)
+    assert np.isfinite(alignment)
+    assert np.isfinite(signed_velocity)
+    assert _soccar_surface_distance(inside_goal.position) > 0.0
+
+    ordinary_field = CanonicalPhysicsV1(
+        position=np.asarray([3500.0, 4500.0, 17.0], dtype=np.float32),
+        rotation_mtx=np.eye(3, dtype=np.float32),
+        linear_velocity=np.zeros(3, dtype=np.float32),
+        angular_velocity=np.zeros(3, dtype=np.float32),
+    )
+    field_distances, field_normal, _, _ = _surface_features(ordinary_field)
+    assert np.all(field_distances >= 0.0)
+    np.testing.assert_allclose(np.linalg.norm(field_normal), 1.0, atol=1e-5, rtol=0)
+
+
+def test_rlbot_v5_standard_soccar_authority_is_frozen_without_hidden_rounding() -> None:
+    assert SIDE_WALL_X == 4096.0
+    assert BACK_WALL_Y == 5120.0
+    assert CEILING_Z == 2044.0
+    assert GOAL_HEIGHT == 642.775
+    assert GOAL_HALF_WIDTH == 892.755
+    assert GOAL_DEPTH == 880.0
+    assert BACK_NET_Y == 6000.0
+    assert CORNER_PLANE_INTERCEPT == 8064.0
+    assert CORNER_ENDPOINT_OFFSET == 1152.0
+    np.testing.assert_allclose(
+        np.sqrt(2.0) * CORNER_ENDPOINT_OFFSET,
+        CORNER_WALL_LENGTH,
+        atol=5e-4,
+        rtol=0,
+    )
+
+    assert np.array_equal(STANDARD_PAD_POSITIONS, RLBOT_STANDARD_PAD_POSITIONS)
+    assert tuple(STANDARD_PAD_POSITIONS[10]) == (-1788.0, -2302.0, np.float32(0.082))
+    assert tuple(STANDARD_PAD_POSITIONS[27]) == (-940.0, 3308.0, np.float32(0.082))
+    ordered = sorted(
+        range(34),
+        key=lambda index: (
+            float(STANDARD_PAD_POSITIONS[index, 1]),
+            float(STANDARD_PAD_POSITIONS[index, 0]),
+        ),
+    )
+    assert ordered == list(range(34))
+
+    manifest = geometry_authority_manifest()
+    assert manifest["boost_pads"]["count"] == 34
+    assert manifest["boost_pads"]["big_count"] == 6
+    assert manifest["standard_soccar"]["wall_bottom_ramp_exact"] is False
+    assert "collision-mesh" in manifest["scope_limit"]
+
+
+def test_rlgym_orb_table_maps_to_rlbot_field_info_order_by_bounded_xy() -> None:
+    from rival_training.v9_canonical import _pad_mapping
+
+    mapping = _pad_mapping(ROCKETSIM_PAD_ORB_POSITIONS, False)
+    assert mapping.tolist() == [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        13,
+        15,
+        16,
+        17,
+        18,
+        20,
+        19,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+    ]
+    mapped = ROCKETSIM_PAD_ORB_POSITIONS[mapping]
+    xy_error = np.linalg.norm(
+        mapped[:, :2] - STANDARD_PAD_POSITIONS[:, :2], axis=1
+    )
+    assert float(np.max(xy_error)) == 2.0
+
+
+def test_corner_clearance_uses_documented_45_degree_plane() -> None:
+    on_corner = np.asarray([3500.0, CORNER_PLANE_INTERCEPT - 3500.0, 500.0])
+    assert _soccar_surface_distance(on_corner) == 0.0
+
+    inside = np.asarray([3500.0, 4300.0, 500.0])
+    expected = (CORNER_PLANE_INTERCEPT - 3500.0 - 4300.0) / np.sqrt(2.0)
+    np.testing.assert_allclose(_soccar_surface_distance(inside), expected, atol=1e-5, rtol=0)
+
+    penetrated = np.asarray([4000.0, 4500.0, 500.0])
+    assert _soccar_surface_distance(penetrated) == 0.0
