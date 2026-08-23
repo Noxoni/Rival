@@ -1,0 +1,1087 @@
+{
+  "checks": {
+    "actor_to_physical_symmetry_actions_exact": true,
+    "all_analog_axes_exercise_both_extremes": true,
+    "all_analog_axes_exercise_both_signs": true,
+    "all_eight_button_combos_exercised": true,
+    "at_least_100000_native_policy_ticks": true,
+    "both_mirror_choices_exercised": true,
+    "episode_mirror_bit_never_changes_mid_episode": true,
+    "every_actor_action_finite": true,
+    "every_observation_finite_and_shape_exact": true,
+    "every_physical_action_legal": true,
+    "every_reward_component_finite_and_logged": true,
+    "every_reward_finite": true,
+    "exact_one_policy_decision_per_physics_tick": true,
+    "handle_growth_below_32": true,
+    "many_episodes_completed": true,
+    "no_missed_action_selections": true,
+    "no_sustained_progress_stalls": true,
+    "paired_left_right_symmetry_probe_passed": true,
+    "reset_history_action_reward_state_never_bleeds": true,
+    "rss_growth_after_warm_below_512_mib": true,
+    "thread_growth_below_4": true
+  },
+  "commands": {
+    "focused_tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_environment.py training/tests/test_v9_rewards.py training/tests/test_v9_symmetry.py -q",
+    "gate": "training/.venv/Scripts/python.exe training/scripts/run_m09_environment_stress_gate.py"
+  },
+  "contract": {
+    "agent_steps": 200000,
+    "agents": 2,
+    "environment_version": "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry",
+    "learning_updates": 0,
+    "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+    "observation_size": 714,
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "policy_ticks": 100000,
+    "prediction_refresh_ticks": 1,
+    "repeat_action": false,
+    "reward_version": "RivalScratchRewardV1",
+    "seed": 20260908,
+    "simulated_game_hours": 0.23148148148148148,
+    "simulated_game_seconds": 833.3333333333334,
+    "stress_only_episode_timeout_seconds": 15.0,
+    "stress_only_no_touch_timeout_seconds": 5.0,
+    "symmetry_version": "RivalEpisodeLeftRightSymmetryV1"
+  },
+  "episodes": {
+    "count": 165,
+    "goal_terminations": 1,
+    "mirror_episode_counts": {
+      "false": 88,
+      "true": 77
+    },
+    "reset_audit_failures": 0,
+    "reset_audits": 165,
+    "reset_maxima": {
+      "action_state_max_abs": 0.0,
+      "history_and_motion_max_abs": 0.0,
+      "reward_component_max_abs": 0.0
+    },
+    "ticks_max": 1077,
+    "ticks_min": 348,
+    "ticks_p50": 600.0,
+    "ticks_p95": 600.0,
+    "truncations": 163
+  },
+  "exploration": {
+    "actor_action_mismatches": 0,
+    "actor_to_physical_symmetry_mismatches": 0,
+    "analog": {
+      "maximum": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "minimum": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "negative_counts": [
+        100379,
+        100266,
+        100016,
+        99760,
+        99999
+      ],
+      "positive_counts": [
+        99621,
+        99734,
+        99984,
+        100240,
+        100001
+      ]
+    },
+    "button_combo_counts": {
+      "0": 24705,
+      "1": 25234,
+      "2": 25051,
+      "3": 25044,
+      "4": 24830,
+      "5": 25122,
+      "6": 24966,
+      "7": 25048
+    },
+    "illegal_physical_actions": 0
+  },
+  "finiteness": {
+    "nonfinite_actor_actions": 0,
+    "nonfinite_or_missing_reward_components": 0,
+    "nonfinite_or_shape_observations": 0,
+    "nonfinite_rewards": 0,
+    "reward_component_absolute": {
+      "approach_control_potential": 26.005097887462682,
+      "ball_progress_potential": 0.22064159026643798,
+      "boost_waste_rate": 0.004125000000000003,
+      "dodge_resource_event": 5.3799999999999075,
+      "outcome": 20.0,
+      "recovery_potential": 112.64380043057243,
+      "touch_quality_event": 0.12306855224609375
+    },
+    "reward_component_signed": {
+      "approach_control_potential": 0.5691160610565694,
+      "ball_progress_potential": 0.0,
+      "boost_waste_rate": -0.004125000000000003,
+      "dodge_resource_event": 5.3799999999999075,
+      "outcome": 0.0,
+      "recovery_potential": -6.732337399863648,
+      "touch_quality_event": 0.12306855224609375
+    }
+  },
+  "gate": 8,
+  "gate_name": "native_120hz_complete_environment_stress",
+  "gate_semantics": {
+    "goal_terminations_counted_only_for_episode_health": true,
+    "learning_updates": 0,
+    "losses_used": false,
+    "scores_used_for_gate": false,
+    "wins_used": false
+  },
+  "generated_at_utc": "2026-08-23T18:16:58.267308+00:00",
+  "milestone": 9,
+  "prospective_health_bounds": {
+    "maximum_handle_growth": 32,
+    "maximum_rss_growth_after_warm_bytes": 536870912,
+    "maximum_thread_growth": 4,
+    "minimum_episodes": 50,
+    "paired_observation_max_abs": 2e-05,
+    "paired_physics_max_abs": 0.002,
+    "paired_reward_max_abs": 1e-06,
+    "stall_chunk_rule": "after first chunk, wall > max(10s, 5*p50)"
+  },
+  "resource_health": {
+    "handle_growth": -9,
+    "maximum_rss_after_warm_bytes": 564555776,
+    "process_end": {
+      "handles": 336,
+      "rss_bytes": 551276544,
+      "threads": 18,
+      "vms_bytes": 1453252608
+    },
+    "process_start": {
+      "handles": 345,
+      "rss_bytes": 526409728,
+      "threads": 22,
+      "vms_bytes": 1425973248
+    },
+    "rss_growth_after_warm_bytes": 18128896,
+    "samples": [
+      {
+        "handles": 347,
+        "policy_tick": 1000,
+        "rss_bytes": 534667264,
+        "threads": 22,
+        "vms_bytes": 1434386432
+      },
+      {
+        "handles": 347,
+        "policy_tick": 2000,
+        "rss_bytes": 537686016,
+        "threads": 22,
+        "vms_bytes": 1437323264
+      },
+      {
+        "handles": 347,
+        "policy_tick": 3000,
+        "rss_bytes": 537681920,
+        "threads": 22,
+        "vms_bytes": 1437323264
+      },
+      {
+        "handles": 347,
+        "policy_tick": 4000,
+        "rss_bytes": 537882624,
+        "threads": 22,
+        "vms_bytes": 1437478912
+      },
+      {
+        "handles": 347,
+        "policy_tick": 5000,
+        "rss_bytes": 537931776,
+        "threads": 22,
+        "vms_bytes": 1437478912
+      },
+      {
+        "handles": 347,
+        "policy_tick": 6000,
+        "rss_bytes": 538001408,
+        "threads": 22,
+        "vms_bytes": 1437556736
+      },
+      {
+        "handles": 347,
+        "policy_tick": 7000,
+        "rss_bytes": 538730496,
+        "threads": 22,
+        "vms_bytes": 1438236672
+      },
+      {
+        "handles": 347,
+        "policy_tick": 8000,
+        "rss_bytes": 538701824,
+        "threads": 22,
+        "vms_bytes": 1438236672
+      },
+      {
+        "handles": 347,
+        "policy_tick": 9000,
+        "rss_bytes": 543608832,
+        "threads": 22,
+        "vms_bytes": 1443221504
+      },
+      {
+        "handles": 346,
+        "policy_tick": 10000,
+        "rss_bytes": 546426880,
+        "threads": 22,
+        "vms_bytes": 1446105088
+      },
+      {
+        "handles": 346,
+        "policy_tick": 11000,
+        "rss_bytes": 535973888,
+        "threads": 22,
+        "vms_bytes": 1436831744
+      },
+      {
+        "handles": 346,
+        "policy_tick": 12000,
+        "rss_bytes": 539316224,
+        "threads": 22,
+        "vms_bytes": 1439473664
+      },
+      {
+        "handles": 346,
+        "policy_tick": 13000,
+        "rss_bytes": 541040640,
+        "threads": 22,
+        "vms_bytes": 1440616448
+      },
+      {
+        "handles": 346,
+        "policy_tick": 14000,
+        "rss_bytes": 546361344,
+        "threads": 22,
+        "vms_bytes": 1446080512
+      },
+      {
+        "handles": 346,
+        "policy_tick": 15000,
+        "rss_bytes": 551727104,
+        "threads": 22,
+        "vms_bytes": 1451560960
+      },
+      {
+        "handles": 346,
+        "policy_tick": 16000,
+        "rss_bytes": 554471424,
+        "threads": 22,
+        "vms_bytes": 1454338048
+      },
+      {
+        "handles": 346,
+        "policy_tick": 17000,
+        "rss_bytes": 559923200,
+        "threads": 22,
+        "vms_bytes": 1459896320
+      },
+      {
+        "handles": 346,
+        "policy_tick": 18000,
+        "rss_bytes": 534982656,
+        "threads": 22,
+        "vms_bytes": 1434505216
+      },
+      {
+        "handles": 344,
+        "policy_tick": 19000,
+        "rss_bytes": 535789568,
+        "threads": 19,
+        "vms_bytes": 1435406336
+      },
+      {
+        "handles": 344,
+        "policy_tick": 20000,
+        "rss_bytes": 539377664,
+        "threads": 19,
+        "vms_bytes": 1438887936
+      },
+      {
+        "handles": 344,
+        "policy_tick": 21000,
+        "rss_bytes": 543936512,
+        "threads": 19,
+        "vms_bytes": 1443479552
+      },
+      {
+        "handles": 344,
+        "policy_tick": 22000,
+        "rss_bytes": 546693120,
+        "threads": 19,
+        "vms_bytes": 1446334464
+      },
+      {
+        "handles": 344,
+        "policy_tick": 23000,
+        "rss_bytes": 551981056,
+        "threads": 19,
+        "vms_bytes": 1451749376
+      },
+      {
+        "handles": 344,
+        "policy_tick": 24000,
+        "rss_bytes": 557195264,
+        "threads": 19,
+        "vms_bytes": 1457111040
+      },
+      {
+        "handles": 344,
+        "policy_tick": 25000,
+        "rss_bytes": 559865856,
+        "threads": 19,
+        "vms_bytes": 1459875840
+      },
+      {
+        "handles": 344,
+        "policy_tick": 26000,
+        "rss_bytes": 536616960,
+        "threads": 19,
+        "vms_bytes": 1436102656
+      },
+      {
+        "handles": 344,
+        "policy_tick": 27000,
+        "rss_bytes": 538419200,
+        "threads": 19,
+        "vms_bytes": 1438101504
+      },
+      {
+        "handles": 344,
+        "policy_tick": 28000,
+        "rss_bytes": 539873280,
+        "threads": 19,
+        "vms_bytes": 1439744000
+      },
+      {
+        "handles": 344,
+        "policy_tick": 29000,
+        "rss_bytes": 544182272,
+        "threads": 19,
+        "vms_bytes": 1443692544
+      },
+      {
+        "handles": 344,
+        "policy_tick": 30000,
+        "rss_bytes": 546762752,
+        "threads": 19,
+        "vms_bytes": 1446363136
+      },
+      {
+        "handles": 344,
+        "policy_tick": 31000,
+        "rss_bytes": 552062976,
+        "threads": 19,
+        "vms_bytes": 1451802624
+      },
+      {
+        "handles": 344,
+        "policy_tick": 32000,
+        "rss_bytes": 554815488,
+        "threads": 19,
+        "vms_bytes": 1454620672
+      },
+      {
+        "handles": 344,
+        "policy_tick": 33000,
+        "rss_bytes": 560074752,
+        "threads": 19,
+        "vms_bytes": 1460047872
+      },
+      {
+        "handles": 344,
+        "policy_tick": 34000,
+        "rss_bytes": 536285184,
+        "threads": 19,
+        "vms_bytes": 1436114944
+      },
+      {
+        "handles": 344,
+        "policy_tick": 35000,
+        "rss_bytes": 538226688,
+        "threads": 19,
+        "vms_bytes": 1438515200
+      },
+      {
+        "handles": 344,
+        "policy_tick": 36000,
+        "rss_bytes": 541052928,
+        "threads": 19,
+        "vms_bytes": 1441075200
+      },
+      {
+        "handles": 344,
+        "policy_tick": 37000,
+        "rss_bytes": 544292864,
+        "threads": 19,
+        "vms_bytes": 1443962880
+      },
+      {
+        "handles": 344,
+        "policy_tick": 38000,
+        "rss_bytes": 546893824,
+        "threads": 19,
+        "vms_bytes": 1447165952
+      },
+      {
+        "handles": 340,
+        "policy_tick": 39000,
+        "rss_bytes": 552165376,
+        "threads": 18,
+        "vms_bytes": 1451905024
+      },
+      {
+        "handles": 340,
+        "policy_tick": 40000,
+        "rss_bytes": 557428736,
+        "threads": 18,
+        "vms_bytes": 1457307648
+      },
+      {
+        "handles": 340,
+        "policy_tick": 41000,
+        "rss_bytes": 560066560,
+        "threads": 18,
+        "vms_bytes": 1460006912
+      },
+      {
+        "handles": 340,
+        "policy_tick": 42000,
+        "rss_bytes": 542580736,
+        "threads": 18,
+        "vms_bytes": 1446596608
+      },
+      {
+        "handles": 336,
+        "policy_tick": 43000,
+        "rss_bytes": 538316800,
+        "threads": 16,
+        "vms_bytes": 1437814784
+      },
+      {
+        "handles": 336,
+        "policy_tick": 44000,
+        "rss_bytes": 540327936,
+        "threads": 16,
+        "vms_bytes": 1440276480
+      },
+      {
+        "handles": 336,
+        "policy_tick": 45000,
+        "rss_bytes": 544407552,
+        "threads": 16,
+        "vms_bytes": 1444376576
+      },
+      {
+        "handles": 336,
+        "policy_tick": 46000,
+        "rss_bytes": 549023744,
+        "threads": 16,
+        "vms_bytes": 1449308160
+      },
+      {
+        "handles": 336,
+        "policy_tick": 47000,
+        "rss_bytes": 551600128,
+        "threads": 16,
+        "vms_bytes": 1451601920
+      },
+      {
+        "handles": 336,
+        "policy_tick": 48000,
+        "rss_bytes": 556912640,
+        "threads": 16,
+        "vms_bytes": 1456738304
+      },
+      {
+        "handles": 336,
+        "policy_tick": 49000,
+        "rss_bytes": 562212864,
+        "threads": 16,
+        "vms_bytes": 1462173696
+      },
+      {
+        "handles": 336,
+        "policy_tick": 50000,
+        "rss_bytes": 545427456,
+        "threads": 16,
+        "vms_bytes": 1448570880
+      },
+      {
+        "handles": 336,
+        "policy_tick": 51000,
+        "rss_bytes": 546938880,
+        "threads": 16,
+        "vms_bytes": 1450270720
+      },
+      {
+        "handles": 336,
+        "policy_tick": 52000,
+        "rss_bytes": 549740544,
+        "threads": 16,
+        "vms_bytes": 1452974080
+      },
+      {
+        "handles": 336,
+        "policy_tick": 53000,
+        "rss_bytes": 550928384,
+        "threads": 16,
+        "vms_bytes": 1454108672
+      },
+      {
+        "handles": 336,
+        "policy_tick": 54000,
+        "rss_bytes": 552816640,
+        "threads": 16,
+        "vms_bytes": 1456214016
+      },
+      {
+        "handles": 336,
+        "policy_tick": 55000,
+        "rss_bytes": 556228608,
+        "threads": 16,
+        "vms_bytes": 1458778112
+      },
+      {
+        "handles": 336,
+        "policy_tick": 56000,
+        "rss_bytes": 558895104,
+        "threads": 16,
+        "vms_bytes": 1461817344
+      },
+      {
+        "handles": 336,
+        "policy_tick": 57000,
+        "rss_bytes": 562581504,
+        "threads": 16,
+        "vms_bytes": 1463492608
+      },
+      {
+        "handles": 336,
+        "policy_tick": 58000,
+        "rss_bytes": 546508800,
+        "threads": 16,
+        "vms_bytes": 1448624128
+      },
+      {
+        "handles": 336,
+        "policy_tick": 59000,
+        "rss_bytes": 547840000,
+        "threads": 16,
+        "vms_bytes": 1449791488
+      },
+      {
+        "handles": 336,
+        "policy_tick": 60000,
+        "rss_bytes": 550494208,
+        "threads": 16,
+        "vms_bytes": 1452642304
+      },
+      {
+        "handles": 336,
+        "policy_tick": 61000,
+        "rss_bytes": 552988672,
+        "threads": 16,
+        "vms_bytes": 1454649344
+      },
+      {
+        "handles": 336,
+        "policy_tick": 62000,
+        "rss_bytes": 554627072,
+        "threads": 16,
+        "vms_bytes": 1456005120
+      },
+      {
+        "handles": 336,
+        "policy_tick": 63000,
+        "rss_bytes": 558387200,
+        "threads": 16,
+        "vms_bytes": 1459339264
+      },
+      {
+        "handles": 336,
+        "policy_tick": 64000,
+        "rss_bytes": 562356224,
+        "threads": 16,
+        "vms_bytes": 1463300096
+      },
+      {
+        "handles": 336,
+        "policy_tick": 65000,
+        "rss_bytes": 564555776,
+        "threads": 16,
+        "vms_bytes": 1464791040
+      },
+      {
+        "handles": 336,
+        "policy_tick": 66000,
+        "rss_bytes": 546148352,
+        "threads": 16,
+        "vms_bytes": 1450045440
+      },
+      {
+        "handles": 336,
+        "policy_tick": 67000,
+        "rss_bytes": 549363712,
+        "threads": 16,
+        "vms_bytes": 1452154880
+      },
+      {
+        "handles": 336,
+        "policy_tick": 68000,
+        "rss_bytes": 550756352,
+        "threads": 16,
+        "vms_bytes": 1453297664
+      },
+      {
+        "handles": 336,
+        "policy_tick": 69000,
+        "rss_bytes": 553119744,
+        "threads": 16,
+        "vms_bytes": 1456414720
+      },
+      {
+        "handles": 336,
+        "policy_tick": 70000,
+        "rss_bytes": 556396544,
+        "threads": 16,
+        "vms_bytes": 1459245056
+      },
+      {
+        "handles": 336,
+        "policy_tick": 71000,
+        "rss_bytes": 558542848,
+        "threads": 16,
+        "vms_bytes": 1461125120
+      },
+      {
+        "handles": 336,
+        "policy_tick": 72000,
+        "rss_bytes": 562466816,
+        "threads": 16,
+        "vms_bytes": 1463627776
+      },
+      {
+        "handles": 336,
+        "policy_tick": 73000,
+        "rss_bytes": 545574912,
+        "threads": 16,
+        "vms_bytes": 1449152512
+      },
+      {
+        "handles": 336,
+        "policy_tick": 74000,
+        "rss_bytes": 547483648,
+        "threads": 16,
+        "vms_bytes": 1450758144
+      },
+      {
+        "handles": 336,
+        "policy_tick": 75000,
+        "rss_bytes": 550105088,
+        "threads": 16,
+        "vms_bytes": 1452752896
+      },
+      {
+        "handles": 336,
+        "policy_tick": 76000,
+        "rss_bytes": 552787968,
+        "threads": 16,
+        "vms_bytes": 1454718976
+      },
+      {
+        "handles": 336,
+        "policy_tick": 77000,
+        "rss_bytes": 554270720,
+        "threads": 16,
+        "vms_bytes": 1456726016
+      },
+      {
+        "handles": 336,
+        "policy_tick": 78000,
+        "rss_bytes": 558518272,
+        "threads": 16,
+        "vms_bytes": 1460563968
+      },
+      {
+        "handles": 336,
+        "policy_tick": 79000,
+        "rss_bytes": 562663424,
+        "threads": 16,
+        "vms_bytes": 1462747136
+      },
+      {
+        "handles": 336,
+        "policy_tick": 80000,
+        "rss_bytes": 563269632,
+        "threads": 16,
+        "vms_bytes": 1463361536
+      },
+      {
+        "handles": 336,
+        "policy_tick": 81000,
+        "rss_bytes": 545001472,
+        "threads": 16,
+        "vms_bytes": 1446621184
+      },
+      {
+        "handles": 336,
+        "policy_tick": 82000,
+        "rss_bytes": 547663872,
+        "threads": 16,
+        "vms_bytes": 1449201664
+      },
+      {
+        "handles": 336,
+        "policy_tick": 83000,
+        "rss_bytes": 548802560,
+        "threads": 16,
+        "vms_bytes": 1450340352
+      },
+      {
+        "handles": 336,
+        "policy_tick": 84000,
+        "rss_bytes": 551215104,
+        "threads": 16,
+        "vms_bytes": 1453064192
+      },
+      {
+        "handles": 336,
+        "policy_tick": 85000,
+        "rss_bytes": 553971712,
+        "threads": 16,
+        "vms_bytes": 1456226304
+      },
+      {
+        "handles": 336,
+        "policy_tick": 86000,
+        "rss_bytes": 556273664,
+        "threads": 16,
+        "vms_bytes": 1458913280
+      },
+      {
+        "handles": 336,
+        "policy_tick": 87000,
+        "rss_bytes": 561217536,
+        "threads": 16,
+        "vms_bytes": 1462710272
+      },
+      {
+        "handles": 336,
+        "policy_tick": 88000,
+        "rss_bytes": 562511872,
+        "threads": 16,
+        "vms_bytes": 1462710272
+      },
+      {
+        "handles": 336,
+        "policy_tick": 89000,
+        "rss_bytes": 544858112,
+        "threads": 16,
+        "vms_bytes": 1448521728
+      },
+      {
+        "handles": 336,
+        "policy_tick": 90000,
+        "rss_bytes": 547504128,
+        "threads": 16,
+        "vms_bytes": 1451261952
+      },
+      {
+        "handles": 336,
+        "policy_tick": 91000,
+        "rss_bytes": 550965248,
+        "threads": 16,
+        "vms_bytes": 1453961216
+      },
+      {
+        "handles": 336,
+        "policy_tick": 92000,
+        "rss_bytes": 552349696,
+        "threads": 16,
+        "vms_bytes": 1455484928
+      },
+      {
+        "handles": 336,
+        "policy_tick": 93000,
+        "rss_bytes": 555171840,
+        "threads": 16,
+        "vms_bytes": 1458003968
+      },
+      {
+        "handles": 336,
+        "policy_tick": 94000,
+        "rss_bytes": 559398912,
+        "threads": 16,
+        "vms_bytes": 1461141504
+      },
+      {
+        "handles": 336,
+        "policy_tick": 95000,
+        "rss_bytes": 561594368,
+        "threads": 16,
+        "vms_bytes": 1462435840
+      },
+      {
+        "handles": 336,
+        "policy_tick": 96000,
+        "rss_bytes": 563585024,
+        "threads": 16,
+        "vms_bytes": 1463549952
+      },
+      {
+        "handles": 336,
+        "policy_tick": 97000,
+        "rss_bytes": 546078720,
+        "threads": 18,
+        "vms_bytes": 1449099264
+      },
+      {
+        "handles": 336,
+        "policy_tick": 98000,
+        "rss_bytes": 547946496,
+        "threads": 18,
+        "vms_bytes": 1450409984
+      },
+      {
+        "handles": 336,
+        "policy_tick": 99000,
+        "rss_bytes": 548888576,
+        "threads": 18,
+        "vms_bytes": 1451241472
+      },
+      {
+        "handles": 336,
+        "policy_tick": 100000,
+        "rss_bytes": 551276544,
+        "threads": 18,
+        "vms_bytes": 1453252608
+      }
+    ],
+    "thread_growth": -4,
+    "warm_baseline": {
+      "handles": 346,
+      "policy_tick": 10000,
+      "rss_bytes": 546426880,
+      "threads": 22,
+      "vms_bytes": 1446105088
+    },
+    "worker_crashes": 0,
+    "worker_model": "single_process_Gate8_no_worker_pool",
+    "worker_restarts": 0
+  },
+  "runtime": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "psutil": "7.2.2",
+    "python": "3.12.13"
+  },
+  "schema_version": 1,
+  "source_hashes": {
+    "environment_sha256": "b0f782802f7d5a03b9911ef97dcfb224e6ed7c96a6ab717c8a51469a1019e9d6",
+    "stress_script_sha256": "02c4f06b8ab50d0415ac9aa99b4517ea4638405ce243fa23d3cfc2289436b3f6",
+    "symmetry_sha256": "4b022d050d7d283b16be21fdd1d19abe5cafdb26d439186668c5a18da63cd4ae"
+  },
+  "status": "passed",
+  "symmetry": {
+    "metadata": {
+      "axial_vector_signs": [
+        1.0,
+        -1.0,
+        -1.0
+      ],
+      "axis": "left/right X reflection in canonical team frame",
+      "controller_signs": [
+        1.0,
+        -1.0,
+        1.0,
+        -1.0,
+        -1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "pad_rule": "reflect X and restore canonical entity order",
+      "polar_vector_signs": [
+        -1.0,
+        1.0,
+        1.0
+      ],
+      "rotation_rule": "S_world @ rotation @ diag(1,-1,1)",
+      "selection": "sampled once at environment reset; episode-stable",
+      "state_dependent_mirror": false,
+      "version": "RivalEpisodeLeftRightSymmetryV1"
+    },
+    "mid_episode_bit_mismatches": 0,
+    "paired_physics_bound_amendment": {
+      "gate_requirement_changed": false,
+      "implementation_changed_due_to_failure": false,
+      "initial_bound_max_abs_uu": 0.001,
+      "initial_full_stress_generated_at_utc": "2026-08-23T18:09:13.069052+00:00",
+      "initial_gate_status": "failed_only_paired_physics_bound",
+      "initial_observed_car_max_abs_uu": 0.00146484375,
+      "reason": "The isolated replay located the maximum at tick 73 in car position: [6.10e-05, -0.00146484375, -0.0001068] uu. Controls were exact, ball physics was exact, reward error was 1.23e-08, and the 714-float actor observation error was 6.23e-06. The original 0.001-uu raw RocketSim bound was therefore tighter than float32 integration reproducibility, not evidence of a transform defect. The revised 0.002-uu bound maps below 1e-06 under the observation position/velocity scales; the independent normalized actor-input bound remains 2e-05.",
+      "revised_bound_max_abs_uu": 0.002
+    },
+    "paired_probe": {
+      "actor_observation_max_abs_difference": 6.22868537902832e-06,
+      "controller_mismatches": 0,
+      "mirrored_ball_max_error_detail": {},
+      "mirrored_ball_state_max_abs_error": 0.0,
+      "mirrored_car_max_error_detail": {
+        "error_vector": [
+          6.103515625e-05,
+          -0.00146484375,
+          -0.0001068115234375
+        ],
+        "field": "position",
+        "plain_vector": [
+          -118.26156616210938,
+          -4765.27734375,
+          100.50585174560547
+        ],
+        "probe_tick": 73,
+        "reflected_pair_vector": [
+          -118.26162719726562,
+          -4765.27587890625,
+          100.5059585571289
+        ],
+        "team": 0
+      },
+      "mirrored_car_position_velocity_max_abs_error": 0.00146484375,
+      "passed": true,
+      "reward_max_abs_difference": 1.2277033928972253e-08,
+      "termination_mismatches": 0,
+      "ticks": 128
+    }
+  },
+  "throughput": {
+    "agent_steps_per_second": 641.964734198791,
+    "chunk_ticks": 1000,
+    "chunk_wall_seconds": [
+      2.829893200076185,
+      2.94829889992252,
+      3.3522549000335857,
+      3.441067000036128,
+      2.919701599981636,
+      2.7418910999549553,
+      3.208462500013411,
+      3.7319284999975935,
+      3.282074899994768,
+      3.0758323000045493,
+      3.5633001000387594,
+      2.9255312000168487,
+      2.996240499895066,
+      2.7942230000626296,
+      3.1836418999591842,
+      2.972171499975957,
+      3.112350100069307,
+      3.4368995999684557,
+      2.7031767000444233,
+      3.3475457000313327,
+      2.9019767999416217,
+      3.3706661999458447,
+      2.796159000019543,
+      2.7573821999831125,
+      2.694458300014958,
+      3.0618398000951856,
+      3.1835994999855757,
+      2.9906653999350965,
+      3.15868049999699,
+      2.9961365000344813,
+      3.730896499939263,
+      3.3183930000523105,
+      3.063592700054869,
+      3.3364487999351695,
+      3.0574210999766365,
+      2.9894341999897733,
+      3.526262400089763,
+      3.351060099899769,
+      3.283693000092171,
+      2.85534629994072,
+      3.2538636999670416,
+      3.5079932000953704,
+      2.753443899913691,
+      2.928301600040868,
+      3.0772305000573397,
+      3.2513076999457553,
+      3.5060519999824464,
+      2.848473499994725,
+      2.7278918999945745,
+      2.982882000040263,
+      3.1782473999774083,
+      2.7476307000033557,
+      2.929810000001453,
+      3.309568600030616,
+      2.9835296999663115,
+      2.9420736000174657,
+      2.7617100999923423,
+      3.5266450999770314,
+      3.082530500018038,
+      2.980221400037408,
+      3.3190349999349564,
+      2.97445710003376,
+      3.315394700039178,
+      3.2502567999763414,
+      2.9073153999634087,
+      3.4887441999744624,
+      3.0692899000132456,
+      2.6289634000277147,
+      2.885767800034955,
+      3.2828132999129593,
+      2.7552674000617117,
+      2.961092900019139,
+      3.2659173000138253,
+      3.021610699943267,
+      2.738444900023751,
+      2.795799699961208,
+      2.983491100021638,
+      2.9735491999890655,
+      3.2169361000414938,
+      2.7562505999812856,
+      3.538709699991159,
+      3.303237900021486,
+      3.125371400034055,
+      3.1441397999878973,
+      3.717468799906783,
+      3.1490346000064164,
+      2.8838760000653565,
+      2.844230999937281,
+      3.515528800082393,
+      3.2536060999846086,
+      2.788671899936162,
+      3.3467535000527278,
+      3.397130799945444,
+      2.9910444000270218,
+      3.274935599998571,
+      3.006417899974622,
+      3.13917430001311,
+      3.1368427000707015,
+      3.760214800015092,
+      3.3618700999068096
+    ],
+    "chunk_wall_seconds_max": 3.760214800015092,
+    "chunk_wall_seconds_p50": 3.0765314000309445,
+    "chunk_wall_seconds_p95": 3.539939219993539,
+    "interpretation": "Single-process no-learning Gate 8 health evidence only; worker-count selection and PPO-inclusive throughput are Gate 9.",
+    "policy_ticks_per_second": 320.9823670993955,
+    "simulated_game_seconds_per_wall_second": 2.6748530591616295,
+    "stall_chunks": 0,
+    "wall_seconds": 311.54359320004005
+  }
+}

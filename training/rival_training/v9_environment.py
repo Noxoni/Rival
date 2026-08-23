@@ -34,9 +34,16 @@ from .v9_observations import (
     observation_schema_manifest,
 )
 from .v9_rewards import RivalScratchRewardV1
+from .v9_symmetry import (
+    RivalEpisodeSymmetryActionParser,
+    mirror_canonical_state,
+)
 
 
 V9_ENVIRONMENT_VERSION = "RivalScratch1v1RocketSimV2OneTickDelay"
+V9_TRAINING_ENVIRONMENT_VERSION = (
+    "RivalScratch1v1RocketSimV3OneTickDelayEpisodeSymmetry"
+)
 
 
 class RivalV9DeterministicKickoffMutator(StateMutator[GameState]):
@@ -68,8 +75,14 @@ class RivalObsV1RLGymBuilder(
 ):
     """Training-only thin adapter around the shared canonical observation."""
 
-    def __init__(self, *, prediction_refresh_ticks: int = 4) -> None:
+    def __init__(
+        self,
+        *,
+        prediction_refresh_ticks: int = 4,
+        apply_episode_mirror: bool = False,
+    ) -> None:
         self.prediction_refresh_ticks = int(prediction_refresh_ticks)
+        self.apply_episode_mirror = bool(apply_episode_mirror)
         self.adapter = RocketSimCanonicalAdapterV1()
         self.builders: dict[AgentID, RivalObsV1Builder] = {}
 
@@ -96,6 +109,9 @@ class RivalObsV1RLGymBuilder(
             "schema_sha256"
         ]
         shared_info["rival_prediction_refresh_ticks"] = self.prediction_refresh_ticks
+        shared_info["rival_v9_observation_episode_mirror_enabled"] = (
+            self.apply_episode_mirror
+        )
 
     def build_obs(
         self,
@@ -107,6 +123,10 @@ class RivalObsV1RLGymBuilder(
         per_agent: dict[AgentID, dict[str, float | bool]] = {}
         for agent in agents:
             canonical = self.adapter.adapt(state, agent, shared_info)
+            if self.apply_episode_mirror and bool(
+                shared_info.get("rival_v9_episode_mirror", False)
+            ):
+                canonical = mirror_canonical_state(canonical)
             observation = self.builders[agent].build(canonical)
             observations[agent] = observation
             per_agent[agent] = dict(self.builders[agent].last_timings)
@@ -178,6 +198,9 @@ def build_v9_training_env(
     no_touch_timeout_seconds: float = 30.0,
     episode_timeout_seconds: float = 300.0,
     rlbot_delay: bool = True,
+    mirror_probability: float = 0.5,
+    symmetry_seed: int = 20260908,
+    forced_mirror: bool | None = None,
 ) -> RLGym:
     """Build the complete one-tick scratch path including Reward V1.
 
@@ -193,9 +216,14 @@ def build_v9_training_env(
             RivalV9DeterministicKickoffMutator(),
         ),
         obs_builder=RivalObsV1RLGymBuilder(
-            prediction_refresh_ticks=prediction_refresh_ticks
+            prediction_refresh_ticks=prediction_refresh_ticks,
+            apply_episode_mirror=True,
         ),
-        action_parser=RivalActionV1Parser(),
+        action_parser=RivalEpisodeSymmetryActionParser(
+            mirror_probability=mirror_probability,
+            seed=symmetry_seed,
+            forced_mirror=forced_mirror,
+        ),
         reward_fn=RivalScratchRewardV1(),
         transition_engine=transition_engine,
         termination_cond=GoalCondition(),
