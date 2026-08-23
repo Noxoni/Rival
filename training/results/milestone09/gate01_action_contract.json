@@ -1,0 +1,154 @@
+{
+  "action_schema_artifact": {
+    "path": "training/schemas/rival_action_v1.json",
+    "sha256": "ee2f8f627e306645610105ec245f08ea220e1f6b3a5a94673b89e054f3b3e4d8",
+    "size_bytes": 1312
+  },
+  "checks": {
+    "all_analog_mean_axes_receive_gradient": true,
+    "all_button_combos_round_trip": true,
+    "all_button_combos_sampled": true,
+    "all_log_std_axes_receive_gradient": true,
+    "analog_axes_bounded": true,
+    "analog_continuous_not_quantized": true,
+    "button_head_receives_gradient": true,
+    "finite_gradients": true,
+    "finite_objective": true,
+    "independent_log_probability_match": true,
+    "lookup_table_absent": true,
+    "one_policy_action_per_physics_tick": true,
+    "parser_byte_float_identical": true,
+    "physical_transport_shape_8": true,
+    "rollout_backprop_log_probability_match": true,
+    "state_dependent_action_mask_absent": true,
+    "steer_yaw_independent": true
+  },
+  "commands": {
+    "generate": "training/.venv/Scripts/python.exe training/scripts/run_m09_action_gate.py",
+    "tests": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v9_actions.py -q"
+  },
+  "contract": {
+    "analog": {
+      "bounds": [
+        -1.0,
+        1.0
+      ],
+      "distribution": "tanh_squashed_diagonal_gaussian",
+      "fields": [
+        "throttle",
+        "steer",
+        "pitch",
+        "yaw",
+        "roll"
+      ],
+      "log_std_bounds": [
+        -5.0,
+        1.0
+      ],
+      "tanh_jacobian_log_probability": true
+    },
+    "buttons": {
+      "combo_count": 8,
+      "distribution": "joint_categorical",
+      "encoding": "jump + 2*boost + 4*handbrake",
+      "fields": [
+        "jump",
+        "boost",
+        "handbrake"
+      ]
+    },
+    "controller_field_order": [
+      "throttle",
+      "steer",
+      "pitch",
+      "yaw",
+      "roll",
+      "jump",
+      "boost",
+      "handbrake"
+    ],
+    "hidden_controller_synthesis": false,
+    "lookup_table": false,
+    "parser_source_sha256": "f026432fae0c8d9652b133fcbb4836d98f444334fde4df9ef07301c4f5e3308a",
+    "physics_hz": 120,
+    "policy_action_head_source_sha256": "f026432fae0c8d9652b133fcbb4836d98f444334fde4df9ef07301c4f5e3308a",
+    "policy_decisions_per_physics_tick": 1,
+    "policy_hz": 120,
+    "repeat_action": false,
+    "schema_version": 1,
+    "state_dependent_action_mask": false,
+    "stored_action": "physical_controller_float32",
+    "timing_delay_version": "RivalOneTickDelayV1",
+    "transport_shape": [
+      8
+    ],
+    "version": "RivalActionV1"
+  },
+  "gate": 1,
+  "gate_name": "action_contract_implementation",
+  "generated_at_utc": "2026-08-23T15:25:44.523283+00:00",
+  "measurements": {
+    "analog_log_std_gradient_abs_by_axis": [
+      0.009978961199522018,
+      0.00905754417181015,
+      0.022956816479563713,
+      0.03159350901842117,
+      0.025383522734045982
+    ],
+    "analog_mean_gradient_l1_by_axis": [
+      0.26780927181243896,
+      0.21303510665893555,
+      0.19134433567523956,
+      0.2151937335729599,
+      0.24434415996074677
+    ],
+    "analog_sample_max": [
+      0.9430149793624878,
+      0.9603854417800903,
+      0.9677767157554626,
+      0.9623658657073975,
+      0.9818811416625977
+    ],
+    "analog_sample_min": [
+      -0.9403547644615173,
+      -0.9802555441856384,
+      -0.9508125185966492,
+      -0.9821719527244568,
+      -0.9612361788749695
+    ],
+    "analog_saturation_fraction_abs_gt_0_95": [
+      0.0,
+      0.0029296875,
+      0.001953125,
+      0.00390625,
+      0.0029296875
+    ],
+    "branch_entropy": {
+      "analog_monte_carlo": 2.991663694381714,
+      "button_exact": 2.0621895790100098,
+      "mixed": 5.0538530349731445
+    },
+    "button_combo_counts": {
+      "0": 174,
+      "1": 126,
+      "2": 122,
+      "3": 127,
+      "4": 127,
+      "5": 97,
+      "6": 125,
+      "7": 126
+    },
+    "button_head_gradient_l1": 0.38957491517066956,
+    "distribution_rows": 4096,
+    "independent_log_probability_max_abs_error": 5.684341886080802e-14,
+    "mixed_entropy": 5.0538530349731445,
+    "parser_max_abs_error": 0.0,
+    "parser_rows": 4096,
+    "rollout_backprop_log_probability_max_abs_error": 0.0,
+    "rollout_rows": 1024
+  },
+  "milestone": 9,
+  "schema_version": 1,
+  "seed": 20260901,
+  "status": "passed"
+}
