@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "package": "Rival v9.0 scratch native-control design",
+  "status": "prospective_design_authority",
+  "design_branch": "rival-v9-scratch-design",
+  "design_base_sha": "0642742c17e5abc8476d3487185b264e2446cb68",
+  "files": [
+    "handoff/v9.0/README.md",
+    "handoff/v9.0/VERSION.md",
+    "handoff/v9.0/ARCHITECTURE.md",
+    "handoff/v9.0/RIVAL_ACTION_V1.md",
+    "handoff/v9.0/RIVAL_OBS_V1.md",
+    "handoff/v9.0/SOURCE_AUDIT.md",
+    "handoff/v9.0/TRAINING_FOUNDATION.md",
+    "handoff/v9.0/VALIDATION_GATES.md",
+    "handoff/v9.0/CODEX_START_PROMPT.md",
+    "handoff/v9.0/PACKAGE_MANIFEST.json"
+  ],
+  "core_contract": {
+    "policy_origin": "scratch",
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "repeat_action": false,
+    "action_version": "RivalActionV1",
+    "action_type": "hybrid_native_controller",
+    "analog_axes": ["throttle", "steer", "pitch", "yaw", "roll"],
+    "button_combo": ["jump", "boost", "handbrake"],
+    "state_dependent_action_mask": false,
+    "observation_version": "RivalObsV1",
+    "canonical_state_version": "RivalCanonicalStateV1",
+    "observation_train_deploy_shared": true,
+    "wisp_in_actor": false,
+    "production_promotion_authorized": false,
+    "pilot_max_simulated_game_hours": 2.0
+  }
+}
