@@ -70,7 +70,11 @@ class RivalBot(rlbot.managers.Bot):
         self.obs_builder = CustomObs()
         self.action_parser = XMirroredActionParser(
             config.CANDIDATE_ACTION_TABLE_PATH,
-            allow_all_actions=config.CANDIDATE_POLICY_ENABLED,
+            allow_all_actions=(
+                config.CANDIDATE_POLICY_ENABLED
+                and not config.CANDIDATE_LEGACY_ONLY
+            ),
+            legacy_only=config.CANDIDATE_LEGACY_ONLY,
         )
 
         self.models: ModelSet | None = None
@@ -117,8 +121,12 @@ class RivalBot(rlbot.managers.Bot):
             "policy_runtime": {
                 "mode": config.POLICY_RUNTIME_MODE,
                 "candidate_enabled": config.CANDIDATE_POLICY_ENABLED,
+                "transfer_diagnostic_mode": config.TRANSFER_DIAGNOSTIC_MODE,
+                "legacy_only": config.CANDIDATE_LEGACY_ONLY,
                 "tick_skip": config.TICK_SKIP,
                 "action_count": len(self.action_parser.actions),
+                "observation_capture": config.DIAGNOSTIC_CAPTURE_OBSERVATIONS,
+                "observation_capture_stride": config.DIAGNOSTIC_OBSERVATION_STRIDE,
             },
             "challenge_calibration": {
                 "mode": self.challenge_calibration.mode.value,
@@ -311,6 +319,15 @@ class RivalBot(rlbot.managers.Bot):
         self.last_tactical_metrics = tactical_metrics
 
         if self.telemetry.enabled:
+            diagnostic = None
+            if (
+                config.DIAGNOSTIC_CAPTURE_OBSERVATIONS
+                and self.policy_tick % config.DIAGNOSTIC_OBSERVATION_STRIDE == 0
+            ):
+                diagnostic = {
+                    "capture_version": "RivalM07LiveObservationV1",
+                    "live_observation_432": obs.detach().cpu().tolist(),
+                }
             state_snapshot = build_state_snapshot(
                 state,
                 player,
@@ -330,6 +347,8 @@ class RivalBot(rlbot.managers.Bot):
                         "strategic_overrides_enabled": config.STRATEGIC_OVERRIDES_ENABLED,
                         "challenge_calibration_mode": self.challenge_calibration.mode.value,
                         "natural_adjustment_mode": self.natural_adjustment.mode.value,
+                        "transfer_diagnostic_mode": config.TRANSFER_DIAGNOSTIC_MODE,
+                        "candidate_legacy_only": config.CANDIDATE_LEGACY_ONLY,
                         "tick_skip": config.TICK_SKIP,
                         "action_delay": config.ACTION_DELAY,
                         "tick_window": self.ticks,
@@ -344,6 +363,7 @@ class RivalBot(rlbot.managers.Bot):
                     ),
                     calibration_decision,
                     natural_decision,
+                    diagnostic,
                 )
             except (OSError, TypeError, ValueError) as exc:
                 self.logger.warning("Disabling Rival telemetry after write failure: %s", exc)

@@ -12,51 +12,6 @@ MAX_PLAYERS_PER_TEAM = 3
 _BASE_DIR = Path(__file__).resolve().parent
 _MODELS_DIR = _BASE_DIR / "models"
 
-_candidate_model_raw = os.environ.get("RIVAL_CANDIDATE_MODEL_PATH", "").strip()
-CANDIDATE_POLICY_ENABLED = bool(_candidate_model_raw)
-CANDIDATE_MODEL_PATH = (
-    Path(_candidate_model_raw).expanduser().resolve()
-    if CANDIDATE_POLICY_ENABLED
-    else None
-)
-CANDIDATE_ACTION_TABLE_PATH = (
-    Path(
-        os.environ.get(
-            "RIVAL_CANDIDATE_ACTION_TABLE_PATH",
-            str(_MODELS_DIR / "RIVAL_ACTIONS_V1.npy"),
-        )
-    )
-    .expanduser()
-    .resolve()
-    if CANDIDATE_POLICY_ENABLED
-    else None
-)
-
-if CANDIDATE_POLICY_ENABLED:
-    MODEL_INFO_POLICY = ModelInfo(CANDIDATE_MODEL_PATH, ActivationType.RELU)
-    MODEL_INFO_SHARED_HEAD = None
-    POLICY_RUNTIME_MODE = "milestone06_trained_candidate"
-else:
-    MODEL_INFO_POLICY = ModelInfo(_MODELS_DIR / "POLICY.lt", ActivationType.RELU)
-    MODEL_INFO_SHARED_HEAD = ModelInfo(_MODELS_DIR / "SHARED_HEAD.lt", ActivationType.RELU)
-    POLICY_RUNTIME_MODE = "frozen_wisp_production"
-
-TICK_SKIP = int(
-    os.environ.get("RIVAL_TICK_SKIP", "4" if CANDIDATE_POLICY_ENABLED else "8")
-)
-if CANDIDATE_POLICY_ENABLED and TICK_SKIP != 4:
-    raise ValueError("Milestone 06 candidate deployment requires RIVAL_TICK_SKIP=4")
-if not CANDIDATE_POLICY_ENABLED and TICK_SKIP != 8:
-    raise ValueError("Frozen Wisp production deployment requires tick skip 8")
-ACTION_DELAY = TICK_SKIP - 1
-
-MODEL_DEVICE = "cpu"
-
-# Infer bot deterministically (stochastic otherwise)
-DETERMINISTIC = True
-
-ROCKETSIM_COLLISION_DIR = _BASE_DIR / "collision_meshes"
-
 
 def _environment_flag(name: str, default: bool = False) -> bool:
     value = os.environ.get(name)
@@ -91,11 +46,114 @@ def _environment_int(name: str, default: int) -> int:
         raise ValueError(f"{name} must be an integer, got {value!r}") from exc
 
 
+_candidate_model_raw = os.environ.get("RIVAL_CANDIDATE_MODEL_PATH", "").strip()
+CANDIDATE_POLICY_ENABLED = bool(_candidate_model_raw)
+_candidate_runtime_label_raw = os.environ.get(
+    "RIVAL_CANDIDATE_RUNTIME_LABEL", ""
+).strip()
+CANDIDATE_MODEL_PATH = (
+    Path(_candidate_model_raw).expanduser().resolve()
+    if CANDIDATE_POLICY_ENABLED
+    else None
+)
+CANDIDATE_ACTION_TABLE_PATH = (
+    Path(
+        os.environ.get(
+            "RIVAL_CANDIDATE_ACTION_TABLE_PATH",
+            str(_MODELS_DIR / "RIVAL_ACTIONS_V1.npy"),
+        )
+    )
+    .expanduser()
+    .resolve()
+    if CANDIDATE_POLICY_ENABLED
+    else None
+)
+
+if CANDIDATE_POLICY_ENABLED:
+    MODEL_INFO_POLICY = ModelInfo(CANDIDATE_MODEL_PATH, ActivationType.RELU)
+    MODEL_INFO_SHARED_HEAD = None
+    POLICY_RUNTIME_MODE = (
+        _candidate_runtime_label_raw or "milestone06_trained_candidate"
+    )
+else:
+    MODEL_INFO_POLICY = ModelInfo(_MODELS_DIR / "POLICY.lt", ActivationType.RELU)
+    MODEL_INFO_SHARED_HEAD = ModelInfo(_MODELS_DIR / "SHARED_HEAD.lt", ActivationType.RELU)
+    POLICY_RUNTIME_MODE = "frozen_wisp_production"
+
+TRANSFER_DIAGNOSTIC_MODE = _environment_flag(
+    "RIVAL_TRANSFER_DIAGNOSTIC_MODE", False
+)
+CANDIDATE_LEGACY_ONLY = _environment_flag("RIVAL_CANDIDATE_LEGACY_ONLY", False)
+if _candidate_runtime_label_raw and not (
+    CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE
+):
+    raise ValueError(
+        "RIVAL_CANDIDATE_RUNTIME_LABEL requires a candidate model and explicit "
+        "RIVAL_TRANSFER_DIAGNOSTIC_MODE"
+    )
+if _candidate_runtime_label_raw and any(
+    character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+    for character in _candidate_runtime_label_raw
+):
+    raise ValueError(
+        "RIVAL_CANDIDATE_RUNTIME_LABEL must use lowercase letters, digits, dash, "
+        "or underscore"
+    )
+
+TICK_SKIP = int(
+    os.environ.get("RIVAL_TICK_SKIP", "4" if CANDIDATE_POLICY_ENABLED else "8")
+)
+if CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE:
+    if TICK_SKIP not in {4, 8}:
+        raise ValueError(
+            "Milestone 07 transfer diagnostics require RIVAL_TICK_SKIP=4 or 8"
+        )
+elif CANDIDATE_POLICY_ENABLED and TICK_SKIP != 4:
+    raise ValueError(
+        "Candidate deployment requires RIVAL_TICK_SKIP=4 unless explicit "
+        "RIVAL_TRANSFER_DIAGNOSTIC_MODE is enabled"
+    )
+if not CANDIDATE_POLICY_ENABLED and TICK_SKIP != 8:
+    raise ValueError("Frozen Wisp production deployment requires tick skip 8")
+if CANDIDATE_LEGACY_ONLY and not (
+    CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE
+):
+    raise ValueError(
+        "RIVAL_CANDIDATE_LEGACY_ONLY requires both a candidate model and explicit "
+        "RIVAL_TRANSFER_DIAGNOSTIC_MODE"
+    )
+ACTION_DELAY = TICK_SKIP - 1
+
+MODEL_DEVICE = "cpu"
+
+# Infer bot deterministically (stochastic otherwise)
+DETERMINISTIC = True
+
+ROCKETSIM_COLLISION_DIR = _BASE_DIR / "collision_meshes"
+
+
 POLICY_TOP_N = int(os.environ.get("RIVAL_POLICY_TOP_N", "5"))
 TELEMETRY_ENABLED = _environment_flag("RIVAL_TELEMETRY_ENABLED", False)
 TELEMETRY_INCLUDE_LOGITS = _environment_flag(
     "RIVAL_TELEMETRY_INCLUDE_LOGITS", False
 )
+DIAGNOSTIC_CAPTURE_OBSERVATIONS = _environment_flag(
+    "RIVAL_DIAGNOSTIC_CAPTURE_OBSERVATIONS", False
+)
+DIAGNOSTIC_OBSERVATION_STRIDE = _environment_int(
+    "RIVAL_DIAGNOSTIC_OBSERVATION_STRIDE", 8
+)
+if DIAGNOSTIC_CAPTURE_OBSERVATIONS and not TRANSFER_DIAGNOSTIC_MODE:
+    raise ValueError(
+        "RIVAL_DIAGNOSTIC_CAPTURE_OBSERVATIONS requires explicit "
+        "RIVAL_TRANSFER_DIAGNOSTIC_MODE"
+    )
+if DIAGNOSTIC_CAPTURE_OBSERVATIONS and not TELEMETRY_ENABLED:
+    raise ValueError(
+        "RIVAL_DIAGNOSTIC_CAPTURE_OBSERVATIONS requires RIVAL_TELEMETRY_ENABLED"
+    )
+if DIAGNOSTIC_OBSERVATION_STRIDE < 1:
+    raise ValueError("RIVAL_DIAGNOSTIC_OBSERVATION_STRIDE must be at least 1")
 TELEMETRY_PATH = Path(
     os.environ.get(
         "RIVAL_TELEMETRY_PATH",

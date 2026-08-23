@@ -1,0 +1,155 @@
+{
+  "action_table": {
+    "generated_table_exact": true,
+    "path": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "shape": [
+      158,
+      8
+    ]
+  },
+  "controller_fields": [
+    "throttle",
+    "steer",
+    "pitch",
+    "yaw",
+    "roll",
+    "jump",
+    "boost",
+    "handbrake"
+  ],
+  "production_modified_or_promoted": false,
+  "purpose": "milestone07_action_function_parity",
+  "schema_version": 1,
+  "spatial_controller_parity": {
+    "appended_index_90_rejected_by_legacy_only_deployment": true,
+    "comparisons": [
+      {
+        "case": "blue_negative_x",
+        "exact_rows": 90,
+        "legacy_rows_compared": 90,
+        "maximum_abs_controller_error": 0.0,
+        "mirror_x": true,
+        "team_num": 0,
+        "x": -1000.0
+      },
+      {
+        "case": "blue_positive_x",
+        "exact_rows": 90,
+        "legacy_rows_compared": 90,
+        "maximum_abs_controller_error": 0.0,
+        "mirror_x": false,
+        "team_num": 0,
+        "x": 1000.0
+      },
+      {
+        "case": "orange_negative_x",
+        "exact_rows": 90,
+        "legacy_rows_compared": 90,
+        "maximum_abs_controller_error": 0.0,
+        "mirror_x": false,
+        "team_num": 1,
+        "x": -1000.0
+      },
+      {
+        "case": "orange_positive_x",
+        "exact_rows": 90,
+        "legacy_rows_compared": 90,
+        "maximum_abs_controller_error": 0.0,
+        "mirror_x": true,
+        "team_num": 1,
+        "x": 1000.0
+      }
+    ],
+    "exact_row_case_comparisons": 360,
+    "legacy_rows_per_case": 90,
+    "maximum_abs_controller_error": 0.0,
+    "passed": true,
+    "production_paths": [
+      "frozen DefaultAction/XMirroredActionParser",
+      "158-action diagnostic candidate with legacy-only guard"
+    ],
+    "total_row_case_comparisons": 360,
+    "training_path": "RivalActionParser"
+  },
+  "status": "passed",
+  "temporal_action_function": {
+    "finding": "The four-tick live and RocketSim repeat/delay windows are exact in steady state. The eight-tick windows differ on ticks 2-5: RocketSim has already applied the new action while live Wisp is still applying the previous action.",
+    "source_derived_not_physics_outcome": true,
+    "tick_4": {
+      "configured_live_action_delay": 3,
+      "exact_window_match": true,
+      "interpretation": "RocketSimEngine(rlbot_delay=True) advances physics once before setting each row's controls. The live loop selects at steady-state tick_window=1 and continues the previous action until tick_window >= ACTION_DELAY - 1.",
+      "live_new_action_ticks": 3,
+      "live_previous_action_ticks": 1,
+      "live_wisp_applied_action": [
+        "previous",
+        "new",
+        "new",
+        "new"
+      ],
+      "mismatch_ticks": [],
+      "rocketsim_new_action_ticks": 3,
+      "rocketsim_previous_action_ticks": 1,
+      "rocketsim_rlbot_delay_applied_action": [
+        "previous",
+        "new",
+        "new",
+        "new"
+      ],
+      "steady_state_cycle_ticks": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "tick_skip": 4
+    },
+    "tick_8": {
+      "configured_live_action_delay": 7,
+      "exact_window_match": false,
+      "interpretation": "RocketSimEngine(rlbot_delay=True) advances physics once before setting each row's controls. The live loop selects at steady-state tick_window=1 and continues the previous action until tick_window >= ACTION_DELAY - 1.",
+      "live_new_action_ticks": 3,
+      "live_previous_action_ticks": 5,
+      "live_wisp_applied_action": [
+        "previous",
+        "previous",
+        "previous",
+        "previous",
+        "previous",
+        "new",
+        "new",
+        "new"
+      ],
+      "mismatch_ticks": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "rocketsim_new_action_ticks": 7,
+      "rocketsim_previous_action_ticks": 1,
+      "rocketsim_rlbot_delay_applied_action": [
+        "previous",
+        "new",
+        "new",
+        "new",
+        "new",
+        "new",
+        "new",
+        "new"
+      ],
+      "steady_state_cycle_ticks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "tick_skip": 8
+    }
+  }
+}

@@ -200,3 +200,27 @@ def test_verbose_telemetry_includes_raw_and_masked_logits(tmp_path) -> None:
     record = records[1]
     assert record["decision"]["raw_logits"] == [0.5, 1.5]
     assert record["decision"]["masked_logits"] == [0.5, 1.5]
+
+
+def test_optional_diagnostic_payload_is_serialized_without_schema_change(tmp_path) -> None:
+    output = tmp_path / "diagnostic.jsonl"
+    logger = DecisionTelemetryLogger(output, enabled=True)
+    observation = [float(index) for index in range(432)]
+
+    logger.log(
+        _decision(),
+        _metrics(),
+        {},
+        {},
+        diagnostic={
+            "capture_version": "RivalM07LiveObservationV1",
+            "live_observation_432": observation,
+        },
+    )
+    logger.close()
+
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines()]
+    decision = records[1]
+    assert decision["schema_version"] == 3
+    assert decision["diagnostic"]["capture_version"] == "RivalM07LiveObservationV1"
+    assert decision["diagnostic"]["live_observation_432"] == observation

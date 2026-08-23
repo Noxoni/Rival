@@ -1,0 +1,1083 @@
+{
+  "conversion_contract": {
+    "ball_prediction": "RocketSim BallPredictor recomputed at ticks 22/66/198/594 from the same current ball state; RLBot prediction slices were not copied",
+    "limitations": [
+      "Packet fields are mapped without a RocketSim settling step.",
+      "RLBot air/jump flags are mapped to the closest RLGym Car flags.",
+      "Live arena-SDF landing normal and cached Wisp ETA remain intentionally different approximations."
+    ],
+    "live_tensor": "exact 432 floats consumed by frozen production Wisp",
+    "physical_source": "exact RLBot v5 packet snapshot at the live inference decision",
+    "slot_alignment": "the one non-padding opponent block is moved to the live tensor's random slot; the 51-value player block is not altered",
+    "training_tensor": "WispCompatible432RLGymV1 from a packet-mapped RLGym GameState"
+  },
+  "corpus": {
+    "description": "exact live P0 tensors plus same-packet closest RLGym/RocketSim reconstruction",
+    "finite": true,
+    "live_shape": [
+      1276,
+      432
+    ],
+    "samples": 1276,
+    "sources": [
+      {
+        "path": "evidence/raw/rival-v7-natural-nexto-blue-20260823T023634Z-3310b855/decisions.jsonl",
+        "samples": 320,
+        "session_id": "rival-v7-natural-nexto-blue-20260823T023634Z-3310b855",
+        "sha256": "b802216d3b60c45ef956fee55a4fce861476545b929bbc048fa5da2138189821",
+        "size_bytes": 75079860
+      },
+      {
+        "path": "evidence/raw/rival-v7-natural-nexto-orange-20260823T023817Z-afbd75fc/decisions.jsonl",
+        "samples": 330,
+        "session_id": "rival-v7-natural-nexto-orange-20260823T023817Z-afbd75fc",
+        "sha256": "a5c9d0ba8ba3ff1fc66b2bd01a2fdceccb102cc9a331ae94347c901b52fb44d1",
+        "size_bytes": 77379457
+      },
+      {
+        "path": "evidence/raw/rival-v7-natural-wisp-blue-20260823T023959Z-6406526f/decisions.jsonl",
+        "samples": 309,
+        "session_id": "rival-v7-natural-wisp-blue-20260823T023959Z-6406526f",
+        "sha256": "f10209831f56073f841efe6d461a29c48b15a63832ccc8b4275c29628e083e0f",
+        "size_bytes": 72760604
+      },
+      {
+        "path": "evidence/raw/rival-v7-natural-wisp-orange-20260823T024132Z-c3033bef/decisions.jsonl",
+        "samples": 317,
+        "session_id": "rival-v7-natural-wisp-orange-20260823T024132Z-c3033bef",
+        "sha256": "62e617ebc24e865a5e9db56076d3fa57c039c2eea9c4e769379de50356c1c016",
+        "size_bytes": 74530960
+      }
+    ],
+    "training_shape": [
+      1276,
+      432
+    ]
+  },
+  "diagnostic_transition_engine_initialized": "RocketSimEngine",
+  "feature_groups": {
+    "ball_kinematics": {
+      "live_distribution": {
+        "count": 11484,
+        "maximum": 1.9987367391586304,
+        "mean": 0.07252728690420883,
+        "minimum": -1.9983700513839722,
+        "std": 0.6392946084786822
+      },
+      "max_abs_error": 1.1920928955078125e-07,
+      "mean_abs_error": 3.913985135994835e-09,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 2.9802322387695312e-08,
+      "p99_abs_error": 5.960464477539063e-08,
+      "pearson_correlation_flattened": 1.0,
+      "range": [
+        0,
+        9
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 11484,
+        "maximum": 1.9987367391586304,
+        "mean": 0.07252728798786147,
+        "minimum": -1.9983700513839722,
+        "std": 0.6392946118332212
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 11484
+    },
+    "ball_prediction_horizons": {
+      "live_distribution": {
+        "count": 61248,
+        "maximum": 1.9265671968460083,
+        "mean": 0.026700149562420592,
+        "minimum": -1.852211833000183,
+        "std": 0.35922032544684174
+      },
+      "max_abs_error": 0.8490443825721741,
+      "mean_abs_error": 0.0022429644595831633,
+      "p50_abs_error": 0.0003775954246520996,
+      "p95_abs_error": 0.0033274967223405807,
+      "p99_abs_error": 0.0367996517568825,
+      "pearson_correlation_flattened": 0.9989225103773226,
+      "range": [
+        16,
+        64
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0045020487839192444,
+      "training_distribution": {
+        "count": 61248,
+        "maximum": 1.9268786907196045,
+        "mean": 0.026574973970515378,
+        "minimum": -1.8524580001831055,
+        "std": 0.3591920141070782
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.001061259143155695,
+      "values": 61248
+    },
+    "boost_pad_availability_timers": {
+      "live_distribution": {
+        "count": 43384,
+        "maximum": 4.136991024017334,
+        "mean": 0.9492548628370688,
+        "minimum": -2.856948137283325,
+        "std": 0.18901725865967384
+      },
+      "max_abs_error": 3.856948137283325,
+      "mean_abs_error": 0.0004947790876030922,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 0.9851849024158489,
+      "range": [
+        64,
+        98
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0002535496957403651,
+      "training_distribution": {
+        "count": 43384,
+        "maximum": 1.0,
+        "mean": 0.9495848558763107,
+        "minimum": 0.09104704111814499,
+        "std": 0.18630624683729766
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 43384
+    },
+    "close_pad_relative_positions": {
+      "live_distribution": {
+        "count": 12760,
+        "maximum": 0.6459137797355652,
+        "mean": 0.02586532686417823,
+        "minimum": -0.5784883499145508,
+        "std": 0.20791035740233713
+      },
+      "max_abs_error": 1.7881393432617188e-07,
+      "mean_abs_error": 1.9585117527753937e-08,
+      "p50_abs_error": 1.4901161193847656e-08,
+      "p95_abs_error": 5.960464477539063e-08,
+      "p99_abs_error": 8.940696716308594e-08,
+      "pearson_correlation_flattened": 0.9999999999999927,
+      "range": [
+        98,
+        108
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 12760,
+        "maximum": 0.64591383934021,
+        "mean": 0.025865327341583918,
+        "minimum": -0.5784884095191956,
+        "std": 0.20791037044014693
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 12760
+    },
+    "goal_relative_vectors": {
+      "live_distribution": {
+        "count": 7656,
+        "maximum": 2.0484659671783447,
+        "mean": -0.12042227000287276,
+        "minimum": -2.064393997192383,
+        "std": 0.7124336696025844
+      },
+      "max_abs_error": 2.384185791015625e-07,
+      "mean_abs_error": 6.205171487749794e-09,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 5.960464477539063e-08,
+      "p99_abs_error": 1.1920928955078125e-07,
+      "pearson_correlation_flattened": 1.0,
+      "range": [
+        9,
+        15
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 7656,
+        "maximum": 2.0484659671783447,
+        "mean": -0.12042227300615921,
+        "minimum": -2.064393997192383,
+        "std": 0.7124336744144023
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 7656
+    },
+    "kickoff_flag": {
+      "live_distribution": {
+        "count": 1276,
+        "maximum": 1.0,
+        "mean": 0.11990595611285267,
+        "minimum": 0.0,
+        "std": 0.32485153193653754
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 1.0,
+      "range": [
+        15,
+        16
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 1276,
+        "maximum": 1.0,
+        "mean": 0.11990595611285267,
+        "minimum": 0.0,
+        "std": 0.32485153193653754
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 1276
+    },
+    "landing_normal": {
+      "live_distribution": {
+        "count": 3828,
+        "maximum": 1.0,
+        "mean": 0.20873793032944582,
+        "minimum": -0.9999579787254333,
+        "std": 0.5382952823573598
+      },
+      "max_abs_error": 1.9991347789764404,
+      "mean_abs_error": 0.06207685172557831,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.5093471229076384,
+      "p99_abs_error": 1.22297101020813,
+      "pearson_correlation_flattened": 0.9012600831443418,
+      "range": [
+        119,
+        122
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.04827586206896552,
+      "training_distribution": {
+        "count": 3828,
+        "maximum": 1.0,
+        "mean": 0.20684155561234746,
+        "minimum": -0.9998123645782471,
+        "std": 0.539026823621324
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.002612330198537095,
+      "values": 3828
+    },
+    "opponent_blocks": {
+      "live_distribution": {
+        "count": 195228,
+        "maximum": 6.765144348144531,
+        "mean": 0.03197074117357693,
+        "minimum": -2.0902721881866455,
+        "std": 0.26553507935114734
+      },
+      "max_abs_error": 9.981766700744629,
+      "mean_abs_error": 0.03403075411915779,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 5.960464477539063e-08,
+      "p99_abs_error": 0.31814998626709345,
+      "pearson_correlation_flattened": 0.6545471986954438,
+      "range": [
+        279,
+        432
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.04584183816782457,
+      "training_distribution": {
+        "count": 195228,
+        "maximum": 10.0,
+        "mean": 0.06162410896484116,
+        "minimum": -2.0902724266052246,
+        "std": 0.5981223245916328
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.009552932980924867,
+      "values": 195228
+    },
+    "previous_action": {
+      "live_distribution": {
+        "count": 10208,
+        "maximum": 1.0,
+        "mean": 0.14155564263322884,
+        "minimum": -1.0,
+        "std": 0.5917447450538802
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 1.0,
+      "range": [
+        108,
+        116
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 10208,
+        "maximum": 1.0,
+        "mean": 0.14155564263322884,
+        "minimum": -1.0,
+        "std": 0.5917447450538802
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 10208
+    },
+    "score_differential": {
+      "live_distribution": {
+        "count": 1276,
+        "maximum": 1.0,
+        "mean": -0.12774294670846395,
+        "minimum": -1.0,
+        "std": 0.8258072424211379
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 1.0,
+      "range": [
+        122,
+        123
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 1276,
+        "maximum": 1.0,
+        "mean": -0.12774294670846395,
+        "minimum": -1.0,
+        "std": 0.8258072424211379
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 1276
+    },
+    "self_car_block": {
+      "live_distribution": {
+        "count": 65076,
+        "maximum": 7.240585803985596,
+        "mean": 0.09842290867954114,
+        "minimum": -1.833324670791626,
+        "std": 0.4388380431690505
+      },
+      "max_abs_error": 9.987192153930664,
+      "mean_abs_error": 0.09766775369644165,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.019197462126612663,
+      "p99_abs_error": 3.830079436302185,
+      "pearson_correlation_flattened": 0.611713375562329,
+      "range": [
+        126,
+        177
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.04535831381733021,
+      "training_distribution": {
+        "count": 65076,
+        "maximum": 10.0,
+        "mean": 0.18128045476179294,
+        "minimum": -1.833324670791626,
+        "std": 0.9985437901385734
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.02590816891019731,
+      "values": 65076
+    },
+    "self_turn_touch_handbrake": {
+      "live_distribution": {
+        "count": 3828,
+        "maximum": 1.0,
+        "mean": 0.17998101013199724,
+        "minimum": 0.0,
+        "std": 0.2688894225422939
+      },
+      "max_abs_error": 1.0,
+      "mean_abs_error": 0.36928457021713257,
+      "p50_abs_error": 0.04286190867424011,
+      "p95_abs_error": 1.0,
+      "p99_abs_error": 1.0,
+      "pearson_correlation_flattened": 0.14467570067844132,
+      "range": [
+        123,
+        126
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 3828,
+        "maximum": 1.0,
+        "mean": 0.5112388974976265,
+        "minimum": 0.0,
+        "std": 0.43226612148408994
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.00026123301985370953,
+      "values": 3828
+    },
+    "teammate_padding_blocks": {
+      "live_distribution": {
+        "count": 130152,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "std": 0.0
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": null,
+      "range": [
+        177,
+        279
+      ],
+      "sign_disagreement_share_where_both_nonzero": null,
+      "training_distribution": {
+        "count": 130152,
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "std": 0.0
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 130152
+    },
+    "wall_distances": {
+      "live_distribution": {
+        "count": 3828,
+        "maximum": 1.1237270832061768,
+        "mean": 0.5086931772811689,
+        "minimum": -0.1721080094575882,
+        "std": 0.27780075115498976
+      },
+      "max_abs_error": 1.1920928955078125e-07,
+      "mean_abs_error": 1.31928237223633e-08,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 5.960464477539063e-08,
+      "p99_abs_error": 9.685754776000977e-08,
+      "pearson_correlation_flattened": 0.9999999999999952,
+      "range": [
+        116,
+        119
+      ],
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 3828,
+        "maximum": 1.1237270832061768,
+        "mean": 0.5086931683780731,
+        "minimum": -0.1721080094575882,
+        "std": 0.2778007565987522
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 3828
+    }
+  },
+  "frozen_wisp_policy_effect": {
+    "group_substitution_ablations": {
+      "ball_kinematics": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 1.430511474609375e-05,
+          "mean_abs_first_90_logit_change": 5.004363288207969e-07,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 1.1444091796875e-05,
+          "mean_abs_first_90_logit_change": 4.832313038605207e-07,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "ball_prediction_horizons": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 16.970638275146484,
+          "mean_abs_first_90_logit_change": 0.04927549511194229,
+          "top1_changed_from_live_share": 0.047021943573667714
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 17,
+          "max_abs_first_90_logit_change": 16.883268356323242,
+          "mean_abs_first_90_logit_change": 0.04251979663968086,
+          "top1_agreement_with_live": 0.47492163009404387,
+          "top1_changed_from_training_share": 0.041536050156739814
+        }
+      },
+      "boost_pad_availability_timers": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 2.693863868713379,
+          "mean_abs_first_90_logit_change": 0.002598882419988513,
+          "top1_changed_from_live_share": 0.0007836990595611285
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 2.6660821437835693,
+          "mean_abs_first_90_logit_change": 0.002115665702149272,
+          "top1_agreement_with_live": 0.4663009404388715,
+          "top1_changed_from_training_share": 0.003134796238244514
+        }
+      },
+      "close_pad_relative_positions": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 2.47955322265625e-05,
+          "mean_abs_first_90_logit_change": 7.424624186569417e-07,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 1.430511474609375e-05,
+          "mean_abs_first_90_logit_change": 7.483318427148333e-07,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "goal_relative_vectors": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 1.1444091796875e-05,
+          "mean_abs_first_90_logit_change": 3.0167990416885004e-07,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 1.2874603271484375e-05,
+          "mean_abs_first_90_logit_change": 2.8884031166853674e-07,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "kickoff_flag": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "landing_normal": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 6.629318714141846,
+          "mean_abs_first_90_logit_change": 0.013434120453894138,
+          "top1_changed_from_live_share": 0.014890282131661442
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 3,
+          "max_abs_first_90_logit_change": 4.324839115142822,
+          "mean_abs_first_90_logit_change": 0.015521924011409283,
+          "top1_agreement_with_live": 0.46551724137931033,
+          "top1_changed_from_training_share": 0.02115987460815047
+        }
+      },
+      "opponent_blocks": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 19.600757598876953,
+          "mean_abs_first_90_logit_change": 0.47207239270210266,
+          "top1_changed_from_live_share": 0.3346394984326019
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 146,
+          "max_abs_first_90_logit_change": 17.930583953857422,
+          "mean_abs_first_90_logit_change": 0.4675653278827667,
+          "top1_agreement_with_live": 0.512539184952978,
+          "top1_changed_from_training_share": 0.3565830721003135
+        }
+      },
+      "previous_action": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "score_differential": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "self_car_block": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 20.37127685546875,
+          "mean_abs_first_90_logit_change": 0.5419719219207764,
+          "top1_changed_from_live_share": 0.4036050156739812
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 180,
+          "max_abs_first_90_logit_change": 17.19902229309082,
+          "mean_abs_first_90_logit_change": 0.490763396024704,
+          "top1_agreement_with_live": 0.5626959247648903,
+          "top1_changed_from_training_share": 0.34717868338557994
+        }
+      },
+      "self_turn_touch_handbrake": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 10.173904418945312,
+          "mean_abs_first_90_logit_change": 0.2320333868265152,
+          "top1_changed_from_live_share": 0.27507836990595613
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 126,
+          "max_abs_first_90_logit_change": 9.571622848510742,
+          "mean_abs_first_90_logit_change": 0.23050929605960846,
+          "top1_agreement_with_live": 0.5203761755485894,
+          "top1_changed_from_training_share": 0.26489028213166144
+        }
+      },
+      "teammate_padding_blocks": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "wall_distances": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 1.4781951904296875e-05,
+          "mean_abs_first_90_logit_change": 4.6445407519968285e-07,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 2.384185791015625e-05,
+          "mean_abs_first_90_logit_change": 4.643938211756904e-07,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      }
+    },
+    "live_vs_training_style": {
+      "disagreement_count": 680,
+      "live_confidence": {
+        "count": 1276,
+        "maximum": 0.9611205458641052,
+        "mean": 0.15816643060590826,
+        "minimum": 0.01850241981446743,
+        "std": 0.19372355199999985
+      },
+      "live_margin": {
+        "count": 1276,
+        "maximum": 0.9239931702613831,
+        "mean": 0.06609742708072112,
+        "minimum": 4.041939973831177e-07,
+        "std": 0.17639928493445678
+      },
+      "masked_top1_agreement": 0.4670846394984326,
+      "max_abs_first_90_logit_error": 20.058515548706055,
+      "mean_abs_first_90_logit_error": 0.8123052716255188,
+      "training_style_confidence": {
+        "count": 1276,
+        "maximum": 0.9671726822853088,
+        "mean": 0.1395708972407172,
+        "minimum": 0.01538013480603695,
+        "std": 0.152750463635202
+      },
+      "training_style_margin": {
+        "count": 1276,
+        "maximum": 0.9347964525222778,
+        "mean": 0.04648254330702079,
+        "minimum": 1.0170042514801025e-06,
+        "std": 0.12262154818046787
+      }
+    },
+    "sensitivity_ranking": [
+      {
+        "baseline_disagreements_recovered": 146,
+        "feature_group": "opponent_blocks",
+        "max_abs_first_90_logit_change": 17.930583953857422,
+        "mean_abs_first_90_logit_change": 0.4675653278827667,
+        "top1_agreement_with_live": 0.512539184952978,
+        "top1_changed_from_training_share": 0.3565830721003135
+      },
+      {
+        "baseline_disagreements_recovered": 180,
+        "feature_group": "self_car_block",
+        "max_abs_first_90_logit_change": 17.19902229309082,
+        "mean_abs_first_90_logit_change": 0.490763396024704,
+        "top1_agreement_with_live": 0.5626959247648903,
+        "top1_changed_from_training_share": 0.34717868338557994
+      },
+      {
+        "baseline_disagreements_recovered": 126,
+        "feature_group": "self_turn_touch_handbrake",
+        "max_abs_first_90_logit_change": 9.571622848510742,
+        "mean_abs_first_90_logit_change": 0.23050929605960846,
+        "top1_agreement_with_live": 0.5203761755485894,
+        "top1_changed_from_training_share": 0.26489028213166144
+      },
+      {
+        "baseline_disagreements_recovered": 17,
+        "feature_group": "ball_prediction_horizons",
+        "max_abs_first_90_logit_change": 16.883268356323242,
+        "mean_abs_first_90_logit_change": 0.04251979663968086,
+        "top1_agreement_with_live": 0.47492163009404387,
+        "top1_changed_from_training_share": 0.041536050156739814
+      },
+      {
+        "baseline_disagreements_recovered": 3,
+        "feature_group": "landing_normal",
+        "max_abs_first_90_logit_change": 4.324839115142822,
+        "mean_abs_first_90_logit_change": 0.015521924011409283,
+        "top1_agreement_with_live": 0.46551724137931033,
+        "top1_changed_from_training_share": 0.02115987460815047
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "boost_pad_availability_timers",
+        "max_abs_first_90_logit_change": 2.6660821437835693,
+        "mean_abs_first_90_logit_change": 0.002115665702149272,
+        "top1_agreement_with_live": 0.4663009404388715,
+        "top1_changed_from_training_share": 0.003134796238244514
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "close_pad_relative_positions",
+        "max_abs_first_90_logit_change": 1.430511474609375e-05,
+        "mean_abs_first_90_logit_change": 7.483318427148333e-07,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "ball_kinematics",
+        "max_abs_first_90_logit_change": 1.1444091796875e-05,
+        "mean_abs_first_90_logit_change": 4.832313038605207e-07,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "wall_distances",
+        "max_abs_first_90_logit_change": 2.384185791015625e-05,
+        "mean_abs_first_90_logit_change": 4.643938211756904e-07,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "goal_relative_vectors",
+        "max_abs_first_90_logit_change": 1.2874603271484375e-05,
+        "mean_abs_first_90_logit_change": 2.8884031166853674e-07,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "kickoff_flag",
+        "max_abs_first_90_logit_change": 0.0,
+        "mean_abs_first_90_logit_change": 0.0,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "previous_action",
+        "max_abs_first_90_logit_change": 0.0,
+        "mean_abs_first_90_logit_change": 0.0,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "score_differential",
+        "max_abs_first_90_logit_change": 0.0,
+        "mean_abs_first_90_logit_change": 0.0,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      },
+      {
+        "baseline_disagreements_recovered": 0,
+        "feature_group": "teammate_padding_blocks",
+        "max_abs_first_90_logit_change": 0.0,
+        "mean_abs_first_90_logit_change": 0.0,
+        "top1_agreement_with_live": 0.4670846394984326,
+        "top1_changed_from_training_share": 0.0
+      }
+    ],
+    "targeted_state_substitution_ablations": {
+      "opponent_eta_slots": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 19.602373123168945,
+          "mean_abs_first_90_logit_change": 0.47106611728668213,
+          "top1_changed_from_live_share": 0.3346394984326019
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 139,
+          "max_abs_first_90_logit_change": 17.896465301513672,
+          "mean_abs_first_90_logit_change": 0.4647361934185028,
+          "top1_agreement_with_live": 0.5078369905956113,
+          "top1_changed_from_training_share": 0.34796238244514105
+        }
+      },
+      "opponent_jump_dodge_ground_state": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "self_eta": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 20.351551055908203,
+          "mean_abs_first_90_logit_change": 0.5353766679763794,
+          "top1_changed_from_live_share": 0.4012539184952978
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 174,
+          "max_abs_first_90_logit_change": 17.261140823364258,
+          "mean_abs_first_90_logit_change": 0.48327958583831787,
+          "top1_agreement_with_live": 0.5572100313479624,
+          "top1_changed_from_training_share": 0.3440438871473354
+        }
+      },
+      "self_jump_dodge_ground_state": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_changed_from_live_share": 0.0
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 0,
+          "max_abs_first_90_logit_change": 0.0,
+          "mean_abs_first_90_logit_change": 0.0,
+          "top1_agreement_with_live": 0.4670846394984326,
+          "top1_changed_from_training_share": 0.0
+        }
+      },
+      "touch_and_handbrake": {
+        "live_plus_training_group": {
+          "max_abs_first_90_logit_change": 10.172650337219238,
+          "mean_abs_first_90_logit_change": 0.20494312047958374,
+          "top1_changed_from_live_share": 0.25
+        },
+        "training_plus_live_group": {
+          "baseline_disagreements_recovered": 112,
+          "max_abs_first_90_logit_change": 9.570291519165039,
+          "mean_abs_first_90_logit_change": 0.2078835517168045,
+          "top1_agreement_with_live": 0.5148902821316614,
+          "top1_changed_from_training_share": 0.23746081504702193
+        }
+      }
+    }
+  },
+  "matrix_report": "training/results/milestone07/transfer_matrix.json",
+  "production_modified_or_promoted": false,
+  "purpose": "milestone07_observation_domain_audit",
+  "schema_version": 1,
+  "status": "completed",
+  "targeted_state_groups": {
+    "opponent_eta_slots": {
+      "indices": [
+        327,
+        378,
+        429
+      ],
+      "live_distribution": {
+        "count": 3828,
+        "maximum": 6.765144348144531,
+        "mean": 0.4597191856329815,
+        "minimum": 0.0,
+        "std": 0.8841611233448187
+      },
+      "max_abs_error": 9.981766700744629,
+      "mean_abs_error": 1.541574478149414,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 9.03058018684387,
+      "p99_abs_error": 9.7138662815094,
+      "pearson_correlation_flattened": 0.6340950254973182,
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 3828,
+        "maximum": 10.0,
+        "mean": 1.915675886400149,
+        "minimum": 0.0,
+        "std": 3.485922725075778
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.1671891327063741,
+      "values": 3828
+    },
+    "opponent_jump_dodge_ground_state": {
+      "indices": [
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        421,
+        422,
+        423,
+        424,
+        425,
+        426
+      ],
+      "live_distribution": {
+        "count": 22968,
+        "maximum": 1.0,
+        "mean": 0.07005398815743644,
+        "minimum": 0.0,
+        "std": 0.25523798091325317
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 0.9999999999999998,
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 22968,
+        "maximum": 1.0,
+        "mean": 0.07005398815743644,
+        "minimum": 0.0,
+        "std": 0.25523798091325317
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 22968
+    },
+    "self_eta": {
+      "indices": [
+        174
+      ],
+      "live_distribution": {
+        "count": 1276,
+        "maximum": 7.240585803985596,
+        "mean": 1.100031216259532,
+        "minimum": 0.0,
+        "std": 1.035396772692048
+      },
+      "max_abs_error": 9.987192153930664,
+      "mean_abs_error": 4.5144476890563965,
+      "p50_abs_error": 4.0133771896362305,
+      "p95_abs_error": 9.690269708633423,
+      "p99_abs_error": 9.938322305679321,
+      "pearson_correlation_flattened": 0.19300609711669886,
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 1276,
+        "maximum": 10.0,
+        "mean": 5.415588731247622,
+        "minimum": 0.0,
+        "std": 3.90699194591061
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.42398119122257055,
+      "values": 1276
+    },
+    "self_jump_dodge_ground_state": {
+      "indices": [
+        166,
+        167,
+        168,
+        169,
+        170,
+        171
+      ],
+      "live_distribution": {
+        "count": 7656,
+        "maximum": 1.0,
+        "mean": 0.19265935214211077,
+        "minimum": 0.0,
+        "std": 0.3943877865430076
+      },
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "p50_abs_error": 0.0,
+      "p95_abs_error": 0.0,
+      "p99_abs_error": 0.0,
+      "pearson_correlation_flattened": 0.9999999999999999,
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 7656,
+        "maximum": 1.0,
+        "mean": 0.19265935214211077,
+        "minimum": 0.0,
+        "std": 0.3943877865430076
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 7656
+    },
+    "touch_and_handbrake": {
+      "indices": [
+        124,
+        125
+      ],
+      "live_distribution": {
+        "count": 2552,
+        "maximum": 1.0,
+        "mean": 0.06341431556754165,
+        "minimum": 0.0,
+        "std": 0.19340234515537852
+      },
+      "max_abs_error": 1.0,
+      "mean_abs_error": 0.508914589881897,
+      "p50_abs_error": 0.5833333134651184,
+      "p95_abs_error": 1.0,
+      "p99_abs_error": 1.0,
+      "pearson_correlation_flattened": 0.07253762111624223,
+      "sign_disagreement_share_where_both_nonzero": 0.0,
+      "training_distribution": {
+        "count": 2552,
+        "maximum": 1.0,
+        "mean": 0.5262539184952978,
+        "minimum": 0.0,
+        "std": 0.49931025601687995
+      },
+      "training_outside_live_observed_per_feature_range_share": 0.0,
+      "values": 2552
+    }
+  },
+  "whole_observation": {
+    "live_distribution": {
+      "count": 551232,
+      "maximum": 7.240585803985596,
+      "mean": 0.10989137498178443,
+      "minimum": -2.856948137283325,
+      "std": 0.3953470483573872
+    },
+    "max_abs_error": 9.987192153930664,
+    "mean_abs_error": 0.026866506785154343,
+    "p50_abs_error": 0.0,
+    "p95_abs_error": 0.0012220412492752047,
+    "p99_abs_error": 0.30663175404071563,
+    "pearson_correlation_flattened": 0.7470624545854156,
+    "sign_disagreement_share_where_both_nonzero": 0.02115624390030155,
+    "training_distribution": {
+      "count": 551232,
+      "maximum": 10.0,
+      "mean": 0.13247469897466535,
+      "minimum": -2.0902724266052246,
+      "std": 0.5946469153280854
+    },
+    "training_outside_live_observed_per_feature_range_share": 0.006579806687565308,
+    "values": 551232
+  }
+}

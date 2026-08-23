@@ -1,0 +1,62 @@
+{
+  "action_table": {
+    "file_sha256": "bed450ded25a7bc624b17695913626fd478d00e11936413c7f5af5022585de2f",
+    "logical_float32_sha256": "38ed338273ae09736d81d3e7fb69c45d91397e45d50f1ae97101e3737c0ecd20",
+    "path": "bot/models/RIVAL_ACTIONS_V1.npy",
+    "shape": [
+      158,
+      8
+    ]
+  },
+  "frozen_teacher_hashes": {
+    "bot/models/POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "bot/models/SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "production_promoted": false,
+  "purpose": "milestone07_zero_optimizer_step_deployment_control",
+  "random_tensor_deployment_parity": {
+    "appended_bias_exact_negative_12": true,
+    "appended_weights_exact_zero": true,
+    "finite": true,
+    "first_90_allclose_atol_1e-6_rtol_1e-6": true,
+    "first_90_exact": true,
+    "first_90_top1_agreement": 1.0,
+    "max_abs_first_90_logit_error": 0.0,
+    "mean_abs_first_90_logit_error": 0.0,
+    "passed": true,
+    "sample_count": 1024,
+    "seed": 20260902
+  },
+  "runtime_requirement": {
+    "allowed_tick_skip": [
+      4,
+      8
+    ],
+    "legacy_only": true,
+    "transfer_diagnostic_mode": true
+  },
+  "schema_version": 1,
+  "source_checkpoint": {
+    "metadata": {
+      "bootstrap_path": "A_direct_trainable_reconstruction"
+    },
+    "optimizer_steps": 0,
+    "path": "training/artifacts/bootstrap/wisp_student_expanded_v1.pt",
+    "ppo_updates": 0,
+    "sha256": "0ae817b0dd15330c3a4e8ee469803c01ad4bde4fbe07d42a606d1ac513015a37"
+  },
+  "status": "passed",
+  "torchscript_export": {
+    "input_shape": [
+      1,
+      432
+    ],
+    "output_shape": [
+      1,
+      158
+    ],
+    "path": "training/artifacts/milestone07/zero_step_actor.ts",
+    "sha256": "4480696d89a3c88770807212dfbb5bc3cd4fb4492511e67a5b7dd1213c9aa3a7",
+    "size_bytes": 13724327
+  }
+}

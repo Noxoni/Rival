@@ -16,6 +16,42 @@ The installer requires Python 3.12, creates `training/.venv`, installs the resol
 
 The exact dependency closure is in `requirements-lock.txt`. `rlgym-ppo` is pinned to commit `4ffd2e924198bf4b2d59f4bf280b29919d7c07ea` rather than a moving branch.
 
+## Optional RLViser spectator
+
+The viewer is a separate, single-environment process. It is disabled by default and is
+never imported by rollout workers, verification, the RLBot transfer matrix, or PPO. It
+uses one CPU inference thread, below-normal Windows process priority, and real-time
+pacing; it does not render any training worker.
+
+Install the optional dependency and pinned RLViser v0.8.2 executable without changing
+the locked NumPy/RLGym closure:
+
+```powershell
+./training/install_rlviser_spectator.ps1
+```
+
+Check the viewer path without opening a window, then watch the latest local campaign
+checkpoint against frozen Wisp at the checkpoint's normal four-tick cadence:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py `
+  --checkpoint current --check
+
+training/.venv/Scripts/python.exe training/scripts/run_m07_rlviser_spectator.py `
+  --checkpoint current --opponent frozen-wisp --tick-skip 4
+```
+
+Use `--checkpoint frozen-wisp` for production Wisp, or pass an actor `.pt`, campaign
+checkpoint directory, or TorchScript `.ts` export. `--opponent selected` renders
+self-play, `--legacy-only` masks actions 90 through 157, and `--playback-speed` adjusts
+wall-clock pacing. Stop an unbounded viewer with Ctrl+C.
+
+`rlviser-py==0.6.13` is pinned intentionally: 0.6.14 requires NumPy 2.x, while the
+RLGym 2.0.1 Rocket League package requires NumPy below 2. The optional installer uses
+`--no-deps`, verifies that the headless environment remains on NumPy 1.26.4, and
+downloads the matching RLViser v0.8.2 Windows executable only after enforcing its
+pinned SHA-256. The generated 48 MB executable is ignored by Git.
+
 ## Verify
 
 Fast deterministic checks:

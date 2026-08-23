@@ -95,6 +95,7 @@ class DecisionTelemetryLogger:
         direct_packet: Mapping[str, Any] | None = None,
         calibration: ChallengeCalibrationDecision | None = None,
         natural_adjustment: NaturalAdjustmentDecision | None = None,
+        diagnostic: Mapping[str, Any] | None = None,
     ) -> bool:
         if not self.enabled:
             return False
@@ -165,6 +166,8 @@ class DecisionTelemetryLogger:
             "packet": None if direct_packet is None else dict(direct_packet),
             "runtime": dict(runtime),
         }
+        if diagnostic is not None:
+            record["diagnostic"] = dict(diagnostic)
 
         with self._lock:
             if not self._started:

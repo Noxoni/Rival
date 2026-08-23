@@ -15,7 +15,10 @@ class DefaultAction:
         action_table_path: str | Path | None = None,
         *,
         allow_all_actions: bool = False,
+        legacy_only: bool = False,
     ):
+        if allow_all_actions and legacy_only:
+            raise ValueError("allow_all_actions and legacy_only are mutually exclusive")
         # Build lookup table
 
         R_B = [0, 1]
@@ -75,6 +78,7 @@ class DefaultAction:
                             )
 
         frozen_prefix = np.stack([action.get_np() for action in self.actions])
+        self.frozen_prefix_count = len(frozen_prefix)
         if action_table_path is not None:
             table = np.load(Path(action_table_path), allow_pickle=False)
             table = np.asarray(table, dtype=np.float32)
@@ -88,6 +92,7 @@ class DefaultAction:
                 raise ValueError("Milestone 06 action table contains duplicate rows")
             self.actions = [Action(row) for row in table]
         self.allow_all_actions = bool(allow_all_actions)
+        self.legacy_only = bool(legacy_only)
 
         ### BUILD MASKS ###
 
@@ -142,13 +147,21 @@ class DefaultAction:
         if player.has_flip_or_jump() or player.is_probably_turtled():
             DefaultAction._apply_mask(self.jump_mask, result, True)
 
+        if self.legacy_only:
+            result[self.frozen_prefix_count :] = False
+
         return result
 
     def get_action(self, index: int, player: Player, state: GameState) -> Action:
+        if self.legacy_only and index >= self.frozen_prefix_count:
+            raise IndexError(
+                f"Diagnostic legacy-only parser rejects appended action index {index}"
+            )
         return self.actions[index]
 
 
 class XMirroredActionParser(DefaultAction):
     def get_action(self, index: int, player: Player, state: GameState) -> Action:
+        action = super().get_action(index, player, state)
         mirror_x = (player.team == Team.ORANGE) != (player.pos.x < 0)
-        return self.actions[index].mirror_x() if mirror_x else self.actions[index]
+        return action.mirror_x() if mirror_x else action

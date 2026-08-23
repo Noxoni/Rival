@@ -2,6 +2,11 @@
 
 `RivalNatural1v1RocketSimV1` uses `RocketSimEngine` with one blue and one orange Octane, kickoff resets, goal termination, a 30-second no-touch truncation, a 300-second episode cap, RLBot-like one-tick action delay, and no renderer.
 
+The opt-in `RivalRLViserSpectatorV1` is a separate process with exactly one independently
+constructed RocketSim environment. It is paced at `tick_skip / 120` wall seconds per
+decision and never changes the renderer-free training builders, worker count, rollout
+configuration, diagnostics, or checkpoint state.
+
 Milestone 05 used ordinary play only. Milestone 06 keeps natural 1v1 as the majority and
 adds seeded minority families for broadly randomized aerial/wall possession, recovery,
 and low-resource aerial states. No fixed named-mechanic drill defines the distribution.
