@@ -1,0 +1,214 @@
+{
+  "actor_benchmark": {
+    "selected_torchscript": {
+      "all_outputs_finite": true,
+      "milliseconds": {
+        "maximum": 3.0056,
+        "p50": 0.3564,
+        "p95": 0.587,
+        "p99": 0.7365,
+        "samples": 3000
+      },
+      "warmup_calls_excluded": 200
+    },
+    "torch_export_candidate": {
+      "all_outputs_finite": true,
+      "milliseconds": {
+        "maximum": 105.4561,
+        "p50": 0.7428,
+        "p95": 1.1888,
+        "p99": 1.516,
+        "samples": 3000
+      },
+      "warmup_calls_excluded": 200
+    }
+  },
+  "artifacts": {
+    "held_reference": {
+      "path": "training/artifacts/milestone09/gate12/held_export_reference.npz",
+      "sha256": "1c0815ad92af96e8fc95ec00376da035f3adbcf0aefac187c0abf808ecced822",
+      "size_bytes": 96022
+    },
+    "metadata": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+      "sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+      "size_bytes": 3771
+    },
+    "native_corpus": {
+      "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+      "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+      "size_bytes": 49198958
+    },
+    "selected": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+      "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+      "size_bytes": 7881248
+    },
+    "torch_export_candidate": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.pt2",
+      "sha256": "c3cb911f2f8db39c0977a31433095812322ddf8daa1925e7d0ab5e70e10c907e",
+      "size_bytes": 8182503
+    }
+  },
+  "checks": {
+    "actor_cpu_maximum_below_4ms_hard_limit": true,
+    "actor_cpu_p99_below_2ms_target": true,
+    "full_pipeline_cpu_p99_below_6ms": true,
+    "modern_controllers_legal": true,
+    "modern_export_finite": true,
+    "modern_export_parity_at_1e_5": true,
+    "runtime_contract_exact": true,
+    "runtime_no_illegal_controllers": true,
+    "runtime_no_nonfinite_outputs": true,
+    "selected_controllers_legal": true,
+    "selected_export_finite": true,
+    "selected_export_parity_at_1e_5": true
+  },
+  "full_pipeline": {
+    "component_milliseconds": {
+      "actor": {
+        "maximum": 3.5453,
+        "p50": 0.5939,
+        "p95": 0.8337,
+        "p99": 1.0717,
+        "samples": 3000
+      },
+      "canonical_adapter": {
+        "maximum": 1.7816,
+        "p50": 0.6023,
+        "p95": 0.7584,
+        "p99": 0.9805,
+        "samples": 3000
+      },
+      "controller": {
+        "maximum": 0.9221,
+        "p50": 0.1297,
+        "p95": 0.1771,
+        "p99": 0.2549,
+        "samples": 3000
+      },
+      "observation": {
+        "maximum": 4.7305,
+        "p50": 1.2639,
+        "p95": 1.7673,
+        "p99": 2.2849,
+        "samples": 3000
+      },
+      "total": {
+        "maximum": 6.5997,
+        "p50": 2.6343,
+        "p95": 3.3497,
+        "p99": 4.2861,
+        "samples": 3000
+      }
+    },
+    "external_observation_to_controller_milliseconds": {
+      "maximum": 6.7234,
+      "p50": 2.6627,
+      "p95": 3.3808,
+      "p99": 4.318,
+      "samples": 3000
+    },
+    "runtime": {
+      "button_combo_counts": {
+        "0": 3200,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0
+      },
+      "decision_count": 3200,
+      "duplicate_packets_reused_previous_controller": 0,
+      "frame_delta_counts": {
+        "1": 3197,
+        "28": 1,
+        "52": 1
+      },
+      "generated_at_utc": "2026-08-23T19:37:19.404836+00:00",
+      "illegal_controllers": 0,
+      "missed_source_frames": 78,
+      "model": {
+        "metadata_sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+        "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+        "size_bytes": 7881248
+      },
+      "non_finite_outputs": 0,
+      "out_of_order_packets": 0,
+      "pipeline_milliseconds": {
+        "actor": {
+          "maximum": 3.5453,
+          "p50": 0.5936,
+          "p95": 0.8435,
+          "p99": 1.1072,
+          "samples": 3200
+        },
+        "canonical_adapter": {
+          "maximum": 1.7816,
+          "p50": 0.6014,
+          "p95": 0.7577,
+          "p99": 0.9766,
+          "samples": 3200
+        },
+        "controller": {
+          "maximum": 0.9221,
+          "p50": 0.1296,
+          "p95": 0.179,
+          "p99": 0.2634,
+          "samples": 3200
+        },
+        "observation": {
+          "maximum": 30.9986,
+          "p50": 1.2272,
+          "p95": 1.7563,
+          "p99": 2.2849,
+          "samples": 3200
+        },
+        "total": {
+          "maximum": 33.0458,
+          "p50": 2.6111,
+          "p95": 3.3281,
+          "p99": 4.2861,
+          "samples": 3200
+        }
+      },
+      "policy_mode": "opt_in_scratch_candidate",
+      "reset_count": 0,
+      "runtime_version": "RivalV9ScratchRLBotRuntimeV1",
+      "schema_version": 1,
+      "timing_contract": {
+        "duplicate_packet_behavior": "reuse previous controller exactly",
+        "missed_packet_behavior": "RLBot retains the previously returned controller; no missing frame is fabricated or interpolated",
+        "one_decision_per_unique_active_packet": true,
+        "physics_hz": 120,
+        "policy_hz": 120
+      }
+    },
+    "samples": 3000,
+    "warmup_packets_excluded": 200
+  },
+  "held_observations": 32,
+  "modern_maximum_absolute_errors": {
+    "analog_log_std": 0.0,
+    "analog_mean": 2.3096799850463867e-07,
+    "button_logits": 1.9371509552001953e-07,
+    "controller": 2.3096799850463867e-07
+  },
+  "parity_tolerance": 1e-05,
+  "runtime": {
+    "executable_role": "repository CPU-only production virtual environment",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13",
+    "torch": "2.13.0+cpu"
+  },
+  "schema_version": 1,
+  "selected_maximum_absolute_errors": {
+    "analog_log_std": 0.0,
+    "analog_mean": 1.1920928955078125e-07,
+    "button_logits": 1.3783574104309082e-07,
+    "controller": 1.1920928955078125e-07
+  },
+  "status": "passed"
+}

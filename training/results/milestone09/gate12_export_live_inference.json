@@ -1,0 +1,608 @@
+{
+  "checks": {
+    "fresh_cpu_runtime_probe_passed": true,
+    "full_pipeline_p99_below_6ms": true,
+    "gate11_passed_before_export": true,
+    "held_corpus_export_parity_passed": true,
+    "live_native_rate_smoke_passed": true,
+    "live_native_rate_smoke_supplied": true,
+    "live_smoke_used_exact_export": true,
+    "production_default_is_frozen_wisp": true,
+    "production_promotion_not_authorized": true,
+    "selected_actor_maximum_below_4ms_hard_limit": true,
+    "selected_actor_p99_below_2ms_target": true
+  },
+  "commands": {
+    "finalize_with_live_smoke": "training/.venv/Scripts/python.exe training/scripts/run_m09_export_gate.py --live-smoke training/results/milestone09/gate12_scratch_live_smoke.json",
+    "live_smoke": ".venv/Scripts/python.exe training/scripts/run_m09_scratch_live_smoke.py --model training/artifacts/milestone09/gate12/rival_v9_scratch.ts --metadata training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+    "offline_export_and_probe": "training/.venv/Scripts/python.exe training/scripts/run_m09_export_gate.py"
+  },
+  "export": {
+    "artifact": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+      "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+      "size_bytes": 7881248
+    },
+    "contract": {
+      "action_schema_sha256": "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163",
+      "action_version": "RivalActionV1",
+      "canonical_adapter_version": "RivalCanonicalAdapterV1",
+      "canonical_state_version": "RivalCanonicalStateV1",
+      "controller_fields": [
+        "throttle",
+        "steer",
+        "pitch",
+        "yaw",
+        "roll",
+        "jump",
+        "boost",
+        "handbrake"
+      ],
+      "deployment_wrapper_version": "RivalV9DeterministicControllerV1",
+      "deterministic_action": "tanh(analog_mean) plus categorical argmax",
+      "export_format": "rival-v9-torchscript-deterministic-controller-v1",
+      "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+      "observation_size": 714,
+      "observation_version": "RivalObsV1",
+      "output_tensors": [
+        "analog_mean",
+        "analog_log_std",
+        "button_logits",
+        "controller"
+      ],
+      "physics_hz": 120,
+      "policy_hz": 120,
+      "policy_version": "RivalPolicyV1",
+      "prediction_refresh_ticks": 1,
+      "repeat_action": false,
+      "reward_schedule_version": "RivalScratchRewardScheduleV1",
+      "reward_version": "RivalScratchRewardV1",
+      "state_dependent_action_mask": false,
+      "training_config_version": "RivalM09TrainingConfigV1"
+    },
+    "export_parity": {
+      "maximum_absolute_errors": {
+        "analog_log_std": 0.0,
+        "analog_mean": 1.1920928955078125e-07,
+        "button_logits": 1.3783574104309082e-07,
+        "controller": 1.1920928955078125e-07
+      },
+      "passed": true,
+      "tolerance": 1e-05
+    },
+    "format": "rival-v9-torchscript-deterministic-controller-v1",
+    "held_corpus": {
+      "observation_size": 714,
+      "observations": 32,
+      "path": "training/artifacts/milestone09/gate12/held_export_reference.npz",
+      "sha256": "1c0815ad92af96e8fc95ec00376da035f3adbcf0aefac187c0abf808ecced822",
+      "size_bytes": 96022,
+      "source": "Gate 11 clean-boundary reload corpus"
+    },
+    "metadata_path": "training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+    "metadata_sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+    "runtime_requirements": {
+      "device": "cpu",
+      "opt_in_only": true,
+      "production_default_unchanged": true,
+      "training_virtual_environment_required": false
+    },
+    "schema_version": 1,
+    "selection": {
+      "reason": "Known Windows CPU loading seam; Gate 12 records a fresh-process latency/parity comparison with torch.export before final acceptance.",
+      "selected_for_live_runtime": true,
+      "selected_format": "TorchScript frozen optimize_for_inference",
+      "torch_export_candidate": {
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.pt2",
+        "sha256": "c3cb911f2f8db39c0977a31433095812322ddf8daa1925e7d0ab5e70e10c907e",
+        "size_bytes": 8182503
+      }
+    },
+    "source_checkpoint": {
+      "actor_sha256": "e58c34e66d190ead95a63a3a1b36ea9bc6090a0d21ec31472f771f992ccb0666",
+      "actor_size_bytes": 7877036,
+      "checkpoint_manifest_sha256": "818c3a2b6fce2d34dafb0ad133082a469fe61255d45665d3fe8969fa0b8b6c81",
+      "checkpoint_manifest_size_bytes": 58912,
+      "cumulative_agent_steps": 576024,
+      "directory": "training/checkpoints/milestone09/gate11-20260823T190944Z/resumed",
+      "simulated_game_hours": 0.6666944444444445
+    },
+    "source_hashes": {
+      "canonical_source_sha256": "cec23700e8308939b0f2a707bfb39c10813504a134c953af4a14f9dcead77027",
+      "deployment_source_sha256": "ea36e061861dc12f20d7195c6f7429f488dc143b904b919c0ad2f492bf9bb1da",
+      "observation_source_sha256": "38d239be20d5aecc7c6073db3eff0aaf6c2e1d76b136014f4bcd661138a60a3d",
+      "policy_source_sha256": "37aa8e2b79ddc4637eee99ff7c57aabb00c3eb9de17b170aef4e21b5d559f04e"
+    },
+    "torch_version": "2.13.0+cu130"
+  },
+  "fresh_cpu_runtime_probe": {
+    "actor_benchmark": {
+      "selected_torchscript": {
+        "all_outputs_finite": true,
+        "milliseconds": {
+          "maximum": 3.0056,
+          "p50": 0.3564,
+          "p95": 0.587,
+          "p99": 0.7365,
+          "samples": 3000
+        },
+        "warmup_calls_excluded": 200
+      },
+      "torch_export_candidate": {
+        "all_outputs_finite": true,
+        "milliseconds": {
+          "maximum": 105.4561,
+          "p50": 0.7428,
+          "p95": 1.1888,
+          "p99": 1.516,
+          "samples": 3000
+        },
+        "warmup_calls_excluded": 200
+      }
+    },
+    "artifacts": {
+      "held_reference": {
+        "path": "training/artifacts/milestone09/gate12/held_export_reference.npz",
+        "sha256": "1c0815ad92af96e8fc95ec00376da035f3adbcf0aefac187c0abf808ecced822",
+        "size_bytes": 96022
+      },
+      "metadata": {
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+        "sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+        "size_bytes": 3771
+      },
+      "native_corpus": {
+        "path": "evidence/raw/rival-v9-native-corpus-20260823T163832Z/native_packets.jsonl",
+        "sha256": "b69b9f1cca7e77f3f879fd383e5e97340078724b108b153e518a52fad6ef54d8",
+        "size_bytes": 49198958
+      },
+      "selected": {
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+        "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+        "size_bytes": 7881248
+      },
+      "torch_export_candidate": {
+        "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.pt2",
+        "sha256": "c3cb911f2f8db39c0977a31433095812322ddf8daa1925e7d0ab5e70e10c907e",
+        "size_bytes": 8182503
+      }
+    },
+    "checks": {
+      "actor_cpu_maximum_below_4ms_hard_limit": true,
+      "actor_cpu_p99_below_2ms_target": true,
+      "full_pipeline_cpu_p99_below_6ms": true,
+      "modern_controllers_legal": true,
+      "modern_export_finite": true,
+      "modern_export_parity_at_1e_5": true,
+      "runtime_contract_exact": true,
+      "runtime_no_illegal_controllers": true,
+      "runtime_no_nonfinite_outputs": true,
+      "selected_controllers_legal": true,
+      "selected_export_finite": true,
+      "selected_export_parity_at_1e_5": true
+    },
+    "full_pipeline": {
+      "component_milliseconds": {
+        "actor": {
+          "maximum": 3.5453,
+          "p50": 0.5939,
+          "p95": 0.8337,
+          "p99": 1.0717,
+          "samples": 3000
+        },
+        "canonical_adapter": {
+          "maximum": 1.7816,
+          "p50": 0.6023,
+          "p95": 0.7584,
+          "p99": 0.9805,
+          "samples": 3000
+        },
+        "controller": {
+          "maximum": 0.9221,
+          "p50": 0.1297,
+          "p95": 0.1771,
+          "p99": 0.2549,
+          "samples": 3000
+        },
+        "observation": {
+          "maximum": 4.7305,
+          "p50": 1.2639,
+          "p95": 1.7673,
+          "p99": 2.2849,
+          "samples": 3000
+        },
+        "total": {
+          "maximum": 6.5997,
+          "p50": 2.6343,
+          "p95": 3.3497,
+          "p99": 4.2861,
+          "samples": 3000
+        }
+      },
+      "external_observation_to_controller_milliseconds": {
+        "maximum": 6.7234,
+        "p50": 2.6627,
+        "p95": 3.3808,
+        "p99": 4.318,
+        "samples": 3000
+      },
+      "runtime": {
+        "button_combo_counts": {
+          "0": 3200,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "decision_count": 3200,
+        "duplicate_packets_reused_previous_controller": 0,
+        "frame_delta_counts": {
+          "1": 3197,
+          "28": 1,
+          "52": 1
+        },
+        "generated_at_utc": "2026-08-23T19:37:19.404836+00:00",
+        "illegal_controllers": 0,
+        "missed_source_frames": 78,
+        "model": {
+          "metadata_sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+          "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+          "size_bytes": 7881248
+        },
+        "non_finite_outputs": 0,
+        "out_of_order_packets": 0,
+        "pipeline_milliseconds": {
+          "actor": {
+            "maximum": 3.5453,
+            "p50": 0.5936,
+            "p95": 0.8435,
+            "p99": 1.1072,
+            "samples": 3200
+          },
+          "canonical_adapter": {
+            "maximum": 1.7816,
+            "p50": 0.6014,
+            "p95": 0.7577,
+            "p99": 0.9766,
+            "samples": 3200
+          },
+          "controller": {
+            "maximum": 0.9221,
+            "p50": 0.1296,
+            "p95": 0.179,
+            "p99": 0.2634,
+            "samples": 3200
+          },
+          "observation": {
+            "maximum": 30.9986,
+            "p50": 1.2272,
+            "p95": 1.7563,
+            "p99": 2.2849,
+            "samples": 3200
+          },
+          "total": {
+            "maximum": 33.0458,
+            "p50": 2.6111,
+            "p95": 3.3281,
+            "p99": 4.2861,
+            "samples": 3200
+          }
+        },
+        "policy_mode": "opt_in_scratch_candidate",
+        "reset_count": 0,
+        "runtime_version": "RivalV9ScratchRLBotRuntimeV1",
+        "schema_version": 1,
+        "timing_contract": {
+          "duplicate_packet_behavior": "reuse previous controller exactly",
+          "missed_packet_behavior": "RLBot retains the previously returned controller; no missing frame is fabricated or interpolated",
+          "one_decision_per_unique_active_packet": true,
+          "physics_hz": 120,
+          "policy_hz": 120
+        }
+      },
+      "samples": 3000,
+      "warmup_packets_excluded": 200
+    },
+    "held_observations": 32,
+    "modern_maximum_absolute_errors": {
+      "analog_log_std": 0.0,
+      "analog_mean": 2.3096799850463867e-07,
+      "button_logits": 1.9371509552001953e-07,
+      "controller": 2.3096799850463867e-07
+    },
+    "parity_tolerance": 1e-05,
+    "runtime": {
+      "executable_role": "repository CPU-only production virtual environment",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.13",
+      "torch": "2.13.0+cpu"
+    },
+    "schema_version": 1,
+    "selected_maximum_absolute_errors": {
+      "analog_log_std": 0.0,
+      "analog_mean": 1.1920928955078125e-07,
+      "button_logits": 1.3783574104309082e-07,
+      "controller": 1.1920928955078125e-07
+    },
+    "status": "passed"
+  },
+  "gate": 12,
+  "gate_name": "export_and_native_120hz_live_inference",
+  "gate_semantics": {
+    "five_x_used_for_native_certification": false,
+    "format_decision_basis": "Both formats met parity; the selected TorchScript seam had lower fresh-process Windows CPU p99/maximum latency and simpler eval loading.",
+    "production_promoted": false,
+    "score_used": false,
+    "selected_format": "TorchScript frozen optimize_for_inference",
+    "training_agent_steps_consumed": 0,
+    "win_loss_used": false
+  },
+  "generated_at_utc": "2026-08-23T19:37:21.492883+00:00",
+  "milestone": 9,
+  "native_rlbot_process_smoke": {
+    "checks": {
+      "callback_p99_within_native_frame_budget": true,
+      "long_contiguous_native_run": true,
+      "native_corpus_complete": true,
+      "native_corpus_json_valid": true,
+      "native_game_speed_observed": true,
+      "native_game_speed_requested": true,
+      "native_record_bound_reached": true,
+      "natural_smoke_completed": true,
+      "no_python_runtime_warnings": true,
+      "no_sustained_post_warmup_frame_gaps": true,
+      "post_warmup_gap_fraction_below_half_percent": true,
+      "production_not_promoted": true,
+      "runtime_actor_maximum_below_4ms_hard_limit": true,
+      "runtime_actor_p99_below_2ms_target": true,
+      "runtime_controllers_legal": true,
+      "runtime_decision_frame_accounting_consistent": true,
+      "runtime_full_pipeline_p99_below_6ms": true,
+      "runtime_outputs_finite": true,
+      "scratch_opt_in_runtime_recorded": true
+    },
+    "evidence_reassessment": {
+      "accounted_transitions": 2994,
+      "assessed_at_utc": "2026-08-23T19:36:37.438926+00:00",
+      "decision_count": 2996,
+      "derived_active_segments": 2,
+      "match_rerun": false,
+      "reason": "The native corpus intentionally stopped at its 2,400-record bound while the runtime continued through the complete 28-second match window. Decision accounting must therefore use the runtime's own frame deltas; decision_count minus transition_count is the number of active segments.",
+      "removed_invalid_check": "one_decision_per_record_with_bounded_startup_difference",
+      "replacement_check": "runtime_decision_frame_accounting_consistent"
+    },
+    "gate": 12,
+    "gate_semantics": {
+      "five_x_used_for_native_certification": false,
+      "game_speed": 1.0,
+      "production_promoted": false,
+      "score_used": false,
+      "startup_warmup_records_excluded_only_from_latency_and_sustained_gap_checks": 120,
+      "win_loss_used": false
+    },
+    "generated_at_utc": "2026-08-23T19:35:52.764002+00:00",
+    "metadata": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.metadata.json",
+      "sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+      "size_bytes": 3771
+    },
+    "milestone": 9,
+    "model": {
+      "path": "training/artifacts/milestone09/gate12/rival_v9_scratch.ts",
+      "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+      "size_bytes": 7881248
+    },
+    "native_corpus": {
+      "callback_wall_milliseconds_after_warmup": {
+        "maximum": 4.3337,
+        "p50": 2.0069,
+        "p95": 2.8885,
+        "p99": 3.2959,
+        "samples": 2280
+      },
+      "end_record": {
+        "complete_bound_reached": true,
+        "corpus_version": "RivalV9NativePacketCorpusV2",
+        "duplicates_ignored": 0,
+        "maximum_records": 2400,
+        "out_of_order_frames": 0,
+        "record_type": "rival_v9_native_corpus_end",
+        "records": 2400,
+        "schema_version": 2,
+        "skipped_source_frames": 6,
+        "wall_seconds": 28.3785874
+      },
+      "end_record_present": true,
+      "frame_delta_counts": {
+        "1": 2396,
+        "2": 2,
+        "5": 1
+      },
+      "invalid_json_records": 0,
+      "longest_contiguous_run": 2378,
+      "one_tick_transitions": 2396,
+      "path": "evidence/raw/rival-v9-gate12-live-20260823T193500Z/native_packets.jsonl",
+      "post_warmup_frame_gap_fraction": 0.0,
+      "post_warmup_maximum_consecutive_nonunit_transitions": 0,
+      "records": 2400,
+      "sha256": "250d32f2bb85bb2d7da2932b6a5e520e040eefb8c498fab5aaf71b4491e66cd2",
+      "size_bytes": 18525129,
+      "start_record": {
+        "corpus_version": "RivalV9NativePacketCorpusV2",
+        "maximum_records": 2400,
+        "metadata": {
+          "diagnostic_only": true,
+          "policy_runtime_mode": "m09_gate12_native_scratch",
+          "purpose": "milestone09_observation_and_timing_parity",
+          "session_id": "rival-v9-speed-smoke-wisp-blue-20260823T193500Z-f67f2cee"
+        },
+        "record_type": "rival_v9_native_corpus_start",
+        "schema_version": 2
+      },
+      "warmup_records_excluded_from_callback_gate": 120
+    },
+    "natural_match_manifest": {
+      "execution": {
+        "active_observation_wall_seconds": 28.390999999945052,
+        "decision_records_per_wall_second": 0.0,
+        "effective_game_seconds_per_wall_second": 0.9871085907000149,
+        "game_seconds_advanced": 28.024999998509884,
+        "lane_id": "m09-gate12-native-scratch",
+        "natural_match_clock": "FiveMinutes",
+        "natural_state_setting_scope": "none",
+        "observed_game_speed_all_active": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 500
+        },
+        "observed_game_speed_sustained": {
+          "maximum": 1.0,
+          "median": 1.0,
+          "minimum": 1.0,
+          "samples": 500
+        },
+        "requested_game_speed": 1.0,
+        "requested_speed_reached": true,
+        "rlbot_server_pid": 40692,
+        "rlbot_server_port": 23234,
+        "sequential_or_parallel": "sequential_single_match",
+        "session_wall_duration_seconds": 50.48499999998603,
+        "state_setting_apply_count": 0
+      },
+      "runtime_warnings": [],
+      "status": "complete",
+      "termination_reason": "speed_integrity_window_complete",
+      "wall_duration_seconds": 50.5
+    },
+    "opponent": "wisp",
+    "production_model_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "purpose": "opt_in_native_120hz_rlbot_process_smoke",
+    "rival_team": 0,
+    "schema_version": 1,
+    "scratch_runtime": {
+      "button_combo_counts": {
+        "0": 2996,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0
+      },
+      "decision_count": 2996,
+      "derived_active_segments": 2,
+      "duplicate_packets_reused_previous_controller": 0,
+      "frame_delta_counts": {
+        "1": 2990,
+        "2": 2,
+        "3": 1,
+        "5": 1
+      },
+      "generated_at_utc": "2026-08-23T19:35:49.551170+00:00",
+      "illegal_controllers": 0,
+      "missed_source_frames": 8,
+      "model": {
+        "metadata_sha256": "7f6f9ce64afdeb1352c157d09f76da5224ab0c2ca7a2a6df7c2e172162ed1277",
+        "sha256": "0e5ddbdc8a7ebe6f7119d2e271efe75fa8478e1821bb795a52d78ba519ef383a",
+        "size_bytes": 7881248
+      },
+      "non_finite_outputs": 0,
+      "out_of_order_packets": 0,
+      "pipeline_milliseconds": {
+        "actor": {
+          "maximum": 2.5052,
+          "p50": 0.5706,
+          "p95": 0.8202,
+          "p99": 0.9969,
+          "samples": 2996
+        },
+        "canonical_adapter": {
+          "maximum": 1.2256,
+          "p50": 0.496,
+          "p95": 0.7045,
+          "p99": 0.8026,
+          "samples": 2996
+        },
+        "controller": {
+          "maximum": 1.7194,
+          "p50": 0.1208,
+          "p95": 0.1845,
+          "p99": 0.2536,
+          "samples": 2996
+        },
+        "observation": {
+          "maximum": 35.3635,
+          "p50": 0.8955,
+          "p95": 1.717,
+          "p99": 1.9939,
+          "samples": 2996
+        },
+        "total": {
+          "maximum": 37.9059,
+          "p50": 2.1311,
+          "p95": 3.2036,
+          "p99": 3.8009,
+          "samples": 2996
+        }
+      },
+      "policy_mode": "opt_in_scratch_candidate",
+      "raw_path": "evidence/raw/rival-v9-gate12-live-20260823T193500Z/scratch_runtime.json",
+      "raw_sha256": "32da3a557a51dd81bc73ad46e0df55799f95abbc73b14c24413d981fd679ffea",
+      "raw_size_bytes": 1861,
+      "reset_count": 0,
+      "runtime_version": "RivalV9ScratchRLBotRuntimeV1",
+      "schema_version": 1,
+      "timing_contract": {
+        "duplicate_packet_behavior": "reuse previous controller exactly",
+        "missed_packet_behavior": "RLBot retains the previously returned controller; no missing frame is fabricated or interpolated",
+        "one_decision_per_unique_active_packet": true,
+        "physics_hz": 120,
+        "policy_hz": 120
+      }
+    },
+    "status": "passed",
+    "stopped_prior_rocket_league_processes": []
+  },
+  "production_default_probe": {
+    "candidate_enabled": false,
+    "m08_enabled": false,
+    "mode": "frozen_wisp_production",
+    "policy": "POLICY.lt",
+    "shared_head": "SHARED_HEAD.lt",
+    "tick_skip": 8,
+    "v9_enabled": false
+  },
+  "production_model_hashes": {
+    "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "schema_version": 1,
+  "source_checkpoint": {
+    "actor_sha256": "e58c34e66d190ead95a63a3a1b36ea9bc6090a0d21ec31472f771f992ccb0666",
+    "actor_size_bytes": 7877036,
+    "checkpoint_manifest_sha256": "818c3a2b6fce2d34dafb0ad133082a469fe61255d45665d3fe8969fa0b8b6c81",
+    "checkpoint_manifest_size_bytes": 58912,
+    "cumulative_agent_steps": 576024,
+    "directory": "training/checkpoints/milestone09/gate11-20260823T190944Z/resumed",
+    "simulated_game_hours": 0.6666944444444445
+  },
+  "source_hashes": {
+    "bot_source_sha256": "9113cad5fc499ff611542016dcc42bdb92201cd5304cf880a46791f7a9610968",
+    "config_source_sha256": "eb6a8c284268bca968f828f2d53863db572ed7661aa7389abdbfdd955d79a6e5",
+    "cpu_probe_source_sha256": "25ae09a5d60aee537f1d204b3170676d7726bf42f563270026870b8d7ba24149",
+    "deployment_source_sha256": "ea36e061861dc12f20d7195c6f7429f488dc143b904b919c0ad2f492bf9bb1da",
+    "gate11_evidence_sha256": "e3f065ad20c88e4b3a48c6daa86561b454cf9276322fe9c66a3a262e17a34224",
+    "gate_script_sha256": "98df96a19283b63efb91f59fc80a0c5e8baef17f482d3953cccf756cba878573",
+    "live_runtime_source_sha256": "c155e17d2c9c972496582abf9878952e7956a252887c94cba2d8d0c7171ed302",
+    "live_smoke_source_sha256": "b407ff0ec465f488756af062864261131765127f7194a63ce133dbd936f62897"
+  },
+  "status": "passed"
+}

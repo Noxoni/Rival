@@ -32,6 +32,10 @@ def test_release_spec_charges_required_runtime_data() -> None:
     assert 'bot_root / "models"' in spec
     assert 'bot_root / "collision_meshes"' in spec
     assert '"third_party/wisp"' in spec
+    assert "str(training_root)" in spec
+    assert '"v9_scratch_runtime"' in spec
+    assert '"rival_training.v9_canonical"' in spec
+    assert '"rival_training.v9_observations"' in spec
     assert 'name="RivalDev"' in spec
     assert "exclude_binaries=True" in spec
 

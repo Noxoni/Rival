@@ -69,6 +69,37 @@ CANDIDATE_ACTION_TABLE_PATH = (
     else None
 )
 
+_v9_scratch_model_raw = os.environ.get("RIVAL_V9_SCRATCH_MODEL_PATH", "").strip()
+V9_SCRATCH_POLICY_ENABLED = bool(_v9_scratch_model_raw)
+V9_SCRATCH_MODEL_PATH = (
+    Path(_v9_scratch_model_raw).expanduser().resolve()
+    if V9_SCRATCH_POLICY_ENABLED
+    else None
+)
+_v9_scratch_metadata_raw = os.environ.get(
+    "RIVAL_V9_SCRATCH_METADATA_PATH", ""
+).strip()
+V9_SCRATCH_METADATA_PATH = (
+    Path(_v9_scratch_metadata_raw).expanduser().resolve()
+    if _v9_scratch_metadata_raw
+    else (
+        V9_SCRATCH_MODEL_PATH.with_suffix(".metadata.json")
+        if V9_SCRATCH_MODEL_PATH is not None
+        else None
+    )
+)
+_v9_scratch_runtime_evidence_raw = os.environ.get(
+    "RIVAL_V9_SCRATCH_RUNTIME_EVIDENCE_PATH", ""
+).strip()
+V9_SCRATCH_RUNTIME_EVIDENCE_PATH = (
+    Path(_v9_scratch_runtime_evidence_raw).expanduser().resolve()
+    if _v9_scratch_runtime_evidence_raw
+    else None
+)
+_v9_scratch_runtime_label_raw = os.environ.get(
+    "RIVAL_V9_SCRATCH_RUNTIME_LABEL", ""
+).strip()
+
 if CANDIDATE_POLICY_ENABLED:
     MODEL_INFO_POLICY = ModelInfo(CANDIDATE_MODEL_PATH, ActivationType.RELU)
     MODEL_INFO_SHARED_HEAD = None
@@ -145,6 +176,30 @@ if M08_DUAL_RATE_ENABLED:
         if M08_MECHANICS_FORCE_PASS
         else "m08_dual_rate_candidate"
     )
+if V9_SCRATCH_POLICY_ENABLED:
+    if not TRANSFER_DIAGNOSTIC_MODE:
+        raise ValueError(
+            "Rival v9 scratch deployment is opt-in diagnostic-only and requires "
+            "RIVAL_TRANSFER_DIAGNOSTIC_MODE"
+        )
+    if CANDIDATE_POLICY_ENABLED or M08_DUAL_RATE_ENABLED:
+        raise ValueError(
+            "Rival v9 scratch deployment cannot be combined with an M06/M07 "
+            "candidate or the M08 overlay"
+        )
+    if V9_SCRATCH_METADATA_PATH is None:
+        raise ValueError("Rival v9 scratch deployment requires export metadata")
+    if _v9_scratch_runtime_label_raw and any(
+        character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+        for character in _v9_scratch_runtime_label_raw
+    ):
+        raise ValueError(
+            "RIVAL_V9_SCRATCH_RUNTIME_LABEL must use lowercase letters, digits, "
+            "dash, or underscore"
+        )
+    POLICY_RUNTIME_MODE = (
+        _v9_scratch_runtime_label_raw or "m09_scratch_candidate_opt_in"
+    )
 if _candidate_runtime_label_raw and not (
     CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE
 ):
@@ -164,9 +219,19 @@ if _candidate_runtime_label_raw and any(
 TICK_SKIP = int(
     os.environ.get(
         "RIVAL_TICK_SKIP",
-        "8" if M08_DUAL_RATE_ENABLED else "4" if CANDIDATE_POLICY_ENABLED else "8",
+        (
+            "1"
+            if V9_SCRATCH_POLICY_ENABLED
+            else "8"
+            if M08_DUAL_RATE_ENABLED
+            else "4"
+            if CANDIDATE_POLICY_ENABLED
+            else "8"
+        ),
     )
 )
+if V9_SCRATCH_POLICY_ENABLED and TICK_SKIP != 1:
+    raise ValueError("Rival v9 scratch deployment requires native tick skip 1")
 if M08_DUAL_RATE_ENABLED and TICK_SKIP != 8:
     raise ValueError("Milestone 08 dual-rate strategic clock must remain tick skip 8")
 if CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE:
@@ -179,7 +244,7 @@ elif CANDIDATE_POLICY_ENABLED and TICK_SKIP != 4:
         "Candidate deployment requires RIVAL_TICK_SKIP=4 unless explicit "
         "RIVAL_TRANSFER_DIAGNOSTIC_MODE is enabled"
     )
-if not CANDIDATE_POLICY_ENABLED and TICK_SKIP != 8:
+if not CANDIDATE_POLICY_ENABLED and not V9_SCRATCH_POLICY_ENABLED and TICK_SKIP != 8:
     raise ValueError("Frozen Wisp production deployment requires tick skip 8")
 if CANDIDATE_LEGACY_ONLY and not (
     CANDIDATE_POLICY_ENABLED and TRANSFER_DIAGNOSTIC_MODE

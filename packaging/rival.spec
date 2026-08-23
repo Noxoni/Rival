@@ -5,6 +5,7 @@ from pathlib import Path
 
 project_root = Path(SPECPATH).resolve().parent
 bot_root = project_root / "bot"
+training_root = project_root / "training"
 
 datas = [
     (str(bot_root / "models"), "models"),
@@ -15,10 +16,15 @@ datas = [
 
 analysis = Analysis(
     [str(bot_root / "bot.py")],
-    pathex=[str(bot_root)],
+    pathex=[str(bot_root), str(training_root)],
     binaries=[],
     datas=datas,
-    hiddenimports=[],
+    hiddenimports=[
+        "v9_scratch_runtime",
+        "rival_training.v9_canonical",
+        "rival_training.v9_observations",
+        "rival_training.v9_soccar_geometry",
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

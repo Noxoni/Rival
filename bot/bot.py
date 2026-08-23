@@ -95,6 +95,8 @@ class RivalBot(rlbot.managers.Bot):
 
         self.models: ModelSet | None = None
         """ Model storage"""
+        self.v9_scratch_runtime = None
+        """Opt-in RivalPolicyV1 runtime; never initialized for production Wisp."""
         self.mechanics_models: ModelSet | None = None
         self.mechanics_window = LiveMechanicsWindow()
         self.mechanics_second_half_started = False
@@ -162,6 +164,17 @@ class RivalBot(rlbot.managers.Bot):
                     if config.M08_MECHANICS_MODEL_PATH is None
                     else str(config.M08_MECHANICS_MODEL_PATH)
                 ),
+                "v9_scratch_enabled": config.V9_SCRATCH_POLICY_ENABLED,
+                "v9_scratch_model_path": (
+                    None
+                    if config.V9_SCRATCH_MODEL_PATH is None
+                    else str(config.V9_SCRATCH_MODEL_PATH)
+                ),
+                "v9_scratch_metadata_path": (
+                    None
+                    if config.V9_SCRATCH_METADATA_PATH is None
+                    else str(config.V9_SCRATCH_METADATA_PATH)
+                ),
             },
             "challenge_calibration": {
                 "mode": self.challenge_calibration.mode.value,
@@ -228,6 +241,23 @@ class RivalBot(rlbot.managers.Bot):
 
         # Prevent thread-fighting with multiple instances
         torch.set_num_threads(1)
+
+        if config.V9_SCRATCH_POLICY_ENABLED:
+            from v9_scratch_runtime import RivalV9ScratchRuntime
+
+            self.v9_scratch_runtime = RivalV9ScratchRuntime(
+                config.V9_SCRATCH_MODEL_PATH,
+                config.V9_SCRATCH_METADATA_PATH,
+                runtime_evidence_path=config.V9_SCRATCH_RUNTIME_EVIDENCE_PATH,
+                collision_mesh_directory=config.ROCKETSIM_COLLISION_DIR,
+            )
+            self.logger.info(
+                "Rival v9 scratch runtime ready (mode=%s, tick_skip=1, model=%s)",
+                config.POLICY_RUNTIME_MODE,
+                config.V9_SCRATCH_MODEL_PATH,
+            )
+            print("Rival v9 scratch initialization complete!")
+            return
 
         # Load models
         shared_head_info = config.MODEL_INFO_SHARED_HEAD
@@ -555,6 +585,15 @@ class RivalBot(rlbot.managers.Bot):
                 self._latest_packet_score["blue"],
                 self._latest_packet_score["orange"],
             )
+        if config.V9_SCRATCH_POLICY_ENABLED:
+            if self.v9_scratch_runtime is None:
+                raise RuntimeError("Rival v9 scratch runtime was not initialized")
+            controller = self.v9_scratch_runtime.step(
+                packet,
+                self_index=self.index,
+                field_info=getattr(self, "field_info", None),
+            )
+            return self._return_controller(packet, controller, callback_started_ns)
         # Detect if the game phase is something we don't care about playing in
         is_active_game_phase = packet.match_info.match_phase in [
             rlbot.flat.MatchPhase.Countdown,
@@ -716,6 +755,8 @@ class RivalBot(rlbot.managers.Bot):
         return None
 
     def retire(self):
+        if self.v9_scratch_runtime is not None:
+            self.v9_scratch_runtime.finalize()
         self.telemetry.finalize(
             termination_reason="rlbot_retired",
             final_score=self._latest_packet_score,
