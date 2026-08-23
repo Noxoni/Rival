@@ -353,12 +353,119 @@ def _validate_worker_transition(
     }
 
 
+def _validate_mechanics_usage_adjustment(
+    evidence_path: str | Path | None,
+    *,
+    restored: dict[str, Any],
+    source_directory: Path,
+    policy: MechanicsDiscretePolicy,
+    config: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Validate and apply one prospective PASS-bias adjustment at a boundary.
+
+    The source checkpoint is never rewritten.  The evidence binds the requested
+    delta to the exact source checkpoint, natural-observation corpus and measured
+    before/after policy statistics.  Applying it here, after the full PPO state is
+    restored but before another rollout is collected, keeps the intervention
+    explicit and resumable.
+    """
+    if evidence_path is None:
+        return None
+    path = Path(evidence_path).resolve()
+    evidence = json.loads(path.read_text(encoding="utf-8"))
+    source_files = _checkpoint_files(source_directory)
+    recorded_files = evidence.get("source_checkpoint", {}).get("files", {})
+    adjustment = evidence.get("pass_bias_adjustment", {})
+    before = evidence.get("before", {})
+    after = evidence.get("after", {})
+    current_bias = float(
+        policy.actor.output_layer.bias[0].detach().cpu().item()
+    )
+    delta = float(adjustment.get("delta", float("nan")))
+    adjusted_bias = float(adjustment.get("adjusted_bias", float("nan")))
+    maximum = float(config["evaluation"]["maximum_sampled_override_share"])
+    checks = {
+        "status_authorized": evidence.get("status") == "authorized",
+        "source_steps_match": int(
+            evidence.get("source_checkpoint", {}).get("agent_steps", -1)
+        )
+        == int(restored["cumulative_agent_steps"]),
+        "source_directory_match": evidence.get("source_checkpoint", {}).get(
+            "directory"
+        )
+        == _portable(source_directory),
+        "source_files_match": recorded_files == source_files,
+        "config_hash_match": evidence.get("config_sha256")
+        == canonical_config_sha256(config),
+        "current_bias_match": math.isclose(
+            current_bias,
+            float(adjustment.get("source_bias", float("nan"))),
+            rel_tol=0.0,
+            abs_tol=1e-7,
+        ),
+        "finite_negative_delta": math.isfinite(delta) and delta < 0.0,
+        "adjusted_bias_consistent": math.isclose(
+            current_bias + delta,
+            adjusted_bias,
+            rel_tol=0.0,
+            abs_tol=1e-6,
+        ),
+        "before_probability_consistent": math.isclose(
+            float(before.get("mean_override_probability", float("nan"))),
+            float(adjustment.get("source_mean_override_probability", float("nan"))),
+            rel_tol=0.0,
+            abs_tol=1e-9,
+        ),
+        "after_probability_bounded": 0.0
+        < float(after.get("mean_override_probability", float("nan")))
+        <= maximum,
+        "sampled_rate_bounded": 0.0
+        < float(evidence.get("sampled_audit", {}).get("override_rate", float("nan")))
+        <= maximum,
+        "source_not_previously_adjusted": not restored.get(
+            "mechanics_usage_adjustment_history", []
+        ),
+    }
+    if not all(checks.values()):
+        raise ValueError(f"M08 mechanics usage adjustment evidence failed: {checks}")
+    with torch.no_grad():
+        policy.actor.output_layer.bias[0].add_(delta)
+    applied_bias = float(
+        policy.actor.output_layer.bias[0].detach().cpu().item()
+    )
+    if not math.isclose(applied_bias, adjusted_bias, rel_tol=0.0, abs_tol=1e-6):
+        raise RuntimeError("M08 mechanics usage adjustment produced the wrong bias")
+    return {
+        "evidence_path": _portable(path),
+        "evidence_sha256": sha256_file(path),
+        "source_checkpoint_agent_steps": int(restored["cumulative_agent_steps"]),
+        "source_bias": current_bias,
+        "pass_bias_delta": delta,
+        "adjusted_bias": applied_bias,
+        "target_mean_override_probability": float(
+            evidence["target_mean_override_probability"]
+        ),
+        "measured_before_mean_override_probability": float(
+            before["mean_override_probability"]
+        ),
+        "measured_after_mean_override_probability": float(
+            after["mean_override_probability"]
+        ),
+        "sampled_audit_override_rate": float(
+            evidence["sampled_audit"]["override_rate"]
+        ),
+        "optimizer_state_preserved": True,
+        "checks": checks,
+    }
+
+
 def run_m08_training_boundary(
     target_agent_steps: int,
     *,
     resume_directory: str | Path | None = None,
     worker_count: int | None = None,
     worker_transition_evidence: str | Path | None = None,
+    mechanics_usage_adjustment_evidence: str | Path | None = None,
     device: str = "cuda:0",
 ) -> dict[str, Any]:
     config = load_milestone08_config()
@@ -381,8 +488,14 @@ def run_m08_training_boundary(
     source_checkpoint = None
     worker_transition = None
     worker_transition_history: list[dict[str, Any]] = []
+    mechanics_usage_adjustment = None
+    mechanics_usage_adjustment_history: list[dict[str, Any]] = []
     try:
         if resume_directory is None:
+            if mechanics_usage_adjustment_evidence is not None:
+                raise ValueError(
+                    "A mechanics usage adjustment requires an exact resume checkpoint"
+                )
             initial_state = {
                 "campaign_id": config["campaign_id"],
                 "completed_iterations": 0,
@@ -393,6 +506,7 @@ def run_m08_training_boundary(
                 "source_checkpoint": None,
                 "mechanics_prior": orchestrator.ppo_learner.policy.prior_state(),
                 "worker_transition_history": [],
+                "mechanics_usage_adjustment_history": [],
             }
             checkpoint_manifests.append(
                 save_m08_checkpoint(orchestrator.ppo_learner, initial_state, config)
@@ -406,6 +520,9 @@ def run_m08_training_boundary(
             worker_transition_history = list(
                 restored.get("worker_transition_history", [])
             )
+            mechanics_usage_adjustment_history = list(
+                restored.get("mechanics_usage_adjustment_history", [])
+            )
             worker_transition = _validate_worker_transition(
                 worker_transition_evidence,
                 restored=restored,
@@ -413,6 +530,17 @@ def run_m08_training_boundary(
             )
             if worker_transition is not None:
                 worker_transition_history.append(worker_transition)
+            mechanics_usage_adjustment = _validate_mechanics_usage_adjustment(
+                mechanics_usage_adjustment_evidence,
+                restored=restored,
+                source_directory=source,
+                policy=orchestrator.ppo_learner.policy,
+                config=config,
+            )
+            if mechanics_usage_adjustment is not None:
+                mechanics_usage_adjustment_history.append(
+                    mechanics_usage_adjustment
+                )
 
         ownership = _optimizer_ownership(orchestrator.ppo_learner)
         if not ownership["optimizer_exactly_matches_policy_parameters"] or ownership[
@@ -512,6 +640,9 @@ def run_m08_training_boundary(
             "source_checkpoint": source_checkpoint,
             "mechanics_prior": orchestrator.ppo_learner.policy.prior_state(),
             "worker_transition_history": worker_transition_history,
+            "mechanics_usage_adjustment_history": (
+                mechanics_usage_adjustment_history
+            ),
         }
         checkpoint_manifests.append(
             save_m08_checkpoint(orchestrator.ppo_learner, trainer_state, config)
@@ -540,6 +671,10 @@ def run_m08_training_boundary(
             "worker_count": workers,
             "worker_transition": worker_transition,
             "worker_transition_history": worker_transition_history,
+            "mechanics_usage_adjustment": mechanics_usage_adjustment,
+            "mechanics_usage_adjustment_history": (
+                mechanics_usage_adjustment_history
+            ),
             "config_sha256": canonical_config_sha256(config),
             "optimizer_ownership": ownership,
             "strategic_branch_before": strategic_before,

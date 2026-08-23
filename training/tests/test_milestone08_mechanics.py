@@ -1,14 +1,20 @@
 from __future__ import annotations
 
+import hashlib
 import json
 
 import numpy as np
 import torch
 
-from rival_training.config import canonical_config_sha256, load_milestone08_config
+from rival_training.config import (
+    REPOSITORY_ROOT,
+    canonical_config_sha256,
+    load_milestone08_config,
+)
 from rival_training.m08_campaign import (
     M08_CHECKPOINT_FORMAT,
     M08_STATE_FILE,
+    _validate_mechanics_usage_adjustment,
     _validate_worker_transition,
     make_m08_ppo,
     verify_m08_checkpoint,
@@ -117,6 +123,89 @@ def test_worker_transition_requires_exact_prospective_evidence(tmp_path) -> None
     assert transition["from_worker_count"] == 64
     assert transition["to_worker_count"] == 56
     assert all(transition["checks"].values())
+
+
+def test_mechanics_usage_adjustment_is_hash_bound_and_applied_once(tmp_path) -> None:
+    config = load_milestone08_config()
+    ppo = make_m08_ppo(config, device="cpu")
+    ppo.save_to(str(tmp_path))
+    restored = {
+        "format": M08_CHECKPOINT_FORMAT,
+        "schema_version": 1,
+        "config_sha256": canonical_config_sha256(config),
+        "campaign_id": config["campaign_id"],
+        "completed_iterations": 40,
+        "cumulative_agent_steps": 1_999_776,
+        "cumulative_model_updates": 111,
+        "worker_count": 56,
+        "mechanics_usage_adjustment_history": [],
+    }
+    state_path = tmp_path / M08_STATE_FILE
+    state_path.write_text(json.dumps(restored) + "\n", encoding="utf-8")
+    files = {
+        path.name: {
+            "size_bytes": path.stat().st_size,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        }
+        for path in sorted(tmp_path.iterdir())
+        if path.is_file()
+    }
+    source_bias = float(ppo.policy.actor.output_layer.bias[0].item())
+    delta = -1.25
+    evidence_path = tmp_path.parent / "usage_adjustment.json"
+    evidence_path.write_text(
+        json.dumps(
+            {
+                "status": "authorized",
+                "config_sha256": canonical_config_sha256(config),
+                "source_checkpoint": {
+                    "directory": tmp_path.resolve()
+                    .relative_to(REPOSITORY_ROOT.resolve())
+                    .as_posix(),
+                    "agent_steps": 1_999_776,
+                    "files": files,
+                },
+                "target_mean_override_probability": 0.10,
+                "pass_bias_adjustment": {
+                    "source_bias": source_bias,
+                    "source_mean_override_probability": 0.03,
+                    "delta": delta,
+                    "adjusted_bias": source_bias + delta,
+                },
+                "before": {"mean_override_probability": 0.03},
+                "after": {"mean_override_probability": 0.10},
+                "sampled_audit": {"override_rate": 0.101},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    applied = _validate_mechanics_usage_adjustment(
+        evidence_path,
+        restored=restored,
+        source_directory=tmp_path,
+        policy=ppo.policy,
+        config=config,
+    )
+
+    assert applied is not None
+    assert applied["pass_bias_delta"] == delta
+    assert applied["optimizer_state_preserved"] is True
+    assert abs(float(ppo.policy.actor.output_layer.bias[0].item()) - (source_bias + delta)) < 1e-6
+
+    restored["mechanics_usage_adjustment_history"] = [applied]
+    try:
+        _validate_mechanics_usage_adjustment(
+            evidence_path,
+            restored=restored,
+            source_directory=tmp_path,
+            policy=ppo.policy,
+            config=config,
+        )
+    except ValueError as exc:
+        assert "source_not_previously_adjusted" in str(exc)
+    else:
+        raise AssertionError("A mechanics usage adjustment was applied twice")
 
 
 def test_m08_candidate_export_requires_safe_label() -> None:

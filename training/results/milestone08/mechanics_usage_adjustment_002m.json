@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "purpose": "Prospective user-directed M08 mechanics exposure increase after the untouched 2M boundary showed zero deterministic overrides.",
+  "config_sha256": "b826b37dd72cfce3d32fc7839ca560d9356eb2a68506f3eac2d7c4b99d33d648",
+  "source_checkpoint": {
+    "directory": "training/checkpoints/milestone08/001999776",
+    "agent_steps": 1999776,
+    "files": {
+      "PPO_POLICY.pt": {
+        "size_bytes": 786037,
+        "sha256": "dab585482628abd941f423a7debcef068612d1e481fd5f0b8855e2d8114db6bb"
+      },
+      "PPO_POLICY_OPTIMIZER.pt": {
+        "size_bytes": 1572829,
+        "sha256": "ab0f04cd9f3097c98810989f18daccbacc13d06b4009b07f84a1e62283bde8af"
+      },
+      "PPO_VALUE_NET.pt": {
+        "size_bytes": 710813,
+        "sha256": "26975e211659daa1bbd999b0c9a9e49df2aa1c94bcc74f4138b94f647931c9a3"
+      },
+      "PPO_VALUE_NET_OPTIMIZER.pt": {
+        "size_bytes": 1421805,
+        "sha256": "538c169cd92d9a0c5be30e682d5a48cc43af7a8dbac8028b1aaca86c59bf3430"
+      },
+      "RIVAL_M08_STATE.json": {
+        "size_bytes": 1257,
+        "sha256": "e3a83c858d791aaaa6c559eabd3fd934a7662aea83b90710519736e2c9787ba2"
+      }
+    }
+  },
+  "natural_observation_corpus": {
+    "path": "training/datasets/milestone08/natural_prior_observations.npy",
+    "observation_count": 10000,
+    "size_bytes": 17280128,
+    "sha256": "489eabe3f05995097d0eea28dc747b0a1f7d954b8fd327cf5c3db6d730fb42ff"
+  },
+  "target_mean_override_probability": 0.1,
+  "pass_bias_adjustment": {
+    "source_bias": 7.719589710235596,
+    "source_mean_override_probability": 0.026404667645692825,
+    "delta": -1.4103919863700867,
+    "adjusted_bias": 6.309197723865509,
+    "application_point": "after exact full-PPO checkpoint restore and before the first post-2M rollout",
+    "optimizer_state_policy": "preserve exact loaded Adam state"
+  },
+  "before": {
+    "mean_pass_probability": 0.9735952615737915,
+    "minimum_pass_probability": 0.9679781198501587,
+    "maximum_pass_probability": 0.9766445159912109,
+    "mean_override_probability": 0.026404667645692825,
+    "deterministic_pass_rate": 1.0,
+    "deterministic_override_rate": 0.0,
+    "conditional_override_entropy": 4.217345237731934,
+    "finite": true
+  },
+  "after": {
+    "mean_pass_probability": 0.8999999761581421,
+    "minimum_pass_probability": 0.8806290626525879,
+    "maximum_pass_probability": 0.9107558727264404,
+    "mean_override_probability": 0.10000002384185791,
+    "deterministic_pass_rate": 1.0,
+    "deterministic_override_rate": 0.0,
+    "conditional_override_entropy": 4.217345237731934,
+    "finite": true
+  },
+  "sampled_audit": {
+    "seed": 20260911,
+    "sample_count": 10000,
+    "override_rate": 0.09849999845027924,
+    "action_counts": [
+      9015,
+      16,
+      17,
+      12,
+      15,
+      17,
+      19,
+      14,
+      13,
+      15,
+      14,
+      7,
+      10,
+      21,
+      18,
+      15,
+      10,
+      14,
+      16,
+      14,
+      9,
+      11,
+      13,
+      20,
+      18,
+      14,
+      14,
+      21,
+      20,
+      17,
+      9,
+      20,
+      15,
+      19,
+      17,
+      15,
+      15,
+      12,
+      14,
+      10,
+      15,
+      13,
+      15,
+      10,
+      10,
+      13,
+      17,
+      18,
+      10,
+      14,
+      15,
+      7,
+      9,
+      12,
+      15,
+      12,
+      12,
+      19,
+      17,
+      13,
+      11,
+      24,
+      14,
+      14,
+      14,
+      11,
+      18,
+      22,
+      11
+    ]
+  },
+  "checks": {
+    "source_is_clean_2m_boundary": true,
+    "source_has_no_prior_usage_adjustment": true,
+    "target_is_increased_but_bounded": true,
+    "negative_finite_pass_bias_delta": true,
+    "mean_probability_hits_target": true,
+    "sampled_rate_near_target": true,
+    "sampled_rate_bounded": true,
+    "all_override_outputs_sampled": true,
+    "statistics_finite": true,
+    "strategic_branch_unchanged": true,
+    "source_checkpoint_unchanged": true
+  },
+  "production_promoted": false
+}
