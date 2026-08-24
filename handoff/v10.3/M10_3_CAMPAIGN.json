@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "milestone": "10.3",
+  "campaign_id": "rival-v10-3-stage1-anti-idle-progressive-retry",
+  "starting_authority_commit": "52dc505af3f43a28f6b2a5a5eb20d4d034f842d2",
+  "source": {
+    "mode": "actor_only_skill_transfer",
+    "checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "expected_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "expected_manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "explicitly_forbid_m10_2_recovery_actor_as_source": true
+  },
+  "frozen_architecture": {
+    "policy": "RivalPolicyV1",
+    "critic": "RivalCriticV1",
+    "observation": "RivalObsV1",
+    "observation_size": 714,
+    "action": "RivalActionV1",
+    "canonical_state": "RivalCanonicalStateV1",
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "repeat_action": false,
+    "one_tick_action_delay": true
+  },
+  "stage_1_v2": {
+    "reward": "RivalBallAcquisitionRewardV2",
+    "curriculum": "RivalBallAcquisitionCurriculumV2",
+    "environment": "RivalBallAcquisitionEnvV2",
+    "evaluation": "RivalBallAcquisitionEvaluationV2",
+    "reward_delta": {
+      "retain_v1_distance_progress": true,
+      "retain_v1_touch_reward": true,
+      "idle_grace_seconds": 0.5,
+      "idle_speed_threshold_uu_per_s": 80.0,
+      "idle_penalty_rate_per_simulated_second": -0.02,
+      "idle_only_before_first_touch": true,
+      "generic_speed_reward": 0.0,
+      "action_magnitude_reward": 0.0,
+      "goal_for_reward": 0.0,
+      "goal_against_reward": 0.0
+    },
+    "curriculum_delta": {
+      "retain_v1_family_weights_and_ranges": true,
+      "stationary_close_heading_error_degrees": 15.0,
+      "stationary_medium_heading_error_degrees": 30.0,
+      "moving_chase_heading_error_degrees": 45.0,
+      "awkward_heading_unchanged": true,
+      "natural_kickoff_holdout_unchanged": true
+    },
+    "evaluation_boundaries_added_simulated_hours": [
+      1.0,
+      2.5,
+      5.0,
+      7.5,
+      10.0,
+      12.5,
+      15.0
+    ],
+    "maximum_learner_simulated_hours": 15.0,
+    "maximum_active_learner_steps": 6480000,
+    "inherit_mastery_and_stop_rules_from": {
+      "path": "handoff/v10.2/EVALUATION_AND_EXIT_GATES.md",
+      "blob_sha": "6ef428a75013841565fff454160a0d3158fae258"
+    },
+    "new_corpus_required": true,
+    "source_baseline_must_be_rerun_on_v2_corpus": true
+  },
+  "progressive_ladder": {
+    "global_wall_clock_hours": 10.0,
+    "finalization_reserve_minutes": 20,
+    "failed_prerequisite_stops_progression": true,
+    "stages": [
+      {
+        "stage": 1,
+        "skill": "ball_acquisition",
+        "authority": "this package"
+      },
+      {
+        "stage": 2,
+        "skill": "ground_ball_control_dribbling",
+        "path": "handoff/v10.2/STAGE_2_GROUND_CONTROL.md",
+        "blob_sha": "72d25469c8b3bbf67786ae633a3aac8328f04de5"
+      },
+      {
+        "stage": 3,
+        "skill": "aerial_acquisition_air_dribble_control",
+        "path": "handoff/v10.2/STAGE_3_AERIAL_CONTROL.md",
+        "blob_sha": "158b913f8f310c56a47fd3c91362a93c806d4337"
+      },
+      {
+        "stage": 4,
+        "skill": "finishing_scoring",
+        "path": "handoff/v10.2/STAGE_4_FINISHING.md",
+        "blob_sha": "e8fdbcc54b55fc4af2fc9b8836b585b69000d0e9"
+      }
+    ],
+    "inherit_stage_protocol": {
+      "path": "handoff/v10.2/PROGRESSIVE_STAGE_PROTOCOL.md",
+      "blob_sha": "fbff7d3a28b0eb4ffa33adcc857dccb2ae7e03c2"
+    },
+    "inherit_wall_clock_protocol": {
+      "path": "handoff/v10.2/OVERNIGHT_10H_BUDGET.md",
+      "blob_sha": "818f3a17b1b53db7bd00e4ffde6a22157cd2705f"
+    }
+  },
+  "ppo": {
+    "inherit_exact_m10_2_defaults": true,
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_trainable_agent_steps_per_iteration": 96000,
+    "ppo_batch_trainable_agent_steps": 96000,
+    "minibatch_trainable_agent_steps": 24000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0
+  },
+  "implementation_requirements": {
+    "use_fixed_m10_2_boundary_batch_logic": true,
+    "regression_test_sub_minibatch_final_boundary": true,
+    "fresh_critic_and_optimizers": true,
+    "dummy_excluded_from_ppo": true,
+    "worker_preflight_required": true,
+    "strict_reward_truth_table_required": true,
+    "no_mid_stage_reward_retuning": true
+  },
+  "production": {
+    "promotion_authorized": false,
+    "expected_wisp_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "expected_wisp_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "reporting": {
+    "result": "docs/MILESTONE_10_3_RESULTS.md",
+    "evidence_root": "training/results/milestone10_3/",
+    "push_after_each_evaluation_boundary": true,
+    "final_remote_readback_required": true
+  }
+}
