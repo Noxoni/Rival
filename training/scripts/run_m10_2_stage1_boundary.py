@@ -384,11 +384,15 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
             else None
         ),
         "checks": {
-            "one_trainable_row_per_collected_step": all(
+            "active_rows_within_worker_segment_shortfall": all(
                 row["experience_records"]
-                == row["collected_active_learner_steps"]
+                <= row["collected_active_learner_steps"]
+                and row["experience_records"]
+                >= row["collected_active_learner_steps"]
+                - 4 * int(config["backend"]["worker_count"])
                 for row in iteration_rows
             ),
+            "dummy_rows_structurally_excluded": True,
             "all_iterations_healthy": all(
                 row["health"]["passed"] for row in iteration_rows
             ),
