@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "milestone": "10.2",
+  "campaign_id": "rival-v10-2-ball-acquisition",
+  "starting_authority_commit": "cc2d971b4990121684920f87a0ee2b87b6dc801b",
+  "source": {
+    "mode": "actor_only_skill_transfer",
+    "checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "expected_historical_cumulative_agent_steps": 32019870,
+    "expected_historical_cumulative_simulated_game_hours": 37.0600347222,
+    "expected_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "retain_actor_weights": true,
+    "retain_critic_weights": false,
+    "retain_actor_optimizer_state": false,
+    "retain_critic_optimizer_state": false
+  },
+  "immutable_versions": {
+    "policy": "RivalPolicyV1",
+    "observation": "RivalObsV1",
+    "action": "RivalActionV1",
+    "canonical_state": "RivalCanonicalStateV1",
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "repeat_action": false
+  },
+  "new_learning_versions": {
+    "reward": "RivalBallAcquisitionRewardV1",
+    "curriculum": "RivalBallAcquisitionCurriculumV1",
+    "environment": "RivalBallAcquisitionEnvV1",
+    "evaluation": "RivalBallAcquisitionEvaluationV1"
+  },
+  "roles": {
+    "trainable_agents_per_environment": 1,
+    "dummy_agents_per_environment": 1,
+    "active_team_randomized": true,
+    "dummy_controller": "all_zero_non_interfering",
+    "dummy_excluded_from_ppo_loss": true
+  },
+  "budget": {
+    "maximum_added_simulated_game_hours": 15.0,
+    "trainable_active_learner_steps_per_simulated_game_hour": 432000,
+    "maximum_added_trainable_active_learner_steps": 6480000,
+    "note": "Historical cumulative_agent_steps used two trainable 1v1 agents and must not be arithmetically mixed with this one-trainable-agent stage. Report v10.2 stage steps separately."
+  },
+  "evaluation_boundaries_added_simulated_hours": [1.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0],
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_trainable_agent_steps_per_iteration": 96000,
+    "ppo_batch_trainable_agent_steps": 96000,
+    "minibatch_trainable_agent_steps": 24000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0,
+    "optimizer_state": "fresh_adam_for_actor_and_fresh_adam_for_new_critic"
+  },
+  "worker_policy": {
+    "starting_worker_count": 56,
+    "require_short_preflight_sweep_if_dummy_masking_changes_throughput_materially": true,
+    "allowed_worker_candidates": [32, 40, 48, 56, 64],
+    "selection_metric": "stable_trainable_active_learner_steps_per_wall_second"
+  },
+  "reward": {
+    "distance_progress_formula": "distance(previous_car,current_ball)-distance(current_car,current_ball)",
+    "distance_progress_scale_uu": 2300.0,
+    "distance_progress_absolute_episode_budget": 0.75,
+    "physical_new_touch_reward": 1.0,
+    "touch_reward_budgeted": false,
+    "speed_reward": 0.0,
+    "goal_for_reward": 0.0,
+    "goal_against_reward": 0.0,
+    "all_other_behavior_rewards": 0.0
+  },
+  "phase_a_curriculum": {
+    "stationary_close": 0.30,
+    "stationary_medium": 0.25,
+    "moving_chase": 0.20,
+    "awkward_heading": 0.20,
+    "natural_kickoff_holdout": 0.05
+  },
+  "phase_b_curriculum": {
+    "stationary_close": 0.10,
+    "stationary_medium": 0.25,
+    "moving_chase": 0.30,
+    "awkward_heading": 0.25,
+    "natural_kickoff_holdout": 0.10
+  },
+  "termination": {
+    "no_active_learner_touch_seconds": 12.0,
+    "episode_timeout_seconds": 45.0,
+    "goal_terminates": true,
+    "goal_reward_neutral": true,
+    "first_touch_does_not_terminate": true
+  },
+  "authority": {
+    "phase_a_first_pass_unlocks_phase_b_only": true,
+    "final_gate_requires_two_consecutive_phase_b_passes": true,
+    "next_skill_if_passed": "ground_ball_control_dribbling",
+    "material_mid_campaign_reward_retuning": false,
+    "production_promotion_authorized": false
+  }
+}
