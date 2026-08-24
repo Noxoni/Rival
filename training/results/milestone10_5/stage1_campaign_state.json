@@ -1,0 +1,88 @@
+{
+  "campaign_id": "rival-v10-5-stage1-turn-approach-first-touch",
+  "campaign_wall_clock_elapsed_seconds": 0.0,
+  "campaign_wall_clock_remaining_seconds": 36000.0,
+  "campaign_wall_clock_started_monotonic": null,
+  "campaign_wall_clock_started_utc": null,
+  "corpora": {
+    "checks": {
+      "corpus_hashes_disjoint": true,
+      "gate_has_exactly_500_episodes": true,
+      "passed": true,
+      "unseen_has_at_least_250_episodes": true
+    },
+    "gate": {
+      "episode_count": 500,
+      "path": "training/results/milestone10_5/stage_1/corpora/stage1_v4_frozen_gate_corpus.json",
+      "sha256": "2a6d081985edd42a58cb6c054fe80c05204f8279a27a0debb0319cfddc42d224"
+    },
+    "unseen": {
+      "episode_count": 250,
+      "path": "training/results/milestone10_5/stage_1/corpora/stage1_v4_unseen_generalization_corpus.json",
+      "sha256": "e852e29df68f91b7bdd55cdbed33c1e555ace3cd00009228f313bac32f159e4a"
+    }
+  },
+  "created_utc": "2026-08-24T16:28:57.463709+00:00",
+  "current_evaluation_boundary": null,
+  "current_phase": "ready_stage_1",
+  "current_skill": "turn_approach_first_touch",
+  "current_stage": 1,
+  "format": "rival-v10-5-stage1-only-state-v1",
+  "gate_decision": "stage_1_preflight_passed",
+  "latest_clean_recovery_checkpoint": null,
+  "m10_2_recovery_actor_used_as_source": false,
+  "m10_3_actor_used_as_source": false,
+  "m10_4_actor_used_as_source": false,
+  "next_authorized_stage": null,
+  "passed_prerequisite_checkpoints": {},
+  "preflight_result": "training/results/milestone10_5/preflight.json",
+  "production_promotion_authorized": false,
+  "schema_version": 1,
+  "scope": "stage_1_only",
+  "selected_worker_count": 56,
+  "source_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+  "source_checkpoint": {
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 167,
+    "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+    "config_version": "RivalM10_1TrainingConfigV1",
+    "cumulative_agent_steps": 32019870,
+    "cumulative_model_updates": 667,
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "simulated_game_hours": 37.06003472222222
+  },
+  "stage_active_learner_steps": 0,
+  "stage_simulated_hours": 0.0,
+  "stop_reason": null,
+  "updated_utc": "2026-08-24T16:40:49.407947+00:00",
+  "user_authority": {
+    "fresh_critic_and_actor_critic_optimizers": true,
+    "production_promotion_authorized": false,
+    "purpose": [
+      "turn_toward_ball",
+      "move_toward_ball",
+      "first_physical_touch"
+    ],
+    "restart_from": "exact_m10_1_plus_10h_actor_weights_only",
+    "reward": {
+      "approach_positive_cap": 3.0,
+      "first_physical_touch": 10.0,
+      "full_idle_penalty": -16.1,
+      "heading_delta_scale": 1.5,
+      "heading_negative_cap": -3.0,
+      "heading_positive_cap": 3.0,
+      "idle_grace_seconds": 0.5,
+      "idle_penalty_per_simulated_second": -1.4,
+      "idle_speed_threshold_uu_per_second": 80.0,
+      "later_touches": 0.0,
+      "maximum_positive_episode_reward": 16.0,
+      "moving_away_cap": -3.0
+    },
+    "scope": "stage_1_only",
+    "stage_2_through_4_authorized": false
+  }
+}
