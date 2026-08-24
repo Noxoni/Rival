@@ -1,14 +1,16 @@
-# Rival v10.2 — Evaluation and Exit Gates
+# Rival v10.2 — Stage 1 Ball-Acquisition Evaluation and Exit Gates
 
-## Evaluation principle
+## Scope
 
-The primary unit of competence is an **episode-level acquisition attempt**:
+This file governs **Stage 1 only** inside the progressive Stage-1-through-4 package.
+
+The primary unit of competence is an episode-level acquisition attempt:
 
 > From this reachable reset, did the active learner physically touch the ball before the no-touch timeout?
 
 Do not use PPO reward, loss, entropy, throughput, or aggregate goals as capability evidence.
 
-Do not make `touches / 100k agent-steps` the primary gate. It remains useful telemetry, but episode-level acquisition success and time-to-first-touch are much easier to interpret for this stage.
+Do not make `touches / 100k agent-steps` the primary gate. It remains useful telemetry, but episode-level acquisition success and time-to-first-touch are the Stage-1 capability measures.
 
 ## Deterministic evaluation suite
 
@@ -28,10 +30,10 @@ Balance:
 
 - active team 50/50;
 - left/right mirror geometry;
-- seed set frozen before the first v10.2 PPO update;
+- seed set frozen before the first Stage-1 PPO update;
 - exact same state corpus reused at every boundary and on the v10.1 source actor.
 
-Separately maintain a second unseen generalization corpus of at least 250 episodes with disjoint seeds. Run it only when a checkpoint appears to pass the frozen corpus, so repeated evaluation does not turn the gate set into an implicit training target.
+Separately maintain a second unseen generalization corpus of at least 250 episodes with disjoint seeds. Run it only when a checkpoint appears to pass the frozen corpus.
 
 ## Metrics
 
@@ -49,24 +51,22 @@ Per family and overall, record:
 - dense reward and touch reward separately;
 - percentage of episodes saturating the distance-shaping budget;
 - goals as reward-neutral diagnostics;
-- deterministic action diagnostics: throttle/steer/jump/dodge/boost use, but none are readiness requirements.
+- deterministic throttle/steer/jump/dodge/boost use as diagnostics only.
 
 ## Source baseline
 
-Before training, evaluate the exact v10.1 +10 actor on both:
+Before Stage-1 training, evaluate the exact v10.1 +10 actor on both:
 
 - the frozen 500-episode gate corpus;
 - the disjoint generalization corpus.
 
 Publish those values as `source_v10_1_plus10`.
 
-Do not infer readiness thresholds from M09/M10 metrics gathered under different protocols.
+Do not infer thresholds from M09/M10 protocols.
 
 ## Phase A readiness
 
-Phase A is the easy-to-broad acquisition distribution.
-
-A boundary passes Phase A only if **all** of the following hold on the frozen gate corpus:
+A boundary passes Phase A only if all of the following hold on the frozen gate corpus:
 
 | Family | First-touch success requirement |
 |---|---:|
@@ -78,83 +78,84 @@ A boundary passes Phase A only if **all** of the following hold on the frozen ga
 
 And globally across the four acquisition families:
 
-- aggregate first-touch success >= 85%;
-- aggregate no-touch timeout share <= 15%;
-- median successful time-to-first-touch <= 5.0 s;
-- mean terminal distance on failed episodes is at least 25% lower than mean initial distance on those same failed episodes;
+- aggregate first-touch success >=85%;
+- aggregate no-touch timeout share <=15%;
+- median successful time-to-first-touch <=5.0 s;
+- mean terminal distance on failed episodes is at least 25% lower than mean initial distance on those same failures;
 - no family regresses by more than 10 percentage points versus the previous boundary once it has exceeded 70% success.
 
-A single Phase A pass does **not** exit the milestone. It authorizes Phase B generalization for the next interval.
+A single Phase-A pass unlocks Phase B only.
 
 ## Phase B final acquisition gate
 
-Phase B uses the harder reset mix from `BALL_ACQUISITION_CURRICULUM.md` with the same reward.
-
-A checkpoint is **acquisition-ready** only when it passes the following at **two consecutive evaluation boundaries**:
+A checkpoint is acquisition-ready only when it passes the following at **two consecutive evaluation boundaries**.
 
 ### Frozen gate corpus
 
-- `stationary_close` first-touch success >= 97%;
-- `stationary_medium` >= 92%;
-- `moving_chase` >= 88%;
-- `awkward_heading` >= 90%;
-- `natural_kickoff_holdout` >= 80%;
-- aggregate across all families >= 90%;
-- overall no-touch timeout share <= 10%;
-- median successful time-to-first-touch <= 4.0 s.
+- `stationary_close` >=97%;
+- `stationary_medium` >=92%;
+- `moving_chase` >=88%;
+- `awkward_heading` >=90%;
+- `natural_kickoff_holdout` >=80%;
+- aggregate across all families >=90%;
+- overall no-touch timeout share <=10%;
+- median successful time-to-first-touch <=4.0 s.
 
 ### Disjoint generalization corpus
 
-At each apparent pass, run the unseen corpus and require:
+At each apparent pass require:
 
-- aggregate first-touch success >= 85%;
+- aggregate first-touch success >=85%;
 - no acquisition family below 75%;
-- no-touch timeout share <= 15%.
+- no-touch timeout share <=15%.
 
 ### Reward-integrity checks
 
 Also require:
 
-- physical touch reward is nonzero and corresponds one-for-one with validated new-contact events;
+- physical touch reward corresponds one-for-one with validated new-contact events;
 - speed reward remains exactly absent;
 - goal/concede reward remains exactly zero;
-- distance shaping contributes less cumulative positive return than touch events on successful evaluation episodes once repeated touches occur, consistent with touch being the semantic maximum;
-- no evidence that the learner receives positive distance reward while remaining stationary as the ball approaches.
+- distance shaping contributes less cumulative positive return than touch events on successful episodes once repeated touches occur;
+- no evidence that a stationary learner receives positive distance reward simply because the ball approaches.
 
-## Exit decision
+## Stage-1 success transition
 
-When the acquisition-ready gate passes twice consecutively:
+When acquisition readiness passes twice consecutively, emit exactly:
 
 `ball_acquisition_skill_passed_unlock_ground_control`
 
 Then:
 
-1. preserve the best passing actor as the Stage-1 skill checkpoint;
-2. write a final v10.2 results document;
-3. do not continue spending the v10.2 budget;
-4. do not promote to production;
-5. the next authorized design target is Stage 2: **ground ball control / dribbling**.
+1. preserve the exact passing Stage-1 actor checkpoint immutably;
+2. write/push the Stage-1 boundary evidence;
+3. independently reload and reproduce held outputs;
+4. **do not promote to production**;
+5. if the progressive 10-hour wall-clock authority still permits another stage, transition to Stage 2 under `STAGE_2_GROUND_CONTROL.md` and `PROGRESSIVE_STAGE_PROTOCOL.md`;
+6. transfer actor weights only and create a fresh critic plus fresh actor/critic optimizers.
+
+Do **not** continue spending Stage-1 budget after mastery.
 
 ## Failure / stop rules
 
-Evaluation boundaries are at added v10.2 simulated game-hours:
+Evaluation boundaries are at added Stage-1 learner-simulated hours:
 
 `+1, +2.5, +5, +7.5, +10, +12.5, +15`
 
-Hard maximum: **15 added simulated game-hours**.
-
-Stop early for diagnosis if either occurs:
+Hard Stage-1 maximum: **15 learner-simulated hours**.
 
 ### No-learning stop at +5h
 
 By +5h, if:
 
-- aggregate first-touch success across the four acquisition families has improved by less than 10 absolute percentage points over the source actor **and**
-- no-touch timeout share has improved by less than 10 absolute percentage points,
+- aggregate first-touch success across the four acquisition families improved by <10 absolute percentage points over the source actor **and**
+- no-touch timeout share improved by <10 absolute percentage points,
 
 stop with:
 
 `stop_ball_acquisition_no_material_learning_by_plus_5h`
+
+This stops the entire progressive campaign. Do not advance to Stage 2.
 
 ### Exploit/regression stop
 
@@ -165,15 +166,23 @@ At any boundary after +2.5h, stop if deterministic speed/activity rises material
 
 and reward-integrity inspection shows dense shaping is being exploited without contact improvement.
 
-### Budget stop
+Stop the entire progressive campaign and preserve evidence.
 
-If the final +15h boundary has not passed acquisition readiness:
+### Stage budget stop
+
+If +15h has not passed acquisition readiness:
 
 `stop_ball_acquisition_not_mastered_by_plus_15h`
 
-Do not silently retune reward weights mid-campaign. Any material reward/curriculum change requires a new versioned intervention.
+Do not advance.
 
-## What is deliberately not a gate
+### Global overnight wall-clock stop
+
+`OVERNIGHT_10H_BUDGET.md` also applies. If the global wall envelope is exhausted before Stage-1 mastery, preserve the current clean checkpoint/evidence and emit:
+
+`stop_progressive_overnight_wall_clock_budget_exhausted`
+
+## Deliberately not Stage-1 gates
 
 Do not require:
 
@@ -185,4 +194,4 @@ Do not require:
 - self-play performance;
 - named mechanics.
 
-Those skills are not being taught yet.
+Those are later lessons.
