@@ -1,21 +1,27 @@
 {
-  "schema_version": 1,
-  "package": "Rival v10.2 Ball Acquisition",
+  "schema_version": 2,
+  "package": "Rival v10.2 Progressive Prerequisite Curriculum — Stages 1 through 4",
   "branch": "rival-v10.2-ball-acquisition",
   "base_authority_commit": "cc2d971b4990121684920f87a0ee2b87b6dc801b",
   "required_files": [
     "README.md",
     "VERSION.md",
     "SKILL_PROGRESSION.md",
+    "PROGRESSIVE_STAGE_PROTOCOL.md",
+    "OVERNIGHT_10H_BUDGET.md",
+    "M10_2_PROGRESSIVE_CAMPAIGN.json",
     "BALL_ACQUISITION_REWARD.md",
     "BALL_ACQUISITION_CURRICULUM.md",
     "EVALUATION_AND_EXIT_GATES.md",
     "IMPLEMENTATION_GATES.md",
     "M10_2_CAMPAIGN.json",
+    "STAGE_2_GROUND_CONTROL.md",
+    "STAGE_3_AERIAL_CONTROL.md",
+    "STAGE_4_FINISHING.md",
     "CODEX_START_PROMPT.md",
     "PACKAGE_MANIFEST.json"
   ],
-  "source_actor": {
+  "initial_source_actor": {
     "checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
     "sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
     "transfer": "actor_weights_only"
@@ -26,25 +32,80 @@
     "RivalActionV1",
     "RivalCanonicalStateV1",
     "120Hz_native_policy_and_physics",
-    "one_tick_action_delay"
+    "one_tick_action_delay",
+    "one_active_learner_plus_inert_dummy",
+    "dummy_excluded_from_ppo"
   ],
-  "new_contracts": [
-    "RivalBallAcquisitionRewardV1",
-    "RivalBallAcquisitionCurriculumV1",
-    "RivalBallAcquisitionEnvV1",
-    "RivalBallAcquisitionEvaluationV1"
-  ],
-  "reward_summary": {
-    "speed_reward": 0.0,
-    "distance_progress_dense": true,
-    "distance_dense_absolute_episode_budget": 0.75,
-    "new_physical_touch_reward": 1.0,
-    "repeated_touch_reward": "each genuine new touch receives +1.0",
-    "goal_reward": 0.0,
-    "concede_reward": 0.0
+  "stage_contracts": {
+    "stage_1": {
+      "skill": "ball_acquisition",
+      "reward": "RivalBallAcquisitionRewardV1",
+      "curriculum": "RivalBallAcquisitionCurriculumV1",
+      "environment": "RivalBallAcquisitionEnvV1",
+      "evaluation": "RivalBallAcquisitionEvaluationV1",
+      "success_decision": "ball_acquisition_skill_passed_unlock_ground_control",
+      "maximum_learner_simulated_hours": 15.0,
+      "maximum_active_learner_steps": 6480000,
+      "goal_reward": 0.0
+    },
+    "stage_2": {
+      "skill": "ground_ball_control_dribbling",
+      "reward": "RivalGroundControlRewardV1",
+      "curriculum": "RivalGroundControlCurriculumV1",
+      "environment": "RivalGroundControlEnvV1",
+      "evaluation": "RivalGroundControlEvaluationV1",
+      "success_decision": "ground_control_skill_passed_unlock_aerial_control",
+      "maximum_learner_simulated_hours": 20.0,
+      "maximum_active_learner_steps": 8640000,
+      "goal_reward": 0.0
+    },
+    "stage_3": {
+      "skill": "aerial_acquisition_air_dribble_control",
+      "reward": "RivalAerialControlRewardV1",
+      "curriculum": "RivalAerialControlCurriculumV1",
+      "environment": "RivalAerialControlEnvV1",
+      "evaluation": "RivalAerialControlEvaluationV1",
+      "success_decision": "aerial_control_skill_passed_unlock_finishing",
+      "maximum_learner_simulated_hours": 30.0,
+      "maximum_active_learner_steps": 12960000,
+      "goal_reward": 0.0
+    },
+    "stage_4": {
+      "skill": "finishing_scoring",
+      "reward": "RivalFinishingRewardV1",
+      "curriculum": "RivalFinishingCurriculumV1",
+      "environment": "RivalFinishingEnvV1",
+      "evaluation": "RivalFinishingEvaluationV1",
+      "success_decision": "finishing_skill_passed_unlock_opponent_pressure",
+      "maximum_learner_simulated_hours": 25.0,
+      "maximum_active_learner_steps": 10800000,
+      "goal_reward": 10.0,
+      "own_goal_reward": -10.0,
+      "terminal_automatic_stage": true
+    }
   },
-  "maximum_added_simulated_game_hours": 15.0,
-  "maximum_trainable_active_learner_steps": 6480000,
-  "production_promotion_authorized": false,
-  "next_skill_if_passed": "ground_ball_control_dribbling"
+  "stage_transition": {
+    "exact_success_gate_required": true,
+    "actor_weights_only": true,
+    "fresh_critic_each_stage": true,
+    "fresh_actor_optimizer_each_stage": true,
+    "fresh_critic_optimizer_each_stage": true,
+    "preserve_passing_checkpoint": true,
+    "skip_failed_stage": false
+  },
+  "overnight_wall_clock": {
+    "total_authority_hours": 10.0,
+    "finalization_reserve_minutes": 20,
+    "unused_time_carries_forward": true,
+    "nominal_stage_wall_hours": [1.5, 2.0, 3.0, 3.1666666667],
+    "authority_file": "OVERNIGHT_10H_BUDGET.md"
+  },
+  "total_maximum": {
+    "learner_simulated_hours": 90.0,
+    "active_learner_steps": 38880000
+  },
+  "terminal_automatic_success_decision": "finishing_skill_passed_unlock_opponent_pressure",
+  "stage_5_opponent_pressure_automatic_authorized": false,
+  "self_play_automatic_authorized": false,
+  "production_promotion_authorized": false
 }
