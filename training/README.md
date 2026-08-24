@@ -79,6 +79,26 @@ physics tick and never enables rendering in a rollout worker. The once-per-secon
 console status shows checkpoint game-hours and the current physical controller row;
 use Ctrl+C to stop an unbounded viewer.
 
+Milestone 10.1 adds a bootstrap-family viewer on the same isolated native-120-Hz
+seam. By default it cycles through ground acquisition, moving-ball chase, touch
+chain, easy aerial contact, easy finish, and natural kickoff for six real-time
+seconds each. Pass `--family` to hold one family for closer inspection:
+
+```powershell
+training/.venv/Scripts/python.exe training/scripts/run_m10_1_rlviser_spectator.py `
+  --checkpoint training/checkpoints/milestone10/boundaries/plus-025h/023378810 `
+  --family all --playback-speed 1
+
+training/.venv/Scripts/python.exe training/scripts/run_m10_1_rlviser_spectator.py `
+  --checkpoint training/checkpoints/milestone10_1/boundaries/plus-002p5h/025683082 `
+  --family easy_aerial_contact --seconds-per-family 30
+```
+
+This path remains disabled by default, owns exactly one spectator environment, and
+never renders or slows the diagnostic/training workers. The selected policy controls
+both cars deterministically through the train/deploy-identical `RivalObsV1` and
+`RivalActionV1` path.
+
 ## Milestone 10 sustained scratch campaign
 
 M10 resumes only the exact final M09 Gate 13 checkpoint. Its focused preflight runs a
