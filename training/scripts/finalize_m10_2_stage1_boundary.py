@@ -32,6 +32,8 @@ from rival_training.v10_2_evaluation import (  # noqa: E402
 GATE_CORPUS_FILENAME = "stage1_frozen_gate_corpus.json"
 UNSEEN_CORPUS_FILENAME = "stage1_unseen_generalization_corpus.json"
 BOUNDARY_RESULT_VERSION = "RivalM10_2Stage1BoundaryResultV1"
+STAGE1_SUCCESS_DECISION = "ball_acquisition_skill_passed_unlock_ground_control"
+STAGE1_SUCCESS_NEXT_STAGE = 2
 
 
 CORE_FAMILIES = (
@@ -347,7 +349,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         decision = "ball_acquisition_phase_a_passed_unlock_phase_b"
         next_phase = "B"
     elif phase == "B" and apparent_phase_b_pass and previous_phase_b_pass:
-        decision = "ball_acquisition_skill_passed_unlock_ground_control"
+        decision = STAGE1_SUCCESS_DECISION
         next_phase = "complete"
     elif no_learning:
         decision = "stop_ball_acquisition_no_material_learning_by_plus_5h"
@@ -401,13 +403,13 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     output = args.output or RESULT_ROOT / "stage_1" / f"boundary_{slug}.json"
     write_json_atomic(output, result)
     stop = decision.startswith("stop_")
-    passed = decision == "ball_acquisition_skill_passed_unlock_ground_control"
+    passed = decision == STAGE1_SUCCESS_DECISION
     update_progressive_state(
         {
             "current_phase": next_phase,
             "current_evaluation_boundary": boundary,
             "gate_decision": decision,
-            "next_authorized_stage": 2 if passed else None,
+            "next_authorized_stage": STAGE1_SUCCESS_NEXT_STAGE if passed else None,
             "passed_prerequisite_checkpoints": (
                 {
                     "stage_1": training["immutable_checkpoint"],
