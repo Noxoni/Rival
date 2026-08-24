@@ -13,12 +13,13 @@
 - Terminal automatic stage: `4`
 - Terminal success decision: `finishing_skill_passed_unlock_opponent_pressure`
 - Stage 5 opponent pressure: `not_authorized_automatic`
+- Overnight wall-clock authority: `10 real hours total`
+- Finalization reserve: `20 minutes`
+- Total experience ceiling: `90 learner-simulated hours / 38,880,000 active-learner steps`
 - Production promotion: `not_authorized`
 
 Milestone intent:
 
 > Retain each learned prerequisite in the actor, reset critic/optimizer state when the lesson changes, remove/reduce obsolete shaping, and advance only after deterministic mastery of the current skill.
 
-Maximum unattended authority across Stages 1–4: `90 learner-simulated hours / 38,880,000 active-learner 120-Hz steps`.
-
-This is a ceiling, not a target. Stop immediately on mastery or documented failure at every stage.
+The run stops on whichever applies first: stage mastery, documented stage failure/no-learning/exploit gate, the global 10-hour wall-clock envelope, or the relevant stage/total experience ceiling.
