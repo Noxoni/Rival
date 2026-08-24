@@ -17,7 +17,23 @@ After Stage 4 passes, Codex must stop for human review. Active-opponent training
 
 A later stage may begin only if the previous stage emits its exact success decision. A failed stage stops the entire progression; Codex may not skip ahead.
 
-See `PROGRESSIVE_STAGE_PROTOCOL.md` and `M10_2_PROGRESSIVE_CAMPAIGN.json`.
+See `PROGRESSIVE_STAGE_PROTOCOL.md`, `M10_2_PROGRESSIVE_CAMPAIGN.json`, and `OVERNIGHT_10H_BUDGET.md`.
+
+## Overnight execution authority
+
+The unattended progressive run has a **hard 10-real-hour wall-clock envelope** from the beginning of real Stage-1 work, including training, evaluations, stage transitions, checkpointing, Git pushes, and final verification.
+
+Reserve the final **20 minutes** for clean finalization.
+
+Nominal planning shares are approximately:
+
+- Stage 1: **1.5 real hours**;
+- Stage 2: **2.0 real hours**;
+- Stage 3: **3.0 real hours**;
+- Stage 4: **3.17 real hours**;
+- finalization reserve: **20 minutes**.
+
+These are soft planning shares, not permission to skip a prerequisite. Unused time from early mastery carries forward. An unfinished prerequisite may consume later-stage reserved time while still inside its own no-learning/experience limits. A failed prerequisite stops the entire run even if wall time remains.
 
 ## Frozen architecture
 
@@ -156,12 +172,12 @@ After this decision, **stop**. Do not start Stage 5/opponent pressure or self-pl
 
 ## Total unattended authority
 
-Maximum if every stage consumes its full ceiling:
+The run is bounded by **both**:
 
-- **90 learner-simulated hours**;
-- **38,880,000 active-learner 120-Hz steps**.
+- **10 real wall-clock hours**; and
+- **90 learner-simulated hours / 38,880,000 active-learner 120-Hz steps**.
 
-This is a ceiling, not a target. Every stage terminates immediately on mastery or on its documented failure/stop gate.
+Whichever applicable capability/failure/wall/experience stop occurs first wins. The 90 simulated hours are a ceiling, not a target. Every stage terminates immediately on mastery or on its documented failure/stop gate.
 
 ## Reporting
 
@@ -175,7 +191,7 @@ and compact evidence under:
 
 with per-stage subdirectories/records.
 
-Push coherent stable boundaries after preflight, each evaluation boundary, every stage transition, every failure closeout, and final Stage-4 completion.
+Push coherent stable boundaries after preflight, each evaluation boundary, every stage transition, every failure/wall-clock closeout, and final Stage-4 completion.
 
 ## Production
 
