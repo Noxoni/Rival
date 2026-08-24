@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "summary_version": "RivalM10_5Stage1FinalSummaryV1",
+  "completed_utc": "2026-08-24T17:19:42.4465281Z",
+  "campaign_id": "rival-v10-5-stage1-turn-approach-first-touch",
+  "scope": "stage_1_only",
+  "primary_question": "Does Rival consistently learn to turn toward, approach, and physically touch the ball?",
+  "answer": "no",
+  "outcome": "stage1_experiment_complete_no_consistent_ball_acquisition",
+  "decision": "stage1_turn_approach_touch_experiment_complete_at_plus_5h",
+  "source": {
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "actor_weights_only": true,
+    "maximum_actor_output_transfer_error": 0.0,
+    "fresh_critic": true,
+    "fresh_actor_optimizer": true,
+    "fresh_critic_optimizer": true
+  },
+  "frozen_contract": {
+    "policy_version": "RivalPolicyV1",
+    "observation_version": "RivalObsV1",
+    "action_version": "RivalActionV1",
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "repeat_action": false,
+    "one_tick_action_delay": true,
+    "curriculum_version": "RivalBallAcquisitionCurriculumV2",
+    "selected_worker_count": 56,
+    "inert_dummy_exact_zero_controller": true,
+    "dummy_rows_excluded_from_ppo": true
+  },
+  "reward_truth": {
+    "truth_table_passed": true,
+    "first_touch_reward": 10.0,
+    "subsequent_touch_reward": 0.0,
+    "maximum_touch_reward_per_episode": 10.0,
+    "heading_positive_budget": 3.0,
+    "heading_negative_budget": -3.0,
+    "approach_positive_budget": 3.0,
+    "approach_negative_budget": -3.0,
+    "idle_grace_seconds": 0.5,
+    "idle_penalty_per_simulated_second": -1.4,
+    "full_idle_penalty": -16.1,
+    "maximum_positive_episode_reward": 16.0,
+    "full_idle_magnitude_exceeds_maximum_positive": true,
+    "all_other_rewards_zero": true
+  },
+  "worker_sweep": [
+    {"workers": 32, "active_learner_steps_per_second": 2322.93034861123, "stable": true, "stalls_or_crashes": 0},
+    {"workers": 40, "active_learner_steps_per_second": 2908.887017326058, "stable": true, "stalls_or_crashes": 0},
+    {"workers": 48, "active_learner_steps_per_second": 2938.3138559524855, "stable": true, "stalls_or_crashes": 0},
+    {"workers": 56, "active_learner_steps_per_second": 3165.8091767675996, "stable": true, "stalls_or_crashes": 0},
+    {"workers": 64, "active_learner_steps_per_second": 3138.86380564989, "stable": true, "stalls_or_crashes": 0}
+  ],
+  "deterministic_gate_corpus": {
+    "episodes": 500,
+    "families": 5,
+    "evaluation_version": "RivalBallAcquisitionEvaluationV4",
+    "no_touch_timeout_definition": "terminal reason after 12 simulated seconds without an active learner touch; timer resets after touch"
+  },
+  "boundaries": [
+    {
+      "name": "source_v10_1_plus10",
+      "first_touch_success_share": 0.09,
+      "no_touch_timeout_share": 0.974,
+      "successful_time_to_first_touch_median_seconds": 1.1583333333333334,
+      "failed_initial_distance_mean_uu": 2138.276862935322,
+      "failed_terminal_distance_mean_uu": 4184.195756307127,
+      "failed_terminal_distance_reduction_share": -0.9568072913454567,
+      "failed_alignment_improvement_mean": -0.5588935740934344
+    },
+    {
+      "name": "plus_1h",
+      "first_touch_success_share": 0.11,
+      "no_touch_timeout_share": 0.976,
+      "successful_time_to_first_touch_median_seconds": 1.0416666666666667,
+      "failed_initial_distance_mean_uu": 2169.4981555839645,
+      "failed_terminal_distance_mean_uu": 3924.0906968091044,
+      "failed_terminal_distance_reduction_share": -0.8087550278432275,
+      "failed_alignment_improvement_mean": -0.6291739367932895
+    },
+    {
+      "name": "plus_2p5h",
+      "first_touch_success_share": 0.142,
+      "no_touch_timeout_share": 0.974,
+      "successful_time_to_first_touch_median_seconds": 1.0666666666666667,
+      "failed_initial_distance_mean_uu": 2213.94637071681,
+      "failed_terminal_distance_mean_uu": 3736.7663246256366,
+      "failed_terminal_distance_reduction_share": -0.6878305518375237,
+      "failed_alignment_improvement_mean": -0.691189902521644
+    },
+    {
+      "name": "plus_5h",
+      "actual_active_learner_steps": 2159909,
+      "actual_simulated_hours": 4.9997893518518515,
+      "first_touch_success_share": 0.154,
+      "no_touch_timeout_share": 0.974,
+      "successful_time_to_first_touch_median_seconds": 0.8333333333333334,
+      "failed_initial_distance_mean_uu": 2229.0149024660723,
+      "failed_terminal_distance_mean_uu": 4417.57298075386,
+      "failed_terminal_distance_reduction_share": -0.9818499086150008,
+      "failed_initial_alignment_mean": 0.5800853009582221,
+      "failed_terminal_alignment_mean": -0.14546871487319557,
+      "failed_alignment_improvement_mean": -0.7255540158314178,
+      "core_first_touch_success_share": 0.1925,
+      "core_no_touch_timeout_share": 0.9675,
+      "core_failed_initial_distance_mean_uu": 1734.48605802492,
+      "core_failed_terminal_distance_mean_uu": 4727.58697116757,
+      "core_failed_terminal_distance_reduction_share": -1.72564137906702
+    }
+  ],
+  "final_family_first_touch_success_share": {
+    "stationary_close": 0.54,
+    "stationary_medium": 0.11,
+    "moving_chase": 0.11,
+    "awkward_heading": 0.01,
+    "natural_kickoff_holdout": 0.0
+  },
+  "final_checkpoint": {
+    "directory": "training/checkpoints/milestone10_5/stage_1/boundaries/plus-005h/002159909",
+    "actor_sha256": "4ff6af0ad1f2d03383d453d5142fc32a42d28e5548118eef248086ffd0938d55",
+    "manifest_sha256": "62265d60c3e78ad7a8cc0df5e681deee7f154e73f2629efcfff5d94f299bfd92",
+    "clean_boundary": true,
+    "independent_reload_parity_passed": true,
+    "active_learner_steps": 2159909,
+    "simulated_hours": 4.9997893518518515,
+    "ppo_iterations": 24,
+    "model_updates": 88,
+    "terminal_shortfall_steps": 91,
+    "terminal_shortfall_tolerance_steps": 112,
+    "terminal_shortfall_accepted": true,
+    "post_boundary_actor_or_optimizer_update": false
+  },
+  "capability_gates": {
+    "phase_a_passed": false,
+    "no_learning_by_plus_5h": true,
+    "evaluation_integrity_passed": true
+  },
+  "verification": {
+    "production_tests_passed": 91,
+    "training_tests_passed": 177,
+    "ruff_passed": true,
+    "protected_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "protected_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "historical_stash_preserved": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "repository_head_before_closeout": "e906559e09a0d81190d9a893e899904ee09406a3"
+  },
+  "stage_2_or_later_run": false,
+  "production_promotion_authorized": false,
+  "production_promotion_performed": false,
+  "prior_stage1_evidence_preserved": true
+}
