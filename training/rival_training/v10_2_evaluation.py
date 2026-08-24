@@ -91,6 +91,7 @@ def _start_episode(specification: dict[str, Any]) -> dict[str, Any]:
         "initial_distance": _distance(env),
         "initial_alignment": _alignment(env),
         "first_touch_seconds": None,
+        "contact_times_seconds": [],
         "physical_touches": 0,
         "reward_total": 0.0,
         "distance_reward_total": 0.0,
@@ -113,6 +114,7 @@ def _finish_episode(state: dict[str, Any]) -> dict[str, Any]:
     env = state["env"]
     physical_actions = np.asarray(state["actions"], dtype=np.float32)
     buttons = physical_actions[:, 5:]
+    contact_times = [float(value) for value in state["contact_times_seconds"]]
     return {
         "index": int(specification["index"]),
         "family": str(specification["family"]),
@@ -120,7 +122,19 @@ def _finish_episode(state: dict[str, Any]) -> dict[str, Any]:
         "mirror": bool(specification["mirror"]),
         "environment_seed": int(specification["environment_seed"]),
         "first_touch_success": state["first_touch_seconds"] is not None,
+        "second_touch_success": len(contact_times) >= 2,
+        "third_touch_success": len(contact_times) >= 3,
+        "all_three_contacts_success": len(contact_times) >= 3,
         "time_to_first_touch_seconds": state["first_touch_seconds"],
+        "time_to_second_touch_seconds": contact_times[1] if len(contact_times) >= 2 else None,
+        "time_to_third_touch_seconds": contact_times[2] if len(contact_times) >= 3 else None,
+        "time_first_to_second_touch_seconds": (
+            contact_times[1] - contact_times[0] if len(contact_times) >= 2 else None
+        ),
+        "time_second_to_third_touch_seconds": (
+            contact_times[2] - contact_times[1] if len(contact_times) >= 3 else None
+        ),
+        "contact_times_seconds": contact_times,
         "physical_touch_count": state["physical_touches"],
         "active_learner_steps": state["ticks"],
         "simulated_seconds": state["ticks"] / 120.0,
@@ -138,6 +152,7 @@ def _finish_episode(state: dict[str, Any]) -> dict[str, Any]:
         "pre_touch_observed_ticks": state["pre_touch_observed_ticks"],
         "pre_touch_idle_share": state["idle_ticks"] / max(state["pre_touch_observed_ticks"], 1),
         "cumulative_idle_penalty": state["idle_penalty_total"],
+        "cumulative_acquisition_time_penalty": state["idle_penalty_total"],
         "reward_total": state["reward_total"],
         "distance_budget_saturated": bool(
             env.rlgym_env.shared_info["rival_v10_2_reward_metrics"]["distance_budget_saturated"]
@@ -195,6 +210,7 @@ def _episode_batch(
                     state["pre_touch_observed_ticks"] += 1
                 if bool(metrics["new_physical_touch"]):
                     state["physical_touches"] += 1
+                    state["contact_times_seconds"].append(state["ticks"] / 120.0)
                     if state["first_touch_seconds"] is None:
                         state["first_touch_seconds"] = state["ticks"] / 120.0
                 if done or truncated:
@@ -238,6 +254,8 @@ def _evaluation_worker_episode(specification: dict[str, Any]) -> dict[str, Any]:
 
 def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
     success = [row for row in episodes if row["first_touch_success"]]
+    second_success = [row for row in episodes if row.get("second_touch_success", False)]
+    third_success = [row for row in episodes if row.get("third_touch_success", False)]
     failures = [row for row in episodes if not row["first_touch_success"]]
     action_names = (
         "mean_absolute_throttle",
@@ -250,6 +268,12 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         "episodes": len(episodes),
         "first_touch_success_count": len(success),
         "first_touch_success_share": len(success) / max(len(episodes), 1),
+        "second_touch_success_count": len(second_success),
+        "second_touch_success_share": len(second_success) / max(len(episodes), 1),
+        "third_touch_success_count": len(third_success),
+        "third_touch_success_share": len(third_success) / max(len(episodes), 1),
+        "all_three_contacts_success_count": len(third_success),
+        "all_three_contacts_success_share": len(third_success) / max(len(episodes), 1),
         "no_touch_timeout_count": sum(
             row["termination_reason"] == "no_touch_timeout" for row in episodes
         ),
@@ -259,6 +283,12 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         / max(len(episodes), 1),
         "successful_time_to_first_touch_seconds": _summary(
             [float(row["time_to_first_touch_seconds"]) for row in success]
+        ),
+        "successful_time_first_to_second_touch_seconds": _summary(
+            [float(row["time_first_to_second_touch_seconds"]) for row in second_success]
+        ),
+        "successful_time_second_to_third_touch_seconds": _summary(
+            [float(row["time_second_to_third_touch_seconds"]) for row in third_success]
         ),
         "initial_car_ball_distance": _summary(
             [float(row["initial_car_ball_distance"]) for row in episodes]
@@ -308,6 +338,10 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
             1,
         ),
         "cumulative_idle_penalty": sum(float(row["cumulative_idle_penalty"]) for row in episodes),
+        "cumulative_acquisition_time_penalty": sum(
+            float(row.get("cumulative_acquisition_time_penalty", row["cumulative_idle_penalty"]))
+            for row in episodes
+        ),
         "dense_budget_saturation_share": sum(
             bool(row["distance_budget_saturated"]) for row in episodes
         )

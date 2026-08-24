@@ -437,6 +437,7 @@ def _running_training_processes() -> list[dict[str, Any]]:
         "run_m10_3_progressive.py",
         "run_m10_4_stage1_boundary.py",
         "run_m10_5_stage1_boundary.py",
+        "run_m10_6_stage1_boundary.py",
     )
     current = os.getpid()
     for process in psutil.process_iter(["pid", "name", "cmdline"]):
