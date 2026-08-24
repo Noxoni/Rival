@@ -1,0 +1,75 @@
+{
+  "campaign_id": "rival-v10-4-stage1-only-reward-rebalance",
+  "campaign_wall_clock_elapsed_seconds": 0.0,
+  "campaign_wall_clock_remaining_seconds": 36000.0,
+  "campaign_wall_clock_started_monotonic": null,
+  "campaign_wall_clock_started_utc": null,
+  "corpora": {
+    "checks": {
+      "corpus_hashes_disjoint": true,
+      "gate_has_exactly_500_episodes": true,
+      "passed": true,
+      "unseen_has_at_least_250_episodes": true
+    },
+    "gate": {
+      "episode_count": 500,
+      "path": "training/results/milestone10_4/stage_1/corpora/stage1_v3_frozen_gate_corpus.json",
+      "sha256": "b8802c5c9f7a8c52932dac78e03c9e94a1086c86367025cfde1bdeb7ee7732eb"
+    },
+    "unseen": {
+      "episode_count": 250,
+      "path": "training/results/milestone10_4/stage_1/corpora/stage1_v3_unseen_generalization_corpus.json",
+      "sha256": "330516281645238ea6336d6ebc01e3b1de31af5957e29071f581ec0f70a405a1"
+    }
+  },
+  "created_utc": "2026-08-24T15:37:48.196067+00:00",
+  "current_evaluation_boundary": null,
+  "current_phase": "ready_stage_1",
+  "current_skill": "ball_acquisition",
+  "current_stage": 1,
+  "format": "rival-v10-4-stage1-only-state-v1",
+  "gate_decision": "stage_1_preflight_passed",
+  "latest_clean_recovery_checkpoint": null,
+  "m10_2_recovery_actor_used_as_source": false,
+  "m10_3_actor_used_as_source": false,
+  "next_authorized_stage": null,
+  "passed_prerequisite_checkpoints": {},
+  "preflight_result": "training/results/milestone10_4/preflight.json",
+  "production_promotion_authorized": false,
+  "schema_version": 1,
+  "scope": "stage_1_only",
+  "selected_worker_count": 48,
+  "source_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+  "source_checkpoint": {
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 167,
+    "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+    "config_version": "RivalM10_1TrainingConfigV1",
+    "cumulative_agent_steps": 32019870,
+    "cumulative_model_updates": 667,
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "simulated_game_hours": 37.06003472222222
+  },
+  "stage_active_learner_steps": 0,
+  "stage_simulated_hours": 0.0,
+  "stop_reason": null,
+  "updated_utc": "2026-08-24T15:49:37.527664+00:00",
+  "user_authority": {
+    "production_promotion_authorized": false,
+    "restart_from": "exact_m10_1_plus_10h_actor_weights_only",
+    "reward": {
+      "away_ball_episode_cap": -0.75,
+      "first_stationary_tick_after_grace": -0.8,
+      "idle_grace_seconds": 0.5,
+      "idle_penalty_repeat_mode": "one_shot_capped_per_episode",
+      "physical_new_touch": 1.0,
+      "toward_ball_episode_cap": 0.75
+    },
+    "scope": "stage_1_only",
+    "stage_2_through_4_authorized": false
+  }
+}
