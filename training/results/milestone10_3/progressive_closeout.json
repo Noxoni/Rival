@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "format": "rival-v10-3-progressive-closeout-v1",
+  "status": "failed",
+  "authority_decision": "stop_ball_acquisition_no_material_learning_by_plus_5h",
+  "stage": 1,
+  "skill": "ball_acquisition",
+  "phase": "A",
+  "failure": {
+    "classification": "stage_1_no_material_learning_gate_failure",
+    "cause": "At the exact +5h boundary, both required material-learning improvements were below 10 percentage points versus the frozen source baseline.",
+    "source_core_first_touch_success_share": 0.1025,
+    "plus_5h_core_first_touch_success_share": 0.165,
+    "core_first_touch_improvement_percentage_points": 6.25,
+    "source_core_no_touch_timeout_share": 0.97,
+    "plus_5h_core_no_touch_timeout_share": 0.9725,
+    "core_no_touch_improvement_percentage_points": -0.25,
+    "required_improvement_percentage_points": 10.0,
+    "no_learning_condition_met": true,
+    "phase_a_mastery_passed": false,
+    "wall_clock_exhausted": false
+  },
+  "evaluation_boundaries": [
+    {
+      "boundary_hours": 1.0,
+      "active_learner_steps": 432017,
+      "actor_sha256": "6c72a079f35c5a0eb9f3209f326b9f9a10c9651a7ce4d2c1965fb2a1c8493149",
+      "overall_first_touch_success_share": 0.16,
+      "core_first_touch_success_share": 0.2,
+      "core_no_touch_timeout_share": 0.9675,
+      "decision": "continue_ball_acquisition_training"
+    },
+    {
+      "boundary_hours": 2.5,
+      "active_learner_steps": 1080010,
+      "actor_sha256": "f2f4a9e0bd1684687cdc6947097aa59f8623f9766e092962328445e8e24adbcf",
+      "overall_first_touch_success_share": 0.144,
+      "core_first_touch_success_share": 0.18,
+      "core_no_touch_timeout_share": 0.975,
+      "decision": "continue_ball_acquisition_training"
+    },
+    {
+      "boundary_hours": 5.0,
+      "active_learner_steps": 2160003,
+      "actor_sha256": "f855bb8da476bdd8c26e346e050081678c73493278bce80cd75e58cd90f176c0",
+      "overall_first_touch_success_share": 0.132,
+      "overall_no_touch_timeout_share": 0.978,
+      "core_first_touch_success_share": 0.165,
+      "core_no_touch_timeout_share": 0.9725,
+      "core_successful_time_to_first_touch_median_seconds": 1.6125,
+      "core_failed_terminal_distance_reduction_share": -1.875763249482531,
+      "decision": "stop_ball_acquisition_no_material_learning_by_plus_5h"
+    }
+  ],
+  "latest_clean_recovery_checkpoint": {
+    "directory": "training/checkpoints/milestone10_3/stage_1/boundaries/plus-005h/002160003",
+    "actor_sha256": "f855bb8da476bdd8c26e346e050081678c73493278bce80cd75e58cd90f176c0",
+    "manifest_sha256": "45022baca4e043799ed34a799d8d3a666307c9efb6379fcd36846a9b0e8a6eee",
+    "active_learner_steps": 2160003,
+    "simulated_learner_hours": 5.000006944444444,
+    "completed_iterations": 24,
+    "cumulative_model_updates": 88,
+    "clean_boundary": true,
+    "independent_reload_and_held_output_parity": true,
+    "maximum_absolute_error": 0.0
+  },
+  "source_checkpoint": {
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "unchanged": true,
+    "m10_2_recovery_actor_used_as_source": false
+  },
+  "progression": {
+    "passed_prerequisite_checkpoints": {},
+    "next_authorized_stage": null,
+    "stage_2_started": false,
+    "stage_3_started": false,
+    "stage_4_started": false,
+    "production_promoted": false
+  },
+  "campaign_accounting_at_stop": {
+    "wall_clock_elapsed_seconds": 1873.5629999999655,
+    "wall_clock_remaining_seconds": 34126.437000000034,
+    "unused_authorized_wall_clock_seconds": 34126.437000000034,
+    "active_learner_steps": 2160003,
+    "simulated_learner_hours": 5.000006944444444,
+    "ppo_iteration_wall_seconds": 718.3620821001241,
+    "gate_evaluation_wall_seconds": 943.023953899974,
+    "selected_worker_count": 56,
+    "preflight_inside_real_campaign_clock": false,
+    "finalization_inside_recorded_stop_clock": false
+  },
+  "frozen_production": {
+    "production_promotion_authorized": false,
+    "production_files_changed": false,
+    "policy_lt_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "shared_head_lt_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "authority_package": {
+    "required_m10_2_closeout_in_history": true,
+    "all_inherited_m10_2_blob_shas_match": true,
+    "v10_3_manifest_byte_counts_match": true,
+    "v10_3_manifest_sha256_fields_match": false,
+    "manifest_sha_discrepancy_gating": false
+  },
+  "final_verification": {
+    "production_pytest": {
+      "passed": true,
+      "tests_passed": 91,
+      "warnings": 2
+    },
+    "training_pytest": {
+      "passed": true,
+      "tests_passed": 163,
+      "warnings": 64
+    },
+    "ruff_training": true,
+    "compileall_training": true,
+    "milestone_json_files_parsed_before_closeout": 15,
+    "current_checkpoint_reload_exact": true,
+    "current_checkpoint_maximum_absolute_error": 0.0,
+    "source_checkpoint_unchanged": true,
+    "frozen_wisp_unchanged": true,
+    "progressive_workers_remaining": false,
+    "checkpoint_binary_ignored": true,
+    "paused_strategy_stash_preserved": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1"
+  }
+}
