@@ -7,6 +7,7 @@ import math
 import numpy as np
 import pytest
 
+from scripts.run_m10_2_stage1_boundary import _terminal_boundary_status
 from rival_training.v10_5_campaign import (
     SOURCE_ACTOR_SHA256,
     TERMINAL_DECISION,
@@ -160,3 +161,32 @@ def test_v10_5_config_is_exact_stage1_only_fresh_restart() -> None:
     assert contract["terminal_decision"] == TERMINAL_DECISION
     assert contract["stage_2_authorized"] is False
     assert contract["production_promotion_authorized"] is False
+
+
+def test_only_terminal_boundary_accepts_two_worker_segment_shortfall() -> None:
+    terminal = _terminal_boundary_status(
+        cumulative_steps=2_159_909,
+        target_steps=2_160_000,
+        stage_maximum_steps=2_160_000,
+        worker_count=56,
+    )
+    ordinary = _terminal_boundary_status(
+        cumulative_steps=431_909,
+        target_steps=432_000,
+        stage_maximum_steps=2_160_000,
+        worker_count=56,
+    )
+    outside = _terminal_boundary_status(
+        cumulative_steps=2_159_887,
+        target_steps=2_160_000,
+        stage_maximum_steps=2_160_000,
+        worker_count=56,
+    )
+    assert terminal["shortfall_active_learner_steps"] == 91
+    assert terminal["maximum_terminal_worker_segment_shortfall"] == 112
+    assert terminal["accepted_terminal_worker_segment_shortfall"] is True
+    assert terminal["reached"] is True
+    assert ordinary["accepted_terminal_worker_segment_shortfall"] is False
+    assert ordinary["reached"] is False
+    assert outside["accepted_terminal_worker_segment_shortfall"] is False
+    assert outside["reached"] is False

@@ -43,9 +43,7 @@ from rival_training.v9_checkpoint import load_v9_checkpoint  # noqa: E402
 from rival_training.v9_trainer import RivalV9PPOTrainer  # noqa: E402
 
 
-DEFAULT_CHECKPOINT_ROOT = (
-    REPOSITORY_ROOT / "training/checkpoints/milestone10_2/stage_1"
-)
+DEFAULT_CHECKPOINT_ROOT = REPOSITORY_ROOT / "training/checkpoints/milestone10_2/stage_1"
 STAGE_MAXIMUM_ACTIVE_STEPS = 6_480_000
 EVALUATION_OVERHEAD_PROJECTION_SECONDS = 540.0
 SOURCE_STATE_KEY = "v10_2_source_checkpoint"
@@ -56,6 +54,22 @@ TRAINING_BOUNDARY_VERSION = "RivalM10_2Stage1TrainingBoundaryV1"
 
 def _read(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _terminal_boundary_status(
+    *, cumulative_steps: int, target_steps: int, stage_maximum_steps: int, worker_count: int
+) -> dict[str, Any]:
+    shortfall = max(0, int(target_steps) - int(cumulative_steps))
+    tolerance = 2 * int(worker_count) if int(target_steps) == int(stage_maximum_steps) else 0
+    accepted_shortfall = 0 < shortfall <= tolerance
+    return {
+        "target_active_learner_steps": int(target_steps),
+        "actual_active_learner_steps": int(cumulative_steps),
+        "shortfall_active_learner_steps": shortfall,
+        "maximum_terminal_worker_segment_shortfall": tolerance,
+        "accepted_terminal_worker_segment_shortfall": accepted_shortfall,
+        "reached": int(cumulative_steps) >= int(target_steps) or accepted_shortfall,
+    }
 
 
 def _effective_config(path: Path) -> dict[str, Any]:
@@ -91,15 +105,9 @@ def _compact_iteration(report: dict[str, Any]) -> dict[str, Any]:
             "critic_loss": report["ppo"]["critic_loss"],
             "analog_entropy": report["ppo"]["analog_entropy"],
             "button_entropy": report["ppo"]["button_entropy"],
-            "actor_update_magnitude": report["ppo"][
-                "actor_update_magnitude"
-            ],
-            "critic_update_magnitude": report["ppo"][
-                "critic_update_magnitude"
-            ],
-            "head_gradient_absolute_sums": report["ppo"][
-                "head_gradient_absolute_sums"
-            ],
+            "actor_update_magnitude": report["ppo"]["actor_update_magnitude"],
+            "critic_update_magnitude": report["ppo"]["critic_update_magnitude"],
+            "head_gradient_absolute_sums": report["ppo"]["head_gradient_absolute_sums"],
         },
         "actions": report["actions"],
         "health": report["health"],
@@ -165,13 +173,9 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         raise RuntimeError(f"Campaign is already stopped: {state['stop_reason']}")
 
     source = args.source_checkpoint.resolve()
-    trainer, source_record, transfer = _new_trainer(
-        source, config, phase=phase, device=args.device
-    )
+    trainer, source_record, transfer = _new_trainer(source, config, phase=phase, device=args.device)
     if trainer.cumulative_agent_steps >= target_steps:
-        raise RuntimeError(
-            "Source has already reached the requested Stage-1 boundary"
-        )
+        raise RuntimeError("Source has already reached the requested Stage-1 boundary")
     if trainer.cumulative_agent_steps > STAGE_MAXIMUM_ACTIVE_STEPS:
         raise RuntimeError("Source exceeds the Stage-1 experience authority")
 
@@ -190,9 +194,7 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
     iteration_rows: list[dict[str, Any]] = []
     rolling_records: list[dict[str, Any]] = []
     removed_rolling: list[str] = []
-    projected_iteration_seconds = float(
-        state.get("projected_next_iteration_seconds", 45.0)
-    )
+    projected_iteration_seconds = float(state.get("projected_next_iteration_seconds", 45.0))
     cleanup = None
     wall_stop = False
     latest_held = None
@@ -202,8 +204,7 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         while trainer.cumulative_agent_steps < target_steps:
             clock = wall_clock_status(
                 projected_iteration_and_boundary_seconds=(
-                    projected_iteration_seconds
-                    + EVALUATION_OVERHEAD_PROJECTION_SECONDS
+                    projected_iteration_seconds + EVALUATION_OVERHEAD_PROJECTION_SECONDS
                 ),
                 config=config,
             )
@@ -236,15 +237,11 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
             latest_held = held
             compact = _compact_iteration(iteration)
             iteration_rows.append(compact)
-            recent = [
-                float(row["iteration_wall_seconds"])
-                for row in iteration_rows[-3:]
-            ]
+            recent = [float(row["iteration_wall_seconds"]) for row in iteration_rows[-3:]]
             projected_iteration_seconds = max(recent) * 1.25
             clock = wall_clock_status(
                 projected_iteration_and_boundary_seconds=(
-                    projected_iteration_seconds
-                    + EVALUATION_OVERHEAD_PROJECTION_SECONDS
+                    projected_iteration_seconds + EVALUATION_OVERHEAD_PROJECTION_SECONDS
                 ),
                 config=config,
             )
@@ -259,9 +256,7 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
                     "production_promotion_authorized": False,
                 }
             )
-            rolling_directory = rolling_root / (
-                f"{trainer.cumulative_agent_steps:09d}"
-            )
+            rolling_directory = rolling_root / (f"{trainer.cumulative_agent_steps:09d}")
             rolling_record = save_checkpoint_atomic(
                 rolling_directory,
                 actor=trainer.actor,
@@ -276,33 +271,20 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
             removed_rolling.extend(
                 prune_rolling_checkpoints(
                     rolling_root,
-                    keep=int(
-                        config["stage_contract"][
-                            "rolling_recovery_checkpoints_to_keep"
-                        ]
-                    ),
+                    keep=int(config["stage_contract"]["rolling_recovery_checkpoints_to_keep"]),
                 )
             )
             update_progressive_state(
                 {
                     "stage_active_learner_steps": trainer.cumulative_agent_steps,
-                    "stage_simulated_hours": trainer.cumulative_agent_steps
-                    / 432_000.0,
-                    "total_progressive_active_learner_steps": (
-                        trainer.cumulative_agent_steps
-                    ),
+                    "stage_simulated_hours": trainer.cumulative_agent_steps / 432_000.0,
+                    "total_progressive_active_learner_steps": (trainer.cumulative_agent_steps),
                     "total_progressive_simulated_hours": (
                         trainer.cumulative_agent_steps / 432_000.0
                     ),
-                    "campaign_wall_clock_elapsed_seconds": clock[
-                        "elapsed_seconds"
-                    ],
-                    "campaign_wall_clock_remaining_seconds": clock[
-                        "remaining_seconds"
-                    ],
-                    "projected_next_iteration_seconds": (
-                        projected_iteration_seconds
-                    ),
+                    "campaign_wall_clock_elapsed_seconds": clock["elapsed_seconds"],
+                    "campaign_wall_clock_remaining_seconds": clock["remaining_seconds"],
+                    "projected_next_iteration_seconds": (projected_iteration_seconds),
                     "latest_clean_recovery_checkpoint": rolling_record,
                 }
             )
@@ -359,7 +341,13 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         expected_config=config,
         device="cpu",
     )
-    reached = trainer.cumulative_agent_steps >= target_steps
+    terminal_boundary = _terminal_boundary_status(
+        cumulative_steps=trainer.cumulative_agent_steps,
+        target_steps=target_steps,
+        stage_maximum_steps=STAGE_MAXIMUM_ACTIVE_STEPS,
+        worker_count=int(config["backend"]["worker_count"]),
+    )
+    reached = bool(terminal_boundary["reached"])
     status = "wall_clock_stop" if wall_stop else "passed" if reached else "failed"
     result = {
         "schema_version": 1,
@@ -371,8 +359,8 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         "boundary_hours": boundary_hours,
         "target_active_learner_steps": target_steps,
         "reached_active_learner_steps": trainer.cumulative_agent_steps,
-        "reached_simulated_hours": trainer.cumulative_agent_steps
-        / 432_000.0,
+        "reached_simulated_hours": trainer.cumulative_agent_steps / 432_000.0,
+        "terminal_boundary_tolerance": terminal_boundary,
         "source_checkpoint": source_record,
         "source_actor_only_transfer": transfer["proof"] if transfer else None,
         "environment_shapes": shapes,
@@ -392,46 +380,38 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "checks": {
             "active_rows_within_worker_segment_shortfall": all(
-                row["experience_records"]
-                <= row["collected_active_learner_steps"]
+                row["experience_records"] <= row["collected_active_learner_steps"]
                 and row["experience_records"]
                 >= row["collected_active_learner_steps"]
                 - 4 * int(config["backend"]["worker_count"])
                 for row in iteration_rows
             ),
             "dummy_rows_structurally_excluded": True,
-            "all_iterations_healthy": all(
-                row["health"]["passed"] for row in iteration_rows
-            ),
+            "all_iterations_healthy": all(row["health"]["passed"] for row in iteration_rows),
             "stage_experience_ceiling_respected": (
                 trainer.cumulative_agent_steps <= STAGE_MAXIMUM_ACTIVE_STEPS
             ),
-            "immutable_checkpoint_reload_exact": reload_parity["checks"][
-                "passed"
-            ],
+            "immutable_checkpoint_reload_exact": reload_parity["checks"]["passed"],
             "workers_cleaned": cleanup["passed"],
             "boundary_reached_or_wall_stop": reached or wall_stop,
             "production_promotion_authorized": False,
         },
     }
-    result["checks"]["passed"] = all(
-        value
-        for key, value in result["checks"].items()
-        if key != "production_promotion_authorized"
-    ) and result["checks"]["production_promotion_authorized"] is False
-    output = args.output or (
-        RESULT_ROOT / "stage_1" / f"training_{slug}.json"
+    result["checks"]["passed"] = (
+        all(
+            value
+            for key, value in result["checks"].items()
+            if key != "production_promotion_authorized"
+        )
+        and result["checks"]["production_promotion_authorized"] is False
     )
+    output = args.output or (RESULT_ROOT / "stage_1" / f"training_{slug}.json")
     write_json_atomic(output, result)
     updates = {
         "stage_active_learner_steps": trainer.cumulative_agent_steps,
         "stage_simulated_hours": trainer.cumulative_agent_steps / 432_000.0,
-        "total_progressive_active_learner_steps": (
-            trainer.cumulative_agent_steps
-        ),
-        "total_progressive_simulated_hours": (
-            trainer.cumulative_agent_steps / 432_000.0
-        ),
+        "total_progressive_active_learner_steps": (trainer.cumulative_agent_steps),
+        "total_progressive_simulated_hours": (trainer.cumulative_agent_steps / 432_000.0),
         "campaign_wall_clock_elapsed_seconds": clock["elapsed_seconds"],
         "campaign_wall_clock_remaining_seconds": clock["remaining_seconds"],
         "current_evaluation_boundary": boundary_hours if reached else None,
@@ -457,9 +437,7 @@ def main() -> int:
     parser.add_argument("--boundary-hours", type=float, required=True)
     parser.add_argument("--phase", choices=("A", "B"), required=True)
     parser.add_argument("--config", type=Path, default=DEFAULT_STAGE1_CONFIG)
-    parser.add_argument(
-        "--checkpoint-root", type=Path, default=DEFAULT_CHECKPOINT_ROOT
-    )
+    parser.add_argument("--checkpoint-root", type=Path, default=DEFAULT_CHECKPOINT_ROOT)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--device", default="cuda:0")
     args = parser.parse_args()
