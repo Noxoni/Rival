@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "summary_version": "RivalM10_7FinalSummaryV1",
+  "completed_utc": "2026-08-24T20:43:46.5916591Z",
+  "status": "completed_negative_capability_result",
+  "decision": "stop_at_plus_2p5h_for_action_policy_evidence_review",
+  "stage": 1,
+  "stage_2_authorized": false,
+  "production_promotion_authorized": false,
+  "reward_retune_authorized": false,
+  "source": {
+    "checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "source_actor_exact": true,
+    "transferred_parameter_count": 1961692,
+    "new_button_parameter_count": 1539,
+    "fresh_critic": true,
+    "fresh_optimizers": true
+  },
+  "persistence_correction": {
+    "formula": "sigmoid(policy_logit + (2*previous_bit-1)*logit(persistence))",
+    "reason": "The requested convex probability mixture is an absorbing deterministic threshold latch for persistence above 0.5.",
+    "jump": 0.95,
+    "boost": 0.9,
+    "handbrake": 0.9,
+    "off_to_on_reachable": true,
+    "on_to_off_reachable": true,
+    "same_effective_probability_for_sampling_replay_and_deterministic_mode": true,
+    "all_eight_button_combinations_representable": true
+  },
+  "supervised_learnability": {
+    "initial_validation_mse": 0.38421541452407837,
+    "final_validation_mse": 0.022074777632951736,
+    "held_out_steering_sign_accuracy": 0.981042654028436,
+    "passed": true,
+    "diagnostic_actor_discarded": true
+  },
+  "capability_curve": [
+    {
+      "boundary_hours": 0.0,
+      "label": "source_transfer",
+      "deterministic": {"first": 0.18, "second": 0.032, "third": 0.008, "all_three": 0.008},
+      "stochastic": {"first": 0.084, "second": 0.002, "third": 0.0, "all_three": 0.0}
+    },
+    {
+      "boundary_hours": 0.5,
+      "deterministic": {"first": 0.178, "second": 0.03, "third": 0.012, "all_three": 0.012},
+      "stochastic": {"first": 0.096, "second": 0.012, "third": 0.0, "all_three": 0.0}
+    },
+    {
+      "boundary_hours": 1.0,
+      "deterministic": {"first": 0.246, "second": 0.066, "third": 0.052, "all_three": 0.052},
+      "stochastic": {"first": 0.106, "second": 0.012, "third": 0.004, "all_three": 0.004}
+    },
+    {
+      "boundary_hours": 2.5,
+      "deterministic": {"first": 0.112, "second": 0.008, "third": 0.0, "all_three": 0.0},
+      "stochastic": {"first": 0.088, "second": 0.008, "third": 0.006, "all_three": 0.006}
+    }
+  ],
+  "final_checkpoint": {
+    "directory": "training/checkpoints/milestone10_7/stage_1/boundaries/plus-002p5h/001080011",
+    "actor_sha256": "5d88514e345e9aa73adc398be547104f9ad5e8901ff7274b6a23f839bb45fc3c",
+    "manifest_sha256": "50d3577c36ae9020893a06a138ad3b968c4832985bcc50359d58026f609d18de",
+    "cumulative_learner_steps": 1080011,
+    "learner_simulated_hours": 2.500025462962963,
+    "model_updates": 44,
+    "clean_boundary": true,
+    "reload_output_maximum_absolute_difference": 0.0
+  },
+  "final_deterministic": {
+    "first_contact_success": 0.112,
+    "second_contact_success": 0.008,
+    "third_contact_success": 0.0,
+    "all_three_success": 0.0,
+    "no_touch_rate": 0.99,
+    "successful_time_to_first_contact_mean_seconds": 1.7851190476190477,
+    "successful_first_to_second_mean_seconds": 1.83125,
+    "successful_second_to_third_mean_seconds": null,
+    "failed_initial_distance_mean_uu": 2180.4211898140466,
+    "failed_terminal_distance_mean_uu": 4010.704418239961,
+    "failed_initial_alignment_mean": 0.594919579290227,
+    "failed_terminal_alignment_mean": -0.23845533101695202,
+    "cumulative_heading_reward": -665.0767428924676,
+    "cumulative_distance_reward": -266.802256448408,
+    "cumulative_acquisition_time_penalty": -8137.138333333364,
+    "throttle_mean": 0.07425214289380812,
+    "steer_mean": 0.07797529581985613,
+    "jump_share": 0.0,
+    "boost_share": 0.0,
+    "handbrake_share": 0.0
+  },
+  "final_stochastic": {
+    "first_contact_success": 0.088,
+    "second_contact_success": 0.008,
+    "third_contact_success": 0.006,
+    "all_three_success": 0.006,
+    "no_touch_rate": 0.982,
+    "successful_time_to_first_contact_mean_seconds": 2.6128787878787886,
+    "successful_first_to_second_mean_seconds": 2.68125,
+    "successful_second_to_third_mean_seconds": 4.986111111111111,
+    "failed_initial_distance_mean_uu": 2108.4876968951996,
+    "failed_terminal_distance_mean_uu": 4342.88260953154,
+    "failed_initial_alignment_mean": 0.615544639850866,
+    "failed_terminal_alignment_mean": -0.01030120921606747,
+    "cumulative_heading_reward": -499.4423354817957,
+    "cumulative_distance_reward": -382.7258117628869,
+    "cumulative_acquisition_time_penalty": -8115.928333333364,
+    "throttle_mean": 0.0877002268237255,
+    "steer_mean": -0.0160809131293887,
+    "jump_share": 0.414057063642262,
+    "boost_share": 0.403543603271911,
+    "handbrake_share": 0.506455441774469
+  },
+  "final_stochastic_minus_deterministic_gap": {
+    "first_contact": -0.024,
+    "second_contact": 0.0,
+    "third_contact": 0.006,
+    "all_three": 0.006,
+    "stochastic_materially_better_first_contact_by_5_points": false
+  },
+  "diagnosis": {
+    "m10_6_joint_argmax_collapse_reproduced": false,
+    "button_policy_learned_useful_deterministic_control": false,
+    "stochastic_policy_hides_better_acquisition": false,
+    "ball_acquisition_monotonically_improved": false,
+    "final_deterministic_first_contact_gain_from_source": -0.068,
+    "next_investigation": "PPO credit assignment/training formulation and learned policy-output behavior, especially analog control; do not respond with another reward-magnitude retune."
+  },
+  "verification": {
+    "production_tests": {"passed": 91, "failed": 0},
+    "training_tests": {"passed": 196, "failed": 0},
+    "ruff": true,
+    "compileall": true,
+    "json_parse": true,
+    "checkpoint_reload_parity": true,
+    "frozen_wisp_unchanged": true,
+    "remaining_m10_7_python_processes": 0,
+    "historical_stash_preserved": true,
+    "clean_worktree_after_commit": true,
+    "remote_main_readback_required_after_push": true
+  },
+  "evidence": {
+    "preflight": "training/results/milestone10_7/preflight.json",
+    "plus_0p5h": "training/results/milestone10_7/stage_1/boundary_plus-000p5h.json",
+    "plus_1h": "training/results/milestone10_7/stage_1/boundary_plus-001h.json",
+    "plus_2p5h": "training/results/milestone10_7/stage_1/boundary_plus-002p5h.json"
+  }
+}
