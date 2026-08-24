@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "config_version": "RivalM10_3Stage1TrainingConfigV1",
+  "campaign_id": "rival-v10-3-stage1-anti-idle-progressive-retry",
+  "stage": 1,
+  "skill": "ball_acquisition",
+  "policy_version": "RivalPolicyV1",
+  "critic_version": "RivalCriticV1",
+  "observation_version": "RivalObsV1",
+  "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+  "action_version": "RivalActionV1",
+  "action_schema_sha256": "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163",
+  "canonical_state_version": "RivalCanonicalStateV1",
+  "canonical_adapter_version": "RivalCanonicalAdapterV1",
+  "reward_version": "RivalBallAcquisitionRewardV2",
+  "reward_schedule_version": "RivalBallAcquisitionRewardScheduleV2",
+  "curriculum_version": "RivalBallAcquisitionCurriculumV2",
+  "environment_version": "RivalBallAcquisitionEnvV2",
+  "evaluation_version": "RivalBallAcquisitionEvaluationV2",
+  "backend": {
+    "name": "rlgym-ppo",
+    "version": "1.3.13",
+    "source_commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea",
+    "worker_count": 56,
+    "minimum_inference_size": 16,
+    "standardize_observations": false
+  },
+  "time_base": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "agents_per_environment": 2,
+    "trainable_agents_per_environment": 1,
+    "dummy_agents_per_environment": 1,
+    "agent_steps_per_simulated_game_second": 120,
+    "agent_steps_per_simulated_game_hour": 432000,
+    "active_learner_steps_per_simulated_game_second": 120,
+    "active_learner_steps_per_simulated_game_hour": 432000,
+    "repeat_action": false,
+    "one_tick_action_delay": true
+  },
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 96000,
+    "experience_buffer_capacity_agent_steps": 300000,
+    "ppo_batch_agent_steps": 96000,
+    "minibatch_agent_steps": 24000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0,
+    "advantage_epsilon": 0.000001
+  },
+  "gate11": {
+    "iterations_before_fresh_reload": 1,
+    "iterations_after_fresh_reload": 1,
+    "held_reload_observation_count": 32,
+    "seed": 20261031
+  },
+  "stage_contract": {
+    "source_checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "source_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "forbid_m10_2_recovery_actor_as_source": true,
+    "actor_weights_only": true,
+    "fresh_critic": true,
+    "fresh_actor_optimizer": true,
+    "fresh_critic_optimizer": true,
+    "dummy_excluded_from_ppo": true,
+    "maximum_active_learner_steps": 6480000,
+    "maximum_learner_simulated_hours": 15.0,
+    "evaluation_boundaries_added_simulated_hours": [
+      1.0,
+      2.5,
+      5.0,
+      7.5,
+      10.0,
+      12.5,
+      15.0
+    ],
+    "rolling_recovery_checkpoints_to_keep": 2,
+    "success_decision": "ball_acquisition_skill_passed_unlock_ground_control",
+    "production_promotion_authorized": false
+  },
+  "wall_clock": {
+    "total_progressive_authority_seconds": 36000,
+    "finalization_reserve_seconds": 1200,
+    "minimum_remaining_to_start_new_stage_seconds": 3000
+  }
+}

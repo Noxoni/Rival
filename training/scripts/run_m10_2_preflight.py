@@ -51,6 +51,7 @@ from rival_training.v10_2_curriculum import (  # noqa: E402
 from rival_training.v10_2_environment import (  # noqa: E402
     RivalSingleLearnerGymWrapperV1,
     build_ball_acquisition_env,
+    make_ball_acquisition_phase_a_env,
 )
 from rival_training.v10_2_evaluation import (  # noqa: E402
     evaluate_stage1_checkpoint,
@@ -72,6 +73,12 @@ DEFAULT_OUTPUT = RESULT_ROOT / "preflight.json"
 DEFAULT_DISPOSABLE_ROOT = (
     REPOSITORY_ROOT / "training/checkpoints/milestone10_2/preflight"
 )
+PHASE_A_ENV_FACTORY = make_ball_acquisition_phase_a_env
+PREFLIGHT_VERSION = "RivalM10_2Stage1PreflightV1"
+DISPOSABLE_STATE_KEY = "v10_2_disposable_preflight"
+MILESTONE_LABEL = "Milestone 10.2"
+GATE_CORPUS_FILENAME = "stage1_frozen_gate_corpus.json"
+UNSEEN_CORPUS_FILENAME = "stage1_unseen_generalization_corpus.json"
 EXPECTED_WISP_HASHES = {
     "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
     "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
@@ -472,6 +479,8 @@ def _running_training_processes() -> list[dict[str, Any]]:
         "run_m10_1_campaign_boundary.py",
         "run_m10_2_stage1_boundary.py",
         "run_m10_2_progressive.py",
+        "run_m10_3_stage1_boundary.py",
+        "run_m10_3_progressive.py",
     )
     current = os.getpid()
     for process in psutil.process_iter(["pid", "name", "cmdline"]):
@@ -545,10 +554,7 @@ def _worker_sweep(
             critic_optimizer=transfer["critic_optimizer"],
             trainer_state=transfer["trainer_state"],
             env_factory=(
-                __import__(
-                    "rival_training.v10_2_environment",
-                    fromlist=["make_ball_acquisition_phase_a_env"],
-                ).make_ball_acquisition_phase_a_env
+                PHASE_A_ENV_FACTORY
             ),
         )
         cleanup = None
@@ -662,13 +668,13 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
 
     source_gate = evaluate_stage1_checkpoint(
         SOURCE_CHECKPOINT,
-        CORPUS_ROOT / "stage1_frozen_gate_corpus.json",
+        CORPUS_ROOT / GATE_CORPUS_FILENAME,
         device=args.device,
         evaluation_workers=args.evaluation_workers,
     )
     source_unseen = evaluate_stage1_checkpoint(
         SOURCE_CHECKPOINT,
-        CORPUS_ROOT / "stage1_unseen_generalization_corpus.json",
+        CORPUS_ROOT / UNSEEN_CORPUS_FILENAME,
         device=args.device,
         evaluation_workers=args.evaluation_workers,
     )
@@ -693,10 +699,6 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
     disposable_transfer = actor_only_stage_transfer(
         SOURCE_CHECKPOINT, effective_config, device=args.device
     )
-    from rival_training.v10_2_environment import (
-        make_ball_acquisition_phase_a_env,
-    )
-
     trainer = RivalV9PPOTrainer(
         effective_config,
         device=args.device,
@@ -705,7 +707,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         actor_optimizer=disposable_transfer["actor_optimizer"],
         critic_optimizer=disposable_transfer["critic_optimizer"],
         trainer_state=disposable_transfer["trainer_state"],
-        env_factory=make_ball_acquisition_phase_a_env,
+        env_factory=PHASE_A_ENV_FACTORY,
     )
     cleanup = None
     try:
@@ -726,7 +728,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         {
             "stage": 1,
             "stage_phase": "A",
-            "v10_2_disposable_preflight": True,
+            DISPOSABLE_STATE_KEY: True,
             "experience_counted_toward_campaign": False,
             "production_promotion_authorized": False,
         }
@@ -822,7 +824,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
     ) and checks["production_promotion_authorized"] is False
     result = {
         "schema_version": 1,
-        "preflight_version": "RivalM10_2Stage1PreflightV1",
+        "preflight_version": PREFLIGHT_VERSION,
         "status": "passed" if passed else "failed",
         "config": config_identity(config),
         "effective_selected_worker_count": sweep["selected_worker_count"],
@@ -874,7 +876,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         }
     )
     if not passed:
-        raise RuntimeError(f"Milestone 10.2 preflight failed: {checks}")
+        raise RuntimeError(f"{MILESTONE_LABEL} preflight failed: {checks}")
     return result
 
 

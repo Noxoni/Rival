@@ -80,6 +80,10 @@ def _start_episode(specification: dict[str, Any]) -> dict[str, Any]:
         "reward_total": 0.0,
         "distance_reward_total": 0.0,
         "touch_reward_total": 0.0,
+        "idle_ticks": 0,
+        "idle_seconds": 0.0,
+        "idle_penalty_total": 0.0,
+        "pre_touch_observed_ticks": 0,
         "progress_values": [],
         "actions": [],
         "termination_reason": None,
@@ -114,6 +118,12 @@ def _finish_episode(state: dict[str, Any]) -> dict[str, Any]:
         ),
         "distance_reward_total": state["distance_reward_total"],
         "touch_reward_total": state["touch_reward_total"],
+        "idle_ticks": state["idle_ticks"],
+        "idle_simulated_seconds": state["idle_seconds"],
+        "pre_touch_observed_ticks": state["pre_touch_observed_ticks"],
+        "pre_touch_idle_share": state["idle_ticks"]
+        / max(state["pre_touch_observed_ticks"], 1),
+        "cumulative_idle_penalty": state["idle_penalty_total"],
         "reward_total": state["reward_total"],
         "distance_budget_saturated": bool(
             env.rlgym_env.shared_info["rival_v10_2_reward_metrics"][
@@ -175,6 +185,17 @@ def _episode_batch(
                 state["progress_values"].append(
                     float(metrics["car_progress_clipped_uu"])
                 )
+                state["idle_ticks"] += int(metrics.get("idle_ticks", 0))
+                state["idle_seconds"] += float(metrics.get("idle_seconds", 0.0))
+                state["idle_penalty_total"] += float(
+                    metrics.get("idle_penalty", 0.0)
+                )
+                if (
+                    state["first_touch_seconds"] is None
+                    and not bool(metrics["new_physical_touch"])
+                    and state["ticks"] > 60
+                ):
+                    state["pre_touch_observed_ticks"] += 1
                 if bool(metrics["new_physical_touch"]):
                     state["physical_touches"] += 1
                     if state["first_touch_seconds"] is None:
@@ -276,6 +297,23 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         ),
         "touch_reward_total": sum(
             float(row["touch_reward_total"]) for row in episodes
+        ),
+        "idle_ticks": sum(int(row["idle_ticks"]) for row in episodes),
+        "idle_simulated_seconds": sum(
+            float(row["idle_simulated_seconds"]) for row in episodes
+        ),
+        "pre_touch_idle_share": sum(
+            int(row["idle_ticks"]) for row in episodes
+        )
+        / max(
+            sum(
+                int(row["pre_touch_observed_ticks"])
+                for row in episodes
+            ),
+            1,
+        ),
+        "cumulative_idle_penalty": sum(
+            float(row["cumulative_idle_penalty"]) for row in episodes
         ),
         "dense_budget_saturation_share": sum(
             bool(row["distance_budget_saturated"]) for row in episodes

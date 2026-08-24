@@ -1,0 +1,161 @@
+{
+  "authority_package_audit": {
+    "checks": {
+      "all_inherited_blob_shas_match": true,
+      "all_manifest_byte_counts_match": true,
+      "manifest_sha256_fields_match": false,
+      "paused_strategy_stash_preserved": true,
+      "required_m10_2_closeout_in_history": true
+    },
+    "files": [
+      {
+        "byte_count_matches": true,
+        "committed_bytes": 2601,
+        "committed_sha256": "9bd776bb26475d7c2f5ea0e04a4b5c0ff78926505e3821004f2d7e07891a8e3a",
+        "expected_bytes": 2601,
+        "expected_sha256": "fc963e65d4f9c96c7652fb3f0d3c21a68c0619de6d91b22571e22e52b45521b5",
+        "path": "handoff/v10.3/CODEX_START_PROMPT.md",
+        "sha256_matches": false
+      },
+      {
+        "byte_count_matches": true,
+        "committed_bytes": 4980,
+        "committed_sha256": "be3355205873c6ec0132b90c340a478a298c114850c39536c93ad1987435e6f5",
+        "expected_bytes": 4980,
+        "expected_sha256": "d97545860f579e4e847f81d5c0bd9184ea1611beb323061ed86320512096f9dc",
+        "path": "handoff/v10.3/M10_3_CAMPAIGN.json",
+        "sha256_matches": false
+      },
+      {
+        "byte_count_matches": true,
+        "committed_bytes": 1715,
+        "committed_sha256": "ee8ff3005e11c3b202824697a5146da34159daf5f70571b7c512eabd572695fb",
+        "expected_bytes": 1715,
+        "expected_sha256": "386b03c14fc8880ad6b0eb0719222385aec336540fedc2b7508b300c745fb7d2",
+        "path": "handoff/v10.3/README.md",
+        "sha256_matches": false
+      },
+      {
+        "byte_count_matches": true,
+        "committed_bytes": 2569,
+        "committed_sha256": "d78e600ce80595ddaeccd0194654214a0bbe2e6d390d261dbab17ee1be1a12bd",
+        "expected_bytes": 2569,
+        "expected_sha256": "548206893b3e67d701ac14a84b5d41032a5f4a9cd645b980684e95610f7e93d2",
+        "path": "handoff/v10.3/STAGE_1_REPAIR.md",
+        "sha256_matches": false
+      },
+      {
+        "byte_count_matches": true,
+        "committed_bytes": 489,
+        "committed_sha256": "1869a7ee11ec219efc07c1ed0a1edf055be96f152cdc9113d0fe854a4e63cc20",
+        "expected_bytes": 489,
+        "expected_sha256": "662d26396a39c12bdd4cbd7eec9de7ef6ce8580d7c564a1b09c06c82ec9a7902",
+        "path": "handoff/v10.3/VERSION.md",
+        "sha256_matches": false
+      }
+    ],
+    "gating_checks_passed": true,
+    "inherited_exact_blobs": [
+      {
+        "actual_blob_sha": "6ef428a75013841565fff454160a0d3158fae258",
+        "expected_blob_sha": "6ef428a75013841565fff454160a0d3158fae258",
+        "passed": true,
+        "path": "handoff/v10.2/EVALUATION_AND_EXIT_GATES.md"
+      },
+      {
+        "actual_blob_sha": "fbff7d3a28b0eb4ffa33adcc857dccb2ae7e03c2",
+        "expected_blob_sha": "fbff7d3a28b0eb4ffa33adcc857dccb2ae7e03c2",
+        "passed": true,
+        "path": "handoff/v10.2/PROGRESSIVE_STAGE_PROTOCOL.md"
+      },
+      {
+        "actual_blob_sha": "818f3a17b1b53db7bd00e4ffde6a22157cd2705f",
+        "expected_blob_sha": "818f3a17b1b53db7bd00e4ffde6a22157cd2705f",
+        "passed": true,
+        "path": "handoff/v10.2/OVERNIGHT_10H_BUDGET.md"
+      },
+      {
+        "actual_blob_sha": "72d25469c8b3bbf67786ae633a3aac8328f04de5",
+        "expected_blob_sha": "72d25469c8b3bbf67786ae633a3aac8328f04de5",
+        "passed": true,
+        "path": "handoff/v10.2/STAGE_2_GROUND_CONTROL.md"
+      },
+      {
+        "actual_blob_sha": "158b913f8f310c56a47fd3c91362a93c806d4337",
+        "expected_blob_sha": "158b913f8f310c56a47fd3c91362a93c806d4337",
+        "passed": true,
+        "path": "handoff/v10.2/STAGE_3_AERIAL_CONTROL.md"
+      },
+      {
+        "actual_blob_sha": "e8fdbcc54b55fc4af2fc9b8836b585b69000d0e9",
+        "expected_blob_sha": "e8fdbcc54b55fc4af2fc9b8836b585b69000d0e9",
+        "passed": true,
+        "path": "handoff/v10.2/STAGE_4_FINISHING.md"
+      }
+    ],
+    "manifest": "handoff/v10.3/PACKAGE_MANIFEST.json",
+    "non_gating_discrepancy": "The five v10.3 manifest SHA-256 fields do not match the committed blobs; byte counts and inherited Git blob identities do match.",
+    "stash_list": [
+      "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1"
+    ]
+  },
+  "campaign_id": "rival-v10-3-stage1-anti-idle-progressive-retry",
+  "campaign_wall_clock_elapsed_seconds": 0.0,
+  "campaign_wall_clock_remaining_seconds": 36000.0,
+  "campaign_wall_clock_started_monotonic": null,
+  "campaign_wall_clock_started_utc": null,
+  "corpora": {
+    "checks": {
+      "corpus_hashes_disjoint": true,
+      "gate_has_exactly_500_episodes": true,
+      "passed": true,
+      "unseen_has_at_least_250_episodes": true
+    },
+    "gate": {
+      "episode_count": 500,
+      "path": "training/results/milestone10_3/stage_1/corpora/stage1_v2_frozen_gate_corpus.json",
+      "sha256": "ea7c093bd2000fa6d2977fea5505d5951abd14744c81e64fb91e7db140c74f48"
+    },
+    "unseen": {
+      "episode_count": 250,
+      "path": "training/results/milestone10_3/stage_1/corpora/stage1_v2_unseen_generalization_corpus.json",
+      "sha256": "00b5f68592b0404e05301e3a39fb2fea160944ae0329ef710044c76149520ae0"
+    }
+  },
+  "created_utc": "2026-08-24T14:37:51.826760+00:00",
+  "current_evaluation_boundary": null,
+  "current_phase": "ready_stage_1",
+  "current_skill": "ball_acquisition",
+  "current_stage": 1,
+  "format": "rival-v10-3-progressive-state-v1",
+  "gate_decision": "stage_1_preflight_passed",
+  "latest_clean_recovery_checkpoint": null,
+  "m10_2_recovery_actor_used_as_source": false,
+  "next_authorized_stage": null,
+  "passed_prerequisite_checkpoints": {},
+  "preflight_result": "training/results/milestone10_3/preflight.json",
+  "production_promotion_authorized": false,
+  "schema_version": 1,
+  "selected_worker_count": 56,
+  "source_actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+  "source_checkpoint": {
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 167,
+    "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+    "config_version": "RivalM10_1TrainingConfigV1",
+    "cumulative_agent_steps": 32019870,
+    "cumulative_model_updates": 667,
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "simulated_game_hours": 37.06003472222222
+  },
+  "stage_active_learner_steps": 0,
+  "stage_simulated_hours": 0.0,
+  "stop_reason": null,
+  "total_progressive_active_learner_steps": 0,
+  "total_progressive_simulated_hours": 0.0,
+  "updated_utc": "2026-08-24T14:49:47.366088+00:00"
+}

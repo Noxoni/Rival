@@ -29,6 +29,11 @@ from rival_training.v10_2_evaluation import (  # noqa: E402
 )
 
 
+GATE_CORPUS_FILENAME = "stage1_frozen_gate_corpus.json"
+UNSEEN_CORPUS_FILENAME = "stage1_unseen_generalization_corpus.json"
+BOUNDARY_RESULT_VERSION = "RivalM10_2Stage1BoundaryResultV1"
+
+
 CORE_FAMILIES = (
     "stationary_close",
     "stationary_medium",
@@ -287,7 +292,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     ]
     evaluation = evaluate_stage1_checkpoint(
         checkpoint,
-        CORPUS_ROOT / "stage1_frozen_gate_corpus.json",
+        CORPUS_ROOT / GATE_CORPUS_FILENAME,
         device=args.device,
         evaluation_workers=args.evaluation_workers,
         include_episode_rows=True,
@@ -303,7 +308,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     if phase == "B" and phase_b["checks"]["passed"]:
         unseen = evaluate_stage1_checkpoint(
             checkpoint,
-            CORPUS_ROOT / "stage1_unseen_generalization_corpus.json",
+            CORPUS_ROOT / UNSEEN_CORPUS_FILENAME,
             device=args.device,
             evaluation_workers=args.evaluation_workers,
         )
@@ -361,7 +366,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     }
     result = {
         "schema_version": 1,
-        "boundary_result_version": "RivalM10_2Stage1BoundaryResultV1",
+        "boundary_result_version": BOUNDARY_RESULT_VERSION,
         "stage": 1,
         "skill": "ball_acquisition",
         "phase": phase,

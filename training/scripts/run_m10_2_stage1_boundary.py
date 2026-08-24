@@ -48,6 +48,10 @@ DEFAULT_CHECKPOINT_ROOT = (
 )
 STAGE_MAXIMUM_ACTIVE_STEPS = 6_480_000
 EVALUATION_OVERHEAD_PROJECTION_SECONDS = 540.0
+SOURCE_STATE_KEY = "v10_2_source_checkpoint"
+ACTIVE_BOUNDARY_STATE_KEY = "v10_2_active_boundary_hours"
+COMPLETED_BOUNDARY_STATE_KEY = "v10_2_completed_boundary_hours"
+TRAINING_BOUNDARY_VERSION = "RivalM10_2Stage1TrainingBoundaryV1"
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -249,8 +253,8 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
                 {
                     "stage": 1,
                     "stage_phase": phase,
-                    "v10_2_source_checkpoint": source_record,
-                    "v10_2_active_boundary_hours": boundary_hours,
+                    SOURCE_STATE_KEY: source_record,
+                    ACTIVE_BOUNDARY_STATE_KEY: boundary_hours,
                     "campaign_wall_clock": clock,
                     "production_promotion_authorized": False,
                 }
@@ -329,8 +333,8 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         {
             "stage": 1,
             "stage_phase": phase,
-            "v10_2_source_checkpoint": source_record,
-            "v10_2_completed_boundary_hours": boundary_hours,
+            SOURCE_STATE_KEY: source_record,
+            COMPLETED_BOUNDARY_STATE_KEY: boundary_hours,
             "campaign_wall_clock": clock,
             "production_promotion_authorized": False,
         }
@@ -359,7 +363,7 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
     status = "wall_clock_stop" if wall_stop else "passed" if reached else "failed"
     result = {
         "schema_version": 1,
-        "training_boundary_version": "RivalM10_2Stage1TrainingBoundaryV1",
+        "training_boundary_version": TRAINING_BOUNDARY_VERSION,
         "status": status,
         "stage": 1,
         "skill": "ball_acquisition",
