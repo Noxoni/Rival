@@ -60,6 +60,20 @@ def _distance(env: RivalSingleLearnerGymWrapperV1) -> float:
     )
 
 
+def _alignment(env: RivalSingleLearnerGymWrapperV1) -> float:
+    if env.active_agent is None:
+        raise RuntimeError("Evaluation environment has no active learner")
+    car = env.rlgym_env.state.cars[env.active_agent]
+    relative = np.asarray(env.rlgym_env.state.ball.position, dtype=np.float64) - np.asarray(
+        car.physics.position, dtype=np.float64
+    )
+    norm = float(np.linalg.norm(relative))
+    if norm <= 1e-12:
+        return 0.0
+    forward = np.asarray(car.physics.forward, dtype=np.float64)
+    return float(np.clip(np.dot(forward, relative / norm), -1.0, 1.0))
+
+
 def _start_episode(specification: dict[str, Any]) -> dict[str, Any]:
     raw = build_ball_acquisition_env(
         phase="A",
@@ -75,10 +89,12 @@ def _start_episode(specification: dict[str, Any]) -> dict[str, Any]:
         "env": env,
         "observation": observation,
         "initial_distance": _distance(env),
+        "initial_alignment": _alignment(env),
         "first_touch_seconds": None,
         "physical_touches": 0,
         "reward_total": 0.0,
         "distance_reward_total": 0.0,
+        "heading_reward_total": 0.0,
         "touch_reward_total": 0.0,
         "idle_ticks": 0,
         "idle_seconds": 0.0,
@@ -110,35 +126,27 @@ def _finish_episode(state: dict[str, Any]) -> dict[str, Any]:
         "simulated_seconds": state["ticks"] / 120.0,
         "initial_car_ball_distance": state["initial_distance"],
         "terminal_car_ball_distance": _distance(env),
-        "mean_signed_car_progress_uu": float(
-            np.mean(state["progress_values"])
-        ),
-        "median_signed_car_progress_uu": float(
-            np.median(state["progress_values"])
-        ),
+        "initial_car_ball_alignment": state["initial_alignment"],
+        "terminal_car_ball_alignment": _alignment(env),
+        "mean_signed_car_progress_uu": float(np.mean(state["progress_values"])),
+        "median_signed_car_progress_uu": float(np.median(state["progress_values"])),
         "distance_reward_total": state["distance_reward_total"],
+        "heading_reward_total": state["heading_reward_total"],
         "touch_reward_total": state["touch_reward_total"],
         "idle_ticks": state["idle_ticks"],
         "idle_simulated_seconds": state["idle_seconds"],
         "pre_touch_observed_ticks": state["pre_touch_observed_ticks"],
-        "pre_touch_idle_share": state["idle_ticks"]
-        / max(state["pre_touch_observed_ticks"], 1),
+        "pre_touch_idle_share": state["idle_ticks"] / max(state["pre_touch_observed_ticks"], 1),
         "cumulative_idle_penalty": state["idle_penalty_total"],
         "reward_total": state["reward_total"],
         "distance_budget_saturated": bool(
-            env.rlgym_env.shared_info["rival_v10_2_reward_metrics"][
-                "distance_budget_saturated"
-            ]
+            env.rlgym_env.shared_info["rival_v10_2_reward_metrics"]["distance_budget_saturated"]
         ),
         "goal_scored_reward_neutral": state["goal_scored"],
         "termination_reason": state["termination_reason"],
         "action_diagnostics": {
-            "mean_absolute_throttle": float(
-                np.mean(np.abs(physical_actions[:, 0]))
-            ),
-            "mean_absolute_steer": float(
-                np.mean(np.abs(physical_actions[:, 1]))
-            ),
+            "mean_absolute_throttle": float(np.mean(np.abs(physical_actions[:, 0]))),
+            "mean_absolute_steer": float(np.mean(np.abs(physical_actions[:, 1]))),
             "jump_share": float(buttons[:, 0].mean()),
             "boost_share": float(buttons[:, 1].mean()),
             "handbrake_share": float(buttons[:, 2].mean()),
@@ -169,27 +177,16 @@ def _episode_batch(
                 state["observation"] = observation
                 state["ticks"] += 1
                 state["actions"].append(physical[0].copy())
-                metrics = env.rlgym_env.shared_info[
-                    "rival_v10_2_reward_metrics"
-                ]
+                metrics = env.rlgym_env.shared_info["rival_v10_2_reward_metrics"]
                 state["reward_total"] += float(rewards[0])
-                components = env.rlgym_env.shared_info["reward_components"][
-                    env.active_agent
-                ]
-                state["distance_reward_total"] += float(
-                    components["distance_progress"]
-                )
-                state["touch_reward_total"] += float(
-                    components["physical_new_touch"]
-                )
-                state["progress_values"].append(
-                    float(metrics["car_progress_clipped_uu"])
-                )
+                components = env.rlgym_env.shared_info["reward_components"][env.active_agent]
+                state["distance_reward_total"] += float(components["distance_progress"])
+                state["heading_reward_total"] += float(components.get("heading_alignment", 0.0))
+                state["touch_reward_total"] += float(components["physical_new_touch"])
+                state["progress_values"].append(float(metrics["car_progress_clipped_uu"]))
                 state["idle_ticks"] += int(metrics.get("idle_ticks", 0))
                 state["idle_seconds"] += float(metrics.get("idle_seconds", 0.0))
-                state["idle_penalty_total"] += float(
-                    metrics.get("idle_penalty", 0.0)
-                )
+                state["idle_penalty_total"] += float(metrics.get("idle_penalty", 0.0))
                 if (
                     state["first_touch_seconds"] is None
                     and not bool(metrics["new_physical_touch"])
@@ -201,9 +198,7 @@ def _episode_batch(
                     if state["first_touch_seconds"] is None:
                         state["first_touch_seconds"] = state["ticks"] / 120.0
                 if done or truncated:
-                    state["termination_reason"] = info["rival_v10_2"][
-                        "termination_reason"
-                    ]
+                    state["termination_reason"] = info["rival_v10_2"]["termination_reason"]
                     state["goal_scored"] = bool(done)
                     completed.append(_finish_episode(state))
                     env.close()
@@ -256,12 +251,10 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         "first_touch_success_count": len(success),
         "first_touch_success_share": len(success) / max(len(episodes), 1),
         "no_touch_timeout_count": sum(
-            row["termination_reason"] == "no_touch_timeout"
-            for row in episodes
+            row["termination_reason"] == "no_touch_timeout" for row in episodes
         ),
         "no_touch_timeout_share": sum(
-            row["termination_reason"] == "no_touch_timeout"
-            for row in episodes
+            row["termination_reason"] == "no_touch_timeout" for row in episodes
         )
         / max(len(episodes), 1),
         "successful_time_to_first_touch_seconds": _summary(
@@ -276,45 +269,45 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         "failed_episode_terminal_car_ball_distance": _summary(
             [float(row["terminal_car_ball_distance"]) for row in failures]
         ),
-        "physical_touch_count": sum(
-            int(row["physical_touch_count"]) for row in episodes
+        "initial_car_ball_alignment": _summary(
+            [float(row["initial_car_ball_alignment"]) for row in episodes]
         ),
-        "touches_per_episode": sum(
-            int(row["physical_touch_count"]) for row in episodes
-        )
+        "terminal_car_ball_alignment": _summary(
+            [float(row["terminal_car_ball_alignment"]) for row in episodes]
+        ),
+        "failed_episode_initial_car_ball_alignment": _summary(
+            [float(row["initial_car_ball_alignment"]) for row in failures]
+        ),
+        "failed_episode_terminal_car_ball_alignment": _summary(
+            [float(row["terminal_car_ball_alignment"]) for row in failures]
+        ),
+        "failed_episode_alignment_improvement": _summary(
+            [
+                float(row["terminal_car_ball_alignment"]) - float(row["initial_car_ball_alignment"])
+                for row in failures
+            ]
+        ),
+        "physical_touch_count": sum(int(row["physical_touch_count"]) for row in episodes),
+        "touches_per_episode": sum(int(row["physical_touch_count"]) for row in episodes)
         / max(len(episodes), 1),
-        "active_learner_steps": sum(
-            int(row["active_learner_steps"]) for row in episodes
-        ),
+        "active_learner_steps": sum(int(row["active_learner_steps"]) for row in episodes),
         "touches_per_100k_active_learner_steps": 100_000.0
         * sum(int(row["physical_touch_count"]) for row in episodes)
         / max(
             sum(int(row["active_learner_steps"]) for row in episodes),
             1,
         ),
-        "distance_reward_total": sum(
-            float(row["distance_reward_total"]) for row in episodes
-        ),
-        "touch_reward_total": sum(
-            float(row["touch_reward_total"]) for row in episodes
-        ),
+        "distance_reward_total": sum(float(row["distance_reward_total"]) for row in episodes),
+        "heading_reward_total": sum(float(row["heading_reward_total"]) for row in episodes),
+        "touch_reward_total": sum(float(row["touch_reward_total"]) for row in episodes),
         "idle_ticks": sum(int(row["idle_ticks"]) for row in episodes),
-        "idle_simulated_seconds": sum(
-            float(row["idle_simulated_seconds"]) for row in episodes
-        ),
-        "pre_touch_idle_share": sum(
-            int(row["idle_ticks"]) for row in episodes
-        )
+        "idle_simulated_seconds": sum(float(row["idle_simulated_seconds"]) for row in episodes),
+        "pre_touch_idle_share": sum(int(row["idle_ticks"]) for row in episodes)
         / max(
-            sum(
-                int(row["pre_touch_observed_ticks"])
-                for row in episodes
-            ),
+            sum(int(row["pre_touch_observed_ticks"]) for row in episodes),
             1,
         ),
-        "cumulative_idle_penalty": sum(
-            float(row["cumulative_idle_penalty"]) for row in episodes
-        ),
+        "cumulative_idle_penalty": sum(float(row["cumulative_idle_penalty"]) for row in episodes),
         "dense_budget_saturation_share": sum(
             bool(row["distance_budget_saturated"]) for row in episodes
         )
@@ -323,17 +316,11 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
             np.mean([row["mean_signed_car_progress_uu"] for row in episodes])
         ),
         "median_signed_car_progress_uu": float(
-            np.median(
-                [row["median_signed_car_progress_uu"] for row in episodes]
-            )
+            np.median([row["median_signed_car_progress_uu"] for row in episodes])
         ),
-        "goals_reward_neutral": sum(
-            bool(row["goal_scored_reward_neutral"]) for row in episodes
-        ),
+        "goals_reward_neutral": sum(bool(row["goal_scored_reward_neutral"]) for row in episodes),
         "action_diagnostics": {
-            name: float(
-                np.mean([row["action_diagnostics"][name] for row in episodes])
-            )
+            name: float(np.mean([row["action_diagnostics"][name] for row in episodes]))
             for name in action_names
         },
     }
@@ -363,15 +350,11 @@ def evaluate_stage1_checkpoint(
     if int(evaluation_workers) == 1:
         loaded = load_v9_checkpoint(checkpoint_path, device=device)
         policy = RivalHybridPolicy(loaded["actor"], device)
-        for start in range(
-            0, len(specifications), int(environment_batch_size)
-        ):
+        for start in range(0, len(specifications), int(environment_batch_size)):
             episodes.extend(
                 _episode_batch(
                     policy,
-                    specifications[
-                        start : start + int(environment_batch_size)
-                    ],
+                    specifications[start : start + int(environment_batch_size)],
                 )
             )
     else:
@@ -399,15 +382,11 @@ def evaluate_stage1_checkpoint(
         "evaluation_version": EVALUATION_VERSION,
         "checkpoint": {
             "directory": portable_path(checkpoint_path),
-            "manifest_sha256": sha256_file(
-                checkpoint_path / "checkpoint_manifest.json"
-            ),
+            "manifest_sha256": sha256_file(checkpoint_path / "checkpoint_manifest.json"),
             "actor_sha256": sha256_file(checkpoint_path / "actor.pt"),
         },
         "corpus": {
-            "path": corpus_path.resolve()
-            .relative_to(REPOSITORY_ROOT)
-            .as_posix(),
+            "path": corpus_path.resolve().relative_to(REPOSITORY_ROOT).as_posix(),
             "sha256": sha256_file(corpus_path),
             "name": corpus["name"],
             "episode_count": int(corpus["episode_count"]),
@@ -416,17 +395,14 @@ def evaluate_stage1_checkpoint(
         "environment_batch_size": int(environment_batch_size),
         "evaluation_workers": int(evaluation_workers),
         "evaluation_device": "cpu" if int(evaluation_workers) > 1 else device,
-        "families": {
-            family: _aggregate(rows) for family, rows in by_family.items()
-        },
+        "families": {family: _aggregate(rows) for family, rows in by_family.items()},
         "overall": overall,
         "evaluation_wall_seconds": wall_seconds,
         "aggregate_simulated_game_seconds_per_wall_second": (
             overall["active_learner_steps"] / 120.0 / wall_seconds
         ),
         "checks": {
-            "all_manifest_episodes_completed": len(episodes)
-            == int(corpus["episode_count"]),
+            "all_manifest_episodes_completed": len(episodes) == int(corpus["episode_count"]),
             "all_five_families_present": len(by_family) == 5,
             "dummy_rows_evaluated": 0,
             "all_metrics_finite": all(

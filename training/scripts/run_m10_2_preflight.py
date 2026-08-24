@@ -70,9 +70,7 @@ from rival_training.v9_trainer import RivalV9PPOTrainer  # noqa: E402
 
 
 DEFAULT_OUTPUT = RESULT_ROOT / "preflight.json"
-DEFAULT_DISPOSABLE_ROOT = (
-    REPOSITORY_ROOT / "training/checkpoints/milestone10_2/preflight"
-)
+DEFAULT_DISPOSABLE_ROOT = REPOSITORY_ROOT / "training/checkpoints/milestone10_2/preflight"
 PHASE_A_ENV_FACTORY = make_ball_acquisition_phase_a_env
 PREFLIGHT_VERSION = "RivalM10_2Stage1PreflightV1"
 DISPOSABLE_STATE_KEY = "v10_2_disposable_preflight"
@@ -113,31 +111,19 @@ def _reward_truth_table() -> dict[str, Any]:
 
     moving_ball = RivalBallAcquisitionRewardKernelV1()
     moving_ball.reset(_transition(0, (0.0, 0.0, 17.0), stationary_ball))
-    ball_toward = moving_ball.step(
-        _transition(1, (0.0, 0.0, 17.0), (500.0, 0.0, 93.0))
-    )
-    ball_away = moving_ball.step(
-        _transition(2, (0.0, 0.0, 17.0), (1500.0, 0.0, 93.0))
-    )
+    ball_toward = moving_ball.step(_transition(1, (0.0, 0.0, 17.0), (500.0, 0.0, 93.0)))
+    ball_away = moving_ball.step(_transition(2, (0.0, 0.0, 17.0), (1500.0, 0.0, 93.0)))
 
     cycle = RivalBallAcquisitionRewardKernelV1()
     cycle.reset(_transition(0, (0.0, 0.0, 17.0), stationary_ball))
-    cycle_approach = cycle.step(
-        _transition(1, (10.0, 0.0, 17.0), stationary_ball)
-    )
-    cycle_retreat = cycle.step(
-        _transition(2, (0.0, 0.0, 17.0), stationary_ball)
-    )
+    cycle_approach = cycle.step(_transition(1, (10.0, 0.0, 17.0), stationary_ball))
+    cycle_retreat = cycle.step(_transition(2, (0.0, 0.0, 17.0), stationary_ball))
 
     contacts = RivalNewContactDetectorV1()
-    contact_sequence = [
-        contacts.process(raw) for raw in (1, 1, 1, 0, 1, 0, 1)
-    ]
+    contact_sequence = [contacts.process(raw) for raw in (1, 1, 1, 0, 1, 0, 1)]
 
     budget = RivalBallAcquisitionRewardKernelV1(safety_clip_uu=1000.0)
-    budget.reset(
-        _transition(0, (0.0, 0.0, 17.0), (5000.0, 0.0, 93.0))
-    )
+    budget.reset(_transition(0, (0.0, 0.0, 17.0), (5000.0, 0.0, 93.0)))
     for tick in range(1, 12):
         budget.step(
             _transition(
@@ -162,12 +148,9 @@ def _reward_truth_table() -> dict[str, Any]:
         "away_from_stationary_ball_negative": away.total < 0.0,
         "stationary_car_ball_toward_zero": abs(ball_toward.total) <= 1e-12,
         "stationary_car_ball_away_zero": abs(ball_away.total) <= 1e-12,
-        "closed_approach_retreat_cycle_zero": abs(
-            cycle_approach.total + cycle_retreat.total
-        )
+        "closed_approach_retreat_cycle_zero": abs(cycle_approach.total + cycle_retreat.total)
         <= 1e-12,
-        "sustained_contact_counted_once": contact_sequence[:3]
-        == [True, False, False],
+        "sustained_contact_counted_once": contact_sequence[:3] == [True, False, False],
         "two_separated_retouches_counted": contact_sequence
         == [True, False, False, False, True, False, True],
         "dense_absolute_budget_exact": math.isclose(
@@ -175,18 +158,12 @@ def _reward_truth_table() -> dict[str, Any]:
             DISTANCE_PROGRESS_ABSOLUTE_EPISODE_BUDGET,
             abs_tol=1e-12,
         ),
-        "goal_for_reward_zero": goal_for.components["goal_for"] == 0.0
-        and goal_for.total == 0.0,
-        "goal_against_reward_zero": ball_acquisition_reward_metadata()[
-            "goal_against_reward"
-        ]
+        "goal_for_reward_zero": goal_for.components["goal_for"] == 0.0 and goal_for.total == 0.0,
+        "goal_against_reward_zero": ball_acquisition_reward_metadata()["goal_against_reward"]
         == 0.0,
-        "speed_and_controller_reward_absent": ball_acquisition_reward_metadata()[
-            "speed_reward"
-        ]
+        "speed_and_controller_reward_absent": ball_acquisition_reward_metadata()["speed_reward"]
         == 0.0
-        and ball_acquisition_reward_metadata()["reads_controller_action"]
-        is False,
+        and ball_acquisition_reward_metadata()["reads_controller_action"] is False,
     }
     checks["passed"] = all(checks.values())
     return {
@@ -207,9 +184,7 @@ def _rocketsim_touch_trace() -> dict[str, Any]:
     shared: dict[str, Any] = {}
     FixedTeamSizeMutator(blue_size=1, orange_size=1).apply(state, shared)
     agents = list(state.cars)
-    learner = next(
-        agent for agent in agents if int(state.cars[agent].team_num) == 0
-    )
+    learner = next(agent for agent in agents if int(state.cars[agent].team_num) == 0)
     dummy = next(agent for agent in agents if agent != learner)
     _set_ball(
         state,
@@ -254,16 +229,11 @@ def _rocketsim_touch_trace() -> dict[str, Any]:
                 "tick": int(state.tick_count),
                 "phase": phase,
                 "learner_raw_touch_records": raw,
-                "dummy_raw_touch_records": int(
-                    state.cars[dummy].ball_touches
-                ),
+                "dummy_raw_touch_records": int(state.cars[dummy].ball_touches),
                 "detector_contact_active": detector.raw_contact_active,
                 "emitted_new_contact": emitted,
                 "car_ball_distance": float(
-                    np.linalg.norm(
-                        state.cars[learner].physics.position
-                        - state.ball.position
-                    )
+                    np.linalg.norm(state.cars[learner].physics.position - state.ball.position)
                 ),
             }
         )
@@ -305,19 +275,12 @@ def _rocketsim_touch_trace() -> dict[str, Any]:
     checks = {
         "first_live_rocketsim_contact_emitted_once": first_touch_found,
         "continuous_raw_contact_run_not_repeated": all(
-            sum(
-                bool(row["emitted_new_contact"])
-                for row in rows
-                if row["phase"] == phase
-            )
-            == 1
+            sum(bool(row["emitted_new_contact"]) for row in rows if row["phase"] == phase) == 1
             for phase in ("first_approach", "second_approach")
         ),
         "separation_raw_zero_observed": separated_zero_seen,
         "separated_retouch_emitted": touch_events >= 2,
-        "dummy_contact_never_credited": all(
-            not row["dummy_raw_touch_records"] for row in rows
-        ),
+        "dummy_contact_never_credited": all(not row["dummy_raw_touch_records"] for row in rows),
         "reset_has_no_phantom_touch": phantom_after_reset is False,
     }
     checks["passed"] = all(checks.values())
@@ -356,24 +319,19 @@ def _active_dummy_isolation_audit(total_steps: int) -> dict[str, Any]:
             action = np.empty((1, 8), dtype=np.float32)
             action[0, :5] = rng.uniform(-1.0, 1.0, 5)
             action[0, 5:] = rng.integers(0, 2, 3)
-            observation, rewards, done, truncated, info = environment.step(
-                action
-            )
+            observation, rewards, done, truncated, info = environment.step(action)
             observations[slot] = observation
             all_finite = all_finite and bool(np.isfinite(observation).all())
             exactly_one_row = exactly_one_row and observation.shape == (1, 714)
             exactly_one_row = exactly_one_row and len(rewards) == 1
             dummy_touches += int(
-                environment.rlgym_env.state.cars[
-                    environment.dummy_agent
-                ].ball_touches
-                > 0
+                environment.rlgym_env.state.cars[environment.dummy_agent].ball_touches > 0
             )
             progress_unclipped.append(
                 float(
-                    environment.rlgym_env.shared_info[
-                        "rival_v10_2_reward_metrics"
-                    ]["car_progress_unclipped_uu"]
+                    environment.rlgym_env.shared_info["rival_v10_2_reward_metrics"][
+                        "car_progress_unclipped_uu"
+                    ]
                 )
             )
             # Force many episode transitions in addition to natural timeouts.
@@ -388,12 +346,9 @@ def _active_dummy_isolation_audit(total_steps: int) -> dict[str, Any]:
     absolute = np.abs(np.asarray(progress_unclipped, dtype=np.float64))
     ordinary_p999 = float(np.percentile(absolute, 99.9))
     maximum = float(absolute.max())
-    total_dummy_actions = sum(
-        environment.dummy_actions_injected for environment in environments
-    )
+    total_dummy_actions = sum(environment.dummy_actions_injected for environment in environments)
     nonzero_dummy_actions = sum(
-        environment.dummy_nonzero_actions_injected
-        for environment in environments
+        environment.dummy_nonzero_actions_injected for environment in environments
     )
     checks = {
         "at_least_10000_environment_steps": int(total_steps) >= 10_000,
@@ -405,8 +360,7 @@ def _active_dummy_isolation_audit(total_steps: int) -> dict[str, Any]:
         "dummy_controller_always_exact_zero": nonzero_dummy_actions == 0
         and total_dummy_actions == int(total_steps),
         "dummy_rows_never_returned": exactly_one_row,
-        "dummy_physical_interference_below_point_one_percent": dummy_touches
-        / int(total_steps)
+        "dummy_physical_interference_below_point_one_percent": dummy_touches / int(total_steps)
         < 0.001,
         "opponent_observation_contract_finite": all_finite,
         "safety_clip_does_not_truncate_ordinary_p999": ordinary_p999
@@ -481,6 +435,8 @@ def _running_training_processes() -> list[dict[str, Any]]:
         "run_m10_2_progressive.py",
         "run_m10_3_stage1_boundary.py",
         "run_m10_3_progressive.py",
+        "run_m10_4_stage1_boundary.py",
+        "run_m10_5_stage1_boundary.py",
     )
     current = os.getpid()
     for process in psutil.process_iter(["pid", "name", "cmdline"]):
@@ -524,8 +480,7 @@ def _resource_snapshot() -> dict[str, Any]:
     memory = psutil.virtual_memory()
     return {
         "cpu_utilization_percent": psutil.cpu_percent(interval=None),
-        "system_memory_used_mib": (memory.total - memory.available)
-        / (1024 * 1024),
+        "system_memory_used_mib": (memory.total - memory.available) / (1024 * 1024),
         "system_memory_available_mib": memory.available / (1024 * 1024),
         "gpu": gpu,
     }
@@ -542,9 +497,7 @@ def _worker_sweep(
     for worker_count in candidates:
         config = deepcopy(base_config)
         config["backend"]["worker_count"] = int(worker_count)
-        transfer = actor_only_stage_transfer(
-            SOURCE_CHECKPOINT, config, device=device
-        )
+        transfer = actor_only_stage_transfer(SOURCE_CHECKPOINT, config, device=device)
         trainer = RivalV9PPOTrainer(
             config,
             device=device,
@@ -553,9 +506,7 @@ def _worker_sweep(
             actor_optimizer=transfer["actor_optimizer"],
             critic_optimizer=transfer["critic_optimizer"],
             trainer_state=transfer["trainer_state"],
-            env_factory=(
-                PHASE_A_ENV_FACTORY
-            ),
+            env_factory=(PHASE_A_ENV_FACTORY),
         )
         cleanup = None
         psutil.cpu_percent(interval=None)
@@ -563,8 +514,8 @@ def _worker_sweep(
         try:
             shapes = trainer.start_workers()
             started = time.perf_counter()
-            data, metrics, collected, collection_seconds = (
-                trainer.manager.collect_timesteps(int(active_steps))
+            data, metrics, collected, collection_seconds = trainer.manager.collect_timesteps(
+                int(active_steps)
             )
             wall_seconds = time.perf_counter() - started
             health = trainer.worker_health()
@@ -593,9 +544,7 @@ def _worker_sweep(
                 "metrics_records": len(metrics),
                 "collection_seconds": float(collection_seconds),
                 "rollout_wall_seconds": wall_seconds,
-                "active_learner_steps_per_second": float(
-                    collected / collection_seconds
-                ),
+                "active_learner_steps_per_second": float(collected / collection_seconds),
                 "aggregate_simulated_game_seconds_per_second": float(
                     collected / collection_seconds / 120.0
                 ),
@@ -608,9 +557,7 @@ def _worker_sweep(
                 "resource_before": before,
                 "resource_after": after,
                 "worker_health": health,
-                "worker_stalls_or_crashes": sum(
-                    not item["alive"] for item in health
-                ),
+                "worker_stalls_or_crashes": sum(not item["alive"] for item in health),
                 "cleanup": cleanup,
                 "stable": stable,
             }
@@ -618,17 +565,13 @@ def _worker_sweep(
     stable_rows = [row for row in rows if row["stable"]]
     if not stable_rows:
         raise RuntimeError("No stable worker candidate completed the sweep")
-    selected = max(
-        stable_rows, key=lambda row: row["active_learner_steps_per_second"]
-    )
+    selected = max(stable_rows, key=lambda row: row["active_learner_steps_per_second"])
     return {
         "selection_metric": "stable_active_learner_steps_per_second",
         "masking_materially_changed_row_count": True,
         "candidates": rows,
         "selected_worker_count": selected["worker_count"],
-        "selected_active_learner_steps_per_second": selected[
-            "active_learner_steps_per_second"
-        ],
+        "selected_active_learner_steps_per_second": selected["active_learner_steps_per_second"],
         "checks": {
             "all_candidates_completed_stably": len(stable_rows) == len(rows),
             "selected_is_highest_stable_throughput": True,
@@ -642,18 +585,12 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
     stale_trainers = _running_training_processes()
     source_before = {
         "actor_sha256": sha256_file(SOURCE_CHECKPOINT / "actor.pt"),
-        "manifest_sha256": sha256_file(
-            SOURCE_CHECKPOINT / "checkpoint_manifest.json"
-        ),
+        "manifest_sha256": sha256_file(SOURCE_CHECKPOINT / "checkpoint_manifest.json"),
     }
     production_before = _production_state()
-    transfer = actor_only_stage_transfer(
-        SOURCE_CHECKPOINT, config, device=args.device
-    )
+    transfer = actor_only_stage_transfer(SOURCE_CHECKPOINT, config, device=args.device)
     corpora = build_stage1_corpus_manifests()
-    initialize_progressive_state(
-        transfer_proof=transfer["proof"], corpora=corpora
-    )
+    initialize_progressive_state(transfer_proof=transfer["proof"], corpora=corpora)
     reward = _reward_truth_table()
     touch_trace = _rocketsim_touch_trace()
     isolation = _active_dummy_isolation_audit(args.isolation_steps)
@@ -678,9 +615,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         device=args.device,
         evaluation_workers=args.evaluation_workers,
     )
-    write_json_atomic(
-        RESULT_ROOT / "stage_1/source_v10_1_plus10_gate.json", source_gate
-    )
+    write_json_atomic(RESULT_ROOT / "stage_1/source_v10_1_plus10_gate.json", source_gate)
     write_json_atomic(
         RESULT_ROOT / "stage_1/source_v10_1_plus10_unseen.json",
         source_unseen,
@@ -693,9 +628,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         active_steps=args.sweep_active_steps,
     )
     effective_config = deepcopy(config)
-    effective_config["backend"]["worker_count"] = int(
-        sweep["selected_worker_count"]
-    )
+    effective_config["backend"]["worker_count"] = int(sweep["selected_worker_count"])
     disposable_transfer = actor_only_stage_transfer(
         SOURCE_CHECKPOINT, effective_config, device=args.device
     )
@@ -719,9 +652,7 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         cleanup = trainer.cleanup()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     disposable_directory = (
-        args.disposable_root.resolve()
-        / stamp
-        / f"{trainer.cumulative_agent_steps:09d}"
+        args.disposable_root.resolve() / stamp / f"{trainer.cumulative_agent_steps:09d}"
     )
     state = trainer.trainer_state()
     state.update(
@@ -748,14 +679,10 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         expected_config=effective_config,
         device="cpu",
     )
-    real_restart = actor_only_stage_transfer(
-        SOURCE_CHECKPOINT, effective_config, device="cpu"
-    )
+    real_restart = actor_only_stage_transfer(SOURCE_CHECKPOINT, effective_config, device="cpu")
     source_after = {
         "actor_sha256": sha256_file(SOURCE_CHECKPOINT / "actor.pt"),
-        "manifest_sha256": sha256_file(
-            SOURCE_CHECKPOINT / "checkpoint_manifest.json"
-        ),
+        "manifest_sha256": sha256_file(SOURCE_CHECKPOINT / "checkpoint_manifest.json"),
     }
     production_after = _production_state()
     expected_production = {
@@ -788,14 +715,10 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         "gate5_reset_distributions": all(
             report["checks"]["passed"] for report in reset_audits.values()
         ),
-        "gate6_corpora_frozen_and_source_evaluated": corpora["checks"][
-            "passed"
-        ]
+        "gate6_corpora_frozen_and_source_evaluated": corpora["checks"]["passed"]
         and source_gate["checks"]["passed"]
         and source_unseen["checks"]["passed"],
-        "gate7_worker_sweep_stable": sweep["checks"][
-            "all_candidates_completed_stably"
-        ],
+        "gate7_worker_sweep_stable": sweep["checks"]["all_candidates_completed_stably"],
         "gate7_disposable_cuda_ppo_healthy": smoke["health"]["passed"],
         "gate7_one_active_row_per_step": smoke["experience_records"]
         == smoke["collected_agent_steps"],
@@ -806,9 +729,9 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         and smoke["health"]["critic_updated"],
         "gate7_checkpoint_reload_exact": reload_parity["checks"]["passed"],
         "gate7_workers_cleaned": cleanup is not None and cleanup["passed"],
-        "disposable_update_discarded_and_real_restart_exact": real_restart[
-            "proof"
-        ]["checks"]["passed"]
+        "disposable_update_discarded_and_real_restart_exact": real_restart["proof"]["checks"][
+            "passed"
+        ]
         and real_restart["proof"]["fresh_actor_optimizer_state_entries"] == 0
         and real_restart["proof"]["fresh_critic_optimizer_state_entries"] == 0,
         "real_campaign_clock_not_started": json.loads(
@@ -817,11 +740,10 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         is None,
         "production_promotion_authorized": False,
     }
-    passed = all(
-        value
-        for key, value in checks.items()
-        if key != "production_promotion_authorized"
-    ) and checks["production_promotion_authorized"] is False
+    passed = (
+        all(value for key, value in checks.items() if key != "production_promotion_authorized")
+        and checks["production_promotion_authorized"] is False
+    )
     result = {
         "schema_version": 1,
         "preflight_version": PREFLIGHT_VERSION,
@@ -864,14 +786,10 @@ def run_preflight(args: argparse.Namespace) -> dict[str, Any]:
         {
             "current_phase": "ready_stage_1" if passed else "stopped",
             "gate_decision": (
-                "stage_1_preflight_passed"
-                if passed
-                else "stop_stage_1_preflight_failed"
+                "stage_1_preflight_passed" if passed else "stop_stage_1_preflight_failed"
             ),
             "selected_worker_count": sweep["selected_worker_count"],
-            "preflight_result": args.output.resolve()
-            .relative_to(REPOSITORY_ROOT)
-            .as_posix(),
+            "preflight_result": args.output.resolve().relative_to(REPOSITORY_ROOT).as_posix(),
             "stop_reason": None if passed else "stop_stage_1_preflight_failed",
         }
     )
@@ -884,9 +802,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=DEFAULT_STAGE1_CONFIG)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument(
-        "--disposable-root", type=Path, default=DEFAULT_DISPOSABLE_ROOT
-    )
+    parser.add_argument("--disposable-root", type=Path, default=DEFAULT_DISPOSABLE_ROOT)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--phase-a-resets", type=int, default=10_000)
     parser.add_argument("--phase-b-resets", type=int, default=5_000)
@@ -905,15 +821,13 @@ def main() -> int:
         json.dumps(
             {
                 "status": report["status"],
-                "selected_worker_count": report[
-                    "effective_selected_worker_count"
+                "selected_worker_count": report["effective_selected_worker_count"],
+                "source_gate_success": report["source_evaluation"]["gate"]["overall"][
+                    "first_touch_success_share"
                 ],
-                "source_gate_success": report["source_evaluation"]["gate"][
-                    "overall"
-                ]["first_touch_success_share"],
-                "source_unseen_success": report["source_evaluation"][
-                    "unseen"
-                ]["overall"]["first_touch_success_share"],
+                "source_unseen_success": report["source_evaluation"]["unseen"]["overall"][
+                    "first_touch_success_share"
+                ],
                 "checks": report["checks"],
             },
             sort_keys=True,

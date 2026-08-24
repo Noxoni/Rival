@@ -34,6 +34,8 @@ UNSEEN_CORPUS_FILENAME = "stage1_unseen_generalization_corpus.json"
 BOUNDARY_RESULT_VERSION = "RivalM10_2Stage1BoundaryResultV1"
 STAGE1_SUCCESS_DECISION = "ball_acquisition_skill_passed_unlock_ground_control"
 STAGE1_SUCCESS_NEXT_STAGE = 2
+STAGE1_TERMINAL_BOUNDARY_HOURS: float | None = None
+STAGE1_TERMINAL_DECISION: str | None = None
 
 
 CORE_FAMILIES = (
@@ -49,55 +51,36 @@ def _read(path: Path) -> dict[str, Any]:
 
 
 def _core_metrics(report: dict[str, Any]) -> dict[str, float]:
-    episode_rows = [
-        row
-        for row in report.get("episode_rows", [])
-        if row["family"] in CORE_FAMILIES
-    ]
+    episode_rows = [row for row in report.get("episode_rows", []) if row["family"] in CORE_FAMILIES]
     if episode_rows:
-        successes = [
-            row for row in episode_rows if row["first_touch_success"]
-        ]
-        failures = [
-            row for row in episode_rows if not row["first_touch_success"]
-        ]
+        successes = [row for row in episode_rows if row["first_touch_success"]]
+        failures = [row for row in episode_rows if not row["first_touch_success"]]
         failed_initial = (
-            statistics.mean(
-                float(row["initial_car_ball_distance"]) for row in failures
-            )
+            statistics.mean(float(row["initial_car_ball_distance"]) for row in failures)
             if failures
             else 0.0
         )
         failed_terminal = (
-            statistics.mean(
-                float(row["terminal_car_ball_distance"]) for row in failures
-            )
+            statistics.mean(float(row["terminal_car_ball_distance"]) for row in failures)
             if failures
             else 0.0
         )
         return {
             "episodes": len(episode_rows),
-            "first_touch_success_share": len(successes)
-            / max(len(episode_rows), 1),
+            "first_touch_success_share": len(successes) / max(len(episode_rows), 1),
             "no_touch_timeout_share": sum(
-                row["termination_reason"] == "no_touch_timeout"
-                for row in episode_rows
+                row["termination_reason"] == "no_touch_timeout" for row in episode_rows
             )
             / max(len(episode_rows), 1),
             "successful_time_to_first_touch_median": (
-                statistics.median(
-                    float(row["time_to_first_touch_seconds"])
-                    for row in successes
-                )
+                statistics.median(float(row["time_to_first_touch_seconds"]) for row in successes)
                 if successes
                 else float("inf")
             ),
             "failed_initial_distance_mean": failed_initial,
             "failed_terminal_distance_mean": failed_terminal,
             "failed_terminal_distance_reduction_share": (
-                (failed_initial - failed_terminal) / failed_initial
-                if failed_initial > 0.0
-                else 0.0
+                (failed_initial - failed_terminal) / failed_initial if failed_initial > 0.0 else 0.0
             ),
         }
     rows = [report["families"][family] for family in CORE_FAMILIES]
@@ -110,12 +93,9 @@ def _core_metrics(report: dict[str, Any]) -> dict[str, float]:
             # Family medians are only a compact approximation if raw episodes
             # are absent, so use the exact overall all-family median for the
             # formal gate below and retain this only as core telemetry.
-            time_values.extend(
-                [float(summary["median"])] * int(summary["samples"])
-            )
+            time_values.extend([float(summary["median"])] * int(summary["samples"]))
     failed_initial_count = sum(
-        int(row["failed_episode_initial_car_ball_distance"]["samples"])
-        for row in rows
+        int(row["failed_episode_initial_car_ball_distance"]["samples"]) for row in rows
     )
     failed_initial = sum(
         float(row["failed_episode_initial_car_ball_distance"]["mean"] or 0.0)
@@ -138,16 +118,12 @@ def _core_metrics(report: dict[str, Any]) -> dict[str, float]:
         "failed_initial_distance_mean": failed_initial,
         "failed_terminal_distance_mean": failed_terminal,
         "failed_terminal_distance_reduction_share": (
-            (failed_initial - failed_terminal) / failed_initial
-            if failed_initial > 0.0
-            else 0.0
+            (failed_initial - failed_terminal) / failed_initial if failed_initial > 0.0 else 0.0
         ),
     }
 
 
-def _phase_a_gates(
-    report: dict[str, Any], previous: dict[str, Any] | None
-) -> dict[str, Any]:
+def _phase_a_gates(report: dict[str, Any], previous: dict[str, Any] | None) -> dict[str, Any]:
     core = _core_metrics(report)
     family = report["families"]
     regression = True
@@ -159,34 +135,23 @@ def _phase_a_gates(
             if old > 0.70 and new < old - 0.10:
                 regression = False
     checks = {
-        "stationary_close_at_least_95_percent": family[
-            "stationary_close"
-        ]["first_touch_success_share"]
+        "stationary_close_at_least_95_percent": family["stationary_close"][
+            "first_touch_success_share"
+        ]
         >= 0.95,
-        "stationary_medium_at_least_85_percent": family[
-            "stationary_medium"
-        ]["first_touch_success_share"]
-        >= 0.85,
-        "moving_chase_at_least_75_percent": family["moving_chase"][
+        "stationary_medium_at_least_85_percent": family["stationary_medium"][
             "first_touch_success_share"
         ]
+        >= 0.85,
+        "moving_chase_at_least_75_percent": family["moving_chase"]["first_touch_success_share"]
         >= 0.75,
-        "awkward_heading_at_least_80_percent": family[
-            "awkward_heading"
-        ]["first_touch_success_share"]
-        >= 0.80,
-        "core_aggregate_at_least_85_percent": core[
+        "awkward_heading_at_least_80_percent": family["awkward_heading"][
             "first_touch_success_share"
         ]
-        >= 0.85,
-        "core_no_touch_at_most_15_percent": core[
-            "no_touch_timeout_share"
-        ]
-        <= 0.15,
-        "successful_median_at_most_5_seconds": core[
-            "successful_time_to_first_touch_median"
-        ]
-        <= 5.0,
+        >= 0.80,
+        "core_aggregate_at_least_85_percent": core["first_touch_success_share"] >= 0.85,
+        "core_no_touch_at_most_15_percent": core["no_touch_timeout_share"] <= 0.15,
+        "successful_median_at_most_5_seconds": core["successful_time_to_first_touch_median"] <= 5.0,
         "failed_terminal_distance_reduced_at_least_25_percent": core[
             "failed_terminal_distance_reduction_share"
         ]
@@ -205,56 +170,37 @@ def _phase_b_frozen_gates(report: dict[str, Any]) -> dict[str, Any]:
         if row["first_touch_success"] and row["physical_touch_count"] >= 2
     ]
     checks = {
-        "stationary_close_at_least_97_percent": family[
-            "stationary_close"
-        ]["first_touch_success_share"]
+        "stationary_close_at_least_97_percent": family["stationary_close"][
+            "first_touch_success_share"
+        ]
         >= 0.97,
-        "stationary_medium_at_least_92_percent": family[
-            "stationary_medium"
-        ]["first_touch_success_share"]
+        "stationary_medium_at_least_92_percent": family["stationary_medium"][
+            "first_touch_success_share"
+        ]
         >= 0.92,
-        "moving_chase_at_least_88_percent": family["moving_chase"][
-            "first_touch_success_share"
-        ]
+        "moving_chase_at_least_88_percent": family["moving_chase"]["first_touch_success_share"]
         >= 0.88,
-        "awkward_heading_at_least_90_percent": family[
-            "awkward_heading"
-        ]["first_touch_success_share"]
-        >= 0.90,
-        "kickoff_at_least_80_percent": family[
-            "natural_kickoff_holdout"
-        ]["first_touch_success_share"]
-        >= 0.80,
-        "overall_at_least_90_percent": report["overall"][
+        "awkward_heading_at_least_90_percent": family["awkward_heading"][
             "first_touch_success_share"
         ]
         >= 0.90,
-        "no_touch_at_most_10_percent": report["overall"][
-            "no_touch_timeout_share"
+        "kickoff_at_least_80_percent": family["natural_kickoff_holdout"][
+            "first_touch_success_share"
         ]
-        <= 0.10,
+        >= 0.80,
+        "overall_at_least_90_percent": report["overall"]["first_touch_success_share"] >= 0.90,
+        "no_touch_at_most_10_percent": report["overall"]["no_touch_timeout_share"] <= 0.10,
         "successful_median_at_most_4_seconds": report["overall"][
             "successful_time_to_first_touch_seconds"
         ]["median"]
         is not None
-        and report["overall"]["successful_time_to_first_touch_seconds"][
-            "median"
-        ]
-        <= 4.0,
-        "touch_events_one_for_one": report["overall"][
-            "physical_touch_count"
-        ]
+        and report["overall"]["successful_time_to_first_touch_seconds"]["median"] <= 4.0,
+        "touch_events_one_for_one": report["overall"]["physical_touch_count"]
         == int(round(report["overall"]["touch_reward_total"])),
         "touch_return_dominates_positive_dense_on_repeated_successes": (
             bool(repeated_success_rows)
-            and sum(
-                float(row["touch_reward_total"])
-                for row in repeated_success_rows
-            )
-            > sum(
-                max(0.0, float(row["distance_reward_total"]))
-                for row in repeated_success_rows
-            )
+            and sum(float(row["touch_reward_total"]) for row in repeated_success_rows)
+            > sum(max(0.0, float(row["distance_reward_total"])) for row in repeated_success_rows)
         ),
         "goal_reward_zero": True,
         "speed_reward_absent": True,
@@ -266,19 +212,12 @@ def _phase_b_frozen_gates(report: dict[str, Any]) -> dict[str, Any]:
 
 def _unseen_gates(report: dict[str, Any]) -> dict[str, Any]:
     core_minimum = min(
-        float(report["families"][family]["first_touch_success_share"])
-        for family in CORE_FAMILIES
+        float(report["families"][family]["first_touch_success_share"]) for family in CORE_FAMILIES
     )
     checks = {
-        "aggregate_at_least_85_percent": report["overall"][
-            "first_touch_success_share"
-        ]
-        >= 0.85,
+        "aggregate_at_least_85_percent": report["overall"]["first_touch_success_share"] >= 0.85,
         "no_core_family_below_75_percent": core_minimum >= 0.75,
-        "no_touch_at_most_15_percent": report["overall"][
-            "no_touch_timeout_share"
-        ]
-        <= 0.15,
+        "no_touch_at_most_15_percent": report["overall"]["no_touch_timeout_share"] <= 0.15,
     }
     checks["passed"] = all(checks.values())
     return {"checks": checks}
@@ -289,9 +228,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     boundary = float(training["boundary_hours"])
     slug = boundary_slug(boundary)
     phase = str(training["phase"])
-    checkpoint = REPOSITORY_ROOT / training["immutable_checkpoint"][
-        "directory"
-    ]
+    checkpoint = REPOSITORY_ROOT / training["immutable_checkpoint"]["directory"]
     evaluation = evaluate_stage1_checkpoint(
         checkpoint,
         CORPUS_ROOT / GATE_CORPUS_FILENAME,
@@ -327,24 +264,23 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
     previous_phase_b_pass = bool(
         previous
         and previous.get("phase") == "B"
-        and previous.get("gates", {})
-        .get("phase_b", {})
-        .get("apparent_pass", False)
+        and previous.get("gates", {}).get("phase_b", {}).get("apparent_pass", False)
     )
     core = _core_metrics(evaluation)
     source_core = _core_metrics(source)
     no_learning = bool(
         boundary >= 5.0
-        and core["first_touch_success_share"]
-        - source_core["first_touch_success_share"]
-        < 0.10
-        and source_core["no_touch_timeout_share"]
-        - core["no_touch_timeout_share"]
-        < 0.10
+        and core["first_touch_success_share"] - source_core["first_touch_success_share"] < 0.10
+        and source_core["no_touch_timeout_share"] - core["no_touch_timeout_share"] < 0.10
     )
     if training["status"] == "wall_clock_stop":
         decision = "stop_progressive_overnight_wall_clock_budget_exhausted"
         next_phase = phase
+    elif STAGE1_TERMINAL_BOUNDARY_HOURS is not None and boundary >= STAGE1_TERMINAL_BOUNDARY_HOURS:
+        if STAGE1_TERMINAL_DECISION is None:
+            raise RuntimeError("A terminal boundary requires an explicit decision")
+        decision = STAGE1_TERMINAL_DECISION
+        next_phase = "complete"
     elif phase == "A" and phase_a["checks"]["passed"]:
         decision = "ball_acquisition_phase_a_passed_unlock_phase_b"
         next_phase = "B"
@@ -361,11 +297,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         decision = "continue_ball_acquisition_training"
         next_phase = phase
     clock = wall_clock_status()
-    compact_evaluation = {
-        key: value
-        for key, value in evaluation.items()
-        if key != "episode_rows"
-    }
+    compact_evaluation = {key: value for key, value in evaluation.items() if key != "episode_rows"}
     result = {
         "schema_version": 1,
         "boundary_result_version": BOUNDARY_RESULT_VERSION,
@@ -374,9 +306,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         "phase": phase,
         "boundary_hours": boundary,
         "checkpoint": training["immutable_checkpoint"],
-        "training_result": args.training_result.resolve()
-        .relative_to(REPOSITORY_ROOT)
-        .as_posix(),
+        "training_result": args.training_result.resolve().relative_to(REPOSITORY_ROOT).as_posix(),
         "evaluation": compact_evaluation,
         "source_baseline": {
             "checkpoint": source["checkpoint"],
@@ -389,8 +319,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
                 "unseen": unseen_gates,
                 "apparent_pass": apparent_phase_b_pass,
                 "previous_boundary_apparent_pass": previous_phase_b_pass,
-                "two_consecutive_passes": apparent_phase_b_pass
-                and previous_phase_b_pass,
+                "two_consecutive_passes": apparent_phase_b_pass and previous_phase_b_pass,
             },
             "no_learning_by_plus_5h": no_learning,
         },
@@ -415,14 +344,10 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
                     "stage_1": training["immutable_checkpoint"],
                 }
                 if passed
-                else _read(CAMPAIGN_STATE_PATH).get(
-                    "passed_prerequisite_checkpoints", {}
-                )
+                else _read(CAMPAIGN_STATE_PATH).get("passed_prerequisite_checkpoints", {})
             ),
             "campaign_wall_clock_elapsed_seconds": clock["elapsed_seconds"],
-            "campaign_wall_clock_remaining_seconds": clock[
-                "remaining_seconds"
-            ],
+            "campaign_wall_clock_remaining_seconds": clock["remaining_seconds"],
             "stop_reason": decision if stop else None,
         }
     )
@@ -445,9 +370,9 @@ def main() -> int:
                 "phase": report["phase"],
                 "boundary_hours": report["boundary_hours"],
                 "decision": report["decision"],
-                "first_touch_success_share": report["evaluation"][
-                    "overall"
-                ]["first_touch_success_share"],
+                "first_touch_success_share": report["evaluation"]["overall"][
+                    "first_touch_success_share"
+                ],
                 "wall_clock": report["campaign_wall_clock"],
             },
             sort_keys=True,
