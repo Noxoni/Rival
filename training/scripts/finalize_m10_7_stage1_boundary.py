@@ -84,20 +84,20 @@ def _compact_capability(report: dict[str, Any]) -> dict[str, Any]:
 
 def _history(previous: Path | None) -> list[dict[str, Any]]:
     source = _read(RESULT_ROOT / "preflight.json")["source_transfer_capability"]
-    rows = [
-        {
-            "boundary_hours": 0.0,
-            "deterministic_first_contact_success": source[
-                "deterministic_overall"
-            ]["first_touch_success_share"],
-            "stochastic_first_contact_success": source["stochastic_overall"][
-                "first_touch_success_share"
-            ],
-        }
-    ]
-    if previous is not None:
-        prior = _read(previous)
-        rows.extend(prior["learning_curve"])
+    source_row = {
+        "boundary_hours": 0.0,
+        "deterministic_first_contact_success": source[
+            "deterministic_overall"
+        ]["first_touch_success_share"],
+        "stochastic_first_contact_success": source["stochastic_overall"][
+            "first_touch_success_share"
+        ],
+    }
+    if previous is None:
+        return [source_row]
+    rows = list(_read(previous)["learning_curve"])
+    if not rows or float(rows[0]["boundary_hours"]) != 0.0:
+        rows.insert(0, source_row)
     return rows
 
 
