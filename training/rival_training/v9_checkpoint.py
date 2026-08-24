@@ -75,8 +75,6 @@ def load_m09_config(path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
         "action_schema_sha256": action_schema_sha256(),
         "canonical_state_version": CANONICAL_STATE_VERSION,
         "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
-        "reward_version": REWARD_VERSION,
-        "reward_schedule_version": REWARD_SCHEDULE_VERSION,
     }
     mismatches = {
         key: {"config": config.get(key), "runtime": value}
@@ -86,30 +84,73 @@ def load_m09_config(path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
     if mismatches:
         raise RuntimeError(f"Milestone 09 config/runtime contract mismatch: {mismatches}")
     environment_version = str(config.get("environment_version"))
-    allowed_environments = {
-        V9_TRAINING_ENVIRONMENT_VERSION,
-        V9_PILOT_ENVIRONMENT_VERSION,
-    }
-    if environment_version not in allowed_environments:
-        raise RuntimeError(
-            f"Milestone 09 environment version is not implemented: {environment_version}"
-        )
-    if environment_version == V9_PILOT_ENVIRONMENT_VERSION:
-        curriculum = config.get("curriculum", {})
-        expected_curriculum = {
-            "version": V9_PILOT_CURRICULUM_VERSION,
-            "seed_base": 20260913,
-            "weights": V9_PILOT_CURRICULUM_WEIGHTS,
-            "natural_is_majority": True,
-            "metrics_version": V9_PILOT_METRICS_VERSION,
+    reward_version = str(config.get("reward_version"))
+    reward_schedule_version = str(config.get("reward_schedule_version"))
+    if reward_version == REWARD_VERSION:
+        if reward_schedule_version != REWARD_SCHEDULE_VERSION:
+            raise RuntimeError("Historical scratch reward schedule version mismatch")
+        allowed_environments = {
+            V9_TRAINING_ENVIRONMENT_VERSION,
+            V9_PILOT_ENVIRONMENT_VERSION,
         }
-        if curriculum != expected_curriculum:
+        if environment_version not in allowed_environments:
             raise RuntimeError(
-                "Milestone 09 pilot curriculum contract mismatch: "
-                f"expected {expected_curriculum}, got {curriculum}"
+                f"Milestone 09 environment version is not implemented: {environment_version}"
             )
-    elif "curriculum" in config:
-        raise RuntimeError("The Gate 11 environment config cannot silently carry pilot curriculum")
+        if environment_version == V9_PILOT_ENVIRONMENT_VERSION:
+            curriculum = config.get("curriculum", {})
+            expected_curriculum = {
+                "version": V9_PILOT_CURRICULUM_VERSION,
+                "seed_base": 20260913,
+                "weights": V9_PILOT_CURRICULUM_WEIGHTS,
+                "natural_is_majority": True,
+                "metrics_version": V9_PILOT_METRICS_VERSION,
+            }
+            if curriculum != expected_curriculum:
+                raise RuntimeError(
+                    "Milestone 09 pilot curriculum contract mismatch: "
+                    f"expected {expected_curriculum}, got {curriculum}"
+                )
+        elif "curriculum" in config:
+            raise RuntimeError(
+                "The Gate 11 environment config cannot silently carry pilot curriculum"
+            )
+    else:
+        from .v10_bootstrap_curriculum import CURRICULUM_VERSION, PHASE_WEIGHTS
+        from .v10_bootstrap_environment import (
+            ENVIRONMENT_VERSION as BOOTSTRAP_ENVIRONMENT_VERSION,
+            EPISODE_TIMEOUT_SECONDS,
+            NO_TOUCH_TIMEOUT_SECONDS,
+        )
+        from .v10_bootstrap_metrics import METRICS_VERSION
+        from .v10_bootstrap_reward import (
+            REWARD_SCHEDULE_VERSION as BOOTSTRAP_REWARD_SCHEDULE_VERSION,
+            REWARD_VERSION as BOOTSTRAP_REWARD_VERSION,
+        )
+
+        bootstrap = config.get("bootstrap", {})
+        checks = {
+            "reward_version": reward_version == BOOTSTRAP_REWARD_VERSION,
+            "reward_schedule_version": reward_schedule_version
+            == BOOTSTRAP_REWARD_SCHEDULE_VERSION,
+            "environment_version": environment_version
+            == BOOTSTRAP_ENVIRONMENT_VERSION,
+            "config_version": config.get("config_version")
+            == "RivalM10_1TrainingConfigV1",
+            "curriculum_version": bootstrap.get("curriculum_version")
+            == CURRICULUM_VERSION,
+            "metrics_version": bootstrap.get("metrics_version") == METRICS_VERSION,
+            "initial_phase": bootstrap.get("initial_phase") == "A",
+            "phase_weights": bootstrap.get("phase_weights") == PHASE_WEIGHTS,
+            "no_touch_timeout": float(
+                bootstrap.get("no_touch_timeout_seconds", -1.0)
+            )
+            == NO_TOUCH_TIMEOUT_SECONDS,
+            "episode_timeout": float(bootstrap.get("episode_timeout_seconds", -1.0))
+            == EPISODE_TIMEOUT_SECONDS,
+        }
+        if not all(checks.values()):
+            raise RuntimeError(f"Milestone 10.1 bootstrap config mismatch: {checks}")
     time_base = config["time_base"]
     if (
         time_base["physics_hz"] != 120
@@ -143,8 +184,8 @@ def checkpoint_contract(config: dict[str, Any]) -> dict[str, Any]:
         "action_schema_sha256": action_schema_sha256(),
         "canonical_state_version": CANONICAL_STATE_VERSION,
         "canonical_adapter_version": CANONICAL_ADAPTER_VERSION,
-        "reward_version": REWARD_VERSION,
-        "reward_schedule_version": REWARD_SCHEDULE_VERSION,
+        "reward_version": config["reward_version"],
+        "reward_schedule_version": config["reward_schedule_version"],
         # Use the stored, loader-validated environment version so a later
         # prospective environment does not make historical checkpoints
         # unverifiable merely because the runtime gained a new implementation.

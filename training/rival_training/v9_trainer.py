@@ -242,6 +242,8 @@ class RivalV9PPOTrainer:
         critic_optimizer: torch.optim.Optimizer | None = None,
         trainer_state: dict[str, Any] | None = None,
         env_factory: Callable | None = None,
+        collect_metrics_fn: Callable | None = None,
+        aggregate_metrics_fn: Callable | None = None,
     ) -> None:
         self.config = config
         self.device = torch.device(device)
@@ -261,12 +263,27 @@ class RivalV9PPOTrainer:
         self.completed_iterations = int(state.get("completed_iterations", 0))
         self.cumulative_agent_steps = int(state.get("cumulative_agent_steps", 0))
         self.cumulative_model_updates = int(state.get("cumulative_model_updates", 0))
-        self.pilot_metrics_enabled = (
+        historical_pilot_metrics = (
             config.get("environment_version") == V9_PILOT_ENVIRONMENT_VERSION
         )
         self.env_factory = env_factory or (
-            make_v9_pilot_gym_env if self.pilot_metrics_enabled else make_v9_training_gym_env
+            make_v9_pilot_gym_env if historical_pilot_metrics else make_v9_training_gym_env
         )
+        self.collect_metrics_fn = (
+            collect_metrics_fn
+            if collect_metrics_fn is not None
+            else collect_v9_pilot_metric_vector
+            if historical_pilot_metrics
+            else None
+        )
+        self.aggregate_metrics_fn = (
+            aggregate_metrics_fn
+            if aggregate_metrics_fn is not None
+            else aggregate_v9_pilot_metrics
+            if historical_pilot_metrics
+            else None
+        )
+        self.pilot_metrics_enabled = self.collect_metrics_fn is not None
         self.manager: BatchedAgentManager | None = None
         self.worker_pids: list[int] = []
 
@@ -277,6 +294,9 @@ class RivalV9PPOTrainer:
         config: dict[str, Any],
         *,
         device: str | torch.device = "cuda:0",
+        env_factory: Callable | None = None,
+        collect_metrics_fn: Callable | None = None,
+        aggregate_metrics_fn: Callable | None = None,
     ) -> "RivalV9PPOTrainer":
         loaded = load_v9_checkpoint(directory, device=device, expected_config=config)
         return cls(
@@ -287,6 +307,9 @@ class RivalV9PPOTrainer:
             actor_optimizer=loaded["actor_optimizer"],
             critic_optimizer=loaded["critic_optimizer"],
             trainer_state=loaded["trainer_state"],
+            env_factory=env_factory,
+            collect_metrics_fn=collect_metrics_fn,
+            aggregate_metrics_fn=aggregate_metrics_fn,
         )
 
     def start_workers(self) -> list[Any]:
@@ -306,9 +329,7 @@ class RivalV9PPOTrainer:
         shapes = self.manager.init_processes(
             n_processes=int(backend["worker_count"]),
             build_env_fn=self.env_factory,
-            collect_metrics_fn=(
-                collect_v9_pilot_metric_vector if self.pilot_metrics_enabled else None
-            ),
+            collect_metrics_fn=self.collect_metrics_fn,
             spawn_delay=None,
             render=False,
             shm_buffer_size=8192,
@@ -547,7 +568,9 @@ class RivalV9PPOTrainer:
         )
         action_diagnostics = _action_diagnostics(actions)
         pilot_metrics = (
-            aggregate_v9_pilot_metrics(collected_metrics) if self.pilot_metrics_enabled else None
+            self.aggregate_metrics_fn(collected_metrics)
+            if self.aggregate_metrics_fn is not None
+            else None
         )
         inference_samples = self.policy.drain_inference_samples()
         inference_per_agent = np.asarray(

@@ -1,0 +1,2141 @@
+{
+  "checks": {
+    "all_56_workers_alive_before_and_after": true,
+    "all_three_10000_reset_distributions_pass": true,
+    "both_action_branches_updated": true,
+    "canonical_resume_checkpoint_unchanged": true,
+    "disposable_copy_is_new_config": true,
+    "exact_m10_plus25_fresh_reload": true,
+    "frozen_wisp_files_unchanged": true,
+    "mirror_and_team_symmetry_statistically_balanced": true,
+    "passed": true,
+    "phase_weights_exact": true,
+    "production_default_unchanged": true,
+    "production_promotion_authorized": false,
+    "real_cuda_full_ppo_iteration_healthy": true,
+    "reward_formula_and_debounce_contract": true,
+    "ten_second_dead_play_timeout": true,
+    "worker_cleanup_passed": true
+  },
+  "config": {
+    "canonical_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+    "contract": {
+      "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+      "curriculum_version": "RivalAgencyBootstrapCurriculumV1",
+      "environment_version": "RivalAgencyBootstrapEnvV1",
+      "episode_timeout_seconds": 120.0,
+      "metrics_version": "RivalAgencyBootstrapMetricsV1",
+      "no_touch_timeout_seconds": 10.0,
+      "phase_weights": {
+        "A": {
+          "easy_aerial_contact": 0.15,
+          "easy_finish": 0.1,
+          "ground_acquisition": 0.3,
+          "moving_ball_chase": 0.2,
+          "natural": 0.05,
+          "touch_chain": 0.2
+        },
+        "B": {
+          "easy_aerial_contact": 0.15,
+          "easy_finish": 0.1,
+          "ground_acquisition": 0.2,
+          "moving_ball_chase": 0.15,
+          "natural": 0.2,
+          "touch_chain": 0.2
+        },
+        "C": {
+          "easy_aerial_contact": 0.1,
+          "easy_finish": 0.1,
+          "ground_acquisition": 0.15,
+          "moving_ball_chase": 0.1,
+          "natural": 0.4,
+          "touch_chain": 0.15
+        }
+      },
+      "reward": {
+        "aerial_touch_minimum_ball_z": 180.0,
+        "boost_waste_penalty": 0.0,
+        "combined_shaping_absolute_episode_budget": 7.5,
+        "components": [
+          "outcome",
+          "useful_speed_rate",
+          "ball_approach_potential",
+          "ball_touch_event",
+          "aerial_touch_event",
+          "touch_chain_event",
+          "ball_progress_potential"
+        ],
+        "concede_reward": -10.0,
+        "direct_action_press_rewards": false,
+        "dodge_resource_reward": 0.0,
+        "gamma_120hz": 0.9987444968227265,
+        "goal_reward": 10.0,
+        "outcome_precedence_exact": true,
+        "physics_hz": 120,
+        "recovery_reward": 0.0,
+        "reward_version": "RivalAgencyBootstrapRewardV1",
+        "schedule_version": "RivalAgencyBootstrapRewardScheduleV1",
+        "shaping_absolute_episode_budgets": {
+          "aerial_touch_event": 1.5,
+          "ball_approach_potential": 1.0,
+          "ball_progress_potential": 0.5,
+          "ball_touch_event": 2.0,
+          "touch_chain_event": 1.5,
+          "useful_speed_rate": 1.0
+        },
+        "touch_chain_timeout_native_ticks": 300,
+        "touch_debounce_native_ticks": 8
+      },
+      "source_checkpoint_manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784"
+    },
+    "file_sha256": "119ae73a903a9a1939b7ccd4ed0a582cde30fc2c9b6d3454d7d86e4c07be797a",
+    "migration": {
+      "allowed_changed_top_level_keys": [
+        "bootstrap",
+        "campaign",
+        "campaign_id",
+        "config_version",
+        "curriculum",
+        "environment_version",
+        "reward_schedule_version",
+        "reward_version"
+      ],
+      "changed_top_level_keys": [
+        "bootstrap",
+        "campaign",
+        "campaign_id",
+        "config_version",
+        "curriculum",
+        "environment_version",
+        "reward_schedule_version",
+        "reward_version"
+      ],
+      "checks": {
+        "bootstrap_reward_is_new_version": true,
+        "immutable_architecture_and_ppo_exact": true,
+        "normal_reward_not_mutated": true,
+        "only_learning_distribution_and_campaign_changed": true,
+        "source_is_m10_or_same_bootstrap": true,
+        "target_is_bootstrap": true
+      },
+      "immutable_top_level_keys": [
+        "action_schema_sha256",
+        "action_version",
+        "backend",
+        "canonical_adapter_version",
+        "canonical_state_version",
+        "critic_version",
+        "gate11",
+        "observation_schema_sha256",
+        "observation_version",
+        "policy_version",
+        "ppo",
+        "time_base"
+      ],
+      "passed": true,
+      "source_config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+      "source_config_version": "RivalM10TrainingConfigV1",
+      "target_config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+      "target_config_version": "RivalM10_1TrainingConfigV1"
+    },
+    "path": "training/configs/milestone10_1.json"
+  },
+  "curriculum_distribution": {
+    "A": {
+      "absolute_share_error": {
+        "easy_aerial_contact": 0.0003999999999999837,
+        "easy_finish": 0.0040999999999999925,
+        "ground_acquisition": 0.0,
+        "moving_ball_chase": 0.001899999999999985,
+        "natural": 0.0013000000000000025,
+        "touch_chain": 0.004299999999999998
+      },
+      "active_team_counts": {
+        "0": 4992,
+        "1": 5008
+      },
+      "checks": {
+        "active_team_balance_within_two_percent": true,
+        "all_reset_physics_finite_and_legal": true,
+        "at_least_10000_resets": true,
+        "configured_weights_sum_to_one": true,
+        "empirical_shares_within_two_percent": true,
+        "left_right_ball_distribution_balanced": true,
+        "passed": true
+      },
+      "configured_weights": {
+        "easy_aerial_contact": 0.15,
+        "easy_finish": 0.1,
+        "ground_acquisition": 0.3,
+        "moving_ball_chase": 0.2,
+        "natural": 0.05,
+        "touch_chain": 0.2
+      },
+      "counts": {
+        "easy_aerial_contact": 1496,
+        "easy_finish": 1041,
+        "ground_acquisition": 3000,
+        "moving_ball_chase": 2019,
+        "natural": 487,
+        "touch_chain": 1957
+      },
+      "curriculum_version": "RivalAgencyBootstrapCurriculumV1",
+      "family_distributions": {
+        "easy_aerial_contact": {
+          "active_car_ball_distance": {
+            "maximum": 1882.48974609375,
+            "mean": 1260.4431315947345,
+            "minimum": 559.0770874023438,
+            "p05": 757.5122680664062,
+            "p50": 1255.8516845703125,
+            "p95": 1749.36865234375
+          },
+          "active_car_boost": {
+            "maximum": 79.99201860781005,
+            "mean": 55.151031603810026,
+            "minimum": 30.02850271614252,
+            "p05": 32.25588881398965,
+            "p50": 55.791708777336154,
+            "p95": 77.09376781192995
+          },
+          "active_car_speed": {
+            "maximum": 849.9155883789062,
+            "mean": 422.9616497349851,
+            "minimum": 0.5977126955986023,
+            "p05": 50.88172912597656,
+            "p50": 421.4208984375,
+            "p95": 801.2619018554688
+          },
+          "ball_height": {
+            "maximum": 899.5657348632812,
+            "mean": 577.6888728728269,
+            "minimum": 250.45138549804688,
+            "p05": 278.7449951171875,
+            "p50": 581.9786071777344,
+            "p95": 867.5213928222656
+          },
+          "ball_x": {
+            "maximum": 3694.464111328125,
+            "mean": 5.795504505332699,
+            "minimum": -3697.81396484375,
+            "p05": -3329.63330078125,
+            "p50": 23.943446159362793,
+            "p95": 3306.6788330078125
+          }
+        },
+        "easy_finish": {
+          "active_car_ball_distance": {
+            "maximum": 1244.0057373046875,
+            "mean": 804.0986467960588,
+            "minimum": 312.13629150390625,
+            "p05": 408.7925720214844,
+            "p50": 813.696533203125,
+            "p95": 1181.6943359375
+          },
+          "active_car_boost": {
+            "maximum": 79.9098810446293,
+            "mean": 49.27311553749114,
+            "minimum": 20.03772377515843,
+            "p05": 22.828037181326433,
+            "p50": 48.58528095454494,
+            "p95": 76.783851283461
+          },
+          "active_car_speed": {
+            "maximum": 949.8946533203125,
+            "mean": 477.7596287777885,
+            "minimum": 0.0698138028383255,
+            "p05": 48.505367279052734,
+            "p50": 472.08843994140625,
+            "p95": 900.1284790039062
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 1147.6846923828125,
+            "mean": 7.393035451428004,
+            "minimum": -1149.6248779296875,
+            "p05": -1035.2906494140625,
+            "p50": 17.195293426513672,
+            "p95": 1037.3983154296875
+          }
+        },
+        "ground_acquisition": {
+          "active_car_ball_distance": {
+            "maximum": 2201.277587890625,
+            "mean": 1395.8623696492514,
+            "minimum": 605.5767822265625,
+            "p05": 684.0157684326172,
+            "p50": 1408.4526977539062,
+            "p95": 2102.252844238281
+          },
+          "active_car_boost": {
+            "maximum": 79.99960864207549,
+            "mean": 50.28599250060169,
+            "minimum": 20.00813356322117,
+            "p05": 23.05423677214168,
+            "p50": 50.69958724761111,
+            "p95": 77.0287202554257
+          },
+          "active_car_speed": {
+            "maximum": 799.807373046875,
+            "mean": 402.5123658282831,
+            "minimum": 0.06157810986042023,
+            "p05": 41.73292770385742,
+            "p50": 406.1391143798828,
+            "p95": 762.0605621337891
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2495.618408203125,
+            "mean": -21.29611125832796,
+            "minimum": -2496.326416015625,
+            "p05": -2265.4611206054688,
+            "p50": -74.91073989868164,
+            "p95": 2248.2482299804688
+          }
+        },
+        "moving_ball_chase": {
+          "active_car_ball_distance": {
+            "maximum": 3006.2998046875,
+            "mean": 1852.9523350194636,
+            "minimum": 811.5733032226562,
+            "p05": 896.8979675292969,
+            "p50": 1830.9132080078125,
+            "p95": 2862.6234130859375
+          },
+          "active_car_boost": {
+            "maximum": 79.99801072949113,
+            "mean": 48.280183702777826,
+            "minimum": 15.000524942787713,
+            "p05": 17.963636267778064,
+            "p50": 48.81108009528522,
+            "p95": 77.03148430449288
+          },
+          "active_car_speed": {
+            "maximum": 1099.2335205078125,
+            "mean": 603.3401414362023,
+            "minimum": 100.9844741821289,
+            "p05": 150.1538101196289,
+            "p50": 603.3753051757812,
+            "p95": 1053.2974243164062
+          },
+          "ball_height": {
+            "maximum": 229.97335815429688,
+            "mean": 162.32701731696466,
+            "minimum": 93.27899932861328,
+            "p05": 99.41071166992188,
+            "p50": 162.5750732421875,
+            "p95": 224.36138000488282
+          },
+          "ball_x": {
+            "maximum": 2399.764404296875,
+            "mean": -21.221908108529153,
+            "minimum": -2399.52392578125,
+            "p05": -2191.073388671875,
+            "p50": -11.818613052368164,
+            "p95": 2170.078662109375
+          }
+        },
+        "natural": {
+          "active_car_ball_distance": {
+            "maximum": 4608.62890625,
+            "mean": 3728.998789323184,
+            "minimum": 3279.283935546875,
+            "p05": 3279.283935546875,
+            "p50": 3849.277099609375,
+            "p95": 4608.62890625
+          },
+          "active_car_boost": {
+            "maximum": 33.3,
+            "mean": 33.30000000000001,
+            "minimum": 33.3,
+            "p05": 33.3,
+            "p50": 33.3,
+            "p95": 33.3
+          },
+          "active_car_speed": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          }
+        },
+        "touch_chain": {
+          "active_car_ball_distance": {
+            "maximum": 793.1756591796875,
+            "mean": 490.40292926801976,
+            "minimum": 171.12001037597656,
+            "p05": 232.39796142578126,
+            "p50": 492.6947326660156,
+            "p95": 742.111962890625
+          },
+          "active_car_boost": {
+            "maximum": 59.98556643337119,
+            "mean": 35.18670250193392,
+            "minimum": 10.02004900472743,
+            "p05": 12.581328428640312,
+            "p50": 35.187379980227746,
+            "p95": 57.66137530330401
+          },
+          "active_car_speed": {
+            "maximum": 1507.55224609375,
+            "mean": 951.3609624754487,
+            "minimum": 402.0263366699219,
+            "p05": 459.78306884765624,
+            "p50": 952.7197875976562,
+            "p95": 1448.1517333984373
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2918.317626953125,
+            "mean": 10.241279066674979,
+            "minimum": -3045.055908203125,
+            "p05": -2306.456103515625,
+            "p50": 37.07667922973633,
+            "p95": 2224.5468749999995
+          }
+        }
+      },
+      "phase": "A",
+      "samples": 10000,
+      "schema_version": 1,
+      "shares": {
+        "easy_aerial_contact": 0.1496,
+        "easy_finish": 0.1041,
+        "ground_acquisition": 0.3,
+        "moving_ball_chase": 0.2019,
+        "natural": 0.0487,
+        "touch_chain": 0.1957
+      }
+    },
+    "B": {
+      "absolute_share_error": {
+        "easy_aerial_contact": 0.001799999999999996,
+        "easy_finish": 0.000800000000000009,
+        "ground_acquisition": 0.004599999999999993,
+        "moving_ball_chase": 0.005400000000000016,
+        "natural": 0.0019000000000000128,
+        "touch_chain": 0.005500000000000005
+      },
+      "active_team_counts": {
+        "0": 5029,
+        "1": 4971
+      },
+      "checks": {
+        "active_team_balance_within_two_percent": true,
+        "all_reset_physics_finite_and_legal": true,
+        "at_least_10000_resets": true,
+        "configured_weights_sum_to_one": true,
+        "empirical_shares_within_two_percent": true,
+        "left_right_ball_distribution_balanced": true,
+        "passed": true
+      },
+      "configured_weights": {
+        "easy_aerial_contact": 0.15,
+        "easy_finish": 0.1,
+        "ground_acquisition": 0.2,
+        "moving_ball_chase": 0.15,
+        "natural": 0.2,
+        "touch_chain": 0.2
+      },
+      "counts": {
+        "easy_aerial_contact": 1482,
+        "easy_finish": 992,
+        "ground_acquisition": 2046,
+        "moving_ball_chase": 1554,
+        "natural": 1981,
+        "touch_chain": 1945
+      },
+      "curriculum_version": "RivalAgencyBootstrapCurriculumV1",
+      "family_distributions": {
+        "easy_aerial_contact": {
+          "active_car_ball_distance": {
+            "maximum": 1906.1546630859375,
+            "mean": 1271.630143385667,
+            "minimum": 563.9842529296875,
+            "p05": 748.074252319336,
+            "p50": 1267.5647583007812,
+            "p95": 1761.0909118652344
+          },
+          "active_car_boost": {
+            "maximum": 79.9028742220862,
+            "mean": 55.4417413402309,
+            "minimum": 30.180264387078203,
+            "p05": 32.689583883462085,
+            "p50": 55.38871178723384,
+            "p95": 77.62445220064528
+          },
+          "active_car_speed": {
+            "maximum": 849.4314575195312,
+            "mean": 434.6587248212292,
+            "minimum": 0.3119904696941376,
+            "p05": 38.66272563934326,
+            "p50": 447.9990997314453,
+            "p95": 810.9597808837891
+          },
+          "ball_height": {
+            "maximum": 899.9273681640625,
+            "mean": 584.128780730501,
+            "minimum": 250.5590057373047,
+            "p05": 286.58136596679685,
+            "p50": 593.71875,
+            "p95": 872.5384216308594
+          },
+          "ball_x": {
+            "maximum": 3697.9541015625,
+            "mean": 63.08822575820341,
+            "minimum": -3695.3359375,
+            "p05": -3311.1150390625,
+            "p50": 65.47397041320801,
+            "p95": 3390.837939453125
+          }
+        },
+        "easy_finish": {
+          "active_car_ball_distance": {
+            "maximum": 1267.6646728515625,
+            "mean": 788.7646552978024,
+            "minimum": 324.8542785644531,
+            "p05": 419.9463180541992,
+            "p50": 791.4926452636719,
+            "p95": 1185.5000671386717
+          },
+          "active_car_boost": {
+            "maximum": 79.81968163398724,
+            "mean": 49.879559305880925,
+            "minimum": 20.006481940550493,
+            "p05": 23.047805985841674,
+            "p50": 49.97843509409265,
+            "p95": 76.74551879927581
+          },
+          "active_car_speed": {
+            "maximum": 947.5508422851562,
+            "mean": 466.636708289505,
+            "minimum": 0.6743199229240417,
+            "p05": 39.21598854064941,
+            "p50": 465.72340393066406,
+            "p95": 897.6985565185546
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 1149.5260009765625,
+            "mean": 4.8241971285953635,
+            "minimum": -1149.302734375,
+            "p05": -1029.1949951171875,
+            "p50": 20.403157234191895,
+            "p95": 1003.420098876953
+          }
+        },
+        "ground_acquisition": {
+          "active_car_ball_distance": {
+            "maximum": 2198.371337890625,
+            "mean": 1395.386284791829,
+            "minimum": 606.128173828125,
+            "p05": 674.322265625,
+            "p50": 1405.0542602539062,
+            "p95": 2116.9586181640625
+          },
+          "active_car_boost": {
+            "maximum": 79.89114113215044,
+            "mean": 49.561142277691545,
+            "minimum": 20.021389920181694,
+            "p05": 23.045898904619463,
+            "p50": 49.14085565355897,
+            "p95": 76.95680037741343
+          },
+          "active_car_speed": {
+            "maximum": 799.42333984375,
+            "mean": 399.78725329344456,
+            "minimum": 0.517173171043396,
+            "p05": 38.13051223754883,
+            "p50": 399.6961975097656,
+            "p95": 760.3592224121094
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2497.279541015625,
+            "mean": -65.2349339188427,
+            "minimum": -2496.4375,
+            "p05": -2234.3361206054688,
+            "p50": -72.42020797729492,
+            "p95": 2205.1710205078125
+          }
+        },
+        "moving_ball_chase": {
+          "active_car_ball_distance": {
+            "maximum": 2998.93408203125,
+            "mean": 1868.221657417916,
+            "minimum": 807.6373901367188,
+            "p05": 921.8186767578125,
+            "p50": 1869.8606567382812,
+            "p95": 2846.094836425781
+          },
+          "active_car_boost": {
+            "maximum": 79.9920275913442,
+            "mean": 47.2059842064349,
+            "minimum": 15.017423923485756,
+            "p05": 18.111962443160763,
+            "p50": 47.23127303184431,
+            "p95": 75.81837294967757
+          },
+          "active_car_speed": {
+            "maximum": 1099.6810302734375,
+            "mean": 595.4777807532744,
+            "minimum": 100.00067901611328,
+            "p05": 143.93701782226563,
+            "p50": 599.0839233398438,
+            "p95": 1049.0480590820312
+          },
+          "ball_height": {
+            "maximum": 229.77891540527344,
+            "mean": 160.19295892015847,
+            "minimum": 93.35749053955078,
+            "p05": 100.76007194519043,
+            "p50": 159.78577423095703,
+            "p95": 221.47410736083984
+          },
+          "ball_x": {
+            "maximum": 2395.815185546875,
+            "mean": -57.591428532410156,
+            "minimum": -2398.927978515625,
+            "p05": -2169.1369873046874,
+            "p50": -111.89585494995117,
+            "p95": 2152.7838989257807
+          }
+        },
+        "natural": {
+          "active_car_ball_distance": {
+            "maximum": 4608.62890625,
+            "mean": 3733.0203972652307,
+            "minimum": 3279.283935546875,
+            "p05": 3279.283935546875,
+            "p50": 3849.277099609375,
+            "p95": 4608.62890625
+          },
+          "active_car_boost": {
+            "maximum": 33.3,
+            "mean": 33.30000000000001,
+            "minimum": 33.3,
+            "p05": 33.3,
+            "p50": 33.3,
+            "p95": 33.3
+          },
+          "active_car_speed": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          }
+        },
+        "touch_chain": {
+          "active_car_ball_distance": {
+            "maximum": 789.7264404296875,
+            "mean": 482.8331131020671,
+            "minimum": 171.06480407714844,
+            "p05": 226.11802673339844,
+            "p50": 480.6488952636719,
+            "p95": 734.4618286132812
+          },
+          "active_car_boost": {
+            "maximum": 59.97828915821913,
+            "mean": 35.35840304368552,
+            "minimum": 10.003409467852538,
+            "p05": 12.709623212225765,
+            "p50": 35.68962565754599,
+            "p95": 57.95892291576997
+          },
+          "active_car_speed": {
+            "maximum": 1504.59326171875,
+            "mean": 960.9335463183091,
+            "minimum": 402.8774719238281,
+            "p05": 462.85838623046874,
+            "p50": 967.6326293945312,
+            "p95": 1453.4638916015624
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2986.14111328125,
+            "mean": 29.287670586593354,
+            "minimum": -3031.536376953125,
+            "p05": -2252.6017578125,
+            "p50": 88.01612091064453,
+            "p95": 2249.851611328125
+          }
+        }
+      },
+      "phase": "B",
+      "samples": 10000,
+      "schema_version": 1,
+      "shares": {
+        "easy_aerial_contact": 0.1482,
+        "easy_finish": 0.0992,
+        "ground_acquisition": 0.2046,
+        "moving_ball_chase": 0.1554,
+        "natural": 0.1981,
+        "touch_chain": 0.1945
+      }
+    },
+    "C": {
+      "absolute_share_error": {
+        "easy_aerial_contact": 0.0023000000000000104,
+        "easy_finish": 0.007800000000000001,
+        "ground_acquisition": 0.004399999999999987,
+        "moving_ball_chase": 0.0020999999999999908,
+        "natural": 0.0029000000000000137,
+        "touch_chain": 0.0002999999999999947
+      },
+      "active_team_counts": {
+        "0": 5020,
+        "1": 4980
+      },
+      "checks": {
+        "active_team_balance_within_two_percent": true,
+        "all_reset_physics_finite_and_legal": true,
+        "at_least_10000_resets": true,
+        "configured_weights_sum_to_one": true,
+        "empirical_shares_within_two_percent": true,
+        "left_right_ball_distribution_balanced": true,
+        "passed": true
+      },
+      "configured_weights": {
+        "easy_aerial_contact": 0.1,
+        "easy_finish": 0.1,
+        "ground_acquisition": 0.15,
+        "moving_ball_chase": 0.1,
+        "natural": 0.4,
+        "touch_chain": 0.15
+      },
+      "counts": {
+        "easy_aerial_contact": 977,
+        "easy_finish": 1078,
+        "ground_acquisition": 1456,
+        "moving_ball_chase": 1021,
+        "natural": 3971,
+        "touch_chain": 1497
+      },
+      "curriculum_version": "RivalAgencyBootstrapCurriculumV1",
+      "family_distributions": {
+        "easy_aerial_contact": {
+          "active_car_ball_distance": {
+            "maximum": 1878.8797607421875,
+            "mean": 1251.0429205216062,
+            "minimum": 581.4395751953125,
+            "p05": 746.6261108398437,
+            "p50": 1253.2796630859375,
+            "p95": 1740.4221679687498
+          },
+          "active_car_boost": {
+            "maximum": 79.9389169371653,
+            "mean": 55.70631814745761,
+            "minimum": 30.039077625129362,
+            "p05": 32.530636992462284,
+            "p50": 56.19807984736492,
+            "p95": 78.06223690367638
+          },
+          "active_car_speed": {
+            "maximum": 849.7340087890625,
+            "mean": 430.23077367906563,
+            "minimum": 0.6673409938812256,
+            "p05": 41.79576797485352,
+            "p50": 433.666015625,
+            "p95": 803.3708251953125
+          },
+          "ball_height": {
+            "maximum": 899.0802612304688,
+            "mean": 571.1265956601443,
+            "minimum": 251.13381958007812,
+            "p05": 279.239013671875,
+            "p50": 573.3526611328125,
+            "p95": 861.8388427734375
+          },
+          "ball_x": {
+            "maximum": 3678.537109375,
+            "mean": -69.91235169710376,
+            "minimum": -3698.6123046875,
+            "p05": -3407.76591796875,
+            "p50": -59.66362380981445,
+            "p95": 3270.3048828124993
+          }
+        },
+        "easy_finish": {
+          "active_car_ball_distance": {
+            "maximum": 1247.0313720703125,
+            "mean": 794.8198059025412,
+            "minimum": 313.6388854980469,
+            "p05": 403.32349090576173,
+            "p50": 796.9733581542969,
+            "p95": 1181.8887451171875
+          },
+          "active_car_boost": {
+            "maximum": 79.94287374412752,
+            "mean": 50.81941250347484,
+            "minimum": 20.034787673936613,
+            "p05": 23.023876124656862,
+            "p50": 51.69181433198915,
+            "p95": 77.360773297305
+          },
+          "active_car_speed": {
+            "maximum": 947.2115478515625,
+            "mean": 482.58203472498394,
+            "minimum": 1.4749622344970703,
+            "p05": 46.117397689819335,
+            "p50": 506.75946044921875,
+            "p95": 899.4169952392577
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 1147.203369140625,
+            "mean": 40.77292316433229,
+            "minimum": -1149.810302734375,
+            "p05": -1014.0810943603516,
+            "p50": 55.021148681640625,
+            "p95": 1045.9119018554686
+          }
+        },
+        "ground_acquisition": {
+          "active_car_ball_distance": {
+            "maximum": 2199.151611328125,
+            "mean": 1411.7901667919787,
+            "minimum": 605.4253540039062,
+            "p05": 698.9796600341797,
+            "p50": 1416.861572265625,
+            "p95": 2111.0804443359375
+          },
+          "active_car_boost": {
+            "maximum": 79.98178447889715,
+            "mean": 49.44332222993532,
+            "minimum": 20.042033593770448,
+            "p05": 22.686553199402848,
+            "p50": 49.38122189101633,
+            "p95": 76.4918835969305
+          },
+          "active_car_speed": {
+            "maximum": 797.3594970703125,
+            "mean": 390.4935331793047,
+            "minimum": 0.048294078558683395,
+            "p05": 38.22484874725342,
+            "p50": 389.3661651611328,
+            "p95": 753.7800445556641
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2498.772705078125,
+            "mean": 45.937103403547965,
+            "minimum": -2495.005859375,
+            "p05": -2227.2513427734375,
+            "p50": 89.57657623291016,
+            "p95": 2246.2409057617188
+          }
+        },
+        "moving_ball_chase": {
+          "active_car_ball_distance": {
+            "maximum": 3001.993408203125,
+            "mean": 1904.0486288192105,
+            "minimum": 812.9173583984375,
+            "p05": 899.9476928710938,
+            "p50": 1909.064208984375,
+            "p95": 2879.7587890625
+          },
+          "active_car_boost": {
+            "maximum": 79.99375985346671,
+            "mean": 47.6480649307656,
+            "minimum": 15.170008310562825,
+            "p05": 17.800362200660615,
+            "p50": 47.56609798289014,
+            "p95": 76.57157329580423
+          },
+          "active_car_speed": {
+            "maximum": 1099.576171875,
+            "mean": 590.182261325937,
+            "minimum": 100.11710357666016,
+            "p05": 142.27210998535156,
+            "p50": 598.98974609375,
+            "p95": 1038.76318359375
+          },
+          "ball_height": {
+            "maximum": 229.71688842773438,
+            "mean": 162.7574036810237,
+            "minimum": 93.38264465332031,
+            "p05": 101.81434631347656,
+            "p50": 163.4406280517578,
+            "p95": 222.08444213867188
+          },
+          "ball_x": {
+            "maximum": 2399.805419921875,
+            "mean": 18.05416772858286,
+            "minimum": -2395.430419921875,
+            "p05": -2150.44970703125,
+            "p50": 19.767940521240234,
+            "p95": 2142.92236328125
+          }
+        },
+        "natural": {
+          "active_car_ball_distance": {
+            "maximum": 4608.62890625,
+            "mean": 3771.9728862500197,
+            "minimum": 3279.283935546875,
+            "p05": 3279.283935546875,
+            "p50": 3849.277099609375,
+            "p95": 4608.62890625
+          },
+          "active_car_boost": {
+            "maximum": 33.3,
+            "mean": 33.300000000000004,
+            "minimum": 33.3,
+            "p05": 33.3,
+            "p50": 33.3,
+            "p95": 33.3
+          },
+          "active_car_speed": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p05": 0.0,
+            "p50": 0.0,
+            "p95": 0.0
+          }
+        },
+        "touch_chain": {
+          "active_car_ball_distance": {
+            "maximum": 794.0352172851562,
+            "mean": 485.6950494617164,
+            "minimum": 169.03170776367188,
+            "p05": 240.76089782714843,
+            "p50": 486.8168029785156,
+            "p95": 735.9815063476562
+          },
+          "active_car_boost": {
+            "maximum": 59.91107524866845,
+            "mean": 34.96181724847569,
+            "minimum": 10.059714687624435,
+            "p05": 12.629988495342907,
+            "p50": 34.99040052656349,
+            "p95": 57.310299800495876
+          },
+          "active_car_speed": {
+            "maximum": 1506.257080078125,
+            "mean": 958.6810817272566,
+            "minimum": 400.59619140625,
+            "p05": 469.2129333496094,
+            "p50": 961.2847290039062,
+            "p95": 1446.7502685546876
+          },
+          "ball_height": {
+            "maximum": 93.1500015258789,
+            "mean": 93.1500015258789,
+            "minimum": 93.1500015258789,
+            "p05": 93.1500015258789,
+            "p50": 93.1500015258789,
+            "p95": 93.1500015258789
+          },
+          "ball_x": {
+            "maximum": 2937.050048828125,
+            "mean": 18.761099863466455,
+            "minimum": -2850.306640625,
+            "p05": -2258.798974609375,
+            "p50": 29.54874610900879,
+            "p95": 2254.9946777343753
+          }
+        }
+      },
+      "phase": "C",
+      "samples": 10000,
+      "schema_version": 1,
+      "shares": {
+        "easy_aerial_contact": 0.0977,
+        "easy_finish": 0.1078,
+        "ground_acquisition": 0.1456,
+        "moving_ball_chase": 0.1021,
+        "natural": 0.3971,
+        "touch_chain": 0.1497
+      }
+    }
+  },
+  "dead_play_timeout": {
+    "expected_seconds": 10.0,
+    "reason": "no_touch_timeout",
+    "status": "passed",
+    "truncated_at_native_tick": 1200
+  },
+  "disposable_cuda_smoke": {
+    "checkpoint": {
+      "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+      "actor_size_bytes": 7877740,
+      "clean_boundary": true,
+      "completed_iterations": 122,
+      "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+      "config_version": "RivalM10_1TrainingConfigV1",
+      "cumulative_agent_steps": 23378810,
+      "cumulative_model_updates": 487,
+      "directory": "training/checkpoints/milestone10_1/preflight/20260824T000400Z/023378810",
+      "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+      "manifest_sha256": "5589d12d2f5b6e81f58da922c884716c57aa5da2b441147411c1bb4c8a31d782",
+      "simulated_game_hours": 27.05880787037037
+    },
+    "cleanup": {
+      "attempted": true,
+      "lingering_worker_pids": [],
+      "passed": true,
+      "worker_pids": [
+        8888,
+        21640,
+        29656,
+        12512,
+        26520,
+        16576,
+        34076,
+        30972,
+        2480,
+        37436,
+        42728,
+        18760,
+        34124,
+        41812,
+        30420,
+        3128,
+        3916,
+        39808,
+        31404,
+        8312,
+        9656,
+        8048,
+        42620,
+        30176,
+        40644,
+        41640,
+        11360,
+        40224,
+        41792,
+        25048,
+        17732,
+        28756,
+        35072,
+        22372,
+        5352,
+        42460,
+        20204,
+        35600,
+        9116,
+        35468,
+        27580,
+        11452,
+        26980,
+        17324,
+        36304,
+        31436,
+        40600,
+        41092,
+        33700,
+        27028,
+        40616,
+        25128,
+        42688,
+        40172,
+        41576,
+        27544
+      ]
+    },
+    "environment_shapes": [
+      714,
+      8,
+      2
+    ],
+    "experience_counted_toward_campaign": false,
+    "health_after_smoke": [
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8888
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21640
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 29656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12512
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26520
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 16576
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34076
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30972
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 2480
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37436
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42728
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 18760
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34124
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41812
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30420
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 3128
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 3916
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39808
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31404
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8312
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42620
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30176
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40644
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41640
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11360
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40224
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41792
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17732
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 28756
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35072
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 22372
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 5352
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42460
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 20204
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35600
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9116
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35468
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27580
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11452
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26980
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17324
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36304
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31436
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40600
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41092
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 33700
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27028
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40616
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25128
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42688
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40172
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41576
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27544
+      }
+    ],
+    "health_after_start": [
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8888
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 21640
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 29656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 12512
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26520
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 16576
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34076
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30972
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 2480
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 37436
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42728
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 18760
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 34124
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41812
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30420
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 3128
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 3916
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 39808
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31404
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8312
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9656
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 8048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42620
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 30176
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40644
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41640
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11360
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40224
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41792
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25048
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17732
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 28756
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35072
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 22372
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 5352
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42460
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 20204
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35600
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 9116
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 35468
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27580
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 11452
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 26980
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 17324
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 36304
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 31436
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40600
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41092
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 33700
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27028
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40616
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 25128
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 42688
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 40172
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 41576
+      },
+      {
+        "alive": true,
+        "exit_code": null,
+        "pid": 27544
+      }
+    ],
+    "iteration": {
+      "actions": {
+        "all_actions_finite": true,
+        "all_eight_button_combos_sampled": true,
+        "analog": [
+          {
+            "absolute_over_0_95_share": 0.002822799050039582,
+            "field": "throttle",
+            "maximum": 0.9950904250144958,
+            "mean": 0.06032985316234052,
+            "minimum": -0.988027036190033,
+            "nontrivial_range": true,
+            "p01": -0.8703235167264939,
+            "p50": 0.07848984003067017,
+            "p95": 0.7902254015207291,
+            "p99": 0.9027037286758419,
+            "samples": 192008,
+            "standard_deviation": 0.4739883783604296
+          },
+          {
+            "absolute_over_0_95_share": 0.00382796550143744,
+            "field": "steer",
+            "maximum": 0.9866315126419067,
+            "mean": -0.1512572129310058,
+            "minimum": -0.9936971068382263,
+            "nontrivial_range": true,
+            "p01": -0.9229268378019333,
+            "p50": -0.19434160739183426,
+            "p95": 0.6653241693973541,
+            "p99": 0.838573110103607,
+            "samples": 192008,
+            "standard_deviation": 0.4674654850111257
+          },
+          {
+            "absolute_over_0_95_share": 0.004369609599600016,
+            "field": "pitch",
+            "maximum": 0.9954971671104431,
+            "mean": -0.17163817424656438,
+            "minimum": -0.9939429759979248,
+            "nontrivial_range": true,
+            "p01": -0.9259942531585693,
+            "p50": -0.22053372114896774,
+            "p95": 0.6482372522354125,
+            "p99": 0.8277944338321683,
+            "samples": 192008,
+            "standard_deviation": 0.4649377077988979
+          },
+          {
+            "absolute_over_0_95_share": 0.002593641931586184,
+            "field": "yaw",
+            "maximum": 0.988383948802948,
+            "mean": 0.024949250111059224,
+            "minimum": -0.9927429556846619,
+            "nontrivial_range": true,
+            "p01": -0.8823865151405335,
+            "p50": 0.033536521717906,
+            "p95": 0.7734852880239487,
+            "p99": 0.8943246793746947,
+            "samples": 192008,
+            "standard_deviation": 0.4757970105889197
+          },
+          {
+            "absolute_over_0_95_share": 0.002765509770426232,
+            "field": "roll",
+            "maximum": 0.9918957948684692,
+            "mean": -0.025064347705608083,
+            "minimum": -0.9970125555992126,
+            "nontrivial_range": true,
+            "p01": -0.8971253061294555,
+            "p50": -0.03178308345377445,
+            "p95": 0.750477659702301,
+            "p99": 0.8843202728033059,
+            "samples": 192008,
+            "standard_deviation": 0.4779803271866258
+          }
+        ],
+        "button_combo_counts": [
+          32987,
+          21112,
+          26739,
+          24404,
+          16023,
+          33228,
+          19712,
+          17803
+        ],
+        "button_combo_shares": [
+          0.17180013332777802,
+          0.10995375192700305,
+          0.13925982250739552,
+          0.12709887088038,
+          0.08344964793133619,
+          0.1730552893629432,
+          0.1026623890671222,
+          0.09272009499604184
+        ],
+        "marginal_button_shares": {
+          "boost": 0.46174117745093957,
+          "handbrake": 0.4518874213574434,
+          "jump": 0.5028280071663681
+        },
+        "sample_count": 192008
+      },
+      "added_bootstrap_simulated_game_hours": 0.22223148148148147,
+      "agent_steps_per_second": 3726.953851311271,
+      "bootstrap_metrics": {
+        "goals": {
+          "blue": 2,
+          "orange": 2
+        },
+        "interaction_rates_per_100k_agent_steps": {
+          "aerial_logical_touches": 1.562434898545894,
+          "dodges": 660.3891504520645,
+          "first_jumps": 549.4562726553061,
+          "logical_touches": 17.707595516853463,
+          "raw_touch_records": 36.45681429940419,
+          "touch_chain_starts": 12.499479188367152
+        },
+        "reset_counts": {
+          "easy_aerial_contact": 17,
+          "easy_finish": 14,
+          "ground_acquisition": 33,
+          "moving_ball_chase": 21,
+          "natural": 2,
+          "touch_chain": 25
+        },
+        "reward_integrity": {
+          "budget_clip_counts": {
+            "blue.aerial_touch_event": 0,
+            "blue.ball_approach_potential": 16,
+            "blue.ball_progress_potential": 0,
+            "blue.ball_touch_event": 0,
+            "blue.touch_chain_event": 0,
+            "blue.useful_speed_rate": 0,
+            "orange.aerial_touch_event": 0,
+            "orange.ball_approach_potential": 472,
+            "orange.ball_progress_potential": 0,
+            "orange.ball_touch_event": 0,
+            "orange.touch_chain_event": 0,
+            "orange.useful_speed_rate": 0
+          },
+          "component_budget_fraction_across_completed_episodes": {
+            "aerial_touch_event": 0.008035714072840554,
+            "ball_approach_potential": 1.0339413237558892,
+            "ball_progress_potential": 0.05950638522243302,
+            "ball_touch_event": 0.045535716095141,
+            "touch_chain_event": 0.008333333457509676,
+            "useful_speed_rate": 0.02573046636406993
+          },
+          "direct_action_press_rewards": false,
+          "reward_correlation_with_logical_touch": 0.07800031397159342,
+          "reward_correlation_with_planar_speed": -0.006757725951107698,
+          "total_reward_per_logical_touch": -0.21065438604684605,
+          "total_reward_per_simulated_agent_second": -0.00447621919436238
+        },
+        "termination_counts": {
+          "episode_timeout": 0,
+          "goal": 4,
+          "no_touch_timeout": 52
+        },
+        "touch_chain": {
+          "histogram": {
+            "1": 24,
+            "2": 6,
+            "3": 4,
+            "4": 0,
+            "5+": 0
+          },
+          "maximum_observed_chain_length_lower_bound": 3,
+          "two_or_more_chain_touches_per_100k_agent_steps": 5.208116328486313
+        }
+      },
+      "collected_agent_steps": 192008,
+      "cumulative_agent_steps": 23570818,
+      "health": {
+        "actor_updated": true,
+        "all_analog_axes_explored": true,
+        "all_button_combos_sampled": true,
+        "all_hybrid_head_gradient_rows_nonzero": true,
+        "all_update_metrics_finite": true,
+        "analog_stds_finite_and_positive": true,
+        "authorized_agent_step_ceiling_respected": true,
+        "button_entropy_finite_and_positive": true,
+        "critic_updated": true,
+        "gae_finite": true,
+        "passed": true,
+        "pilot_metrics_finite": true,
+        "rollout_log_probabilities_reproduced": true,
+        "rollout_workers_alive": true
+      },
+      "iteration": 123,
+      "iteration_wall_seconds": 55.423072200035676,
+      "ppo": {
+        "actor_loss": {
+          "maximum": 0.00026993872597813606,
+          "mean": -0.0025704467261675745,
+          "minimum": -0.006423802115023136,
+          "p01": -0.006305931035894901,
+          "p50": -0.002063961757812649,
+          "p95": -1.5525688650087216e-05,
+          "p99": 0.00021284584305249107,
+          "samples": 4,
+          "standard_deviation": 0.002439281459486579
+        },
+        "actor_update_magnitude": 0.08738750964403152,
+        "analog_entropy": {
+          "maximum": 2.8972525596618652,
+          "mean": 2.892700970172882,
+          "minimum": 2.8879752159118652,
+          "p01": 2.8880591797828674,
+          "p50": 2.892788052558899,
+          "p95": 2.8968849897384645,
+          "p99": 2.897179045677185,
+          "samples": 4,
+          "standard_deviation": 0.00357692636098775
+        },
+        "approximate_kl": {
+          "maximum": 0.001057916902936995,
+          "mean": 0.0003406263438276557,
+          "minimum": -8.816520430388053e-11,
+          "p01": 1.298506367213778e-06,
+          "p50": 0.00015229428026941605,
+          "p95": 0.0009384246921399606,
+          "p99": 0.001034018460777588,
+          "samples": 4,
+          "standard_deviation": 0.00042580379350268786
+        },
+        "button_entropy": {
+          "maximum": 2.045909881591797,
+          "mean": 2.0457385182380676,
+          "minimum": 2.0456626415252686,
+          "p01": 2.0456632924079896,
+          "p50": 2.0456907749176025,
+          "p95": 2.045877981185913,
+          "p99": 2.04590350151062,
+          "samples": 4,
+          "standard_deviation": 9.970506700926928e-05
+        },
+        "clip_fraction": {
+          "maximum": 8.333333244081587e-05,
+          "mean": 2.0833333110203966e-05,
+          "minimum": 0.0,
+          "p01": 0.0,
+          "p50": 0.0,
+          "p95": 7.083333257469346e-05,
+          "p99": 8.083333246759137e-05,
+          "samples": 4,
+          "standard_deviation": 3.608439143788021e-05
+        },
+        "critic_loss": {
+          "maximum": 0.0904945358633995,
+          "mean": 0.08713868446648121,
+          "minimum": 0.0837126150727272,
+          "p01": 0.08380809970200062,
+          "p50": 0.08717379346489906,
+          "p95": 0.09003817811608314,
+          "p99": 0.09040326431393624,
+          "samples": 4,
+          "standard_deviation": 0.002406092323409286
+        },
+        "critic_update_magnitude": 0.21975678205490112
+      },
+      "reward": {
+        "maximum": 10.0,
+        "mean": -3.730182859215524e-05,
+        "minimum": -10.0,
+        "p01": -0.0022527140402235093,
+        "p50": -8.770717249717563e-05,
+        "p95": 0.0011042388272471722,
+        "p99": 0.0020934256445616444,
+        "samples": 192008,
+        "standard_deviation": 0.06479522081497484
+      }
+    }
+  },
+  "exact_start_checkpoint": {
+    "checkpoint": {
+      "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+      "actor_size_bytes": 7877740,
+      "clean_boundary": true,
+      "completed_iterations": 122,
+      "config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+      "config_version": "RivalM10TrainingConfigV1",
+      "cumulative_agent_steps": 23378810,
+      "cumulative_model_updates": 487,
+      "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+      "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+      "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+      "simulated_game_hours": 27.05880787037037
+    },
+    "checks": {
+      "actor_critic_optimizers_present": true,
+      "actor_sha256_exact": true,
+      "cumulative_steps_exact": true,
+      "directory_exact": true,
+      "fresh_reload_exact": true,
+      "manifest_sha256_exact": true,
+      "trainer_clean_boundary": true
+    },
+    "status": "passed"
+  },
+  "preflight_version": "RivalAgencyBootstrapPreflightV1",
+  "production_after": {
+    "probe": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    }
+  },
+  "production_before": {
+    "probe": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    }
+  },
+  "reward_formulas": {
+    "checks": {
+      "aerial_requires_physical_touch": true,
+      "aerial_touch_bonus_exact": true,
+      "chain_schedule_exact": true,
+      "combined_absolute_spend_bounded": true,
+      "continuous_contact_debounced": true,
+      "eight_tick_separation_rewards_second_touch": true,
+      "ground_touch_base_exact": true,
+      "kernel_has_no_action_argument": true,
+      "metadata_forbids_action_reward": true,
+      "opponent_touch_resets_chain_and_debounce": true,
+      "outcomes_exact": true,
+      "rate_integrates_1_2_4_ticks": true,
+      "stationary_unchanged_zero": true,
+      "toward_speed_exceeds_away": true
+    },
+    "final_absolute_spend": {
+      "aerial_touch_event": 1.5,
+      "ball_approach_potential": 0.0,
+      "ball_progress_potential": 0.0,
+      "ball_touch_event": 2.0,
+      "touch_chain_event": 1.5,
+      "useful_speed_rate": 0.5980069840640377
+    },
+    "outcomes": {
+      "concede": -10.0,
+      "goal": 10.0
+    },
+    "speed": {
+      "away_four_ticks": 4.763705103969754e-05,
+      "toward_four_ticks": 0.00013585312746374815,
+      "toward_one_tick": 3.396328186593704e-05
+    },
+    "stationary_components": {
+      "aerial_touch_event": 0.0,
+      "ball_approach_potential": 0.0,
+      "ball_progress_potential": 0.0,
+      "ball_touch_event": 0.0,
+      "outcome": 0.0,
+      "touch_chain_event": 0.0,
+      "useful_speed_rate": 0.0
+    },
+    "status": "passed",
+    "touch_proposals": {
+      "aerial_touch_event": 0.45,
+      "ball_approach_potential": 0.0,
+      "ball_progress_potential": 0.0,
+      "ball_touch_event": 0.3,
+      "outcome": 0.0,
+      "touch_chain_event": 0.5,
+      "useful_speed_rate": 0.0
+    }
+  },
+  "schema_version": 1,
+  "source_checkpoint_after": {
+    "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 122,
+    "config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+    "config_version": "RivalM10TrainingConfigV1",
+    "cumulative_agent_steps": 23378810,
+    "cumulative_model_updates": 487,
+    "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+    "simulated_game_hours": 27.05880787037037
+  },
+  "source_checkpoint_before": {
+    "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 122,
+    "config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+    "config_version": "RivalM10TrainingConfigV1",
+    "cumulative_agent_steps": 23378810,
+    "cumulative_model_updates": 487,
+    "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+    "simulated_game_hours": 27.05880787037037
+  },
+  "status": "passed",
+  "visual_inspection": {
+    "required_families": [
+      "ground_acquisition",
+      "moving_ball_chase",
+      "touch_chain",
+      "easy_aerial_contact",
+      "easy_finish",
+      "natural"
+    ],
+    "status": "pending_separate_rlviser_family_sample"
+  }
+}

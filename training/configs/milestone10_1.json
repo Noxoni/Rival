@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "config_version": "RivalM10_1TrainingConfigV1",
+  "campaign_id": "rival-v10-1-agency-bootstrap",
+  "policy_version": "RivalPolicyV1",
+  "critic_version": "RivalCriticV1",
+  "observation_version": "RivalObsV1",
+  "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+  "action_version": "RivalActionV1",
+  "action_schema_sha256": "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163",
+  "canonical_state_version": "RivalCanonicalStateV1",
+  "canonical_adapter_version": "RivalCanonicalAdapterV1",
+  "reward_version": "RivalAgencyBootstrapRewardV1",
+  "reward_schedule_version": "RivalAgencyBootstrapRewardScheduleV1",
+  "environment_version": "RivalAgencyBootstrapEnvV1",
+  "backend": {
+    "name": "rlgym-ppo",
+    "version": "1.3.13",
+    "source_commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea",
+    "worker_count": 56,
+    "minimum_inference_size": 16,
+    "standardize_observations": false
+  },
+  "time_base": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "agents_per_environment": 2,
+    "agent_steps_per_simulated_game_second": 240,
+    "agent_steps_per_simulated_game_hour": 864000,
+    "repeat_action": false
+  },
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 192000,
+    "experience_buffer_capacity_agent_steps": 600000,
+    "ppo_batch_agent_steps": 192000,
+    "minibatch_agent_steps": 48000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0,
+    "advantage_epsilon": 0.000001
+  },
+  "gate11": {
+    "iterations_before_fresh_reload": 2,
+    "iterations_after_fresh_reload": 1,
+    "held_reload_observation_count": 32,
+    "seed": 20260911
+  },
+  "bootstrap": {
+    "reward_version": "RivalAgencyBootstrapRewardV1",
+    "curriculum_version": "RivalAgencyBootstrapCurriculumV1",
+    "environment_version": "RivalAgencyBootstrapEnvV1",
+    "metrics_version": "RivalAgencyBootstrapMetricsV1",
+    "seed_base": 20261001,
+    "initial_phase": "A",
+    "no_touch_timeout_seconds": 10.0,
+    "episode_timeout_seconds": 120.0,
+    "phase_weights": {
+      "A": {
+        "ground_acquisition": 0.30,
+        "moving_ball_chase": 0.20,
+        "touch_chain": 0.20,
+        "easy_aerial_contact": 0.15,
+        "easy_finish": 0.10,
+        "natural": 0.05
+      },
+      "B": {
+        "ground_acquisition": 0.20,
+        "moving_ball_chase": 0.15,
+        "touch_chain": 0.20,
+        "easy_aerial_contact": 0.15,
+        "easy_finish": 0.10,
+        "natural": 0.20
+      },
+      "C": {
+        "ground_acquisition": 0.15,
+        "moving_ball_chase": 0.10,
+        "touch_chain": 0.15,
+        "easy_aerial_contact": 0.10,
+        "easy_finish": 0.10,
+        "natural": 0.40
+      }
+    }
+  },
+  "campaign": {
+    "starting_checkpoint": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+    "starting_checkpoint_actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+    "starting_checkpoint_manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+    "starting_cumulative_agent_steps": 23378810,
+    "starting_simulated_game_hours": 27.05880787037037,
+    "maximum_additional_agent_steps": 21600000,
+    "maximum_additional_simulated_game_hours": 25.0,
+    "evaluation_boundaries_added_simulated_hours": [2.5, 5.0, 10.0, 15.0, 20.0, 25.0],
+    "rolling_recovery_checkpoints_to_keep": 2,
+    "phase_a_hard_review_ceiling_hours": 10.0,
+    "production_promotion_authorized": false
+  }
+}

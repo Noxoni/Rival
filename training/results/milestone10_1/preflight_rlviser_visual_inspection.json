@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "inspection_version": "RivalAgencyBootstrapRLViserVisualInspectionV1",
+  "inspected_at_utc": "2026-08-24T00:09:48Z",
+  "inspector": "Codex direct Windows.Graphics.Capture observation",
+  "source": {
+    "checkpoint": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+    "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+    "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+    "automated_preflight": "training/results/milestone10_1/preflight.json",
+    "automated_preflight_sha256": "d73654dbe18d56159bcdd31052b3bc7e2236a9f62fd2c93b2a713d1b8de4abf3",
+    "spectator_report": "training/results/milestone10_1/preflight_rlviser.json",
+    "spectator_report_sha256": "022a9b8af8abf0eeecc6bb5c7900846096592645cb78827baaeceba74b79f283"
+  },
+  "renderer": {
+    "name": "RLViser-rs",
+    "version": "0.8.2",
+    "binary_sha256": "518a04f711c68de81008a51cb90a61808847d11a0ce8a102a87017cf6f94f8ad",
+    "separate_spectator_process": true,
+    "single_rocket_sim_environment": true,
+    "training_workers_rendered": false,
+    "physics_and_policy_hz": 120,
+    "playback_speed": 1.0
+  },
+  "family_observations": {
+    "ground_acquisition": {
+      "observed": true,
+      "result": "grounded ball and grounded cars were visibly in-bounds, with the active car presented at an acquisition distance"
+    },
+    "moving_ball_chase": {
+      "observed": true,
+      "result": "moving elevated ball and separated chase geometry were visibly in-bounds and coherent"
+    },
+    "touch_chain": {
+      "observed": true,
+      "result": "ground ball was visibly close ahead of the active moving car with the opponent separated"
+    },
+    "easy_aerial_contact": {
+      "observed": true,
+      "result": "elevated ball and an active-car aerial approach were clearly visible in the viewport"
+    },
+    "easy_finish": {
+      "observed": true,
+      "result": "ball, trailing attacker, defender, and attacking-third placement were visibly coherent near the target goal"
+    },
+    "natural": {
+      "observed": true,
+      "result": "centered resting ball and symmetric diagonal kickoff cars were visibly coherent"
+    }
+  },
+  "checks": {
+    "all_six_families_directly_observed": true,
+    "no_out_of_bounds_or_non_finite_visual_state": true,
+    "family_geometry_matches_authority_intent": true,
+    "renderer_process_verified": true,
+    "spectator_did_not_render_training_workers": true,
+    "production_bot_or_rocket_league_launched": false,
+    "passed": true
+  },
+  "limitations": [
+    "This is a qualitative reset-geometry inspection, not capability evidence.",
+    "Viewport screenshots were inspected live and are not committed; the compact spectator report preserves exact initial physics for every family."
+  ]
+}
