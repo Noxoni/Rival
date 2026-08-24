@@ -1,0 +1,3877 @@
+{
+  "bootstrap_evaluation": {
+    "agent_steps_evaluated": 108042,
+    "capability_summary": {
+      "aerial_logical_touches": 0.0,
+      "dodges": 199.92225245737768,
+      "easy_finish_active_team_goals": 5,
+      "easy_finish_success_rate": 0.625,
+      "episode_timeout_share": 0.0,
+      "episode_touch_shares": {
+        "at_least_1": 0.041666666666666664,
+        "at_least_2": 0.010416666666666666,
+        "at_least_3": 0.0
+      },
+      "first_jumps": 243.4238536865293,
+      "goal_termination_share": 0.1875,
+      "goals": {
+        "blue": 6,
+        "orange": 3
+      },
+      "logical_touches": 4.627829917994854,
+      "maximum_touch_chain_length_lower_bound": 2,
+      "mean_distance_to_ball": 3085.770127031553,
+      "mean_planar_speed": 511.3517108408914,
+      "mean_speed": 555.4970829508818,
+      "natural_goal_activity": false,
+      "natural_goal_episodes": 0,
+      "no_touch_timeout_share": 0.8125,
+      "raw_touch_records": 9.255659835989707,
+      "speed_share_over_1000": 0.15966938783065843,
+      "speed_share_over_1500": 0.04421428703652283,
+      "speed_share_over_2000": 0.0029432998278447267,
+      "speed_share_over_500": 0.4752503655985635,
+      "touch_chain_starts": 3.702263934395883,
+      "touches_by_reset_family": {
+        "easy_aerial_contact": 0,
+        "easy_finish": 0,
+        "ground_acquisition": 0,
+        "moving_ball_chase": 1,
+        "natural": 0,
+        "touch_chain": 4
+      },
+      "two_or_more_chain_touches_per_100k_agent_steps": 0.9255659835989708
+    },
+    "checkpoint": {
+      "actor_sha256": "bf1a797884fd88246907b706820f05d8d442636d4791af62d5327af89216dca1",
+      "config_version": "RivalM10_1TrainingConfigV1",
+      "cumulative_agent_steps": 27795246,
+      "directory": "training/checkpoints/milestone10_1/boundaries/plus-005h/027795246",
+      "manifest_sha256": "8f9014d4aef8cbfb6615b9f5e05d1ab1decfa3eb23768ef2be2a53f57cfef456",
+      "simulated_game_hours": 32.17042361111111
+    },
+    "checks": {
+      "all_episodes_reached_environment_end": true,
+      "all_six_families_evaluated": true,
+      "checkpoint_loaded": true,
+      "deterministic_policy": true,
+      "episode_count_exact": true,
+      "metric_transport_finite": true,
+      "passed": true,
+      "scores_not_the_only_gate": true,
+      "scores_recorded_as_capability_evidence": true
+    },
+    "environment_ticks": 54021,
+    "episode_outcomes_by_family": {
+      "easy_aerial_contact": {
+        "active_team_goals": 0,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 0,
+        "no_touch_timeouts": 8
+      },
+      "easy_finish": {
+        "active_team_goals": 5,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 5,
+        "no_touch_timeouts": 3
+      },
+      "ground_acquisition": {
+        "active_team_goals": 1,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 1,
+        "no_touch_timeouts": 7
+      },
+      "moving_ball_chase": {
+        "active_team_goals": 1,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 1,
+        "no_touch_timeouts": 7
+      },
+      "natural": {
+        "active_team_goals": 0,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 0,
+        "no_touch_timeouts": 8
+      },
+      "touch_chain": {
+        "active_team_goals": 2,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 2,
+        "no_touch_timeouts": 6
+      }
+    },
+    "evaluation_version": "RivalAgencyBootstrapFixedEvaluationV1",
+    "fixed_protocol": {
+      "active_team_rule": "episode_index_modulo_2",
+      "episodes_per_family": 8,
+      "evaluation_agent_steps_are_not_training_experience": true,
+      "families": [
+        "ground_acquisition",
+        "moving_ball_chase",
+        "touch_chain",
+        "easy_aerial_contact",
+        "easy_finish",
+        "natural"
+      ],
+      "forced_mirror": false,
+      "maximum_ticks_per_episode": 14405,
+      "native_physics_and_policy_hz": 120,
+      "opponent": "same_current_Rival_actor_self_play",
+      "phase": "A",
+      "policy_mode": "deterministic_tanh_mean_and_button_argmax",
+      "seed": 20261061
+    },
+    "metrics": {
+      "action_diagnostics": {
+        "analog": {
+          "pitch": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -30069.464405252133,
+            "cumulative_absolute": 30069.464405252133,
+            "maximum": 0.0,
+            "mean": -0.2783127339854143,
+            "minimum": -0.4559258222579956,
+            "p50": -0.28874067962169647,
+            "p95": -0.1113455343991518,
+            "samples": 108042,
+            "standard_deviation": 0.07465788711115304
+          },
+          "roll": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": 3149.7660735870013,
+            "cumulative_absolute": 9269.416717490414,
+            "maximum": 0.3373417258262634,
+            "mean": 0.02915316334006221,
+            "minimum": -0.24224047362804413,
+            "p50": 0.027528395876288414,
+            "p95": 0.19357191324234008,
+            "samples": 108042,
+            "standard_deviation": 0.10080682652313334
+          },
+          "steer": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -25199.22814100096,
+            "cumulative_absolute": 25199.237958190497,
+            "maximum": 0.004908594768494368,
+            "mean": -0.23323548380260417,
+            "minimum": -0.5179228186607361,
+            "p50": -0.2381964847445488,
+            "p95": -0.09749583788216136,
+            "samples": 108042,
+            "standard_deviation": 0.08130346945702979
+          },
+          "throttle": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": 5182.363535907905,
+            "cumulative_absolute": 6808.623029374547,
+            "maximum": 0.2547251284122467,
+            "mean": 0.0479661940348004,
+            "minimum": -0.1376071721315384,
+            "p50": 0.04752029664814472,
+            "p95": 0.15071125999093055,
+            "samples": 108042,
+            "standard_deviation": 0.06273235350794559
+          },
+          "yaw": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -21043.21662290208,
+            "cumulative_absolute": 21043.21662290208,
+            "maximum": 0.0,
+            "mean": -0.19476885491662577,
+            "minimum": -0.408908873796463,
+            "p50": -0.19581761956214905,
+            "p95": -0.112156056240201,
+            "samples": 108042,
+            "standard_deviation": 0.053512420336212396
+          }
+        },
+        "button_combo_counts": [
+          46318,
+          0,
+          0,
+          9676,
+          0,
+          52048,
+          0,
+          0
+        ],
+        "button_combo_shares": [
+          0.42870365228337126,
+          0.0,
+          0.0,
+          0.08955776457303641,
+          0.0,
+          0.4817385831435923,
+          0.0,
+          0.0
+        ],
+        "marginal_button_shares": {
+          "boost": 0.08955776457303641,
+          "handbrake": 0.4817385831435923,
+          "jump": 0.5712963477166287
+        },
+        "samples": 108042
+      },
+      "agent_metric_samples": 108042,
+      "episode_touch_shares": {
+        "at_least_1": 0.041666666666666664,
+        "at_least_2": 0.010416666666666666,
+        "at_least_3": 0.0
+      },
+      "finite": true,
+      "goals": {
+        "blue": 6,
+        "orange": 3
+      },
+      "goals_by_reset_family": {
+        "easy_aerial_contact": 0,
+        "easy_finish": 5,
+        "ground_acquisition": 1,
+        "moving_ball_chase": 1,
+        "natural": 0,
+        "touch_chain": 2
+      },
+      "interaction_counts": {
+        "blue.aerial_logical_touch": 0,
+        "blue.chain_length_1": 3,
+        "blue.chain_length_2": 0,
+        "blue.chain_length_3": 0,
+        "blue.chain_length_4": 0,
+        "blue.chain_length_5plus": 0,
+        "blue.dodge_event": 110,
+        "blue.episode_self_touches_ge1": 3,
+        "blue.episode_self_touches_ge2": 0,
+        "blue.episode_self_touches_ge3": 0,
+        "blue.first_jump_event": 135,
+        "blue.first_touch_event": 3,
+        "blue.logical_touch": 3,
+        "blue.raw_touch_record": 6,
+        "blue.touch_chain_start": 3,
+        "orange.aerial_logical_touch": 0,
+        "orange.chain_length_1": 1,
+        "orange.chain_length_2": 1,
+        "orange.chain_length_3": 0,
+        "orange.chain_length_4": 0,
+        "orange.chain_length_5plus": 0,
+        "orange.dodge_event": 106,
+        "orange.episode_self_touches_ge1": 1,
+        "orange.episode_self_touches_ge2": 1,
+        "orange.episode_self_touches_ge3": 0,
+        "orange.first_jump_event": 128,
+        "orange.first_touch_event": 1,
+        "orange.logical_touch": 2,
+        "orange.raw_touch_record": 4,
+        "orange.touch_chain_start": 1
+      },
+      "interaction_rates_per_100k_agent_steps": {
+        "aerial_logical_touches": 0.0,
+        "dodges": 199.92225245737768,
+        "first_jumps": 243.4238536865293,
+        "logical_touches": 4.627829917994854,
+        "raw_touch_records": 9.255659835989707,
+        "touch_chain_starts": 3.702263934395883
+      },
+      "metric_vector_count": 54021,
+      "metric_vector_size": 117,
+      "metrics_version": "RivalAgencyBootstrapMetricsV1",
+      "motion": {
+        "blue.distance_to_ball": {
+          "cumulative": 164090193.62446594,
+          "cumulative_absolute": 164090193.62446594,
+          "maximum": 9665.8935546875,
+          "mean": 3037.5260292194876,
+          "minimum": 131.41766357421875,
+          "p50": 2864.845458984375,
+          "p95": 6613.74853515625,
+          "samples": 54021,
+          "standard_deviation": 1781.6018524107494
+        },
+        "blue.planar_speed": {
+          "cumulative": 27002361.391229037,
+          "cumulative_absolute": 27002361.391229037,
+          "maximum": 2197.230712890625,
+          "mean": 499.84934361135555,
+          "minimum": 0.0,
+          "p50": 366.5877990722656,
+          "p95": 1416.6234130859375,
+          "samples": 54021,
+          "standard_deviation": 457.364277577856
+        },
+        "blue.speed": {
+          "cumulative": 29674792.883158732,
+          "cumulative_absolute": 29674792.883158732,
+          "maximum": 2300.0,
+          "mean": 549.319577259931,
+          "minimum": 1.6281646821880713e-05,
+          "p50": 449.0032043457031,
+          "p95": 1467.8048095703125,
+          "samples": 54021,
+          "standard_deviation": 465.2163468214159
+        },
+        "blue.speed_over_1000": {
+          "cumulative": 9070.0,
+          "cumulative_absolute": 9070.0,
+          "maximum": 1.0,
+          "mean": 0.1678976694248533,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 54021,
+          "standard_deviation": 0.37377538980858005
+        },
+        "blue.speed_over_1500": {
+          "cumulative": 2310.0,
+          "cumulative_absolute": 2310.0,
+          "maximum": 1.0,
+          "mean": 0.04276114844227245,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.20231814705105025
+        },
+        "blue.speed_over_2000": {
+          "cumulative": 151.0,
+          "cumulative_absolute": 151.0,
+          "maximum": 1.0,
+          "mean": 0.0027952092704688915,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.05279579600312109
+        },
+        "blue.speed_over_500": {
+          "cumulative": 24987.0,
+          "cumulative_absolute": 24987.0,
+          "maximum": 1.0,
+          "mean": 0.46254234464374966,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 54021,
+          "standard_deviation": 0.49859494988939906
+        },
+        "blue.time_to_first_touch_seconds": {
+          "cumulative": 3.033333420753479,
+          "cumulative_absolute": 3.033333420753479,
+          "maximum": 2.133333444595337,
+          "mean": 1.0111111402511597,
+          "minimum": 0.38333332538604736,
+          "p50": 0.5166666507720947,
+          "p95": 1.9716667652130124,
+          "samples": 3,
+          "standard_deviation": 0.7953957585966421
+        },
+        "orange.distance_to_ball": {
+          "cumulative": 169302582.4402771,
+          "cumulative_absolute": 169302582.4402771,
+          "maximum": 10083.23046875,
+          "mean": 3134.014224843618,
+          "minimum": 158.75099182128906,
+          "p50": 3097.271240234375,
+          "p95": 6386.48583984375,
+          "samples": 54021,
+          "standard_deviation": 1757.0622193327015
+        },
+        "orange.planar_speed": {
+          "cumulative": 28245100.151442558,
+          "cumulative_absolute": 28245100.151442558,
+          "maximum": 2195.410888671875,
+          "mean": 522.8540780704274,
+          "minimum": 0.0,
+          "p50": 441.3243713378906,
+          "p95": 1445.44970703125,
+          "samples": 54021,
+          "standard_deviation": 436.7231284542049
+        },
+        "orange.speed": {
+          "cumulative": 30342222.953020442,
+          "cumulative_absolute": 30342222.953020442,
+          "maximum": 2195.4130859375,
+          "mean": 561.6745886418327,
+          "minimum": 1.6326099512298242e-06,
+          "p50": 485.23858642578125,
+          "p95": 1451.8785400390625,
+          "samples": 54021,
+          "standard_deviation": 431.6317114698774
+        },
+        "orange.speed_over_1000": {
+          "cumulative": 8181.0,
+          "cumulative_absolute": 8181.0,
+          "maximum": 1.0,
+          "mean": 0.1514411062364636,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 54021,
+          "standard_deviation": 0.35847830837909805
+        },
+        "orange.speed_over_1500": {
+          "cumulative": 2467.0,
+          "cumulative_absolute": 2467.0,
+          "maximum": 1.0,
+          "mean": 0.045667425630773216,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.20876281246196848
+        },
+        "orange.speed_over_2000": {
+          "cumulative": 167.0,
+          "cumulative_absolute": 167.0,
+          "maximum": 1.0,
+          "mean": 0.0030913903852205623,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.05551426565043194
+        },
+        "orange.speed_over_500": {
+          "cumulative": 26360.0,
+          "cumulative_absolute": 26360.0,
+          "maximum": 1.0,
+          "mean": 0.48795838655337737,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 54021,
+          "standard_deviation": 0.49985497851437083
+        },
+        "orange.time_to_first_touch_seconds": {
+          "cumulative": 1.1166666746139526,
+          "cumulative_absolute": 1.1166666746139526,
+          "maximum": 1.1166666746139526,
+          "mean": 1.1166666746139526,
+          "minimum": 1.1166666746139526,
+          "p50": 1.1166666746139526,
+          "p95": 1.1166666746139526,
+          "samples": 1,
+          "standard_deviation": 0.0
+        }
+      },
+      "reset_counts": {
+        "easy_aerial_contact": 8,
+        "easy_finish": 8,
+        "ground_acquisition": 8,
+        "moving_ball_chase": 8,
+        "natural": 8,
+        "touch_chain": 8
+      },
+      "reset_shares": {
+        "easy_aerial_contact": 0.16666666666666666,
+        "easy_finish": 0.16666666666666666,
+        "ground_acquisition": 0.16666666666666666,
+        "moving_ball_chase": 0.16666666666666666,
+        "natural": 0.16666666666666666,
+        "touch_chain": 0.16666666666666666
+      },
+      "reward_components": {
+        "blue.aerial_touch_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.0
+        },
+        "blue.ball_approach_potential": {
+          "cumulative": -4.514078689613417,
+          "cumulative_absolute": 17.732070665145745,
+          "maximum": 0.04079911485314369,
+          "mean": -8.35615536479039e-05,
+          "minimum": -0.013403931632637978,
+          "p50": -4.634370270650834e-05,
+          "p95": 0.0006583830108866096,
+          "samples": 54021,
+          "standard_deviation": 0.0006846112351637112
+        },
+        "blue.ball_progress_potential": {
+          "cumulative": 0.21301380566419378,
+          "cumulative_absolute": 0.7387904383125387,
+          "maximum": 0.0061898608691990376,
+          "mean": 3.9431666511947905e-06,
+          "minimum": -0.0011968682520091534,
+          "p50": 0.0,
+          "p95": 2.9874912797822617e-05,
+          "samples": 54021,
+          "standard_deviation": 3.590067301886331e-05
+        },
+        "blue.ball_touch_event": {
+          "cumulative": 0.9000000357627869,
+          "cumulative_absolute": 0.9000000357627869,
+          "maximum": 0.30000001192092896,
+          "mean": 1.6660188366797854e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.002235571324464478
+        },
+        "blue.outcome": {
+          "cumulative": 30.0,
+          "cumulative_absolute": 90.0,
+          "maximum": 10.0,
+          "mean": 0.0005553395901593825,
+          "minimum": -10.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.12907315484918264
+        },
+        "blue.touch_chain_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.0
+        },
+        "blue.useful_speed_rate": {
+          "cumulative": 0.3369671428796094,
+          "cumulative_absolute": 0.3369671428796094,
+          "maximum": 0.00011014420306310058,
+          "mean": 6.237706500798012e-06,
+          "minimum": 0.0,
+          "p50": 2.381369995418936e-06,
+          "p95": 2.4859833501977846e-05,
+          "samples": 54021,
+          "standard_deviation": 9.520295435012766e-06
+        },
+        "orange.aerial_touch_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.0
+        },
+        "orange.ball_approach_potential": {
+          "cumulative": -4.585738261354666,
+          "cumulative_absolute": 17.495771256903296,
+          "maximum": 0.032029952853918076,
+          "mean": -8.488806688796331e-05,
+          "minimum": -0.014692164026200771,
+          "p50": -3.4989781852345914e-05,
+          "p95": 0.0006074151606298983,
+          "samples": 54021,
+          "standard_deviation": 0.00066349266138249
+        },
+        "orange.ball_progress_potential": {
+          "cumulative": -0.21301380566419378,
+          "cumulative_absolute": 0.7387904383125387,
+          "maximum": 0.0011968682520091534,
+          "mean": -3.9431666511947905e-06,
+          "minimum": -0.0061898608691990376,
+          "p50": 0.0,
+          "p95": 2.4322631361428648e-05,
+          "samples": 54021,
+          "standard_deviation": 3.590067301886331e-05
+        },
+        "orange.ball_touch_event": {
+          "cumulative": 0.6000000238418579,
+          "cumulative_absolute": 0.6000000238418579,
+          "maximum": 0.30000001192092896,
+          "mean": 1.1106792244531903e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.0018253532383976775
+        },
+        "orange.outcome": {
+          "cumulative": -30.0,
+          "cumulative_absolute": 90.0,
+          "maximum": 10.0,
+          "mean": -0.0005553395901593825,
+          "minimum": -10.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.12907315484918264
+        },
+        "orange.touch_chain_event": {
+          "cumulative": 0.10000000149011612,
+          "cumulative_absolute": 0.10000000149011612,
+          "maximum": 0.10000000149011612,
+          "mean": 1.8511319947819573e-06,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 54021,
+          "standard_deviation": 0.0004302438559084083
+        },
+        "orange.useful_speed_rate": {
+          "cumulative": 0.3221101707449664,
+          "cumulative_absolute": 0.3221101707449664,
+          "maximum": 6.643182859988883e-05,
+          "mean": 5.962684340255945e-06,
+          "minimum": 0.0,
+          "p50": 2.8833690066676354e-06,
+          "p95": 2.4783146727713756e-05,
+          "samples": 54021,
+          "standard_deviation": 8.565005305569496e-06
+        }
+      },
+      "reward_integrity": {
+        "budget_clip_counts": {
+          "blue.aerial_touch_event": 0,
+          "blue.ball_approach_potential": 0,
+          "blue.ball_progress_potential": 0,
+          "blue.ball_touch_event": 0,
+          "blue.touch_chain_event": 0,
+          "blue.useful_speed_rate": 0,
+          "orange.aerial_touch_event": 0,
+          "orange.ball_approach_potential": 0,
+          "orange.ball_progress_potential": 0,
+          "orange.ball_touch_event": 0,
+          "orange.touch_chain_event": 0,
+          "orange.useful_speed_rate": 0
+        },
+        "component_budget_fraction_across_completed_episodes": {
+          "aerial_touch_event": 0.0,
+          "ball_approach_potential": 0.3669566866880108,
+          "ball_progress_potential": 0.030782934929689112,
+          "ball_touch_event": 0.007812500310440859,
+          "touch_chain_event": 0.000694444454792473,
+          "useful_speed_rate": 0.006865388683589331
+        },
+        "direct_action_press_rewards": false,
+        "reward_correlation_with_logical_touch": 0.01680331133825825,
+        "reward_correlation_with_planar_speed": -0.0021283832307273137,
+        "total_reward_per_logical_touch": -1.3681479152497482,
+        "total_reward_per_simulated_agent_second": -0.007597867025322087
+      },
+      "schema_version": 1,
+      "scores_are_capability_evidence_but_not_the_only_gate": true,
+      "termination_counts": {
+        "episode_timeout": 0,
+        "goal": 9,
+        "no_touch_timeout": 39
+      },
+      "termination_shares": {
+        "episode_timeout": 0.0,
+        "goal": 0.1875,
+        "no_touch_timeout": 0.8125
+      },
+      "time_to_first_touch_seconds": {
+        "cumulative": 4.150000095367432,
+        "cumulative_absolute": 4.150000095367432,
+        "maximum": 2.133333444595337,
+        "mean": 1.037500023841858,
+        "minimum": 0.38333332538604736,
+        "p50": 0.8166666626930237,
+        "p95": 1.9808334290981289,
+        "samples": 4,
+        "standard_deviation": 0.6903476871306488
+      },
+      "touch_chain": {
+        "histogram": {
+          "1": 4,
+          "2": 1,
+          "3": 0,
+          "4": 0,
+          "5+": 0
+        },
+        "maximum_observed_chain_length_lower_bound": 2,
+        "two_or_more_chain_touches_per_100k_agent_steps": 0.9255659835989708
+      },
+      "touches_by_reset_family": {
+        "easy_aerial_contact": 0,
+        "easy_finish": 0,
+        "ground_acquisition": 0,
+        "moving_ball_chase": 1,
+        "natural": 0,
+        "touch_chain": 4
+      }
+    },
+    "status": "passed",
+    "wall_seconds": 317.02395999990404
+  },
+  "boundary_added_bootstrap_hours": 5.0,
+  "checks": {
+    "all_evaluations_use_expected_checkpoints": true,
+    "bootstrap_evaluation_passed": true,
+    "boundary_starts_after_exact_m10_plus25": true,
+    "fixed_historical_evaluation_passed": true,
+    "passed": true,
+    "prebootstrap_baseline_passed": true,
+    "production_promotion_authorized": false,
+    "training_boundary_passed": true
+  },
+  "decision": {
+    "action": "continue_phase_A",
+    "continue_training": true,
+    "next_phase": "A"
+  },
+  "evidence_files": {
+    "bootstrap_evaluation": {
+      "path": "training/results/raw/milestone10_1/plus-005h/bootstrap_evaluation.json",
+      "sha256": "3b8785837e7fffa1f49941e3a4dfbfe8cfb63c55e2fcc08089a930742bed8686"
+    },
+    "fixed_evaluation": {
+      "path": "training/results/raw/milestone10_1/plus-005h/fixed_evaluation.json",
+      "sha256": "f9df43ece8b7a6b7bd3f02db53dbb8ca73ce20e48094c9aabe10db22650e3742"
+    },
+    "prebootstrap_evaluation": {
+      "path": "training/results/raw/milestone10_1/prebootstrap_plus25_bootstrap_evaluation.json",
+      "sha256": "8eb7f850fec2edc9a487e00b621693ae9895107a595306a7906215cd69962bc3"
+    },
+    "training_progress": {
+      "path": "training/results/raw/milestone10_1/plus-005h/training_progress.json",
+      "sha256": "064dd5d1d883f6540d1b3226aa25709b73a2bb24e219f5896bd3a1e8b7d2da7a"
+    }
+  },
+  "fixed_historical_evaluation": {
+    "actor_fingerprint": {
+      "all_finite": true,
+      "deterministic_action_sha256": "c5fb64406a7dbc4339b0dbcd892c5a0f8b6d1b488459f00c5fd3d09bcbf57a70",
+      "distribution_parameter_sha256": "e7c2b5d103da3d810797e9b70a142710f5e810f68e41d8c88566e22ac7d3ec40",
+      "distribution_parameter_shape": [
+        32,
+        18
+      ],
+      "held_observation_count": 32,
+      "parameter_l2_norm": 91.61247253417969
+    },
+    "agent_steps_evaluated": 57600,
+    "behavior_signature": {
+      "aerial_possession_like_share": 0.013628472222222222,
+      "aerial_touches_per_100k_agent_steps": 3.4722222222222223,
+      "air_roll_active_share": 0.025677083333333333,
+      "airborne_distance_per_agent_step": 2.022528148244083,
+      "dodges_per_100k_agent_steps": 166.66666666666666,
+      "first_jumps_per_100k_agent_steps": 175.34722222222223,
+      "mean_boost": 18.238159878335168,
+      "mean_distance_to_ball": 4037.886919520696,
+      "mean_planar_speed": 425.39303490901574,
+      "mean_speed": 457.16769478473634,
+      "mechanic_like_events_per_100k_agent_steps": 960.0694444444445,
+      "recovery_landings_per_100k_agent_steps": 317.7083333333333,
+      "touches_per_100k_agent_steps": 3.4722222222222223
+    },
+    "checkpoint": {
+      "actor_sha256": "bf1a797884fd88246907b706820f05d8d442636d4791af62d5327af89216dca1",
+      "cumulative_agent_steps": 27795246,
+      "directory": "training/checkpoints/milestone10_1/boundaries/plus-005h/027795246",
+      "manifest_sha256": "8f9014d4aef8cbfb6615b9f5e05d1ab1decfa3eb23768ef2be2a53f57cfef456",
+      "simulated_game_hours": 32.17042361111111
+    },
+    "checks": {
+      "actor_outputs_finite": true,
+      "all_requested_episodes_completed": true,
+      "fixed_action_diagnostics_finite": true,
+      "metric_transport_finite": true,
+      "no_parser_or_domain_failure": true,
+      "passed": true,
+      "scores_excluded_from_pass_fail": true
+    },
+    "evaluation_version": "RivalScratchPilotFixedEvaluationV1",
+    "fixed_action_diagnostics": {
+      "action_semantics": "policy_selected_RivalActionV1_before_one_tick_transport",
+      "all_finite": true,
+      "analog": {
+        "pitch": {
+          "absolute_over_0_95_share": 0.0,
+          "maximum": -0.028454137966036797,
+          "mean": -0.24940947072525482,
+          "minimum": -0.4423568844795227,
+          "p01": -0.40718161284923554,
+          "p50": -0.26620015501976013,
+          "p99": -0.10122803598642349,
+          "samples": 57600,
+          "standard_deviation": 0.08699566049384866
+        },
+        "roll": {
+          "absolute_over_0_95_share": 0.0,
+          "maximum": 0.36767977476119995,
+          "mean": 0.03135047123157721,
+          "minimum": -0.22220391035079956,
+          "p01": -0.1810865393280983,
+          "p50": 0.022855401039123535,
+          "p99": 0.25444833457469973,
+          "samples": 57600,
+          "standard_deviation": 0.10308437687964768
+        },
+        "steer": {
+          "absolute_over_0_95_share": 0.0,
+          "maximum": -0.04765767231583595,
+          "mean": -0.21032474959353245,
+          "minimum": -0.4858219027519226,
+          "p01": -0.40501715064048766,
+          "p50": -0.1957787573337555,
+          "p99": -0.07270809851586818,
+          "samples": 57600,
+          "standard_deviation": 0.08383105671179913
+        },
+        "throttle": {
+          "absolute_over_0_95_share": 0.0,
+          "maximum": 0.26191869378089905,
+          "mean": 0.03746870488129288,
+          "minimum": -0.12651832401752472,
+          "p01": -0.07981663815677166,
+          "p50": 0.024351957254111767,
+          "p99": 0.18895852625370024,
+          "samples": 57600,
+          "standard_deviation": 0.06507248840861325
+        },
+        "yaw": {
+          "absolute_over_0_95_share": 0.0,
+          "maximum": -0.037197235971689224,
+          "mean": -0.2034330025189815,
+          "minimum": -0.4161703586578369,
+          "p01": -0.33180870294570924,
+          "p50": -0.2070121094584465,
+          "p99": -0.09580370672047137,
+          "samples": 57600,
+          "standard_deviation": 0.04757605595748772
+        }
+      },
+      "button_categorical_entropy": {
+        "maximum": 2.059144973754883,
+        "mean": 2.03948477168464,
+        "minimum": 2.0106770992279053,
+        "p01": 2.023020167350769,
+        "p50": 2.04042911529541,
+        "p99": 2.0494308471679688,
+        "samples": 57600,
+        "standard_deviation": 0.00742995964294534
+      },
+      "button_combo_counts": [
+        33169,
+        0,
+        0,
+        4110,
+        0,
+        20321,
+        0,
+        0
+      ],
+      "button_combo_shares": [
+        0.5758506944444445,
+        0.0,
+        0.0,
+        0.07135416666666666,
+        0.0,
+        0.3527951388888889,
+        0.0,
+        0.0
+      ],
+      "consecutive_button_state_run_lengths_ticks": {
+        "boost": {
+          "held": {
+            "maximum": 466.0,
+            "mean": 4.312696747114376,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 2.0,
+            "p99": 58.36000000000013,
+            "samples": 953,
+            "standard_deviation": 19.68494815889074
+          },
+          "released": {
+            "maximum": 2400.0,
+            "mean": 54.86153846153846,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 3.0,
+            "p99": 1210.0,
+            "samples": 975,
+            "standard_deviation": 241.49177043406
+          }
+        },
+        "handbrake": {
+          "held": {
+            "maximum": 2400.0,
+            "mean": 12.590458488228006,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 3.0,
+            "p99": 113.0,
+            "samples": 1614,
+            "standard_deviation": 86.32765991030364
+          },
+          "released": {
+            "maximum": 2400.0,
+            "mean": 23.09727385377943,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 2.0,
+            "p99": 564.0,
+            "samples": 1614,
+            "standard_deviation": 152.05932883093232
+          }
+        },
+        "jump": {
+          "held": {
+            "maximum": 2400.0,
+            "mean": 26.555434782608696,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 2.0,
+            "p99": 414.24999999999864,
+            "samples": 920,
+            "standard_deviation": 142.8301635602125
+          },
+          "released": {
+            "maximum": 2392.0,
+            "mean": 36.131808278867105,
+            "minimum": 1.0,
+            "p01": 1.0,
+            "p50": 4.0,
+            "p99": 1093.0,
+            "samples": 918,
+            "standard_deviation": 199.40943595891707
+          }
+        }
+      },
+      "controller_change_rate_per_agent_second": 105.0,
+      "learned_analog_log_std": [
+        -0.5038408041000366,
+        -0.5043380260467529,
+        -0.5053626298904419,
+        -0.5040255784988403,
+        -0.5009753108024597
+      ],
+      "learned_analog_std": [
+        0.6042055622482241,
+        0.603905212658738,
+        0.6032867659421699,
+        0.6040939308423364,
+        0.605939392189863
+      ],
+      "samples": 57600,
+      "schema_version": 1,
+      "standalone_button_activation_rates": {
+        "boost": 0.07135416666666666,
+        "handbrake": 0.3527951388888889,
+        "jump": 0.4241493055555556
+      }
+    },
+    "fixed_protocol": {
+      "episode_seed_rule": "base_seed_plus_episode_index",
+      "episodes": 12,
+      "evaluation_agent_steps_are_not_training_experience": true,
+      "maximum_ticks_per_episode": 2400,
+      "opponent": "same_current_scratch_actor_self_play",
+      "policy_mode": "deterministic_tanh_mean_and_button_argmax",
+      "scores_are_recorded_but_not_used_as_a_technical_gate": true,
+      "seed": 20260913
+    },
+    "status": "passed"
+  },
+  "gates": {
+    "bootstrap_exit": {
+      "conditions": {
+        "aerial_touches_at_least_5_per_100k": false,
+        "deterministic_dodges_at_least_10_per_100k": true,
+        "deterministic_jumps_at_least_20_per_100k": true,
+        "logical_touches_at_least_150_per_100k": false,
+        "mean_ball_distance_improved_at_least_10_percent": false,
+        "mean_planar_speed_at_least_700": false,
+        "natural_goal_activity_nonzero": false,
+        "no_obvious_single_component_farming": false,
+        "no_touch_timeout_share_at_most_30_percent": false,
+        "repeated_touch_chains_nontrivial_and_debounced": false
+      },
+      "contact_farming_checks": {
+        "chain_events_do_not_exceed_logical_touches": true,
+        "debounce_contract_preflight_passed": true,
+        "maximum_chain_length_at_least_2": true,
+        "two_plus_chain_rate_at_least_10_per_100k": false
+      },
+      "mean_distance_improvement_fraction_vs_prebootstrap": -0.2682880144906781,
+      "previous_boundary_single_passed": false,
+      "single_boundary_passed": false,
+      "two_consecutive_boundaries_passed": false
+    },
+    "gate_thresholds_are_capability_not_win_loss": true,
+    "phase_a": {
+      "conditions": {
+        "at_least_2p5_bootstrap_hours": true,
+        "deterministic_jumps_at_least_5_per_100k": true,
+        "easy_finish_active_team_goal_with_touch_evidence_exists": false,
+        "logical_touches_at_least_75_per_100k": false,
+        "mean_planar_speed_at_least_600": false,
+        "no_touch_timeout_share_at_most_60_percent": false,
+        "no_useful_speed_dominance_with_stagnant_interaction": true
+      },
+      "passed": false
+    },
+    "phase_at_evaluation": "A",
+    "phase_b": {
+      "conditions": {
+        "aerial_touches_at_least_3_per_100k": false,
+        "at_least_10_bootstrap_hours": false,
+        "deterministic_dodges_at_least_5_per_100k": true,
+        "deterministic_jumps_at_least_20_per_100k": true,
+        "goal_activity_outside_easy_finish": true,
+        "logical_touches_at_least_150_per_100k": false,
+        "no_touch_timeout_share_at_most_40_percent": false,
+        "two_plus_chain_touches_at_least_10_per_100k": false
+      },
+      "passed": false
+    },
+    "reward_integrity_interpretation": {
+      "ball_interaction_stagnant_vs_prebootstrap": true,
+      "combined_shaping_absolute_reward": {
+        "aerial_touch_event": 0.0,
+        "ball_approach_potential": 35.22784192204904,
+        "ball_progress_potential": 1.4775808766250773,
+        "ball_touch_event": 1.5000000596046448,
+        "touch_chain_event": 0.10000000149011612,
+        "useful_speed_rate": 0.6590773136245758
+      },
+      "component_absolute_fractions": {
+        "aerial_touch_event": 0.0,
+        "ball_approach_potential": 0.9041009576738788,
+        "ball_progress_potential": 0.03792120699738963,
+        "ball_touch_event": 0.03849658157886254,
+        "touch_chain_event": 0.0025664387081859755,
+        "useful_speed_rate": 0.016914815041683007
+      },
+      "largest_component": "ball_approach_potential",
+      "largest_component_fraction": 0.9041009576738788,
+      "no_obvious_single_component_farming": false,
+      "speed_dominance_with_stagnant_interaction": false,
+      "useful_speed_rate_dominant_over_80_percent": false
+    }
+  },
+  "historical_comparisons": {
+    "behavior_signatures": {
+      "candidate": {
+        "aerial_possession_like_share": 0.013628472222222222,
+        "aerial_touches_per_100k_agent_steps": 3.4722222222222223,
+        "air_roll_active_share": 0.025677083333333333,
+        "airborne_distance_per_agent_step": 2.022528148244083,
+        "dodges_per_100k_agent_steps": 166.66666666666666,
+        "first_jumps_per_100k_agent_steps": 175.34722222222223,
+        "mean_boost": 18.238159878335168,
+        "mean_distance_to_ball": 4037.886919520696,
+        "mean_planar_speed": 425.39303490901574,
+        "mean_speed": 457.16769478473634,
+        "mechanic_like_events_per_100k_agent_steps": 960.0694444444445,
+        "recovery_landings_per_100k_agent_steps": 317.7083333333333,
+        "touches_per_100k_agent_steps": 3.4722222222222223
+      },
+      "m09_gate13": {
+        "aerial_possession_like_share": 0.0027083333333333334,
+        "aerial_touches_per_100k_agent_steps": 0.0,
+        "air_roll_active_share": 0.0008159722222222223,
+        "airborne_distance_per_agent_step": 0.025668006733887725,
+        "dodges_per_100k_agent_steps": 0.0,
+        "first_jumps_per_100k_agent_steps": 0.0,
+        "mean_boost": 45.02457492201486,
+        "mean_distance_to_ball": 3455.1533677607113,
+        "mean_planar_speed": 335.6859955130293,
+        "mean_speed": 337.9707972725421,
+        "mechanic_like_events_per_100k_agent_steps": 13.88888888888889,
+        "recovery_landings_per_100k_agent_steps": 13.88888888888889,
+        "touches_per_100k_agent_steps": 83.33333333333333
+      },
+      "m10_plus10": {
+        "aerial_possession_like_share": 0.0030555555555555557,
+        "aerial_touches_per_100k_agent_steps": 0.0,
+        "air_roll_active_share": 0.00140625,
+        "airborne_distance_per_agent_step": 1.4043674761719174,
+        "dodges_per_100k_agent_steps": 0.0,
+        "first_jumps_per_100k_agent_steps": 0.0,
+        "mean_boost": 3.0683822984926197,
+        "mean_distance_to_ball": 3844.5485709108243,
+        "mean_planar_speed": 636.6222095152518,
+        "mean_speed": 733.3379040744404,
+        "mechanic_like_events_per_100k_agent_steps": 3043.402777777778,
+        "recovery_landings_per_100k_agent_steps": 258.68055555555554,
+        "touches_per_100k_agent_steps": 10.416666666666666
+      },
+      "m10_plus25": {
+        "aerial_possession_like_share": 0.010451388888888889,
+        "aerial_touches_per_100k_agent_steps": 3.4722222222222223,
+        "air_roll_active_share": 0.016197916666666666,
+        "airborne_distance_per_agent_step": 2.564417874371057,
+        "dodges_per_100k_agent_steps": 225.69444444444446,
+        "first_jumps_per_100k_agent_steps": 246.52777777777777,
+        "mean_boost": 36.05432332971651,
+        "mean_distance_to_ball": 3209.5335674304433,
+        "mean_planar_speed": 420.56969407611155,
+        "mean_speed": 477.8453696351457,
+        "mechanic_like_events_per_100k_agent_steps": 1404.513888888889,
+        "recovery_landings_per_100k_agent_steps": 496.52777777777777,
+        "touches_per_100k_agent_steps": 3.4722222222222223
+      }
+    },
+    "candidate_deltas": {
+      "m09_gate13": {
+        "aerial_possession_like_share": 0.010920138888888889,
+        "aerial_touches_per_100k_agent_steps": 3.4722222222222223,
+        "air_roll_active_share": 0.02486111111111111,
+        "airborne_distance_per_agent_step": 1.9968601415101954,
+        "dodges_per_100k_agent_steps": 166.66666666666666,
+        "first_jumps_per_100k_agent_steps": 175.34722222222223,
+        "mean_boost": -26.78641504367969,
+        "mean_distance_to_ball": 582.733551759985,
+        "mean_planar_speed": 89.70703939598644,
+        "mean_speed": 119.19689751219425,
+        "mechanic_like_events_per_100k_agent_steps": 946.1805555555555,
+        "recovery_landings_per_100k_agent_steps": 303.8194444444444,
+        "touches_per_100k_agent_steps": -79.8611111111111
+      },
+      "m10_plus10": {
+        "aerial_possession_like_share": 0.010572916666666666,
+        "aerial_touches_per_100k_agent_steps": 3.4722222222222223,
+        "air_roll_active_share": 0.024270833333333332,
+        "airborne_distance_per_agent_step": 0.6181606720721657,
+        "dodges_per_100k_agent_steps": 166.66666666666666,
+        "first_jumps_per_100k_agent_steps": 175.34722222222223,
+        "mean_boost": 15.169777579842549,
+        "mean_distance_to_ball": 193.3383486098719,
+        "mean_planar_speed": -211.22917460623609,
+        "mean_speed": -276.1702092897041,
+        "mechanic_like_events_per_100k_agent_steps": -2083.3333333333335,
+        "recovery_landings_per_100k_agent_steps": 59.02777777777777,
+        "touches_per_100k_agent_steps": -6.944444444444444
+      },
+      "m10_plus25": {
+        "aerial_possession_like_share": 0.003177083333333334,
+        "aerial_touches_per_100k_agent_steps": 0.0,
+        "air_roll_active_share": 0.009479166666666667,
+        "airborne_distance_per_agent_step": -0.541889726126974,
+        "dodges_per_100k_agent_steps": -59.0277777777778,
+        "first_jumps_per_100k_agent_steps": -71.18055555555554,
+        "mean_boost": -17.816163451381342,
+        "mean_distance_to_ball": 828.3533520902529,
+        "mean_planar_speed": 4.823340832904194,
+        "mean_speed": -20.677674850409346,
+        "mechanic_like_events_per_100k_agent_steps": -444.44444444444446,
+        "recovery_landings_per_100k_agent_steps": -178.81944444444446,
+        "touches_per_100k_agent_steps": 0.0
+      }
+    }
+  },
+  "immutable_checkpoint": {
+    "actor_sha256": "bf1a797884fd88246907b706820f05d8d442636d4791af62d5327af89216dca1",
+    "actor_size_bytes": 7877740,
+    "clean_boundary": true,
+    "completed_iterations": 145,
+    "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+    "config_version": "RivalM10_1TrainingConfigV1",
+    "cumulative_agent_steps": 27795246,
+    "cumulative_model_updates": 579,
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-005h/027795246",
+    "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+    "manifest_sha256": "8f9014d4aef8cbfb6615b9f5e05d1ab1decfa3eb23768ef2be2a53f57cfef456",
+    "simulated_game_hours": 32.17042361111111
+  },
+  "milestone": "10.1",
+  "phase": "A",
+  "phase_authorization_output": null,
+  "prebootstrap_plus25_bootstrap_evaluation": {
+    "agent_steps_evaluated": 111938,
+    "capability_summary": {
+      "aerial_logical_touches": 0.0,
+      "dodges": 217.97780914434776,
+      "easy_finish_active_team_goals": 5,
+      "easy_finish_success_rate": 0.625,
+      "episode_timeout_share": 0.0,
+      "episode_touch_shares": {
+        "at_least_1": 0.052083333333333336,
+        "at_least_2": 0.020833333333333332,
+        "at_least_3": 0.010416666666666666
+      },
+      "first_jumps": 247.45841447944397,
+      "goal_termination_share": 0.1875,
+      "goals": {
+        "blue": 6,
+        "orange": 3
+      },
+      "logical_touches": 8.040165091389877,
+      "maximum_touch_chain_length_lower_bound": 4,
+      "mean_distance_to_ball": 2433.0200173583944,
+      "mean_planar_speed": 399.85437478490036,
+      "mean_speed": 482.51159698201684,
+      "natural_goal_activity": false,
+      "natural_goal_episodes": 0,
+      "no_touch_timeout_share": 0.8125,
+      "raw_touch_records": 17.867033536421946,
+      "speed_share_over_1000": 0.09959977844878415,
+      "speed_share_over_1500": 0.01596419446479301,
+      "speed_share_over_2000": 0.0012417588307813254,
+      "speed_share_over_500": 0.3657113759402526,
+      "touch_chain_starts": 5.360110060926584,
+      "touches_by_reset_family": {
+        "easy_aerial_contact": 1,
+        "easy_finish": 0,
+        "ground_acquisition": 2,
+        "moving_ball_chase": 4,
+        "natural": 0,
+        "touch_chain": 2
+      },
+      "two_or_more_chain_touches_per_100k_agent_steps": 2.680055030463292
+    },
+    "checkpoint": {
+      "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+      "config_version": "RivalM10TrainingConfigV1",
+      "cumulative_agent_steps": 23378810,
+      "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+      "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+      "simulated_game_hours": 27.05880787037037
+    },
+    "checks": {
+      "all_episodes_reached_environment_end": true,
+      "all_six_families_evaluated": true,
+      "checkpoint_loaded": true,
+      "deterministic_policy": true,
+      "episode_count_exact": true,
+      "metric_transport_finite": true,
+      "passed": true,
+      "scores_not_the_only_gate": true,
+      "scores_recorded_as_capability_evidence": true
+    },
+    "environment_ticks": 55969,
+    "episode_outcomes_by_family": {
+      "easy_aerial_contact": {
+        "active_team_goals": 0,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 0,
+        "no_touch_timeouts": 8
+      },
+      "easy_finish": {
+        "active_team_goals": 5,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 5,
+        "no_touch_timeouts": 3
+      },
+      "ground_acquisition": {
+        "active_team_goals": 1,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 1,
+        "no_touch_timeouts": 7
+      },
+      "moving_ball_chase": {
+        "active_team_goals": 1,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 1,
+        "no_touch_timeouts": 7
+      },
+      "natural": {
+        "active_team_goals": 0,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 0,
+        "no_touch_timeouts": 8
+      },
+      "touch_chain": {
+        "active_team_goals": 2,
+        "episode_timeouts": 0,
+        "episodes": 8,
+        "goals": 2,
+        "no_touch_timeouts": 6
+      }
+    },
+    "evaluation_version": "RivalAgencyBootstrapFixedEvaluationV1",
+    "fixed_protocol": {
+      "active_team_rule": "episode_index_modulo_2",
+      "episodes_per_family": 8,
+      "evaluation_agent_steps_are_not_training_experience": true,
+      "families": [
+        "ground_acquisition",
+        "moving_ball_chase",
+        "touch_chain",
+        "easy_aerial_contact",
+        "easy_finish",
+        "natural"
+      ],
+      "forced_mirror": false,
+      "maximum_ticks_per_episode": 14405,
+      "native_physics_and_policy_hz": 120,
+      "opponent": "same_current_Rival_actor_self_play",
+      "phase": "A",
+      "policy_mode": "deterministic_tanh_mean_and_button_argmax",
+      "seed": 20261061
+    },
+    "metrics": {
+      "action_diagnostics": {
+        "analog": {
+          "pitch": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -25265.89820871511,
+            "cumulative_absolute": 25268.671220724325,
+            "maximum": 0.052427347749471664,
+            "mean": -0.22571332531146804,
+            "minimum": -0.40157079696655273,
+            "p50": -0.21522415429353714,
+            "p95": -0.09735113494098187,
+            "samples": 111938,
+            "standard_deviation": 0.08123654170316026
+          },
+          "roll": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -13181.40640481055,
+            "cumulative_absolute": 13392.825372259773,
+            "maximum": 0.13338997960090637,
+            "mean": -0.11775631514597858,
+            "minimum": -0.3174011707305908,
+            "p50": -0.11607136577367783,
+            "p95": -0.004356922209262867,
+            "samples": 111938,
+            "standard_deviation": 0.07096532439537548
+          },
+          "steer": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": -20697.340647340752,
+            "cumulative_absolute": 20714.944782382983,
+            "maximum": 0.09753654152154922,
+            "mean": -0.18490003973039318,
+            "minimum": -0.4232024848461151,
+            "p50": -0.18929870426654816,
+            "p95": -0.04518080465495595,
+            "samples": 111938,
+            "standard_deviation": 0.07920124828748078
+          },
+          "throttle": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": 4416.882394092914,
+            "cumulative_absolute": 6615.962436568923,
+            "maximum": 0.20957940816879272,
+            "mean": 0.03945829293084488,
+            "minimum": -0.18298688530921936,
+            "p50": 0.03711894154548645,
+            "p95": 0.1301739625632763,
+            "samples": 111938,
+            "standard_deviation": 0.06063842566270907
+          },
+          "yaw": {
+            "absolute_over_0_95_share": 0.0,
+            "cumulative": 4129.400881505688,
+            "cumulative_absolute": 5628.202276577824,
+            "maximum": 0.25219669938087463,
+            "mean": 0.03689007201759624,
+            "minimum": -0.16179288923740387,
+            "p50": 0.03260653465986252,
+            "p95": 0.13094285055994984,
+            "samples": 111938,
+            "standard_deviation": 0.053055140455890756
+          }
+        },
+        "button_combo_counts": [
+          63044,
+          0,
+          0,
+          0,
+          0,
+          48894,
+          0,
+          0
+        ],
+        "button_combo_shares": [
+          0.5632046311350927,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.4367953688649074,
+          0.0,
+          0.0
+        ],
+        "marginal_button_shares": {
+          "boost": 0.0,
+          "handbrake": 0.4367953688649074,
+          "jump": 0.4367953688649074
+        },
+        "samples": 111938
+      },
+      "agent_metric_samples": 111938,
+      "episode_touch_shares": {
+        "at_least_1": 0.052083333333333336,
+        "at_least_2": 0.020833333333333332,
+        "at_least_3": 0.010416666666666666
+      },
+      "finite": true,
+      "goals": {
+        "blue": 6,
+        "orange": 3
+      },
+      "goals_by_reset_family": {
+        "easy_aerial_contact": 0,
+        "easy_finish": 5,
+        "ground_acquisition": 1,
+        "moving_ball_chase": 1,
+        "natural": 0,
+        "touch_chain": 2
+      },
+      "interaction_counts": {
+        "blue.aerial_logical_touch": 0,
+        "blue.chain_length_1": 6,
+        "blue.chain_length_2": 1,
+        "blue.chain_length_3": 1,
+        "blue.chain_length_4": 1,
+        "blue.chain_length_5plus": 0,
+        "blue.dodge_event": 120,
+        "blue.episode_self_touches_ge1": 5,
+        "blue.episode_self_touches_ge2": 2,
+        "blue.episode_self_touches_ge3": 1,
+        "blue.first_jump_event": 132,
+        "blue.first_touch_event": 5,
+        "blue.logical_touch": 9,
+        "blue.raw_touch_record": 20,
+        "blue.touch_chain_start": 6,
+        "orange.aerial_logical_touch": 0,
+        "orange.chain_length_1": 0,
+        "orange.chain_length_2": 0,
+        "orange.chain_length_3": 0,
+        "orange.chain_length_4": 0,
+        "orange.chain_length_5plus": 0,
+        "orange.dodge_event": 124,
+        "orange.episode_self_touches_ge1": 0,
+        "orange.episode_self_touches_ge2": 0,
+        "orange.episode_self_touches_ge3": 0,
+        "orange.first_jump_event": 145,
+        "orange.first_touch_event": 0,
+        "orange.logical_touch": 0,
+        "orange.raw_touch_record": 0,
+        "orange.touch_chain_start": 0
+      },
+      "interaction_rates_per_100k_agent_steps": {
+        "aerial_logical_touches": 0.0,
+        "dodges": 217.97780914434776,
+        "first_jumps": 247.45841447944397,
+        "logical_touches": 8.040165091389877,
+        "raw_touch_records": 17.867033536421946,
+        "touch_chain_starts": 5.360110060926584
+      },
+      "metric_vector_count": 55969,
+      "metric_vector_size": 117,
+      "metrics_version": "RivalAgencyBootstrapMetricsV1",
+      "motion": {
+        "blue.distance_to_ball": {
+          "cumulative": 124034828.69750977,
+          "cumulative_absolute": 124034828.69750977,
+          "maximum": 6345.2509765625,
+          "mean": 2216.1344440227585,
+          "minimum": 153.45469665527344,
+          "p50": 2102.764404296875,
+          "p95": 4573.009375,
+          "samples": 55969,
+          "standard_deviation": 1258.1742686935079
+        },
+        "blue.planar_speed": {
+          "cumulative": 20389009.350515276,
+          "cumulative_absolute": 20389009.350515276,
+          "maximum": 2153.457275390625,
+          "mean": 364.2911138400771,
+          "minimum": 0.0,
+          "p50": 281.4688720703125,
+          "p95": 1075.5443359375,
+          "samples": 55969,
+          "standard_deviation": 350.5897618421478
+        },
+        "blue.speed": {
+          "cumulative": 25177609.643445093,
+          "cumulative_absolute": 25177609.643445093,
+          "maximum": 2217.245361328125,
+          "mean": 449.84919586637415,
+          "minimum": 0.0031370988581329584,
+          "p50": 398.83404541015625,
+          "p95": 1115.3813964843748,
+          "samples": 55969,
+          "standard_deviation": 344.7360091820154
+        },
+        "blue.speed_over_1000": {
+          "cumulative": 3943.0,
+          "cumulative_absolute": 3943.0,
+          "maximum": 1.0,
+          "mean": 0.07044971323411174,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 55969,
+          "standard_deviation": 0.25590340196906947
+        },
+        "blue.speed_over_1500": {
+          "cumulative": 1007.0,
+          "cumulative_absolute": 1007.0,
+          "maximum": 1.0,
+          "mean": 0.017992102771176903,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.13292248496416365
+        },
+        "blue.speed_over_2000": {
+          "cumulative": 139.0,
+          "cumulative_absolute": 139.0,
+          "maximum": 1.0,
+          "mean": 0.0024835176615626508,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.049772982647088335
+        },
+        "blue.speed_over_500": {
+          "cumulative": 19717.0,
+          "cumulative_absolute": 19717.0,
+          "maximum": 1.0,
+          "mean": 0.3522843002376315,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 55969,
+          "standard_deviation": 0.4776819779348116
+        },
+        "blue.time_to_first_touch_seconds": {
+          "cumulative": 15.349999994039536,
+          "cumulative_absolute": 15.349999994039536,
+          "maximum": 5.5,
+          "mean": 3.069999998807907,
+          "minimum": 0.34166666865348816,
+          "p50": 3.924999952316284,
+          "p95": 5.3933333396911625,
+          "samples": 5,
+          "standard_deviation": 2.1769665434212913
+        },
+        "orange.distance_to_ball": {
+          "cumulative": 148312566.0055542,
+          "cumulative_absolute": 148312566.0055542,
+          "maximum": 10273.587890625,
+          "mean": 2649.9055906940307,
+          "minimum": 266.4312744140625,
+          "p50": 2247.104248046875,
+          "p95": 6179.683203125,
+          "samples": 55969,
+          "standard_deviation": 1808.5514643056174
+        },
+        "orange.planar_speed": {
+          "cumulative": 24369889.6541569,
+          "cumulative_absolute": 24369889.6541569,
+          "maximum": 1918.571044921875,
+          "mean": 435.4176357297236,
+          "minimum": 0.0,
+          "p50": 348.9065856933594,
+          "p95": 1306.5857177734374,
+          "samples": 55969,
+          "standard_deviation": 393.7726898119614
+        },
+        "orange.speed": {
+          "cumulative": 28833773.49952791,
+          "cumulative_absolute": 28833773.49952791,
+          "maximum": 1966.1243896484375,
+          "mean": 515.1739980976596,
+          "minimum": 6.662131636403501e-05,
+          "p50": 432.97454833984375,
+          "p95": 1316.3616943359375,
+          "samples": 55969,
+          "standard_deviation": 380.29927762436404
+        },
+        "orange.speed_over_1000": {
+          "cumulative": 7206.0,
+          "cumulative_absolute": 7206.0,
+          "maximum": 1.0,
+          "mean": 0.12874984366345657,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 55969,
+          "standard_deviation": 0.33492285890946893
+        },
+        "orange.speed_over_1500": {
+          "cumulative": 780.0,
+          "cumulative_absolute": 780.0,
+          "maximum": 1.0,
+          "mean": 0.01393628615840912,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.11722655879330439
+        },
+        "orange.speed_over_2000": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0
+        },
+        "orange.speed_over_500": {
+          "cumulative": 21220.0,
+          "cumulative_absolute": 21220.0,
+          "maximum": 1.0,
+          "mean": 0.37913845164287374,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 1.0,
+          "samples": 55969,
+          "standard_deviation": 0.4851726353873619
+        },
+        "orange.time_to_first_touch_seconds": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 0,
+          "standard_deviation": 0.0
+        }
+      },
+      "reset_counts": {
+        "easy_aerial_contact": 8,
+        "easy_finish": 8,
+        "ground_acquisition": 8,
+        "moving_ball_chase": 8,
+        "natural": 8,
+        "touch_chain": 8
+      },
+      "reset_shares": {
+        "easy_aerial_contact": 0.16666666666666666,
+        "easy_finish": 0.16666666666666666,
+        "ground_acquisition": 0.16666666666666666,
+        "moving_ball_chase": 0.16666666666666666,
+        "natural": 0.16666666666666666,
+        "touch_chain": 0.16666666666666666
+      },
+      "reward_components": {
+        "blue.aerial_touch_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0
+        },
+        "blue.ball_approach_potential": {
+          "cumulative": -2.5079605822122684,
+          "cumulative_absolute": 12.95169177248278,
+          "maximum": 0.016481652855873108,
+          "mean": -4.4809815830410915e-05,
+          "minimum": -0.011634818278253078,
+          "p50": -2.9133039788575843e-05,
+          "p95": 0.00035141701810061923,
+          "samples": 55969,
+          "standard_deviation": 0.0004820284157558357
+        },
+        "blue.ball_progress_potential": {
+          "cumulative": 0.17121690627414185,
+          "cumulative_absolute": 0.6939844304149633,
+          "maximum": 0.003080562222748995,
+          "mean": 3.0591382064025058e-06,
+          "minimum": -0.0006078946753405035,
+          "p50": 0.0,
+          "p95": 2.982458609039894e-05,
+          "samples": 55969,
+          "standard_deviation": 2.4162994422760337e-05
+        },
+        "blue.ball_touch_event": {
+          "cumulative": 2.7000001072883606,
+          "cumulative_absolute": 2.7000001072883606,
+          "maximum": 0.30000001192092896,
+          "mean": 4.8240992465263996e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0038039415244325997
+        },
+        "blue.outcome": {
+          "cumulative": 30.0,
+          "cumulative_absolute": 90.0,
+          "maximum": 10.0,
+          "mean": 0.0005360110060926585,
+          "minimum": -10.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.12680710892919647
+        },
+        "blue.touch_chain_event": {
+          "cumulative": 0.6499999985098839,
+          "cumulative_absolute": 0.6499999985098839,
+          "maximum": 0.3499999940395355,
+          "mean": 1.1613571772050312e-05,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0017555421846427856
+        },
+        "blue.useful_speed_rate": {
+          "cumulative": 0.25482042776342784,
+          "cumulative_absolute": 0.25482042776342784,
+          "maximum": 7.907245890237391e-05,
+          "mean": 4.5528851286145515e-06,
+          "minimum": 0.0,
+          "p50": 1.993937303268467e-06,
+          "p95": 1.7719217430567357e-05,
+          "samples": 55969,
+          "standard_deviation": 7.157860626209072e-06
+        },
+        "orange.aerial_touch_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0
+        },
+        "orange.ball_approach_potential": {
+          "cumulative": -2.280092155625601,
+          "cumulative_absolute": 14.763357606920929,
+          "maximum": 0.031311389058828354,
+          "mean": -4.0738483010695224e-05,
+          "minimum": -0.005897373426705599,
+          "p50": -3.071087849093601e-05,
+          "p95": 0.0004549231263808903,
+          "samples": 55969,
+          "standard_deviation": 0.0005395536550303224
+        },
+        "orange.ball_progress_potential": {
+          "cumulative": -0.17121690627414185,
+          "cumulative_absolute": 0.6939844304149633,
+          "maximum": 0.0006078946753405035,
+          "mean": -3.0591382064025058e-06,
+          "minimum": -0.003080562222748995,
+          "p50": 0.0,
+          "p95": 2.2436727158492426e-05,
+          "samples": 55969,
+          "standard_deviation": 2.4162994422760337e-05
+        },
+        "orange.ball_touch_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0
+        },
+        "orange.outcome": {
+          "cumulative": -30.0,
+          "cumulative_absolute": 90.0,
+          "maximum": 10.0,
+          "mean": -0.0005360110060926585,
+          "minimum": -10.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.12680710892919647
+        },
+        "orange.touch_chain_event": {
+          "cumulative": 0.0,
+          "cumulative_absolute": 0.0,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "samples": 55969,
+          "standard_deviation": 0.0
+        },
+        "orange.useful_speed_rate": {
+          "cumulative": 0.31140980879390645,
+          "cumulative_absolute": 0.31140980879390645,
+          "maximum": 8.062258712016046e-05,
+          "mean": 5.563969497291473e-06,
+          "minimum": 0.0,
+          "p50": 2.4409612251474755e-06,
+          "p95": 2.432571418466978e-05,
+          "samples": 55969,
+          "standard_deviation": 8.756814631518711e-06
+        }
+      },
+      "reward_integrity": {
+        "budget_clip_counts": {
+          "blue.aerial_touch_event": 0,
+          "blue.ball_approach_potential": 0,
+          "blue.ball_progress_potential": 0,
+          "blue.ball_touch_event": 0,
+          "blue.touch_chain_event": 0,
+          "blue.useful_speed_rate": 0,
+          "orange.aerial_touch_event": 0,
+          "orange.ball_approach_potential": 488,
+          "orange.ball_progress_potential": 0,
+          "orange.ball_touch_event": 0,
+          "orange.touch_chain_event": 0,
+          "orange.useful_speed_rate": 0
+        },
+        "component_budget_fraction_across_completed_episodes": {
+          "aerial_touch_event": 0.0,
+          "ball_approach_potential": 0.2886984310354553,
+          "ball_progress_potential": 0.028916017933956803,
+          "ball_touch_event": 0.014062500558793545,
+          "touch_chain_event": 0.0045138888785408605,
+          "useful_speed_rate": 0.005898231630805565
+        },
+        "direct_action_press_rewards": false,
+        "reward_correlation_with_logical_touch": 0.026190061707867335,
+        "reward_correlation_with_planar_speed": 0.002924398655164631,
+        "total_reward_per_logical_touch": -0.09686915505358736,
+        "total_reward_per_simulated_agent_second": -0.0009346127986731436
+      },
+      "schema_version": 1,
+      "scores_are_capability_evidence_but_not_the_only_gate": true,
+      "termination_counts": {
+        "episode_timeout": 0,
+        "goal": 9,
+        "no_touch_timeout": 39
+      },
+      "termination_shares": {
+        "episode_timeout": 0.0,
+        "goal": 0.1875,
+        "no_touch_timeout": 0.8125
+      },
+      "time_to_first_touch_seconds": {
+        "cumulative": 15.349999994039536,
+        "cumulative_absolute": 15.349999994039536,
+        "maximum": 5.5,
+        "mean": 3.069999998807907,
+        "minimum": 0.34166666865348816,
+        "p50": 3.924999952316284,
+        "p95": 5.3933333396911625,
+        "samples": 5,
+        "standard_deviation": 2.1769665434212913
+      },
+      "touch_chain": {
+        "histogram": {
+          "1": 6,
+          "2": 1,
+          "3": 1,
+          "4": 1,
+          "5+": 0
+        },
+        "maximum_observed_chain_length_lower_bound": 4,
+        "two_or_more_chain_touches_per_100k_agent_steps": 2.680055030463292
+      },
+      "touches_by_reset_family": {
+        "easy_aerial_contact": 1,
+        "easy_finish": 0,
+        "ground_acquisition": 2,
+        "moving_ball_chase": 4,
+        "natural": 0,
+        "touch_chain": 2
+      }
+    },
+    "status": "passed",
+    "wall_seconds": 310.20151100005023
+  },
+  "production_promotion_authorized": false,
+  "schema_version": 1,
+  "status": "passed",
+  "training": {
+    "achieved": {
+      "additional_agent_steps_from_m10_plus25": 4416436,
+      "additional_bootstrap_simulated_game_hours": 5.11161574074074,
+      "cumulative_agent_steps": 27795246,
+      "normal_iteration_alignment_agent_steps": 96436
+    },
+    "cleanup": {
+      "attempted": true,
+      "lingering_worker_pids": [],
+      "passed": true,
+      "worker_pids": [
+        20972,
+        42548,
+        13856,
+        39504,
+        30176,
+        14408,
+        42716,
+        3308,
+        16192,
+        8436,
+        8308,
+        13264,
+        17904,
+        41312,
+        6980,
+        41208,
+        21272,
+        35856,
+        35232,
+        33192,
+        26324,
+        40620,
+        7588,
+        24696,
+        42128,
+        22312,
+        7816,
+        6880,
+        39840,
+        21108,
+        24592,
+        18444,
+        35188,
+        17872,
+        37044,
+        41976,
+        32716,
+        37036,
+        37272,
+        41424,
+        34220,
+        33012,
+        43060,
+        43160,
+        43264,
+        43364,
+        43464,
+        43580,
+        43716,
+        43864,
+        44012,
+        43708,
+        43860,
+        44092,
+        44180,
+        44284
+      ]
+    },
+    "iteration_count": 11,
+    "iterations": [
+      {
+        "added_bootstrap_simulated_game_hours": 2.8892152777777778,
+        "agent_steps_per_second": 2337.8544011195036,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 3,
+            "orange": 2
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5208062080099994,
+            "dodges": 669.2359772928494,
+            "first_jumps": 550.4921618665694,
+            "logical_touches": 15.103380032289985,
+            "raw_touch_records": 31.24837248059997,
+            "touch_chain_starts": 14.582573824279985
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 16,
+            "easy_finish": 15,
+            "ground_acquisition": 34,
+            "moving_ball_chase": 21,
+            "natural": 2,
+            "touch_chain": 27
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 312,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 608,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.002542372814006051,
+              "ball_approach_potential": 1.0368637174754594,
+              "ball_progress_potential": 0.056276021740640295,
+              "ball_touch_event": 0.03686440824452093,
+              "touch_chain_event": 0.0005649717598311645,
+              "useful_speed_rate": 0.026473750112652215
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.0538242501228252,
+            "reward_correlation_with_planar_speed": -0.0013659146063404765,
+            "total_reward_per_logical_touch": -0.42834344073444586,
+            "total_reward_per_simulated_agent_second": -0.007763320523701223
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 5,
+            "no_touch_timeout": 54
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 28,
+              "2": 1,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 2,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.5208062080099994
+          }
+        },
+        "collected_agent_steps": 192010,
+        "cumulative_agent_steps": 25875092,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 135,
+        "iteration_wall_seconds": 87.28356989996973,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0020935828797519207,
+            "mean": -0.0025485067162662745,
+            "minimum": -0.008714037947356701,
+            "p01": -0.008566129067912698,
+            "p50": -0.0017867858987301588,
+            "p95": 0.0018110709730535738,
+            "p99": 0.002037080498412251,
+            "samples": 4,
+            "standard_deviation": 0.004144239238240235
+          },
+          "actor_update_magnitude": 0.09647691249847412,
+          "analog_entropy": {
+            "maximum": 2.793107032775879,
+            "mean": 2.7891297936439514,
+            "minimum": 2.786494731903076,
+            "p01": 2.786510496139526,
+            "p50": 2.7884587049484253,
+            "p95": 2.7926255583763124,
+            "p99": 2.7930107378959654,
+            "samples": 4,
+            "standard_deviation": 0.0026363448853043495
+          },
+          "approximate_kl": {
+            "maximum": 0.0011524591827765107,
+            "mean": 0.00048028110174831024,
+            "minimum": -2.1109977654809597e-10,
+            "p01": 2.4271046791371488e-06,
+            "p50": 0.0003843327176582534,
+            "p95": 0.001082753573427908,
+            "p99": 0.00113851806090679,
+            "samples": 4,
+            "standard_deviation": 0.0004703817614288638
+          },
+          "button_entropy": {
+            "maximum": 2.046238422393799,
+            "mean": 2.04500013589859,
+            "minimum": 2.0436787605285645,
+            "p01": 2.043703351020813,
+            "p50": 2.0450416803359985,
+            "p95": 2.046140396595001,
+            "p99": 2.046218817234039,
+            "samples": 4,
+            "standard_deviation": 0.0009840033648727167
+          },
+          "clip_fraction": {
+            "maximum": 0.00012499999138526618,
+            "mean": 3.1249997846316546e-05,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0,
+            "p95": 0.00010624999267747621,
+            "p99": 0.00012124999164370817,
+            "samples": 4,
+            "standard_deviation": 5.412658400623825e-05
+          },
+          "critic_loss": {
+            "maximum": 0.15260723233222961,
+            "mean": 0.14423315227031708,
+            "minimum": 0.13696129620075226,
+            "p01": 0.13711127057671546,
+            "p50": 0.14368204027414322,
+            "p95": 0.15152669325470924,
+            "p99": 0.15239112451672554,
+            "samples": 4,
+            "standard_deviation": 0.005690789866610755
+          },
+          "critic_update_magnitude": 0.20222656428813934
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -6.469433984020062e-05,
+          "minimum": -10.0,
+          "p01": -0.0022120182355865837,
+          "p50": -0.00010892892896663398,
+          "p95": 0.0011620943201705808,
+          "p99": 0.002217226196080447,
+          "samples": 192010,
+          "standard_deviation": 0.07228933600446169
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 3.1114722222222224,
+        "agent_steps_per_second": 2314.1936977251553,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 8,
+            "orange": 1
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.520751965838671,
+            "dodges": 644.1701817424361,
+            "first_jumps": 528.0424933604124,
+            "logical_touches": 10.41503931677342,
+            "raw_touch_records": 20.83007863354684,
+            "touch_chain_starts": 8.852783419257408
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 3,
+            "easy_finish": 8,
+            "ground_acquisition": 20,
+            "moving_ball_chase": 14,
+            "natural": 3,
+            "touch_chain": 16
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 1458,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 926,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0023437499379118285,
+              "ball_approach_potential": 0.8898745835257039,
+              "ball_progress_potential": 0.047252105603202976,
+              "ball_touch_event": 0.023437500931322575,
+              "touch_chain_event": 0.0015625000232830644,
+              "useful_speed_rate": 0.020143810879395777
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.03538482066062894,
+            "reward_correlation_with_planar_speed": 0.00014688787713208537,
+            "total_reward_per_logical_touch": -0.357365352872334,
+            "total_reward_per_simulated_agent_second": -0.004466369040741559
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 9,
+            "no_touch_timeout": 55
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 17,
+              "2": 3,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 2,
+            "two_or_more_chain_touches_per_100k_agent_steps": 1.562255897516013
+          }
+        },
+        "collected_agent_steps": 192030,
+        "cumulative_agent_steps": 26067122,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 136,
+        "iteration_wall_seconds": 86.63811090006493,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0004525377880781889,
+            "mean": -0.002623088366817683,
+            "minimum": -0.008932491764426231,
+            "p01": -0.008735943378414959,
+            "p50": -0.0010061997454613447,
+            "p95": 0.00043992903083562847,
+            "p99": 0.0004500160366296768,
+            "samples": 4,
+            "standard_deviation": 0.0038169421873941707
+          },
+          "actor_update_magnitude": 0.09869394451379776,
+          "analog_entropy": {
+            "maximum": 2.7840309143066406,
+            "mean": 2.778409004211426,
+            "minimum": 2.7726757526397705,
+            "p01": 2.7728124594688417,
+            "p50": 2.778464674949646,
+            "p95": 2.7833807826042176,
+            "p99": 2.783900887966156,
+            "samples": 4,
+            "standard_deviation": 0.0041084678162095645
+          },
+          "approximate_kl": {
+            "maximum": 0.0020696476567536592,
+            "mean": 0.0007707118245889426,
+            "minimum": -1.8626451769865326e-10,
+            "p01": 6.408843386449952e-06,
+            "p50": 0.0005065999139333144,
+            "p95": 0.0018791353621054436,
+            "p99": 0.002031545197824016,
+            "samples": 4,
+            "standard_deviation": 0.0008050464889058438
+          },
+          "button_entropy": {
+            "maximum": 2.043194055557251,
+            "mean": 2.04243004322052,
+            "minimum": 2.0416359901428223,
+            "p01": 2.0416504669189455,
+            "p50": 2.0424450635910034,
+            "p95": 2.0431306838989256,
+            "p99": 2.043181381225586,
+            "samples": 4,
+            "standard_deviation": 0.000597475829450661
+          },
+          "clip_fraction": {
+            "maximum": 0.002730076666921377,
+            "mean": 0.0006825191667303443,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0,
+            "p95": 0.0023205651668831697,
+            "p99": 0.002648174366913735,
+            "samples": 4,
+            "standard_deviation": 0.00118215787391653
+          },
+          "critic_loss": {
+            "maximum": 0.3323464095592499,
+            "mean": 0.3061511144042015,
+            "minimum": 0.28760722279548645,
+            "p01": 0.2878592136502266,
+            "p50": 0.30232541263103485,
+            "p95": 0.3287910342216492,
+            "p99": 0.3316353344917297,
+            "samples": 4,
+            "standard_deviation": 0.016875930658415472
+          },
+          "critic_update_magnitude": 0.20607051253318787
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -3.7073020858381356e-05,
+          "minimum": -10.0,
+          "p01": -0.002094235846307129,
+          "p50": -7.363310214714147e-05,
+          "p95": 0.0011527179100085053,
+          "p99": 0.0021504274127073617,
+          "samples": 191984,
+          "standard_deviation": 0.09690432182965585
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 3.333712962962963,
+        "agent_steps_per_second": 2497.0058517996995,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 4,
+            "orange": 3
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5207899341721524,
+            "dodges": 657.7576868594284,
+            "first_jumps": 521.8315140404966,
+            "logical_touches": 9.374218815098741,
+            "raw_touch_records": 17.70685776185318,
+            "touch_chain_starts": 9.374218815098741
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 10,
+            "easy_finish": 9,
+            "ground_acquisition": 33,
+            "moving_ball_chase": 21,
+            "natural": 6,
+            "touch_chain": 19
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 515,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 778,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0015306122043505818,
+              "ball_approach_potential": 0.5901280925132862,
+              "ball_progress_potential": 0.026115059217100403,
+              "ball_touch_event": 0.013775510751471227,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.014649851372257404
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.03667017076568692,
+            "reward_correlation_with_planar_speed": -0.003892103647120139,
+            "total_reward_per_logical_touch": -0.4938166461797197,
+            "total_reward_per_simulated_agent_second": -0.005554974354992264
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 7,
+            "no_touch_timeout": 91
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 18,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192016,
+        "cumulative_agent_steps": 26259138,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 137,
+        "iteration_wall_seconds": 80.3669888000004,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.004461995325982571,
+            "mean": -0.002557192783569917,
+            "minimum": -0.010584263131022453,
+            "p01": -0.010360062127001584,
+            "p50": -0.002053251664619893,
+            "p95": 0.0036433549772482347,
+            "p99": 0.0042982672562357025,
+            "samples": 4,
+            "standard_deviation": 0.005395553675499127
+          },
+          "actor_update_magnitude": 0.09965422749519348,
+          "analog_entropy": {
+            "maximum": 2.7937920093536377,
+            "mean": 2.790137469768524,
+            "minimum": 2.785609006881714,
+            "p01": 2.785724756717682,
+            "p50": 2.7905744314193726,
+            "p95": 2.7934754371643065,
+            "p99": 2.7937286949157714,
+            "samples": 4,
+            "standard_deviation": 0.0030288542696690034
+          },
+          "approximate_kl": {
+            "maximum": 0.004858000203967094,
+            "mean": 0.0017863253984251072,
+            "minimum": -2.2351741291171123e-10,
+            "p01": 1.0989880550191926e-05,
+            "p50": 0.0011436508066253737,
+            "p95": 0.004417444928549229,
+            "p99": 0.004769889148883521,
+            "samples": 4,
+            "standard_deviation": 0.0019144608521890632
+          },
+          "button_entropy": {
+            "maximum": 2.0411288738250732,
+            "mean": 2.0409803986549377,
+            "minimum": 2.0408244132995605,
+            "p01": 2.0408271813392638,
+            "p50": 2.0409841537475586,
+            "p95": 2.041117286682129,
+            "p99": 2.041126556396484,
+            "samples": 4,
+            "standard_deviation": 0.00011780234911323335
+          },
+          "clip_fraction": {
+            "maximum": 0.043347783386707306,
+            "mean": 0.011373404180631042,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.00107291666790843,
+            "p95": 0.03716749087907373,
+            "p99": 0.042111724885180585,
+            "samples": 4,
+            "standard_deviation": 0.018481190672018526
+          },
+          "critic_loss": {
+            "maximum": 0.24951493740081787,
+            "mean": 0.23203524947166443,
+            "minimum": 0.20899343490600586,
+            "p01": 0.20972264170646668,
+            "p50": 0.234816312789917,
+            "p95": 0.24753754138946532,
+            "p99": 0.24911945819854736,
+            "samples": 4,
+            "standard_deviation": 0.014633264785763666
+          },
+          "critic_update_magnitude": 0.2365410178899765
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -4.630160316363501e-05,
+          "minimum": -10.0,
+          "p01": -0.0021164321643300354,
+          "p50": -7.142282265704125e-05,
+          "p95": 0.0011444477015174926,
+          "p99": 0.002184466440230613,
+          "samples": 191984,
+          "standard_deviation": 0.08546584748814287
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 3.5559421296296296,
+        "agent_steps_per_second": 2367.370825526767,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 2,
+            "orange": 1
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.0,
+            "dodges": 638.5217128631397,
+            "first_jumps": 507.79663135527016,
+            "logical_touches": 9.895524098205264,
+            "raw_touch_records": 19.79104819641053,
+            "touch_chain_starts": 9.895524098205264
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 10,
+            "easy_finish": 6,
+            "ground_acquisition": 22,
+            "moving_ball_chase": 16,
+            "natural": 1,
+            "touch_chain": 15
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 1354,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 761,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0,
+              "ball_approach_potential": 0.8129983023097372,
+              "ball_progress_potential": 0.04570218256916919,
+              "ball_touch_event": 0.020357143666063036,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.01879457959246947
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.05279022110945607,
+            "reward_correlation_with_planar_speed": -0.0005850603044518625,
+            "total_reward_per_logical_touch": -0.7026450632774104,
+            "total_reward_per_simulated_agent_second": -0.008343649387375893
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 3,
+            "no_touch_timeout": 67
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 19,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192006,
+        "cumulative_agent_steps": 26451144,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 138,
+        "iteration_wall_seconds": 84.9640293000266,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0008598582353442907,
+            "mean": -0.0025951828865800053,
+            "minimum": -0.007646720856428146,
+            "p01": -0.007501782376784831,
+            "p50": -0.0017969344626180828,
+            "p95": 0.0006141148915048682,
+            "p99": 0.000810709566576406,
+            "samples": 4,
+            "standard_deviation": 0.003193917885629213
+          },
+          "actor_update_magnitude": 0.09353969991207123,
+          "analog_entropy": {
+            "maximum": 2.8297321796417236,
+            "mean": 2.8252055644989014,
+            "minimum": 2.821018934249878,
+            "p01": 2.821099028587341,
+            "p50": 2.825035572052002,
+            "p95": 2.829229712486267,
+            "p99": 2.8296316862106323,
+            "samples": 4,
+            "standard_deviation": 0.0032289238101440416
+          },
+          "approximate_kl": {
+            "maximum": 0.0022078657057136297,
+            "mean": 0.0010131427045174252,
+            "minimum": -1.73846881335038e-10,
+            "p01": 1.0015314208187687e-05,
+            "p50": 0.0009223526431014761,
+            "p95": 0.002103314228588715,
+            "p99": 0.0021869554102886468,
+            "samples": 4,
+            "standard_deviation": 0.0008892383370710333
+          },
+          "button_entropy": {
+            "maximum": 2.0422415733337402,
+            "mean": 2.0420135855674744,
+            "minimum": 2.041585683822632,
+            "p01": 2.0415981221199035,
+            "p50": 2.0421135425567627,
+            "p95": 2.0422393560409544,
+            "p99": 2.0422411298751832,
+            "samples": 4,
+            "standard_deviation": 0.0002649111723683506
+          },
+          "clip_fraction": {
+            "maximum": 0.004607814364135265,
+            "mean": 0.0013446619268506765,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0003854166716337204,
+            "p95": 0.00403226721100509,
+            "p99": 0.004492704933509229,
+            "samples": 4,
+            "standard_deviation": 0.0019100834057271586
+          },
+          "critic_loss": {
+            "maximum": 0.18583567440509796,
+            "mean": 0.15137261524796486,
+            "minimum": 0.12813976407051086,
+            "p01": 0.12842728659510613,
+            "p50": 0.1457575112581253,
+            "p95": 0.18102899938821793,
+            "p99": 0.18487433940172196,
+            "samples": 4,
+            "standard_deviation": 0.021906654750537744
+          },
+          "critic_update_magnitude": 0.30904778838157654
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -6.949878339450608e-05,
+          "minimum": -10.0,
+          "p01": -0.00206642041914165,
+          "p50": -0.00010034015940618701,
+          "p95": 0.0011245681263972063,
+          "p99": 0.0022021518601104575,
+          "samples": 191962,
+          "standard_deviation": 0.0559969124755248
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 3.7781921296296295,
+        "agent_steps_per_second": 2390.157045906532,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 2,
+            "orange": 3
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 1.0415364746073408,
+            "dodges": 663.4587343248761,
+            "first_jumps": 536.9120526600841,
+            "logical_touches": 13.53997416989543,
+            "raw_touch_records": 28.64225305170187,
+            "touch_chain_starts": 11.977669457984419
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 12,
+            "easy_finish": 5,
+            "ground_acquisition": 21,
+            "moving_ball_chase": 15,
+            "natural": 3,
+            "touch_chain": 19
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 764,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 1171,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.003999999894036187,
+              "ball_approach_potential": 0.7724776970522265,
+              "ball_progress_potential": 0.044903720338330295,
+              "ball_touch_event": 0.026000001033147178,
+              "touch_chain_event": 0.0028888888822661504,
+              "useful_speed_rate": 0.019326313149042443
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.057580358648460915,
+            "reward_correlation_with_planar_speed": -0.004480280619666794,
+            "total_reward_per_logical_touch": -0.23902292002974918,
+            "total_reward_per_simulated_agent_second": -0.003883636995858942
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 5,
+            "no_touch_timeout": 70
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 23,
+              "2": 1,
+              "3": 1,
+              "4": 1,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 4,
+            "two_or_more_chain_touches_per_100k_agent_steps": 1.5623047119110112
+          }
+        },
+        "collected_agent_steps": 192024,
+        "cumulative_agent_steps": 26643168,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 139,
+        "iteration_wall_seconds": 84.09111270005815,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0039356667548418045,
+            "mean": -0.0025712454225867987,
+            "minimum": -0.0058938502334058285,
+            "p01": -0.005876959245651961,
+            "p50": -0.004163399105891585,
+            "p95": 0.0028959196060895894,
+            "p99": 0.0037277173250913603,
+            "samples": 4,
+            "standard_deviation": 0.003910730303750486
+          },
+          "actor_update_magnitude": 0.09386084228754044,
+          "analog_entropy": {
+            "maximum": 2.8445963859558105,
+            "mean": 2.839476525783539,
+            "minimum": 2.8372366428375244,
+            "p01": 2.8372404980659485,
+            "p50": 2.83803653717041,
+            "p95": 2.843713116645813,
+            "p99": 2.844419732093811,
+            "samples": 4,
+            "standard_deviation": 0.003011590047614742
+          },
+          "approximate_kl": {
+            "maximum": 0.001874932087957859,
+            "mean": 0.0007731820934277489,
+            "minimum": -1.3783574281944766e-10,
+            "p01": 6.514576993648102e-06,
+            "p50": 0.0006088982117944397,
+            "p95": 0.0017437881848309186,
+            "p99": 0.0018487033073324708,
+            "samples": 4,
+            "standard_deviation": 0.0007369810917669961
+          },
+          "button_entropy": {
+            "maximum": 2.0417144298553467,
+            "mean": 2.041109561920166,
+            "minimum": 2.0405378341674805,
+            "p01": 2.040548555850983,
+            "p50": 2.0410929918289185,
+            "p95": 2.041650879383087,
+            "p99": 2.0417017197608947,
+            "samples": 4,
+            "standard_deviation": 0.00043917863930902665
+          },
+          "clip_fraction": {
+            "maximum": 0.001980074215680361,
+            "mean": 0.0005054352204751922,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 2.0833333110203966e-05,
+            "p95": 0.0016893130832613672,
+            "p99": 0.0019219219891965617,
+            "samples": 4,
+            "standard_deviation": 0.0008515531343211788
+          },
+          "critic_loss": {
+            "maximum": 0.24038714170455933,
+            "mean": 0.19834545999765396,
+            "minimum": 0.15799687802791595,
+            "p01": 0.15862478002905844,
+            "p50": 0.19749891012907028,
+            "p95": 0.2367397017776966,
+            "p99": 0.23965765371918676,
+            "samples": 4,
+            "standard_deviation": 0.031963964704194166
+          },
+          "critic_update_magnitude": 0.3336683511734009
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -3.230499783279209e-05,
+          "minimum": -10.0,
+          "p01": -0.002130073471926153,
+          "p50": -8.249441088992171e-05,
+          "p95": 0.0011773504316806788,
+          "p99": 0.0022061423026025298,
+          "samples": 191978,
+          "standard_deviation": 0.07232058421746708
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 4.000418981481482,
+        "agent_steps_per_second": 2267.6088670253994,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 2,
+            "orange": 3
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5208224828649403,
+            "dodges": 645.299056269661,
+            "first_jumps": 531.759755005104,
+            "logical_touches": 12.499739588758567,
+            "raw_touch_records": 24.999479177517134,
+            "touch_chain_starts": 12.499739588758567
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 13,
+            "easy_finish": 5,
+            "ground_acquisition": 30,
+            "moving_ball_chase": 11,
+            "natural": 4,
+            "touch_chain": 22
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 1843,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 2847,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0017647058356042,
+              "ball_approach_potential": 0.6438917395962321,
+              "ball_progress_potential": 0.03928267307261841,
+              "ball_touch_event": 0.021176471429712632,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.015077683633074214
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.049065103438291575,
+            "reward_correlation_with_planar_speed": -0.0019391250166614043,
+            "total_reward_per_logical_touch": -0.3133975765295997,
+            "total_reward_per_simulated_agent_second": -0.004700865713241637
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 5,
+            "no_touch_timeout": 80
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 24,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192004,
+        "cumulative_agent_steps": 26835172,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 140,
+        "iteration_wall_seconds": 88.72203930001706,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0034558444749563932,
+            "mean": -0.00273263655253686,
+            "minimum": -0.00757064763456583,
+            "p01": -0.007507333727553487,
+            "p50": -0.0034078715252690017,
+            "p95": 0.0027341339562553897,
+            "p99": 0.0033115023712161915,
+            "samples": 4,
+            "standard_deviation": 0.004214246870325015
+          },
+          "actor_update_magnitude": 0.09994853287935257,
+          "analog_entropy": {
+            "maximum": 2.8433189392089844,
+            "mean": 2.841070532798767,
+            "minimum": 2.83648943901062,
+            "p01": 2.8366341280937193,
+            "p50": 2.842236876487732,
+            "p95": 2.8432953000068664,
+            "p99": 2.8433142113685608,
+            "samples": 4,
+            "standard_deviation": 0.0027600611043312262
+          },
+          "approximate_kl": {
+            "maximum": 0.0019165938720107079,
+            "mean": 0.0008014075201936074,
+            "minimum": -1.490116086078075e-10,
+            "p01": 8.841526973995816e-06,
+            "p50": 0.0006445181788876653,
+            "p95": 0.00177825188729912,
+            "p99": 0.00188892547506839,
+            "samples": 4,
+            "standard_deviation": 0.0007382136511258669
+          },
+          "button_entropy": {
+            "maximum": 2.0399889945983887,
+            "mean": 2.039173185825348,
+            "minimum": 2.0385522842407227,
+            "p01": 2.038558886051178,
+            "p50": 2.03907573223114,
+            "p95": 2.0398975133895876,
+            "p99": 2.0399706983566284,
+            "samples": 4,
+            "standard_deviation": 0.0005599431356244832
+          },
+          "clip_fraction": {
+            "maximum": 0.0022103595547378063,
+            "mean": 0.0005630065552395536,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 2.0833333110203966e-05,
+            "p95": 0.0018850556214601959,
+            "p99": 0.002145298768082284,
+            "samples": 4,
+            "standard_deviation": 0.0009512517999094407
+          },
+          "critic_loss": {
+            "maximum": 0.25462573766708374,
+            "mean": 0.2435772754251957,
+            "minimum": 0.22889402508735657,
+            "p01": 0.2291898874938488,
+            "p50": 0.24539466947317123,
+            "p95": 0.2542368620634079,
+            "p99": 0.2545479625463486,
+            "samples": 4,
+            "standard_deviation": 0.01039727451195719
+          },
+          "critic_update_magnitude": 0.29899537563323975
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -3.917538096131037e-05,
+          "minimum": -10.0,
+          "p01": -0.0020406641415320337,
+          "p50": -6.89707521814853e-05,
+          "p95": 0.0011002504907082766,
+          "p99": 0.002094384876545524,
+          "samples": 191956,
+          "standard_deviation": 0.072279632337303
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 4.222662037037037,
+        "agent_steps_per_second": 2298.5557723918146,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 4,
+            "orange": 3
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.0,
+            "dodges": 650.9806372319262,
+            "first_jumps": 529.6378464518951,
+            "logical_touches": 7.811767646783114,
+            "raw_touch_records": 18.227457842493934,
+            "touch_chain_starts": 6.249414117426491
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 9,
+            "easy_finish": 8,
+            "ground_acquisition": 36,
+            "moving_ball_chase": 7,
+            "natural": 2,
+            "touch_chain": 16
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 1432,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 1510,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0,
+              "ball_approach_potential": 0.7220568774193555,
+              "ball_progress_potential": 0.03700592087027302,
+              "ball_touch_event": 0.014423077496198507,
+              "touch_chain_event": 0.0027777777714097602,
+              "useful_speed_rate": 0.017236717429547105
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.03535685490123556,
+            "reward_correlation_with_planar_speed": -0.003437249278132641,
+            "total_reward_per_logical_touch": -0.9029771385213292,
+            "total_reward_per_simulated_agent_second": -0.008464617115782856
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 7,
+            "no_touch_timeout": 71
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 12,
+              "2": 1,
+              "3": 1,
+              "4": 1,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 4,
+            "two_or_more_chain_touches_per_100k_agent_steps": 1.5623535293566229
+          }
+        },
+        "collected_agent_steps": 192018,
+        "cumulative_agent_steps": 27027190,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 141,
+        "iteration_wall_seconds": 87.44767929997761,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.001610434614121914,
+            "mean": -0.0023808074183762074,
+            "minimum": -0.00811533723026514,
+            "p01": -0.007971229418180882,
+            "p50": -0.0015091635286808014,
+            "p95": 0.001412881887517869,
+            "p99": 0.0015709240688011046,
+            "samples": 4,
+            "standard_deviation": 0.0037693819231386636
+          },
+          "actor_update_magnitude": 0.09518226981163025,
+          "analog_entropy": {
+            "maximum": 2.8170065879821777,
+            "mean": 2.812266230583191,
+            "minimum": 2.8100790977478027,
+            "p01": 2.8100916361808777,
+            "p50": 2.8109896183013916,
+            "p95": 2.8161779284477233,
+            "p99": 2.8168408560752867,
+            "samples": 4,
+            "standard_deviation": 0.002783849494932961
+          },
+          "approximate_kl": {
+            "maximum": 0.00167995470110327,
+            "mean": 0.0007751771686404646,
+            "minimum": -1.8005569257795173e-10,
+            "p01": 1.2172693064596563e-05,
+            "p50": 0.0007103770767571405,
+            "p95": 0.0015802102803718296,
+            "p99": 0.0016600058169569819,
+            "samples": 4,
+            "standard_deviation": 0.0006351182538469852
+          },
+          "button_entropy": {
+            "maximum": 2.0381476879119873,
+            "mean": 2.0373822450637817,
+            "minimum": 2.0368478298187256,
+            "p01": 2.036855697631836,
+            "p50": 2.037266731262207,
+            "p95": 2.038039040565491,
+            "p99": 2.038125958442688,
+            "samples": 4,
+            "standard_deviation": 0.0004866369525995885
+          },
+          "clip_fraction": {
+            "maximum": 0.00148058554623276,
+            "mean": 0.000375354719835741,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 1.0416666555101983e-05,
+            "p95": 0.001261622714264376,
+            "p99": 0.0014367929798390828,
+            "samples": 4,
+            "standard_deviation": 0.0006381619944555556
+          },
+          "critic_loss": {
+            "maximum": 0.39555394649505615,
+            "mean": 0.36883796006441116,
+            "minimum": 0.339353084564209,
+            "p01": 0.3395352798700333,
+            "p50": 0.37022240459918976,
+            "p95": 0.3954736366868019,
+            "p99": 0.3955378845334053,
+            "samples": 4,
+            "standard_deviation": 0.026535978501803004
+          },
+          "critic_update_magnitude": 0.2482190579175949
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -7.061005123255912e-05,
+          "minimum": -10.0,
+          "p01": -0.0021433738083578647,
+          "p50": -8.679836537339725e-05,
+          "p95": 0.0010887463344261051,
+          "p99": 0.002087245536968113,
+          "samples": 191954,
+          "standard_deviation": 0.08546709081276321
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 4.4449097222222225,
+        "agent_steps_per_second": 2418.6848408269307,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 8,
+            "orange": 3
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5207736613513035,
+            "dodges": 656.6955869639937,
+            "first_jumps": 527.0229452875192,
+            "logical_touches": 7.811604920269552,
+            "raw_touch_records": 17.185530824593016,
+            "touch_chain_starts": 7.811604920269552
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 6,
+            "easy_finish": 7,
+            "ground_acquisition": 26,
+            "moving_ball_chase": 20,
+            "natural": 4,
+            "touch_chain": 16
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 586,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 1431,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0018987341269159116,
+              "ball_approach_potential": 0.7332099454317859,
+              "ball_progress_potential": 0.036391346278689306,
+              "ball_touch_event": 0.014240506894980805,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.01734507630480529
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.027087918229507936,
+            "reward_correlation_with_planar_speed": -0.0007694736091207584,
+            "total_reward_per_logical_touch": -0.8594517246555075,
+            "total_reward_per_simulated_agent_second": -0.008056436785263738
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 11,
+            "no_touch_timeout": 68
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 15,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192022,
+        "cumulative_agent_steps": 27219212,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 142,
+        "iteration_wall_seconds": 83.1105319999624,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.0014074891805648804,
+            "mean": -0.0023648269125260413,
+            "minimum": -0.008517658337950706,
+            "p01": -0.00830005377298221,
+            "p50": -0.0011745692463591695,
+            "p95": 0.0010336209554225198,
+            "p99": 0.0013327155355364077,
+            "samples": 4,
+            "standard_deviation": 0.0037059812292850546
+          },
+          "actor_update_magnitude": 0.09607115387916565,
+          "analog_entropy": {
+            "maximum": 2.806405544281006,
+            "mean": 2.8017481565475464,
+            "minimum": 2.7979419231414795,
+            "p01": 2.7979852962493896,
+            "p50": 2.80132257938385,
+            "p95": 2.8059333324432374,
+            "p99": 2.8063111019134523,
+            "samples": 4,
+            "standard_deviation": 0.003317697717804012
+          },
+          "approximate_kl": {
+            "maximum": 0.0035980348475277424,
+            "mean": 0.0015474236538090443,
+            "minimum": -1.8750627439612089e-10,
+            "p01": 1.582209750234223e-05,
+            "p50": 0.0012958299776073545,
+            "p95": 0.0033679672167636447,
+            "p99": 0.0035520213213749226,
+            "samples": 4,
+            "standard_deviation": 0.0014059753024635035
+          },
+          "button_entropy": {
+            "maximum": 2.0363245010375977,
+            "mean": 2.035706877708435,
+            "minimum": 2.035026788711548,
+            "p01": 2.0350437903404237,
+            "p50": 2.0357381105422974,
+            "p95": 2.0362582325935366,
+            "p99": 2.0363112473487854,
+            "samples": 4,
+            "standard_deviation": 0.00047110227722278703
+          },
+          "clip_fraction": {
+            "maximum": 0.019882457330822945,
+            "mean": 0.005720614339224994,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.001500000013038516,
+            "p95": 0.01735008873511105,
+            "p99": 0.019375983611680563,
+            "samples": 4,
+            "standard_deviation": 0.008267563062896327
+          },
+          "critic_loss": {
+            "maximum": 0.36950594186782837,
+            "mean": 0.34203267842531204,
+            "minimum": 0.2975635826587677,
+            "p01": 0.29887166380882263,
+            "p50": 0.35053059458732605,
+            "p95": 0.36806428581476214,
+            "p99": 0.3692176106572151,
+            "samples": 4,
+            "standard_deviation": 0.027622863397488047
+          },
+          "critic_update_magnitude": 0.20988312363624573
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -6.714005156063265e-05,
+          "minimum": -10.0,
+          "p01": -0.002064714322332293,
+          "p50": -8.388754213228822e-05,
+          "p95": 0.0011451222409959848,
+          "p99": 0.002104639925528318,
+          "samples": 191982,
+          "standard_deviation": 0.10709853711712611
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 4.667143518518518,
+        "agent_steps_per_second": 2312.3594741967254,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 7,
+            "orange": 5
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5208062080099994,
+            "dodges": 661.9446903807093,
+            "first_jumps": 547.3673246185094,
+            "logical_touches": 10.41612416019999,
+            "raw_touch_records": 22.39466694442998,
+            "touch_chain_starts": 9.89531795218999
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 10,
+            "easy_finish": 11,
+            "ground_acquisition": 30,
+            "moving_ball_chase": 11,
+            "natural": 4,
+            "touch_chain": 22
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 511,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 677,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0017045454093904207,
+              "ball_approach_potential": 0.6614974655790428,
+              "ball_progress_potential": 0.03398832632513477,
+              "ball_touch_event": 0.017045455222780056,
+              "touch_chain_event": 0.000378787884432258,
+              "useful_speed_rate": 0.01583928214783331
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.029810819933855145,
+            "reward_correlation_with_planar_speed": -0.002524347519121372,
+            "total_reward_per_logical_touch": -0.5096906699558204,
+            "total_reward_per_simulated_agent_second": -0.006370801561866408
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 12,
+            "no_touch_timeout": 76
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 19,
+              "2": 1,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 2,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.5208062080099994
+          }
+        },
+        "collected_agent_steps": 192010,
+        "cumulative_agent_steps": 27411222,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 143,
+        "iteration_wall_seconds": 87.30265930003952,
+        "ppo": {
+          "actor_loss": {
+            "maximum": -0.001021647360175848,
+            "mean": -0.00248855582321994,
+            "minimum": -0.0048814089968800545,
+            "p01": -0.004824265288189054,
+            "p50": -0.002025583467911929,
+            "p95": -0.001029582490446046,
+            "p99": -0.0010232343862298875,
+            "samples": 4,
+            "standard_deviation": 0.001590219293514577
+          },
+          "actor_update_magnitude": 0.09218725562095642,
+          "analog_entropy": {
+            "maximum": 2.806746006011963,
+            "mean": 2.8013380765914917,
+            "minimum": 2.794070243835449,
+            "p01": 2.7942277431488036,
+            "p50": 2.8022680282592773,
+            "p95": 2.806516480445862,
+            "p99": 2.806700100898743,
+            "samples": 4,
+            "standard_deviation": 0.005029310332762734
+          },
+          "approximate_kl": {
+            "maximum": 0.0012378101237118244,
+            "mean": 0.000529943213264536,
+            "minimum": -1.9992391075973615e-10,
+            "p01": 5.784970759027952e-06,
+            "p50": 0.0004409814646351151,
+            "p95": 0.0011555072211194783,
+            "p99": 0.0012213495431933551,
+            "samples": 4,
+            "standard_deviation": 0.0004798159831851761
+          },
+          "button_entropy": {
+            "maximum": 2.034240961074829,
+            "mean": 2.0338539481163025,
+            "minimum": 2.033588409423828,
+            "p01": 2.0335939598083494,
+            "p50": 2.0337932109832764,
+            "p95": 2.034176766872406,
+            "p99": 2.0342281222343446,
+            "samples": 4,
+            "standard_deviation": 0.00023898274757294
+          },
+          "clip_fraction": {
+            "maximum": 0.00035434385063126683,
+            "mean": 8.858596265781671e-05,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0,
+            "p95": 0.0003011922730365767,
+            "p99": 0.00034371353511232874,
+            "samples": 4,
+            "standard_deviation": 0.00015343538816073784
+          },
+          "critic_loss": {
+            "maximum": 0.4777446985244751,
+            "mean": 0.43756693601608276,
+            "minimum": 0.41755029559135437,
+            "p01": 0.4175945949554443,
+            "p50": 0.4274863749742508,
+            "p95": 0.47147486507892605,
+            "p99": 0.4764907318353653,
+            "samples": 4,
+            "standard_deviation": 0.02429649131137298
+          },
+          "critic_update_magnitude": 0.1982714980840683
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -5.3060976622621536e-05,
+          "minimum": -10.0,
+          "p01": -0.0021692189038731158,
+          "p50": -7.927082333480939e-05,
+          "p95": 0.0011488129384815693,
+          "p99": 0.0021206390811130404,
+          "samples": 191976,
+          "standard_deviation": 0.11187068518694035
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 4.889381944444445,
+        "agent_steps_per_second": 2445.7883940773663,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 6,
+            "orange": 7
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.5207953586717635,
+            "dodges": 649.4318122636892,
+            "first_jumps": 512.9834282916871,
+            "logical_touches": 9.895111814763506,
+            "raw_touch_records": 19.790223629527013,
+            "touch_chain_starts": 9.895111814763506
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 12,
+            "easy_finish": 6,
+            "ground_acquisition": 26,
+            "moving_ball_chase": 12,
+            "natural": 2,
+            "touch_chain": 17
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 851,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 759,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0019736841582415395,
+              "ball_approach_potential": 0.7651522539114499,
+              "ball_progress_potential": 0.04080738691966481,
+              "ball_touch_event": 0.01875000074505806,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.018092764772080754
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.027545569128136195,
+            "reward_correlation_with_planar_speed": -0.008479630819842503,
+            "total_reward_per_logical_touch": -0.5750838479307535,
+            "total_reward_per_simulated_agent_second": -0.0068286227737671115
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 13,
+            "no_touch_timeout": 63
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 19,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192014,
+        "cumulative_agent_steps": 27603236,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 144,
+        "iteration_wall_seconds": 82.02472740004305,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.000635005533695221,
+            "mean": -0.0026412884471938014,
+            "minimum": -0.005158456042408943,
+            "p01": -0.0051093757385388015,
+            "p50": -0.0030208516400307417,
+            "p95": 0.00016186609864234813,
+            "p99": 0.0005403776466846458,
+            "samples": 4,
+            "standard_deviation": 0.002113147239101319
+          },
+          "actor_update_magnitude": 0.09714158624410629,
+          "analog_entropy": {
+            "maximum": 2.7936668395996094,
+            "mean": 2.7915833592414856,
+            "minimum": 2.7891767024993896,
+            "p01": 2.789251925945282,
+            "p50": 2.7917449474334717,
+            "p95": 2.7933876752853393,
+            "p99": 2.7936110067367554,
+            "samples": 4,
+            "standard_deviation": 0.0015962848313478535
+          },
+          "approximate_kl": {
+            "maximum": 0.0018573382403701544,
+            "mean": 0.0007209354793400666,
+            "minimum": -1.9495685621429004e-10,
+            "p01": 5.2660493323761215e-06,
+            "p50": 0.0005132019359734841,
+            "p95": 0.0017063668929040428,
+            "p99": 0.0018271439708769318,
+            "samples": 4,
+            "standard_deviation": 0.0007289539366774758
+          },
+          "button_entropy": {
+            "maximum": 2.0341312885284424,
+            "mean": 2.0338849425315857,
+            "minimum": 2.0336923599243164,
+            "p01": 2.0336945772171022,
+            "p50": 2.033858060836792,
+            "p95": 2.034104073047638,
+            "p99": 2.0341258454322815,
+            "samples": 4,
+            "standard_deviation": 0.00017034589321524783
+          },
+          "clip_fraction": {
+            "maximum": 0.002710253233090043,
+            "mean": 0.0006827716415500618,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 1.0416666555101983e-05,
+            "p95": 0.002306840248093066,
+            "p99": 0.002629570636090647,
+            "samples": 4,
+            "standard_deviation": 0.0011705979409284437
+          },
+          "critic_loss": {
+            "maximum": 0.35577139258384705,
+            "mean": 0.3222399726510048,
+            "minimum": 0.27193692326545715,
+            "p01": 0.2732739168405533,
+            "p50": 0.3306257873773575,
+            "p95": 0.354117913544178,
+            "p99": 0.3554406967759132,
+            "samples": 4,
+            "standard_deviation": 0.03238163714490724
+          },
+          "critic_update_magnitude": 0.22381862998008728
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -5.691061184658478e-05,
+          "minimum": -10.0,
+          "p01": -0.0021124938735738396,
+          "p50": -8.061104745138437e-05,
+          "p95": 0.0011376835755072534,
+          "p99": 0.0021410990157164638,
+          "samples": 191966,
+          "standard_deviation": 0.11643315918124972
+        }
+      },
+      {
+        "added_bootstrap_simulated_game_hours": 5.11161574074074,
+        "agent_steps_per_second": 2460.095041260111,
+        "bootstrap_metrics": {
+          "goals": {
+            "blue": 4,
+            "orange": 1
+          },
+          "interaction_rates_per_100k_agent_steps": {
+            "aerial_logical_touches": 0.0,
+            "dodges": 647.8829227644394,
+            "first_jumps": 530.7015259621895,
+            "logical_touches": 6.249674496119994,
+            "raw_touch_records": 11.978542784229989,
+            "touch_chain_starts": 6.249674496119994
+          },
+          "reset_counts": {
+            "easy_aerial_contact": 13,
+            "easy_finish": 5,
+            "ground_acquisition": 25,
+            "moving_ball_chase": 23,
+            "natural": 4,
+            "touch_chain": 13
+          },
+          "reward_integrity": {
+            "budget_clip_counts": {
+              "blue.aerial_touch_event": 0,
+              "blue.ball_approach_potential": 2030,
+              "blue.ball_progress_potential": 0,
+              "blue.ball_touch_event": 0,
+              "blue.touch_chain_event": 0,
+              "blue.useful_speed_rate": 0,
+              "orange.aerial_touch_event": 0,
+              "orange.ball_approach_potential": 1717,
+              "orange.ball_progress_potential": 0,
+              "orange.ball_touch_event": 0,
+              "orange.touch_chain_event": 0,
+              "orange.useful_speed_rate": 0
+            },
+            "component_budget_fraction_across_completed_episodes": {
+              "aerial_touch_event": 0.0,
+              "ball_approach_potential": 0.6831922605517253,
+              "ball_progress_potential": 0.03410775444066209,
+              "ball_touch_event": 0.010975610192229108,
+              "touch_chain_event": 0.0,
+              "useful_speed_rate": 0.018001024013019874
+            },
+            "direct_action_press_rewards": false,
+            "reward_correlation_with_logical_touch": 0.03258709512982389,
+            "reward_correlation_with_planar_speed": -0.0015456791313174232,
+            "total_reward_per_logical_touch": -0.9734021297643244,
+            "total_reward_per_simulated_agent_second": -0.00730013575782838
+          },
+          "termination_counts": {
+            "episode_timeout": 0,
+            "goal": 5,
+            "no_touch_timeout": 77
+          },
+          "touch_chain": {
+            "histogram": {
+              "1": 12,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5+": 0
+            },
+            "maximum_observed_chain_length_lower_bound": 1,
+            "two_or_more_chain_touches_per_100k_agent_steps": 0.0
+          }
+        },
+        "collected_agent_steps": 192010,
+        "cumulative_agent_steps": 27795246,
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 145,
+        "iteration_wall_seconds": 81.43761450005695,
+        "ppo": {
+          "actor_loss": {
+            "maximum": 0.00018898607231676579,
+            "mean": -0.0026029713917523623,
+            "minimum": -0.007932884618639946,
+            "p01": -0.0077623512782156465,
+            "p50": -0.0013339935103431344,
+            "p95": 9.770609904080608e-05,
+            "p99": 0.00017073007766157375,
+            "samples": 4,
+            "standard_deviation": 0.0032053094917582105
+          },
+          "actor_update_magnitude": 0.09928692877292633,
+          "analog_entropy": {
+            "maximum": 2.806072950363159,
+            "mean": 2.79911470413208,
+            "minimum": 2.7906832695007324,
+            "p01": 2.7909469914436342,
+            "p50": 2.7998512983322144,
+            "p95": 2.805196297168732,
+            "p99": 2.8058976197242735,
+            "samples": 4,
+            "standard_deviation": 0.005497184034681007
+          },
+          "approximate_kl": {
+            "maximum": 0.0041073099710047245,
+            "mean": 0.0017128484752805297,
+            "minimum": -1.7757216530522868e-10,
+            "p01": 2.0442007857690706e-05,
+            "p50": 0.0013720420538447797,
+            "p95": 0.003800615190993994,
+            "p99": 0.004045971015002578,
+            "samples": 4,
+            "standard_deviation": 0.0015695182942668284
+          },
+          "button_entropy": {
+            "maximum": 2.0344793796539307,
+            "mean": 2.0342296957969666,
+            "minimum": 2.033900737762451,
+            "p01": 2.0339092350006105,
+            "p50": 2.034269332885742,
+            "p95": 2.0344606757164003,
+            "p99": 2.0344756388664247,
+            "samples": 4,
+            "standard_deviation": 0.0002169494033085051
+          },
+          "clip_fraction": {
+            "maximum": 0.028102068230509758,
+            "mean": 0.007634892070200294,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0012187500251457095,
+            "p95": 0.024252383003477,
+            "p99": 0.027332131185103203,
+            "samples": 4,
+            "standard_deviation": 0.011858555325512539
+          },
+          "critic_loss": {
+            "maximum": 0.19820885360240936,
+            "mean": 0.17533684521913528,
+            "minimum": 0.14056777954101562,
+            "p01": 0.14152747482061387,
+            "p50": 0.18128537386655807,
+            "p95": 0.19697949439287185,
+            "p99": 0.19796298176050187,
+            "samples": 4,
+            "standard_deviation": 0.022108448499713454
+          },
+          "critic_update_magnitude": 0.2663552761077881
+        },
+        "reward": {
+          "maximum": 10.0,
+          "mean": -6.0845451009037155e-05,
+          "minimum": -10.0,
+          "p01": -0.002068200707435608,
+          "p50": -7.075964094838127e-05,
+          "p95": 0.0010847710480447856,
+          "p99": 0.0021328342473134394,
+          "samples": 191968,
+          "standard_deviation": 0.07222163801476375
+        }
+      }
+    ],
+    "maximum_agent_steps_per_second": 2497.0058517996995,
+    "mean_agent_steps_per_second": 2373.606746532364,
+    "minimum_agent_steps_per_second": 2267.6088670253994,
+    "source_checkpoint": {
+      "actor_sha256": "3be4dc242f6cebe165f4670da8e534afcce9d1bf96f2ef6e14fac0d36549c130",
+      "actor_size_bytes": 7877740,
+      "clean_boundary": true,
+      "completed_iterations": 134,
+      "config_sha256": "011360169900bc92718f68dedd25c9b957b76ae0b4dbe94f5d476bf663ef9efe",
+      "config_version": "RivalM10_1TrainingConfigV1",
+      "cumulative_agent_steps": 25683082,
+      "cumulative_model_updates": 535,
+      "directory": "training/checkpoints/milestone10_1/boundaries/plus-002p5h/025683082",
+      "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+      "manifest_sha256": "c8d768848d71b61e7557d80e05d3f53de4a06d2bb09302115b3547c2a7bfc8dc",
+      "simulated_game_hours": 29.72578935185185
+    }
+  }
+}
