@@ -35,6 +35,36 @@ STOP FOR HUMAN REVIEW
 
 Stage 5 opponent pressure and Stage 6 self-play are **not authorized** by this package.
 
+## 10-hour unattended wall-clock envelope
+
+`OVERNIGHT_10H_BUDGET.md` is binding authority for the unattended run.
+
+From the beginning of real Stage-1 progressive work, the entire campaign has at most **10 real wall-clock hours**, including training, evaluations, stage transitions, checkpointing, reporting, commits, pushes, and final verification.
+
+Reserve the final **20 minutes** for safe closeout.
+
+Nominal planning shares are:
+
+- Stage 1: ~1.5 real hours;
+- Stage 2: ~2.0 real hours;
+- Stage 3: ~3.0 real hours;
+- Stage 4: ~3.17 real hours;
+- finalization: 20 minutes.
+
+These are soft planning shares. They do **not** allow skipping a prerequisite.
+
+Rules:
+
+- unused time from an early-mastered stage carries forward;
+- an unfinished prerequisite may consume later-stage reserved time while it remains inside its own stage/no-learning limits;
+- a failed prerequisite stops the entire progression even if wall time remains;
+- do not start a new stage when less than 30 minutes remain before the finalization reserve;
+- use measured recent PPO/evaluation durations to decide whether another iteration safely fits;
+- on global wall-clock exhaustion, preserve a clean state and stop with:
+  `stop_progressive_overnight_wall_clock_budget_exhausted`.
+
+The 90 learner-simulated-hour experience ceiling remains a separate hard maximum. Whichever hard limit or capability stop is reached first wins.
+
 ## Universal stage-transition contract
 
 At every successful stage transition:
@@ -50,6 +80,7 @@ At every successful stage transition:
 9. Initialize fresh critic Adam state.
 10. Run the next stage's implementation/preflight gates before consuming its real training budget.
 11. Measure the previous skill on the next stage's frozen retention corpus before the first next-stage PPO update.
+12. Confirm enough wall-clock authority remains to begin the next stage.
 
 Do not carry critic values or optimizer moments across reward-contract changes.
 
@@ -75,8 +106,6 @@ No active opponent is authorized through Stage 4.
 ## Skill reward removal principle
 
 Once a prerequisite passes, its direct reward must be **removed or substantially reduced** in the next lesson.
-
-The intended progression is:
 
 ### Stage 1
 
@@ -130,7 +159,7 @@ Authority files:
 - `IMPLEMENTATION_GATES.md`
 - `M10_2_CAMPAIGN.json`
 
-Maximum: 15 learner-simulated hours.
+Maximum: 15 learner-simulated hours / 6,480,000 active learner steps.
 
 ### Stage 2
 
@@ -138,7 +167,7 @@ Authority file:
 
 - `STAGE_2_GROUND_CONTROL.md`
 
-Maximum: 20 learner-simulated hours.
+Maximum: 20 learner-simulated hours / 8,640,000 active learner steps.
 
 ### Stage 3
 
@@ -146,7 +175,7 @@ Authority file:
 
 - `STAGE_3_AERIAL_CONTROL.md`
 
-Maximum: 30 learner-simulated hours.
+Maximum: 30 learner-simulated hours / 12,960,000 active learner steps.
 
 ### Stage 4
 
@@ -154,9 +183,9 @@ Authority file:
 
 - `STAGE_4_FINISHING.md`
 
-Maximum: 25 learner-simulated hours.
+Maximum: 25 learner-simulated hours / 10,800,000 active learner steps.
 
-Total maximum authorized learner-simulated experience across Stages 1–4 if every stage consumes its full budget:
+Total maximum authorized learner-simulated experience across Stages 1–4 if every stage consumes its full experience ceiling:
 
 **90 hours = 38,880,000 active-learner 120-Hz steps.**
 
@@ -179,13 +208,14 @@ Before real training begins in each later stage, Codex must create and execute a
 11. source actor is evaluated on the new stage's gate/retention corpus;
 12. one disposable real CUDA PPO update passes with finite gradients in analog/button actor heads and critic;
 13. disposable update is discarded and the real campaign starts again from the exact transferred actor plus fresh critic/optimizers;
-14. frozen production Wisp hashes/config remain unchanged.
+14. frozen production Wisp hashes/config remain unchanged;
+15. measured stage throughput and projected wall-clock consumption are recorded before real stage experience begins.
 
 If any preflight fails, stop before spending real stage experience.
 
 ## Campaign implementation requirement
 
-Codex should implement one resumable **progressive skill campaign controller** (name may follow repository conventions) that records:
+Codex should implement one resumable **progressive skill campaign controller** that records:
 
 - current stage;
 - stage phase;
@@ -193,6 +223,9 @@ Codex should implement one resumable **progressive skill campaign controller** (
 - stage-active learner steps;
 - stage simulated hours;
 - total progressive learner steps/hours;
+- campaign wall-clock elapsed/remaining;
+- current-stage wall-clock elapsed;
+- projected next iteration/evaluation duration;
 - current evaluation boundary;
 - gate decision;
 - exact passing checkpoint for completed stages;
@@ -233,7 +266,8 @@ For every stage:
 - unseen generalization corpus is run only on apparent passes;
 - exact stage success requires the documented consecutive-pass rule;
 - prior-stage retention gates must pass where specified;
-- accidental goals in Stages 1–3 are reward-neutral and cannot be capability evidence.
+- accidental goals in Stages 1–3 are reward-neutral and cannot be capability evidence;
+- wall-time telemetry is recorded at each boundary.
 
 ## Failure behavior
 
@@ -247,7 +281,8 @@ On **any** stage failure/stop decision:
 6. do not modify reward weights to chase the gate;
 7. do not advance to the next stage;
 8. push the stable closeout to `origin/main`;
-9. leave frozen production unchanged.
+9. leave frozen production unchanged;
+10. report unused wall-clock authority rather than spending it on an unversioned intervention.
 
 ## Successful Stage-4 closeout
 
@@ -261,7 +296,8 @@ When Stage 4 passes:
 `finishing_skill_passed_unlock_opponent_pressure`
 
 5. stop. Do not start opponent pressure or self-play.
-6. no production promotion is authorized.
+6. use remaining wall-clock authority only for verification/evidence cleanup/final push.
+7. no production promotion is authorized.
 
 ## Repository progress preservation
 
@@ -270,7 +306,7 @@ Push coherent commits at minimum:
 - after progressive implementation/preflights;
 - after every evaluation boundary;
 - at every stage transition;
-- at any failure closeout;
+- at any failure/wall-clock closeout;
 - at final Stage-4 closeout.
 
 Do not leave the only copy of campaign authority, results, or stage decisions in terminal output/chat.
