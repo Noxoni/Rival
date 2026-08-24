@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "summary_version": "RivalM10_6Stage1FinalSummaryV1",
+  "campaign_id": "rival-v10-6-stage1-uncapped-reacquisition",
+  "status": "complete_unpromoted",
+  "decision": "stage1_uncapped_reacquisition_experiment_complete_at_plus_5h",
+  "capability_conclusion": "failed_reliable_ball_acquisition_and_reacquisition",
+  "source": {
+    "checkpoint": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "actor_weights_only": true,
+    "fresh_critic": true,
+    "fresh_actor_optimizer": true,
+    "fresh_critic_optimizer": true,
+    "later_m10_actors_used_as_source": false
+  },
+  "reward_preflight": {
+    "strict_truth_table_checks": 23,
+    "all_checks_passed": true,
+    "first_three_separated_contacts_reward_each": 10.0,
+    "maximum_contact_reward_per_episode": 30.0,
+    "acquisition_grace_seconds_per_target": 0.5,
+    "acquisition_time_penalty_per_simulated_second": -1.4,
+    "failed_acquisition_window_penalty": -16.1,
+    "speed_independent_time_penalty": true,
+    "heading_episode_spend_caps": false,
+    "distance_episode_spend_caps": false,
+    "other_reward_components_zero": true
+  },
+  "training": {
+    "selected_worker_count": 64,
+    "target_active_learner_steps": 2160000,
+    "actual_active_learner_steps": 2159878,
+    "learner_simulated_hours": 4.999717592592592,
+    "accepted_terminal_shortfall_steps": 122,
+    "maximum_terminal_shortfall_steps": 128,
+    "completed_ppo_iterations": 24,
+    "completed_model_updates": 88,
+    "all_iterations_healthy": true,
+    "workers_cleaned": true
+  },
+  "final_checkpoint": {
+    "directory": "training/checkpoints/milestone10_6/stage_1/boundaries/plus-005h/002159878",
+    "actor_sha256": "776f3f2fadd1799dfc7dc141840f8b1903550b0e1ae98bd9e2d3a67fcc36c6d8",
+    "manifest_sha256": "d3d76869693b8e6ae5e6d2e7909c4174437b74a9ebb38e27c34171cafb5c7e65",
+    "reload_parity_passed": true,
+    "production_promotion_authorized": false
+  },
+  "deterministic_gate_curve": [
+    {
+      "boundary": "source",
+      "episodes": 500,
+      "first_touch_success_share": 0.09,
+      "second_touch_success_share": 0.004,
+      "third_touch_success_share": 0.0,
+      "all_three_contacts_success_share": 0.0
+    },
+    {
+      "boundary": "+1h",
+      "episodes": 500,
+      "first_touch_success_share": 0.16,
+      "second_touch_success_share": 0.034,
+      "third_touch_success_share": 0.024,
+      "all_three_contacts_success_share": 0.024
+    },
+    {
+      "boundary": "+2.5h",
+      "episodes": 500,
+      "first_touch_success_share": 0.128,
+      "second_touch_success_share": 0.016,
+      "third_touch_success_share": 0.002,
+      "all_three_contacts_success_share": 0.002
+    },
+    {
+      "boundary": "+5h",
+      "episodes": 500,
+      "first_touch_success_share": 0.162,
+      "second_touch_success_share": 0.01,
+      "third_touch_success_share": 0.004,
+      "all_three_contacts_success_share": 0.004
+    }
+  ],
+  "final_deterministic_capability": {
+    "episodes": 500,
+    "first_touch_success_count": 81,
+    "first_touch_success_share": 0.162,
+    "first_touch_failure_share": 0.838,
+    "second_touch_success_count": 5,
+    "second_touch_success_share": 0.01,
+    "third_touch_success_count": 2,
+    "third_touch_success_share": 0.004,
+    "all_three_contacts_success_count": 2,
+    "all_three_contacts_success_share": 0.004,
+    "time_to_first_touch_seconds": {
+      "samples": 81,
+      "mean": 1.759156378600823,
+      "median": 1.0583333333333333,
+      "p95": 5.116666666666666
+    },
+    "time_first_to_second_touch_seconds": {
+      "samples": 5,
+      "mean": 1.0416666666666665,
+      "median": 1.0249999999999995,
+      "p95": 1.3183333333333331
+    },
+    "time_second_to_third_touch_seconds": {
+      "samples": 2,
+      "mean": 0.10416666666666685,
+      "median": 0.10416666666666685,
+      "p95": 0.145416666666667
+    },
+    "failed_initial_ball_distance_mean": 2241.3559720492294,
+    "failed_terminal_ball_distance_mean": 3849.797831727484,
+    "failed_distance_change_mean": 1608.4418596782546,
+    "failed_initial_alignment_mean": 0.5721925440002122,
+    "failed_terminal_alignment_mean": 0.1802644294905239,
+    "failed_alignment_change_mean": -0.3919281145096883,
+    "cumulative_heading_reward": -352.638515055993,
+    "cumulative_distance_reward": -222.354297356623,
+    "cumulative_acquisition_time_penalty": -8063.6616666667,
+    "physical_contact_count": 94,
+    "rewarded_contact_count": 88,
+    "deterministic_actions": {
+      "mean_absolute_throttle": 0.35546001267433164,
+      "mean_absolute_steer": 0.2123098037093878,
+      "jump_share": 0.9777148410677909,
+      "boost_share": 0.9784160526394844,
+      "handbrake_share": 0.00007869829307310283
+    }
+  },
+  "interpretation": {
+    "learning_curve_visibly_and_consistently_improved": false,
+    "reliable_turn_approach_contact_behavior_learned": false,
+    "reliable_reacquisition_learned": false,
+    "continued_retreat_exploit_eliminated_from_reward": true,
+    "continued_retreat_behavior_eliminated_from_policy": false,
+    "next_investigation": [
+      "observation_action_learnability",
+      "policy_output_behavior",
+      "ppo_credit_assignment",
+      "steering_control_mapping"
+    ],
+    "another_reward_magnitude_retune_recommended": false
+  },
+  "production": {
+    "modified": false,
+    "promotion_authorized": false,
+    "frozen_wisp_policy_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "frozen_wisp_shared_head_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "verification": {
+    "production_tests": "91 passed",
+    "training_tests": "186 passed",
+    "ruff_production": "passed",
+    "ruff_training": "passed",
+    "compileall_production": "passed",
+    "compileall_training": "passed",
+    "tracked_json_documents_parsed": 236,
+    "new_final_summary_json_parsed": true,
+    "final_checkpoint_reload_parity": "passed",
+    "training_workers_remaining": 0,
+    "paused_historical_stash_preserved": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1"
+  }
+}
