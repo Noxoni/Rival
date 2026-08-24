@@ -1,148 +1,201 @@
 # Rival prerequisite skill progression
 
-This document freezes the training order for the next scratch-policy development stages. The ordering is intentionally prerequisite-driven: a later skill is not trained until the earlier motor/control skill is demonstrably reliable.
+This document freezes the prerequisite order for scratch-policy training.
+
+The governing rule is simple:
+
+> **A later skill is not trained until the earlier skill is demonstrably reliable. Once a prerequisite is learned, its direct reward is removed or reduced so it becomes a tool for the next lesson instead of a permanent reward exploit.**
 
 ## Stage 0 — Locomotion / agency
 
-**Status:** learned sufficiently to stop rewarding directly.
+**Status:** learned sufficiently in v10.1 to stop rewarding directly.
 
-Capability learned in v10.1:
+Rival demonstrated sustained controller use and much higher arena speed. That did not produce ball interaction, but it proved the actor can learn a simple motor primitive from reinforcement.
 
-- produce sustained useful controller output;
-- accelerate and travel around the arena;
-- use throttle/steer/jump/dodge controls rather than remaining mostly inert.
-
-The v10.1 actor is retained as the starting actor for Stage 1, but speed is no longer rewarded. A primitive that has been learned should become a means to the next objective rather than a permanent source of reward.
+Carry the v10.1 actor forward. Do not keep a speed reward.
 
 ## Stage 1 — Ball acquisition
 
-**Current stage: v10.2.**
+**Authorized/current first stage of v10.2.**
 
 Question:
 
-> Can Rival reliably locate, approach, and physically touch the ball from broad reachable ground states?
+> Can Rival reliably locate, approach, and physically touch the ball from broad reachable states?
 
 Reward only:
 
-- signed car-caused reduction in car-to-ball distance;
-- every genuine new physical ball touch.
+- small signed car-caused reduction in car-to-ball distance;
+- every genuine new physical learner touch.
 
-No scoring reward exists.
+No scoring reward.
 
-Exit only when first-touch acquisition is reliable across close, medium, moving/intercept, and awkward-heading families.
+Exit decision:
+
+`ball_acquisition_skill_passed_unlock_ground_control`
+
+Only then may Stage 2 start.
 
 ## Stage 2 — Ground ball control / dribbling
 
-Locked until Stage 1 passes.
+**Authorized after Stage 1 passes.**
 
 Question:
 
-> After reaching the ball, can Rival keep it close and deliberately produce additional controlled contacts instead of merely colliding once and losing it?
+> After reaching the ball, can Rival keep it reachable and deliberately produce repeated controlled ground contacts instead of merely colliding once and losing it?
 
-Expected future learning signals:
+Progression:
 
-- controlled ball proximity after first touch;
-- repeated separated self touches;
-- ball velocity compatible with continued possession;
-- carrying/pushing the ball while retaining reachability;
-- eventually ball-on-car / dribble-like control.
+1. second touch after acquisition;
+2. third/fourth touch chain;
+3. moving push/control while keeping the ball nearby;
+4. turning back into control;
+5. broad carry/dribble-like control with low relative car-ball velocity.
 
-At this stage the generic first-touch acquisition reward should be reduced substantially or removed once acquisition remains retained.
+The first touch is now only a small bridge. Follow-up physical touches are the high-value event. A small bounded proximity/control signal may bridge between contacts.
 
-Still do **not** make scoring the primary target.
+Still no positive scoring objective.
+
+Exit decision:
+
+`ground_control_skill_passed_unlock_aerial_control`
+
+Only then may Stage 3 start.
 
 ## Stage 3 — Aerial acquisition and air-dribble control
 
-Locked until ground control is reliable.
+**Authorized after Stage 2 passes.**
 
 Question:
 
-> Can Rival leave the ground intentionally, acquire an elevated ball, and sustain useful repeated aerial contacts?
+> Can Rival intentionally leave the ground, acquire an elevated ball, and sustain useful repeated aerial contacts?
 
-Progression inside the stage should move from:
+Progression:
 
-1. reachable single aerial contact;
-2. aerial follow-up contact;
-3. multiple controlled aerial touches;
-4. sustained air-dribble-like possession;
-5. wall-to-air and ceiling-origin variations after basic open-air control is reliable.
+1. reachable low aerial contact;
+2. medium/moving aerial intercept;
+3. aerial follow-up contact;
+4. repeated controlled aerial touches;
+5. sustained air-dribble-like possession;
+6. lateral and wall-to-air variations after basic open-air control becomes reliable.
 
-The objective is aerial ball control, not named mechanics and not scoring yet.
+Do not reward jump/boost button presses directly. Reward the physical result: reaching and touching the airborne ball, then retaining aerial control.
+
+Still no positive scoring objective.
+
+Exit decision:
+
+`aerial_control_skill_passed_unlock_finishing`
+
+Only then may Stage 4 start.
 
 ## Stage 4 — Finishing with learned control skills
 
-Locked until ground and aerial possession/control prerequisites are established.
+**Authorized after Stage 3 passes.**
 
 This is the **first stage where scoring becomes a deliberate positive training objective**.
 
 Question:
 
-> Can Rival use the ball-control skills it already owns to put the ball into the opponent goal?
+> Can Rival use the ground and aerial ball-control skills it already owns to deliberately put the ball into the opponent goal?
 
-Train broad finishing from both learned modes:
+Train broad finishing from:
 
-- ground dribble / carry / push into shots;
-- aerial / air-dribble finishing;
-- simple direct strikes may also emerge, but the curriculum should not erase possession skills simply because a faster shot is available.
+- ground possession/dribble states;
+- awkward/off-angle ground possession;
+- aerial/air-dribble possession;
+- wall-to-air possession;
+- free-play-style chained acquisition/control/finish states.
 
-Goal reward becomes the terminal maximum outcome signal here.
+A correct goal becomes the terminal maximum reward. Own goals are negative. Previous control signals are retained only as small bounded bridges.
+
+Capability evaluation must separately track:
+
+- ordinary goal success;
+- ground-control-qualified goals;
+- aerial-control-qualified goals;
+- retention of Stages 1–3.
+
+Exit decision:
+
+`finishing_skill_passed_unlock_opponent_pressure`
+
+**Stop for human review after this decision.** Stage 5 is not automatically authorized.
 
 ## Stage 5 — Defensive response and opponent pressure
 
-Locked until Rival can independently acquire, control, and finish the ball.
+**Future/locked. Not authorized by the unattended v10.2 package.**
 
-Introduce active opponents progressively rather than immediately demanding full self-play competence.
+Only after Rival can independently acquire, control, and finish should an active opponent be introduced.
 
-Skills:
+Expected skills:
 
-- react to an opponent reaching/challenging the ball;
+- react to challenges;
 - preserve possession under pressure;
-- recover after losing possession;
+- recover after possession loss;
 - intercept/defend threatening balls;
-- distinguish when to attack versus defend;
-- learn saves, challenges, shadowing, and useful clears through outcome pressure.
+- saves, clears, challenges, shadowing;
+- attack/defend role selection.
 
-Use controlled opponent difficulty first, then stronger fixed bots.
+Difficulty should progress from controlled opponents to stronger fixed bots.
 
 ## Stage 6 — Full self-play / opponent league
 
-Only after Rival can actually play Rocket League in isolation and under basic pressure should self-play become the primary tactical curriculum.
+**Future/locked.**
 
-Opponent pool can then include:
+Only after Rival can actually play coherent Rocket League in isolation and under basic pressure should self-play become the primary tactical curriculum.
+
+Opponent pool may include:
 
 - current Rival;
 - historical Rival snapshots;
 - Wisp;
 - Nexto;
-- later specialized exploiters or additional strong fixed bots.
+- later exploiters/specialized bots.
 
-At this point most primitive shaping should be heavily reduced or absent. Outcome, possession quality, resource efficiency, and tactical performance can dominate.
+Primitive shaping should be heavily reduced or absent. Outcome, possession quality, resource efficiency, and tactics can dominate.
 
 ## Stage 7 — Advanced mechanics and refinement
 
-Advanced mechanics are not prerequisite substitutes. They are learned after the policy can already play coherent Rocket League.
+**Future/locked.**
 
-Target capabilities may include:
+Advanced mechanics are not substitutes for basic ball control.
 
-- flip and ceiling resets;
-- wavedash, wall dash, zap-dash-like recoveries;
+Potential later capabilities:
+
+- flip/ceiling resets;
+- wavedash, wall dash, zap-dash-like movement;
 - stalls;
 - sidewall skim/recovery;
 - Meeri-pop-like transitions;
-- musty/Breezi-like control sequences;
+- musty/Breezi-like control;
 - momentum-preserving aerial flips;
-- highly efficient recoveries and boost use.
+- high-efficiency recoveries/boost use.
 
-Prefer outcome/usefulness-driven emergence and broad state distributions. Named mechanics are diagnostic capability labels, not macro actions.
+Named mechanics are capability labels/diagnostics, not macro buttons.
 
-## Governing principle
+## Stage-transition rule
 
-Each stage follows this pattern:
+Every Stage 1–4 transition follows:
 
-1. identify the next missing prerequisite;
-2. reward that prerequisite simply and directly;
-3. measure it deterministically;
-4. remove/reduce its direct reward once retained;
-5. unlock exactly the next dependency.
+```text
+learn current skill
+-> evaluate deterministic frozen corpus
+-> evaluate unseen generalization on apparent pass
+-> require documented consecutive passes
+-> preserve exact passing actor checkpoint
+-> reset critic + actor/critic optimizer states
+-> retain actor weights
+-> reduce/remove old skill reward
+-> begin next lesson
+```
 
-The policy should not be asked to optimize scoring before it can reliably acquire and control the ball, and it should not be asked to solve tactical self-play before it can independently execute the motor skills required for meaningful play.
+If a stage fails its stop/budget gate:
+
+```text
+stop
+-> preserve evidence/checkpoint
+-> do not retune silently
+-> do not skip prerequisite
+```
+
+The unattended v10.2 package is authorized only through successful completion of Stage 4.
