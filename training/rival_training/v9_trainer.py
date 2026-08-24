@@ -351,12 +351,27 @@ class RivalV9PPOTrainer:
         ]
 
     def trainer_state(self) -> dict[str, Any]:
+        time_base = self.config["time_base"]
+        steps_per_second = int(
+            time_base.get(
+                "active_learner_steps_per_simulated_game_second",
+                time_base.get("agent_steps_per_simulated_game_second", 240),
+            )
+        )
+        steps_per_hour = int(
+            time_base.get(
+                "active_learner_steps_per_simulated_game_hour",
+                time_base.get("agent_steps_per_simulated_game_hour", 864000),
+            )
+        )
         return {
             "completed_iterations": self.completed_iterations,
             "cumulative_agent_steps": self.cumulative_agent_steps,
             "cumulative_model_updates": self.cumulative_model_updates,
-            "simulated_game_seconds": self.cumulative_agent_steps / 240.0,
-            "simulated_game_hours": self.cumulative_agent_steps / 864000.0,
+            "simulated_game_seconds": self.cumulative_agent_steps
+            / float(steps_per_second),
+            "simulated_game_hours": self.cumulative_agent_steps
+            / float(steps_per_hour),
             "worker_count": int(self.config["backend"]["worker_count"]),
             "clean_boundary": True,
             "partial_experience_buffer_records": 0,
@@ -607,14 +622,29 @@ class RivalV9PPOTrainer:
             int(ppo["epochs"]) * math.ceil(batch_size / minibatch_size)
         )
         health = self.worker_health()
+        time_base = self.config["time_base"]
+        steps_per_second = int(
+            time_base.get(
+                "active_learner_steps_per_simulated_game_second",
+                time_base.get("agent_steps_per_simulated_game_second", 240),
+            )
+        )
+        steps_per_hour = int(
+            time_base.get(
+                "active_learner_steps_per_simulated_game_hour",
+                time_base.get("agent_steps_per_simulated_game_hour", 864000),
+            )
+        )
         report = {
             "iteration": self.completed_iterations,
             "collected_agent_steps": int(collected),
             "experience_records": int(len(observations)),
             "cumulative_agent_steps": self.cumulative_agent_steps,
             "cumulative_model_updates": self.cumulative_model_updates,
-            "simulated_game_seconds": self.cumulative_agent_steps / 240.0,
-            "simulated_game_hours": self.cumulative_agent_steps / 864000.0,
+            "simulated_game_seconds": self.cumulative_agent_steps
+            / float(steps_per_second),
+            "simulated_game_hours": self.cumulative_agent_steps
+            / float(steps_per_hour),
             "collection_seconds": float(collection_seconds),
             "rollout_wall_seconds": float(rollout_wall),
             "update_wall_seconds": float(update_seconds),
