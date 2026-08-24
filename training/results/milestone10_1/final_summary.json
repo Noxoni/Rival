@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "status": "completed_negative_result",
+  "milestone": "10.1",
+  "campaign_id": "rival-v10-1-agency-bootstrap",
+  "source_checkpoint": {
+    "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+    "cumulative_agent_steps": 23378810,
+    "simulated_game_hours": 27.05880787037037,
+    "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+    "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784"
+  },
+  "final_checkpoint": {
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "cumulative_agent_steps": 32019870,
+    "simulated_game_hours": 37.06003472222222,
+    "completed_iterations": 167,
+    "cumulative_model_updates": 667,
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "clean_boundary": true
+  },
+  "campaign_consumption": {
+    "additional_agent_steps": 8641060,
+    "additional_bootstrap_simulated_game_hours": 10.001226851851852,
+    "ppo_iterations": 45,
+    "authorized_maximum_additional_agent_steps": 21600000,
+    "authorized_maximum_additional_simulated_game_hours": 25.0,
+    "stopped_before_maximum": true,
+    "unspent_authorized_agent_steps": 12958940,
+    "unspent_authorized_simulated_game_hours": 14.998773148148148
+  },
+  "boundaries": [
+    {
+      "nominal_added_hours": 2.5,
+      "achieved_added_hours": 2.6669814814814816,
+      "phase": "A",
+      "checkpoint_steps": 25683082,
+      "training_iterations": 12,
+      "mean_agent_steps_per_second": 3737.5645919319068,
+      "phase_a_readiness_passed": false,
+      "decision": "continue_phase_A",
+      "result": "training/results/milestone10_1/boundary_plus-002p5h.json"
+    },
+    {
+      "nominal_added_hours": 5.0,
+      "achieved_added_hours": 5.11161574074074,
+      "phase": "A",
+      "checkpoint_steps": 27795246,
+      "training_iterations": 11,
+      "mean_agent_steps_per_second": 2373.606746532364,
+      "phase_a_readiness_passed": false,
+      "decision": "continue_phase_A",
+      "result": "training/results/milestone10_1/boundary_plus-005h.json"
+    },
+    {
+      "nominal_added_hours": 10.0,
+      "achieved_added_hours": 10.001226851851852,
+      "phase": "A",
+      "checkpoint_steps": 32019870,
+      "training_iterations": 22,
+      "mean_agent_steps_per_second": 2352.859938844994,
+      "phase_a_readiness_passed": false,
+      "decision": "stop_phase_A_readiness_failed_by_plus_10h",
+      "result": "training/results/milestone10_1/boundary_plus-010h.json"
+    }
+  ],
+  "bootstrap_probe_capability": {
+    "prebootstrap_plus25": {
+      "mean_planar_speed": 399.85437478490036,
+      "mean_distance_to_ball": 2433.0200173583944,
+      "logical_touches_per_100k_agent_steps": 8.040165091389877,
+      "aerial_touches_per_100k_agent_steps": 0.0,
+      "jumps_per_100k_agent_steps": 247.45841447944397,
+      "dodges_per_100k_agent_steps": 217.97780914434776,
+      "two_plus_chain_touches_per_100k_agent_steps": 2.680055030463292,
+      "no_touch_timeout_share": 0.8125,
+      "natural_goal_episodes": 0
+    },
+    "plus_2p5h": {
+      "mean_planar_speed": 335.27967502903346,
+      "mean_distance_to_ball": 2966.1527767483594,
+      "logical_touches_per_100k_agent_steps": 3.741184833236686,
+      "aerial_touches_per_100k_agent_steps": 0.9352962083091715,
+      "jumps_per_100k_agent_steps": 177.7062795787426,
+      "dodges_per_100k_agent_steps": 139.35913503806657,
+      "two_plus_chain_touches_per_100k_agent_steps": 0.0,
+      "no_touch_timeout_share": 0.7916666666666666,
+      "natural_goal_episodes": 0
+    },
+    "plus_5h": {
+      "mean_planar_speed": 511.3517108408914,
+      "mean_distance_to_ball": 3085.770127031553,
+      "logical_touches_per_100k_agent_steps": 4.627829917994854,
+      "aerial_touches_per_100k_agent_steps": 0.0,
+      "jumps_per_100k_agent_steps": 243.4238536865293,
+      "dodges_per_100k_agent_steps": 199.92225245737768,
+      "two_plus_chain_touches_per_100k_agent_steps": 0.9255659835989708,
+      "no_touch_timeout_share": 0.8125,
+      "natural_goal_episodes": 0
+    },
+    "plus_10h": {
+      "mean_planar_speed": 1262.270541616107,
+      "mean_distance_to_ball": 3815.301566741823,
+      "logical_touches_per_100k_agent_steps": 6.400292584803877,
+      "aerial_touches_per_100k_agent_steps": 0.9143275121148395,
+      "jumps_per_100k_agent_steps": 63.088598335923926,
+      "dodges_per_100k_agent_steps": 58.51696077534973,
+      "two_plus_chain_touches_per_100k_agent_steps": 0.9143275121148395,
+      "no_touch_timeout_share": 0.8333333333333334,
+      "natural_goal_episodes": 0,
+      "easy_finish_logical_touches": 2
+    }
+  },
+  "final_phase_a_gate": {
+    "at_least_2p5_bootstrap_hours": true,
+    "mean_planar_speed_at_least_600": true,
+    "logical_touches_at_least_75_per_100k": false,
+    "deterministic_jumps_at_least_5_per_100k": true,
+    "easy_finish_active_team_goal_with_touch_evidence_exists": true,
+    "no_touch_timeout_share_at_most_60_percent": false,
+    "no_useful_speed_dominance_with_stagnant_interaction": true,
+    "passed": false
+  },
+  "final_reward_interpretation": {
+    "largest_absolute_shaping_component": "ball_approach_potential",
+    "largest_absolute_shaping_component_fraction": 0.8817371569358026,
+    "useful_speed_rate_fraction": 0.04890810014325993,
+    "ball_interaction_stagnant_vs_prebootstrap": true,
+    "no_obvious_single_component_farming": false,
+    "interpretation": "Fast movement emerged, but approach shaping dominated while distinct contacts remained below the source checkpoint and ball distance worsened."
+  },
+  "conclusion": {
+    "campaign_stopped": true,
+    "stop_reason": "phase_A_readiness_failed_by_plus_10h",
+    "phase_b_activated": false,
+    "phase_c_activated": false,
+    "plus_15_20_25_boundaries_run": false,
+    "bootstrap_exit_gate_passed": false,
+    "additional_m10_1_training_authorized": false,
+    "production_promotion_authorized": false,
+    "production_promoted": false,
+    "result_interpretation": "The v10.1 intervention produced fast deterministic driving but did not establish reliable basic ball agency."
+  },
+  "next_intervention_from_authority": [
+    "imitation or motor pretraining",
+    "an active external opponent curriculum"
+  ]
+}

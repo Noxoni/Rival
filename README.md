@@ -39,24 +39,28 @@ The bounded M09 pilot reached 1,680,214 cumulative agent-steps / 1.9446921296 si
 
 See `docs/MILESTONE_09_RESULTS.md` and `training/results/milestone09/`.
 
-## Current Codex handoff — v10.0
+## Milestone 10.1 — agency-bootstrap result
 
-Start here:
+Milestone 10 stopped the original +100-hour continuation at its exact +25-hour
+checkpoint, as required by the v10.1 steering package. Milestone 10.1 then resumed
+that exact actor/critic/optimizer state with a versioned agency-bootstrap reward,
+interaction-dense curriculum, 10-second no-touch reset, and new capability metrics.
 
-`handoff/v10.0/CODEX_START_PROMPT.md`
+The intervention stopped at its mandatory +10 bootstrap-hour Phase A review. Rival
+learned much faster deterministic driving but did not learn reliable ball agency:
+logical touches remained 6.40/100k agent-steps, no-touch timeouts were 83.33%, mean
+ball distance worsened, and natural-play goal activity stayed zero. Phase A failed;
+Phase B was never activated; the remaining v10.1 budget was not spent.
 
-Milestone 10 is the **first serious scratch training campaign**. It resumes the exact final M09 checkpoint instead of resetting or redesigning the architecture.
+Final v10.1 checkpoint:
 
-Authorized M10 budget:
+`training/checkpoints/milestone10_1/boundaries/plus-010h/032019870`
 
-- 100 additional simulated game-hours;
-- 86,400,000 additional agent-steps;
-- nominal cumulative target 88,080,214 agent-steps;
-- immutable evaluation boundaries at approximately +5, +10, +25, +50, and +100 simulated hours.
+This is a recoverable research checkpoint, not a production candidate. Production
+promotion remains **not authorized**, and the default bot remains frozen Wisp.
 
-M10 intentionally keeps the M09 policy, observation, action, reward, PPO hyperparameters, native 120-Hz cadence, 56-worker selection, and 70/10/8/8/4 curriculum unchanged. The primary variable is experience volume.
-
-Production promotion is not authorized.
+See `docs/MILESTONE_10_1_RESULTS.md` and
+`training/results/milestone10_1/final_summary.json`.
 
 ## Earlier milestone history
 

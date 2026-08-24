@@ -1,0 +1,268 @@
+{
+  "boundary_results": [
+    {
+      "path": "training/results/milestone10_1/boundary_plus-002p5h.json",
+      "sha256": "fa953d169ae4efb7505cd58ec3937d7ad5a454ecc18ccc8f8000f9686596309b",
+      "size_bytes": 145869,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone10_1/boundary_plus-005h.json",
+      "sha256": "2eba0ac0a2d8d7b8449d8f05ec4a97a2b7686bab37199a4cfadc6408fe26c0af",
+      "size_bytes": 139823,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone10_1/boundary_plus-010h.json",
+      "sha256": "5fdeb6c92b663c532ed2dac91190407f603136777226592e4a0c1d3f81e3e348",
+      "size_bytes": 211688,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone10_1/final_summary.json",
+      "sha256": "a89f3c679397a8a00b0307a5589ebe9308ffc04bc69cfa5faadb968430c8965c",
+      "size_bytes": 6372,
+      "status": "completed_negative_result"
+    },
+    {
+      "path": "training/results/milestone10_1/preflight.json",
+      "sha256": "d73654dbe18d56159bcdd31052b3bc7e2236a9f62fd2c93b2a713d1b8de4abf3",
+      "size_bytes": 61905,
+      "status": "passed"
+    },
+    {
+      "path": "training/results/milestone10_1/preflight_rlviser.json",
+      "sha256": "022a9b8af8abf0eeecc6bb5c7900846096592645cb78827baaeceba74b79f283",
+      "size_bytes": 7846,
+      "status": "completed"
+    },
+    {
+      "path": "training/results/milestone10_1/preflight_rlviser_visual_inspection.json",
+      "sha256": "1ea3ce73cdb5a362cfb8ad6b12243349adfdd506c1472265771943c43c1b33ff",
+      "size_bytes": 2847,
+      "status": "passed"
+    }
+  ],
+  "checks": {
+    "all_three_required_boundaries_passed_evidence_checks": true,
+    "checkpoint_and_rlviser_artifacts_ignored_untracked": true,
+    "compileall_training_passed": true,
+    "complete_training_tests_passed": true,
+    "exact_m10_plus25_source_preserved": true,
+    "final_checkpoint_actor_exact": true,
+    "final_checkpoint_manifest_exact": true,
+    "final_checkpoint_outputs_and_optimizer_state_present": true,
+    "final_checkpoint_second_reload_exact": true,
+    "final_checkpoint_steps_exact": true,
+    "frozen_wisp_hashes_unchanged": true,
+    "frozen_wisp_selftest_passed": true,
+    "git_diff_check_passed": true,
+    "hard_review_stop_decision_exact": true,
+    "historical_v4_stash_preserved": true,
+    "main_aligned_with_origin_before_final_commit": true,
+    "no_campaign_process_running": true,
+    "no_later_m10_or_m10_1_boundaries_exist": true,
+    "passed": true,
+    "phase_a_never_authorized_phase_b": true,
+    "preflight_and_visual_inspection_passed": true,
+    "production_default_remains_frozen_wisp": true,
+    "production_promotion_authorized": false,
+    "production_tests_passed": true,
+    "ruff_training_passed": true
+  },
+  "commands": {
+    "compileall": {
+      "command": "training\\.venv\\Scripts\\python.exe -m compileall -q training/rival_training training/scripts training/tests",
+      "name": "compileall_training",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 0.7630553999915719
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "name": "git_diff_check",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 0.9052473000483587
+    },
+    "production_tests": {
+      "command": ".venv\\Scripts\\python.exe -m pytest tests -q --basetemp .tmp\\pytest-m10-1-final-production",
+      "name": "production_pytest",
+      "passed": true,
+      "pytest_passed_count": 91,
+      "pytest_warning_count": 2,
+      "return_code": 0,
+      "wall_seconds": 47.404129300033674
+    },
+    "ruff": {
+      "command": "training\\.venv\\Scripts\\python.exe -m ruff check training",
+      "name": "ruff_training",
+      "passed": true,
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "wall_seconds": 1.2102287000743672
+    },
+    "training_tests": {
+      "command": "training\\.venv\\Scripts\\python.exe -m pytest training/tests -q --basetemp .tmp\\pytest-m10-1-final-training",
+      "name": "complete_training_pytest",
+      "passed": true,
+      "pytest_passed_count": 140,
+      "pytest_warning_count": 3,
+      "return_code": 0,
+      "wall_seconds": 23.011612699949183
+    },
+    "wisp_selftest": {
+      "collision_mesh_count": 16,
+      "command": ".venv\\Scripts\\python.exe bot/bot.py --self-test",
+      "finite_logits": true,
+      "name": "frozen_wisp_selftest",
+      "observation_shape": [
+        432
+      ],
+      "passed": true,
+      "policy_output_shape": [
+        90
+      ],
+      "pytest_passed_count": null,
+      "pytest_warning_count": null,
+      "return_code": 0,
+      "status": "pass",
+      "wall_seconds": 3.052362799993716
+    }
+  },
+  "conclusion": {
+    "additional_m10_1_training_authorized": false,
+    "campaign_stopped": true,
+    "phase_b_activated": false,
+    "production_promotion_decision": "not_authorized_not_promoted",
+    "stop_reason": "phase_A_readiness_failed_by_plus_10h"
+  },
+  "final_checkpoint": {
+    "actor_optimizer_state_entries": 46,
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "completed_iterations": 167,
+    "critic_optimizer_state_entries": 43,
+    "cumulative_agent_steps": 32019870,
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "held_observation_count": 32,
+    "held_output_shapes": {
+      "analog_log_std": [
+        32,
+        5
+      ],
+      "analog_mean": [
+        32,
+        5
+      ],
+      "button_logits": [
+        32,
+        8
+      ]
+    },
+    "held_outputs_finite": true,
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "second_reload_maximum_parameter_error": 0.0,
+    "simulated_game_hours": 37.06003472222222
+  },
+  "generated_at_utc": "2026-08-24T01:47:00.268731+00:00",
+  "ignored_artifacts": [
+    {
+      "exists": true,
+      "ignored": true,
+      "passed": true,
+      "path": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870/actor.pt",
+      "tracked": false
+    },
+    {
+      "exists": true,
+      "ignored": true,
+      "passed": true,
+      "path": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870/critic.pt",
+      "tracked": false
+    },
+    {
+      "exists": true,
+      "ignored": true,
+      "passed": true,
+      "path": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870/actor_optimizer.pt",
+      "tracked": false
+    },
+    {
+      "exists": true,
+      "ignored": true,
+      "passed": true,
+      "path": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870/critic_optimizer.pt",
+      "tracked": false
+    },
+    {
+      "exists": true,
+      "ignored": true,
+      "passed": true,
+      "path": "training/tools/rlviser/rlviser.exe",
+      "tracked": false
+    }
+  ],
+  "milestone": "10.1",
+  "production": {
+    "actual_wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "default_probe": {
+      "candidate": false,
+      "m08": false,
+      "mode": "frozen_wisp_production",
+      "policy": "POLICY.lt",
+      "shared_head": "SHARED_HEAD.lt",
+      "tick_skip": 8,
+      "v9": false
+    },
+    "expected_wisp_hashes": {
+      "POLICY.lt": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+      "SHARED_HEAD.lt": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+    },
+    "promoted": false
+  },
+  "repository_before_final_commit": {
+    "branch": "main",
+    "historical_stash": [
+      "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1"
+    ],
+    "local_head": "79fa3e383037f4562794b48b4fbe5342c64b8240",
+    "origin_main": "79fa3e383037f4562794b48b4fbe5342c64b8240"
+  },
+  "running_campaign_processes": [],
+  "schema_version": 1,
+  "source_checkpoint": {
+    "checkpoint": {
+      "actor_sha256": "5d246a7eee8af22290f6f644a3e408f786551dc893bf10f19d487945329100c1",
+      "actor_size_bytes": 7877740,
+      "clean_boundary": true,
+      "completed_iterations": 122,
+      "config_sha256": "3fe1b9ed0a91d8958b60572c8a933a0ff9c172c611d9d3b5e77f26d943e25fc1",
+      "config_version": "RivalM10TrainingConfigV1",
+      "cumulative_agent_steps": 23378810,
+      "cumulative_model_updates": 487,
+      "directory": "training/checkpoints/milestone10/boundaries/plus-025h/023378810",
+      "format": "rival-v9-hybrid-ppo-checkpoint-v1",
+      "manifest_sha256": "903a38cdb85d8a171e207c18718d9651cae1ec905003f0fbf3729c5203202784",
+      "simulated_game_hours": 27.05880787037037
+    },
+    "checks": {
+      "actor_critic_optimizers_present": true,
+      "actor_sha256_exact": true,
+      "cumulative_steps_exact": true,
+      "directory_exact": true,
+      "fresh_reload_exact": true,
+      "manifest_sha256_exact": true,
+      "trainer_clean_boundary": true
+    },
+    "status": "passed"
+  },
+  "status": "passed"
+}
