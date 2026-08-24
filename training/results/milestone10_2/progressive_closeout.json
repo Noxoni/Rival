@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "format": "rival-v10-2-progressive-closeout-v1",
+  "status": "failed",
+  "authority_decision": "stop_stage_1_boundary_not_reached",
+  "stage": 1,
+  "skill": "ball_acquisition",
+  "phase": "A",
+  "failure": {
+    "classification": "stage_1_execution_prerequisite_failure",
+    "cause": "The boundary runner rounded the final rollout down to zero when the remaining 23893 active learner steps were smaller than the configured 48000-step PPO minibatch.",
+    "target_active_learner_steps": 2160000,
+    "reached_active_learner_steps": 2136107,
+    "shortfall_active_learner_steps": 23893,
+    "reached_simulated_learner_hours": 4.94469212962963,
+    "target_simulated_learner_hours": 5.0,
+    "wall_clock_exhausted": false,
+    "failed_check": "boundary_reached_or_wall_stop",
+    "training_health_checks_passed": true,
+    "worker_cleanup_passed": true,
+    "plus_5h_evaluation_run": false,
+    "plus_5h_capability_or_no_learning_decision_claimed": false
+  },
+  "last_completed_evaluation_boundary": {
+    "boundary_hours": 2.5,
+    "decision": "continue_ball_acquisition_training",
+    "overall_first_touch_success_share": 0.04,
+    "overall_no_touch_timeout_share": 0.984,
+    "core_first_touch_success_share": 0.05,
+    "core_no_touch_timeout_share": 0.98,
+    "core_failed_terminal_distance_reduction_share": -2.0683942805280644,
+    "source_core_first_touch_success_share": 0.0425,
+    "source_core_no_touch_timeout_share": 0.9825,
+    "interpretation": "No demonstrated Stage-1 mastery; the last valid gate authorized continuation only."
+  },
+  "latest_clean_recovery_checkpoint": {
+    "directory": "training/checkpoints/milestone10_2/stage_1/boundaries/plus-005h/002136107",
+    "actor_sha256": "f71af340fdff99baa58b8f81821edf24ab5fccf129ee426328e7d71e949f5f02",
+    "manifest_sha256": "5dfbb66be61dc4921433f21a40c89f75eeb35e4976711f15e69d0098a8e76703",
+    "clean_boundary": true,
+    "completed_iterations": 23,
+    "cumulative_model_updates": 87,
+    "independent_reload_and_held_output_parity": true,
+    "maximum_absolute_error": 0.0
+  },
+  "source_checkpoint": {
+    "directory": "training/checkpoints/milestone10_1/boundaries/plus-010h/032019870",
+    "actor_sha256": "e6b9fd1a38dbb5c6670711a8b47769a628d2f20caf7c88738f372d0839b7a3b6",
+    "manifest_sha256": "d1a785ef439b0127b5ab1a9ff1693ade1aa11d850151cd17b9733bbeb98dacb3",
+    "unchanged": true
+  },
+  "frozen_production": {
+    "production_promotion_authorized": false,
+    "production_files_changed": false,
+    "policy_lt_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "shared_head_lt_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42"
+  },
+  "progression": {
+    "passed_prerequisite_checkpoints": {},
+    "next_authorized_stage": null,
+    "stage_2_started": false,
+    "stage_3_started": false,
+    "stage_4_started": false,
+    "production_promoted": false
+  },
+  "campaign_accounting_at_stop": {
+    "wall_clock_elapsed_seconds": 1510.9529999999795,
+    "wall_clock_remaining_seconds": 34489.04700000002,
+    "active_learner_steps": 2136107,
+    "simulated_learner_hours": 4.94469212962963,
+    "selected_worker_count": 64
+  },
+  "stable_corrective_work": {
+    "boundary_batch_fix_implemented": true,
+    "fix_used_to_resume_failed_campaign": false,
+    "description": "A positive final rollout smaller than one normal minibatch now remains a positive PPO batch instead of being rounded to zero; non-wall boundary failures are no longer mislabeled as wall-clock exhaustion."
+  },
+  "final_verification": {
+    "production_pytest": {
+      "passed": true,
+      "tests_passed": 91,
+      "warnings": 2
+    },
+    "training_pytest": {
+      "passed": true,
+      "tests_passed": 153,
+      "warnings": 64
+    },
+    "ruff_training": true,
+    "compileall_training": true,
+    "new_json_files_parsed": true,
+    "parsed_milestone10_2_json_file_count_before_closeout": 13,
+    "current_checkpoint_reload_exact": true,
+    "source_checkpoint_unchanged": true,
+    "frozen_wisp_unchanged": true,
+    "progressive_workers_remaining": false,
+    "checkpoint_binary_ignored": true,
+    "rlviser_changed": false,
+    "paused_strategy_stash_preserved": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1"
+  }
+}

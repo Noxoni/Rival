@@ -28,6 +28,7 @@ from rival_training.v10_2_campaign import (  # noqa: E402
     RESULT_ROOT,
     SOURCE_CHECKPOINT,
     actor_only_stage_transfer,
+    boundary_ppo_batch_agent_steps,
     boundary_slug,
     load_stage1_config,
     nominal_stage1_steps,
@@ -220,9 +221,9 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
                 )
                 maximum = target_steps + worker_reserve
             minibatch = int(config["ppo"]["minibatch_agent_steps"])
-            batch = (rollout // minibatch) * minibatch
-            if batch < minibatch or rollout <= 0:
+            if rollout <= 0:
                 break
+            batch = boundary_ppo_batch_agent_steps(rollout, minibatch)
             iteration, held = trainer.run_iteration(
                 rollout_target_agent_steps=rollout,
                 ppo_batch_agent_steps=batch,
@@ -381,6 +382,8 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
         "stop_reason": (
             "stop_progressive_overnight_wall_clock_budget_exhausted"
             if wall_stop
+            else "stop_stage_1_boundary_not_reached"
+            if not reached
             else None
         ),
         "checks": {
@@ -433,6 +436,8 @@ def run_boundary(args: argparse.Namespace) -> dict[str, Any]:
             "pending_stage_1_evaluation"
             if reached
             else "stop_progressive_overnight_wall_clock_budget_exhausted"
+            if wall_stop
+            else "stop_stage_1_boundary_not_reached"
         ),
         "stop_reason": result["stop_reason"],
     }

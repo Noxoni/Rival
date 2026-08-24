@@ -9,7 +9,10 @@ import pytest
 from rlgym.rocket_league.sim import RocketSimEngine
 from rlgym.rocket_league.state_mutators import FixedTeamSizeMutator
 
-from rival_training.v10_2_campaign import load_stage1_config
+from rival_training.v10_2_campaign import (
+    boundary_ppo_batch_agent_steps,
+    load_stage1_config,
+)
 from rival_training.v10_2_curriculum import (
     FAMILIES,
     RivalBallAcquisitionCurriculumV1,
@@ -45,6 +48,14 @@ def _transition(
         goal_for=goal_for,
         goal_against=goal_against,
     )
+
+
+def test_boundary_batch_uses_smaller_final_update_without_zeroing_it() -> None:
+    assert boundary_ppo_batch_agent_steps(96_000, 48_000) == 96_000
+    assert boundary_ppo_batch_agent_steps(71_891, 48_000) == 48_000
+    assert boundary_ppo_batch_agent_steps(23_893, 48_000) == 23_893
+    with pytest.raises(ValueError):
+        boundary_ppo_batch_agent_steps(0, 48_000)
 
 
 def test_car_caused_progress_sign_and_moving_ball_invariance() -> None:

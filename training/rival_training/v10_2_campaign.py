@@ -64,6 +64,14 @@ ACTIVE_LEARNER_STEPS_PER_SIMULATED_HOUR = 432_000
 STAGE1_BOUNDARY_HOURS = (1.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0)
 
 
+def boundary_ppo_batch_agent_steps(rollout: int, minibatch: int) -> int:
+    """Use full minibatches normally, but permit one smaller boundary batch."""
+    if rollout <= 0 or minibatch <= 0:
+        raise ValueError("Rollout and minibatch sizes must be positive")
+    full_minibatches = rollout // minibatch
+    return full_minibatches * minibatch if full_minibatches else rollout
+
+
 def _read_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
