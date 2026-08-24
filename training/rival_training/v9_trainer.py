@@ -10,6 +10,7 @@ import numpy as np
 import psutil
 import torch
 from rlgym_ppo.batched_agents import BatchedAgentManager
+from torch import nn
 
 from .v9_actions import ANALOG_DIM, BUTTON_COMBO_COUNT, RivalHybridDistribution
 from .v9_checkpoint import load_v9_checkpoint
@@ -200,7 +201,7 @@ def _action_diagnostics(actions: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _gradient_rows(actor: RivalPolicyV1) -> dict[str, list[float]]:
+def _gradient_rows(actor: nn.Module) -> dict[str, list[float]]:
     head = actor.action_head
     if (
         head.analog_mean.weight.grad is None
@@ -208,6 +209,11 @@ def _gradient_rows(actor: RivalPolicyV1) -> dict[str, list[float]]:
         or head.button_logits.weight.grad is None
     ):
         raise RuntimeError("One or more hybrid action heads received no gradient")
+    button_key = (
+        "button_logit_abs_sum_by_button"
+        if int(head.button_logits.out_features) == 3
+        else "button_logit_abs_sum_by_combo"
+    )
     return {
         "analog_mean_abs_sum_by_axis": head.analog_mean.weight.grad.detach()
         .abs()
@@ -215,7 +221,7 @@ def _gradient_rows(actor: RivalPolicyV1) -> dict[str, list[float]]:
         .cpu()
         .tolist(),
         "analog_log_std_abs_by_axis": head.analog_log_std.grad.detach().abs().cpu().tolist(),
-        "button_logit_abs_sum_by_combo": head.button_logits.weight.grad.detach()
+        button_key: head.button_logits.weight.grad.detach()
         .abs()
         .sum(dim=1)
         .cpu()
@@ -228,6 +234,20 @@ def _add_gradient_rows(aggregate: dict[str, np.ndarray], current: dict[str, list
         aggregate[key] += np.asarray(values, dtype=np.float64)
 
 
+def _empty_gradient_rows(actor: nn.Module) -> dict[str, np.ndarray]:
+    head = actor.action_head
+    button_key = (
+        "button_logit_abs_sum_by_button"
+        if int(head.button_logits.out_features) == 3
+        else "button_logit_abs_sum_by_combo"
+    )
+    return {
+        "analog_mean_abs_sum_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
+        "analog_log_std_abs_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
+        button_key: np.zeros(int(head.button_logits.out_features), dtype=np.float64),
+    }
+
+
 class RivalV9PPOTrainer:
     """Clean-boundary PPO trainer using the proven rlgym-ppo worker manager."""
 
@@ -236,7 +256,7 @@ class RivalV9PPOTrainer:
         config: dict[str, Any],
         *,
         device: str | torch.device = "cuda:0",
-        actor: RivalPolicyV1 | None = None,
+        actor: nn.Module | None = None,
         critic: RivalCriticV1 | None = None,
         actor_optimizer: torch.optim.Optimizer | None = None,
         critic_optimizer: torch.optim.Optimizer | None = None,
@@ -244,6 +264,8 @@ class RivalV9PPOTrainer:
         env_factory: Callable | None = None,
         collect_metrics_fn: Callable | None = None,
         aggregate_metrics_fn: Callable | None = None,
+        policy_factory: Callable[[nn.Module, str | torch.device], Any] | None = None,
+        button_entropy_coefficient_fn: Callable[[int], float] | None = None,
     ) -> None:
         self.config = config
         self.device = torch.device(device)
@@ -251,7 +273,12 @@ class RivalV9PPOTrainer:
             raise RuntimeError("Gate 11 requires CUDA")
         self.actor = (actor or RivalPolicyV1()).to(self.device)
         self.critic = (critic or RivalCriticV1()).to(self.device)
-        self.policy = InstrumentedRivalHybridPolicy(self.actor, self.device)
+        self.policy = (
+            InstrumentedRivalHybridPolicy(self.actor, self.device)
+            if policy_factory is None
+            else policy_factory(self.actor, self.device)
+        )
+        self.button_entropy_coefficient_fn = button_entropy_coefficient_fn
         ppo = config["ppo"]
         self.actor_optimizer = actor_optimizer or torch.optim.Adam(
             self.actor.parameters(), lr=float(ppo["actor_learning_rate"])
@@ -476,15 +503,14 @@ class RivalV9PPOTrainer:
         rng.shuffle(indices)
         actor_before = torch.nn.utils.parameters_to_vector(self.actor.parameters()).detach().cpu()
         critic_before = torch.nn.utils.parameters_to_vector(self.critic.parameters()).detach().cpu()
-        gradient_aggregate = {
-            "analog_mean_abs_sum_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
-            "analog_log_std_abs_by_axis": np.zeros(ANALOG_DIM, dtype=np.float64),
-            "button_logit_abs_sum_by_combo": np.zeros(BUTTON_COMBO_COUNT, dtype=np.float64),
-        }
+        gradient_aggregate = _empty_gradient_rows(self.actor)
         actor_losses: list[float] = []
         critic_losses: list[float] = []
         analog_entropies: list[float] = []
         button_entropies: list[float] = []
+        button_entropies_by_field: dict[str, list[float]] = {
+            name: [] for name in ("jump", "boost", "handbrake")
+        }
         mixed_log_ratio_maxima: list[float] = []
         actor_gradient_norms: list[float] = []
         critic_gradient_norms: list[float] = []
@@ -497,6 +523,17 @@ class RivalV9PPOTrainer:
             else 0.0
         )
         update_started = time.perf_counter()
+        entropy_schedule_step = self.cumulative_agent_steps + int(collected) // 2
+        button_entropy_coefficient = (
+            float(ppo["button_entropy_coefficient"])
+            if self.button_entropy_coefficient_fn is None
+            else float(self.button_entropy_coefficient_fn(entropy_schedule_step))
+        )
+        if not math.isfinite(button_entropy_coefficient) or button_entropy_coefficient < 0.0:
+            raise ValueError(
+                "Button entropy coefficient schedule produced an invalid value: "
+                f"{button_entropy_coefficient}"
+            )
         for _epoch in range(int(ppo["epochs"])):
             for start in range(0, batch_size, minibatch_size):
                 batch = indices[start : start + minibatch_size]
@@ -530,7 +567,7 @@ class RivalV9PPOTrainer:
                 actor_loss = (
                     -torch.minimum(surrogate, clipped).mean()
                     - float(ppo["analog_entropy_coefficient"]) * entropy.analog_monte_carlo
-                    - float(ppo["button_entropy_coefficient"]) * entropy.button_exact
+                    - button_entropy_coefficient * entropy.button_exact
                 )
                 self.actor_optimizer.zero_grad(set_to_none=True)
                 actor_loss.backward()
@@ -553,6 +590,11 @@ class RivalV9PPOTrainer:
                 critic_losses.append(float(critic_loss.detach().cpu()))
                 analog_entropies.append(float(entropy.analog_monte_carlo.detach().cpu()))
                 button_entropies.append(float(entropy.button_exact.detach().cpu()))
+                if hasattr(entropy, "button_by_field"):
+                    for index, name in enumerate(button_entropies_by_field):
+                        button_entropies_by_field[name].append(
+                            float(entropy.button_by_field[index].detach().cpu())
+                        )
                 mixed_log_ratio_maxima.append(float((logp - old_logp).detach().abs().max().cpu()))
                 log_ratio = logp - old_logp
                 approximate_kls.append(
@@ -578,6 +620,27 @@ class RivalV9PPOTrainer:
         actor_update = float(torch.linalg.vector_norm(actor_after - actor_before))
         critic_update = float(torch.linalg.vector_norm(critic_after - critic_before))
         gradients = {key: value.tolist() for key, value in gradient_aggregate.items()}
+        button_gradient_key = next(
+            key for key in gradients if key.startswith("button_logit_abs_sum_by_")
+        )
+        controller_branch_gradients = {
+            name: {
+                "mean_weight_absolute_sum": gradients[
+                    "analog_mean_abs_sum_by_axis"
+                ][index],
+                "log_std_absolute_sum": gradients[
+                    "analog_log_std_abs_by_axis"
+                ][index],
+            }
+            for index, name in enumerate(("throttle", "steer", "pitch", "yaw", "roll"))
+        }
+        if len(gradients[button_gradient_key]) == 3:
+            controller_branch_gradients.update(
+                {
+                    name: {"logit_weight_absolute_sum": gradients[button_gradient_key][index]}
+                    for index, name in enumerate(("jump", "boost", "handbrake"))
+                }
+            )
         all_gradient_branches_nonzero = all(
             bool(np.all(np.asarray(value) > 0.0)) for value in gradients.values()
         )
@@ -690,6 +753,13 @@ class RivalV9PPOTrainer:
                 "critic_loss": _stats(np.asarray(critic_losses)),
                 "analog_entropy": _stats(np.asarray(analog_entropies)),
                 "button_entropy": _stats(np.asarray(button_entropies)),
+                "button_entropy_by_field": {
+                    name: _stats(np.asarray(values))
+                    for name, values in button_entropies_by_field.items()
+                    if values
+                },
+                "button_entropy_coefficient": button_entropy_coefficient,
+                "button_entropy_schedule_active_learner_step": entropy_schedule_step,
                 "maximum_absolute_log_ratio_per_minibatch": mixed_log_ratio_maxima,
                 "approximate_kl": _stats(np.asarray(approximate_kls)),
                 "clip_fraction": _stats(np.asarray(clip_fractions)),
@@ -700,6 +770,7 @@ class RivalV9PPOTrainer:
                 "actor_update_magnitude": actor_update,
                 "critic_update_magnitude": critic_update,
                 "head_gradient_absolute_sums": gradients,
+                "controller_branch_gradient_absolute_sums": controller_branch_gradients,
                 "all_hybrid_head_gradient_rows_nonzero": all_gradient_branches_nonzero,
                 "analog_log_std": final_log_std.tolist(),
                 "analog_std": np.exp(final_log_std).tolist(),
