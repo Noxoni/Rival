@@ -71,14 +71,17 @@ EXPECTED_WISP_HASHES = {
 
 def _training_processes() -> list[dict[str, Any]]:
     needles = ("run_m10_7_preflight.py", "run_m10_7_stage1_boundary.py")
-    current = os.getpid()
+    current_process = psutil.Process(os.getpid())
+    excluded = {int(current_process.pid)} | {
+        int(process.pid) for process in current_process.parents()
+    }
     matches = []
     for process in psutil.process_iter(["pid", "name", "cmdline"]):
         try:
             command = " ".join(process.info.get("cmdline") or [])
         except (psutil.AccessDenied, psutil.NoSuchProcess):
             continue
-        if process.pid != current and any(needle in command for needle in needles):
+        if process.pid not in excluded and any(needle in command for needle in needles):
             matches.append(
                 {
                     "pid": int(process.pid),
