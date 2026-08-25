@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "verification_version": "RivalM10_9FinalVerificationV1",
+  "completed_utc": "2026-08-25T18:56:42.2461537Z",
+  "production_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests -q --basetemp .pytest_tmp/m10_9_final_production",
+    "passed": 91,
+    "failed": 0,
+    "warnings": 2,
+    "wall_seconds": 31.1
+  },
+  "training_tests": {
+    "command": "training/.venv/Scripts/python.exe -m pytest training/tests -q --basetemp .pytest_tmp/m10_9_final_training",
+    "passed": 207,
+    "failed": 0,
+    "warnings": 64,
+    "wall_seconds": 21.83
+  },
+  "targeted_ppo_v2_tests": {
+    "command": "training/.venv/Scripts/python.exe -m pytest training/tests/test_v10_9_ppo_v2.py -q --basetemp .pytest_tmp/m10_9_final_targeted",
+    "passed": 7,
+    "failed": 0,
+    "status": "passed"
+  },
+  "ruff": {
+    "command": "training/.venv/Scripts/python.exe -m ruff check bot tests scripts training/rival_training training/scripts training/tests",
+    "status": "passed"
+  },
+  "compileall": {
+    "production_command": ".venv/Scripts/python.exe -m compileall -q bot tests scripts",
+    "training_command": "training/.venv/Scripts/python.exe -m compileall -q training/rival_training training/scripts training/tests",
+    "status": "passed"
+  },
+  "json_parsing": {
+    "scope": "training/results/milestone10_9/**/*.json",
+    "files_parsed": 15,
+    "status": "passed"
+  },
+  "final_checkpoint_reload_parity": {
+    "checkpoint": "training/checkpoints/milestone10_9/stage_1/boundaries/plus-001h/000432006",
+    "manifest_sha256": "43c68db2ccc0d6ccb0df340847e7fd333414da0212e1ac1102f91c5094b393166",
+    "all_checks_passed": true,
+    "maximum_absolute_error": 0.0
+  },
+  "stochastic_log_probability_replay": {
+    "campaign_iterations": 7,
+    "same_policy_maximum_absolute_error": 1.0967254638671875e-05,
+    "same_policy_tolerance": 0.001,
+    "independent_implementation_maximum_absolute_error": 5.7220458984375e-06,
+    "independent_implementation_tolerance": 2e-05,
+    "all_passed": true
+  },
+  "ar_exploration_state": {
+    "checkpoint_semantics": "AR exploration state is per-trajectory rollout-manager state and is deliberately reset, not persisted across a clean checkpoint reload or unrelated episode.",
+    "targeted_stationary_initial_and_conditional_transition_test_passed": true,
+    "targeted_deterministic_zero_ar_term_test_passed": true,
+    "plus_0p25h_reset_trajectory_rows": 112,
+    "plus_0p5h_reset_trajectory_rows": 108,
+    "plus_1h_reset_trajectory_rows": 170,
+    "plus_1h_sampled_transition_rows": 216008,
+    "recorded_state_slots_before_plus_1h_manager_disposal": 56,
+    "workers_terminated_after_cleanup": true,
+    "status": "passed"
+  },
+  "advantage_sign_and_critic": {
+    "all_campaign_iterations_preserved_raw_scaled_sign": true,
+    "disposable_critic_held_out_ev_before": -0.0032402286555754944,
+    "disposable_critic_held_out_ev_after": 0.5886425750177503,
+    "disposable_critic_held_out_loss_before": 12.5126953125,
+    "disposable_critic_held_out_loss_after": 2.3222496509552,
+    "disposable_critic_optimizer_steps": 96,
+    "all_campaign_critic_iterations_improved_held_out_ev_and_loss": true,
+    "status": "passed"
+  },
+  "production_wisp": {
+    "POLICY.lt_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "SHARED_HEAD.lt_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "unchanged": true
+  },
+  "process_cleanup": {
+    "remaining_m10_9_processes": [],
+    "passed": true
+  },
+  "historical_stash": {
+    "entry": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "preserved": true
+  },
+  "pre_closeout_remote_readback": {
+    "local_head": "841ee08b4d0dc048519c2ba686e093c90a78a903",
+    "origin_main": "841ee08b4d0dc048519c2ba686e093c90a78a903",
+    "matched": true
+  },
+  "git_diff_check": "passed",
+  "stage_2_authorized": false,
+  "production_promotion_authorized": false,
+  "checks": {
+    "production_tests_passed": true,
+    "training_tests_passed": true,
+    "targeted_ppo_v2_tests_passed": true,
+    "ruff_passed": true,
+    "compileall_passed": true,
+    "json_parsing_passed": true,
+    "final_checkpoint_reload_exact": true,
+    "stochastic_log_probability_replay_passed": true,
+    "ar_exploration_reload_and_reset_correct": true,
+    "advantage_sign_preserved": true,
+    "critic_held_out_learning_demonstrated": true,
+    "no_training_workers_remain": true,
+    "frozen_production_wisp_unchanged": true,
+    "historical_stash_preserved": true,
+    "pre_closeout_remote_readback_matched": true,
+    "passed": true
+  }
+}
