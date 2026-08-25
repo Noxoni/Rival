@@ -250,6 +250,10 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
     failures = [row for row in episodes if not row["first_touch_success"]]
     result.update(
         {
+            "no_touch_failure_count": len(episodes)
+            - int(result["first_touch_success_count"]),
+            "no_touch_failure_share": 1.0
+            - float(result["first_touch_success_share"]),
             "initial_car_to_ball_velocity_projection": _summary(
                 [
                     float(row["initial_car_to_ball_velocity_projection"])
@@ -449,6 +453,9 @@ def capability_gap(
         ),
         "no_touch_timeout_share": float(
             sto["no_touch_timeout_share"] - det["no_touch_timeout_share"]
+        ),
+        "no_touch_failure_share": float(
+            sto["no_touch_failure_share"] - det["no_touch_failure_share"]
         ),
         "stochastic_materially_better_first_touch_by_5_points": (
             sto["first_touch_success_share"]

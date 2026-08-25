@@ -341,6 +341,9 @@ def main() -> int:
                     "no_touch_timeout_share": result["evaluation"][
                         "deterministic_overall"
                     ]["no_touch_timeout_share"],
+                    "no_touch_failure_share": result["evaluation"][
+                        "deterministic_overall"
+                    ]["no_touch_failure_share"],
                 },
                 "stochastic": {
                     "first_touch_success_share": result["evaluation"][
@@ -349,6 +352,9 @@ def main() -> int:
                     "no_touch_timeout_share": result["evaluation"][
                         "stochastic_overall"
                     ]["no_touch_timeout_share"],
+                    "no_touch_failure_share": result["evaluation"][
+                        "stochastic_overall"
+                    ]["no_touch_failure_share"],
                 },
             },
             sort_keys=True,

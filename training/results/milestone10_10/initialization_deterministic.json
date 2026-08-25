@@ -1,0 +1,1617 @@
+{
+  "checkpoint": {
+    "actor_sha256": "a4c2c51d1dadb51ceb3b417c8851a8c3104b2b33cfbc4d4ac6314ae699d732d4",
+    "directory": "training/checkpoints/milestone10_10/stage_1/initialization/000000000",
+    "manifest_sha256": "e98c8e813cc816337b57c15b69e411c94d06c64a3daf76465b4f80e083847e2f"
+  },
+  "checks": {
+    "all_500_manifest_episodes_completed": true,
+    "all_five_families_present": true,
+    "all_metrics_finite": true,
+    "deterministic_ar_term_zero": true,
+    "dummy_rows_evaluated": 0,
+    "no_reacquisition_objective": true,
+    "passed": true,
+    "touch_terminates_immediately": true
+  },
+  "corpus": {
+    "episode_count": 500,
+    "name": "stage1_v4_frozen_gate_corpus",
+    "path": "training/results/milestone10_5/stage_1/corpora/stage1_v4_frozen_gate_corpus.json",
+    "sha256": "2a6d081985edd42a58cb6c054fe80c05204f8279a27a0debb0319cfddc42d224"
+  },
+  "deterministic_actor": true,
+  "evaluation_version": "RivalFirstTouchVelocityEvaluationV1PPOV2AR1",
+  "evaluation_wall_seconds": 489.3589368999237,
+  "evaluation_workers": 24,
+  "families": {
+    "awkward_heading": {
+      "action_diagnostics": {
+        "boost_share": 0.0,
+        "handbrake_share": 0.0,
+        "jump_share": 0.0,
+        "mean_absolute_pitch": 0.06987123513594269,
+        "mean_absolute_roll": 0.06503248152323067,
+        "mean_absolute_steer": 0.057907265815883874,
+        "mean_absolute_throttle": 0.19546884901821612,
+        "mean_absolute_yaw": 0.30697521969676017,
+        "pitch_mean": -0.06511345851235091,
+        "roll_mean": -0.06057698488468304,
+        "steer_mean": -0.056938951169140634,
+        "throttle_mean": 0.19546884901821612,
+        "yaw_mean": -0.30697521969676017
+      },
+      "active_learner_steps": 144000,
+      "all_three_contacts_success_count": 0,
+      "all_three_contacts_success_share": 0.0,
+      "analog_exploration_diagnostics": {
+        "deterministic_has_zero_ar_term": true,
+        "epsilon_mean": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "epsilon_std": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "initial_transition_count": 144000,
+        "log_std": {
+          "pitch": -0.5063936114311218,
+          "roll": -0.5014182329177856,
+          "steer": -0.504316508769989,
+          "throttle": -0.5028958916664124,
+          "yaw": -0.504790723323822
+        },
+        "policy_mean": {
+          "pitch": -0.06539660796057432,
+          "roll": -0.06088224955834448,
+          "steer": -0.05711088886950165,
+          "throttle": 0.19894613340497017,
+          "yaw": -0.31802504509687424
+        },
+        "rho": 0.8948393168143698,
+        "saturation_share": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        }
+      },
+      "button_policy_diagnostics": {
+        "boost": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4006274173527749,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4982193592302501,
+          "mean_effective_probability": 0.0993725826472251,
+          "mean_entropy": 0.3236874414781729,
+          "previous_bit_share": 0.0
+        },
+        "handbrake": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.39990691946824597,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5002135089248833,
+          "mean_effective_probability": 0.10009308053175402,
+          "mean_entropy": 0.3252672319834431,
+          "previous_bit_share": 0.0
+        },
+        "jump": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.44788844985587317,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5108696171730343,
+          "mean_effective_probability": 0.05211155014412685,
+          "mean_entropy": 0.20468070010509756,
+          "previous_bit_share": 0.0
+        }
+      },
+      "cumulative_acquisition_time_penalty": 0.0,
+      "cumulative_idle_penalty": 0.0,
+      "dense_budget_saturation_share": 0.0,
+      "distance_reward_total": 0.0,
+      "episodes": 100,
+      "failed_episode_alignment_improvement": {
+        "maximum": 1.477919266096681,
+        "mean": 0.5579490073480323,
+        "median": 0.6484493934769164,
+        "minimum": -0.8343603292595204,
+        "p90": 1.0444387058033264,
+        "p95": 1.2359242210817591,
+        "samples": 100
+      },
+      "failed_episode_initial_car_ball_alignment": {
+        "maximum": -0.0004161848335787179,
+        "mean": -0.644396936415663,
+        "median": -0.7073124942106164,
+        "minimum": -0.9990545733804682,
+        "p90": -0.16461011446171497,
+        "p95": -0.07710810897055508,
+        "samples": 100
+      },
+      "failed_episode_initial_car_ball_distance": {
+        "maximum": 2444.8943824247617,
+        "mean": 1452.7329454325807,
+        "median": 1510.1955093492334,
+        "minimum": 514.8258770252531,
+        "p90": 2281.3570924118626,
+        "p95": 2401.7219249234804,
+        "samples": 100
+      },
+      "failed_episode_initial_car_to_ball_velocity_projection": {
+        "maximum": -4.921906587651192,
+        "mean": -405.69971062904716,
+        "median": -396.16146337293964,
+        "minimum": -1174.5256906614063,
+        "p90": -35.9647481243917,
+        "p95": -22.80373128754157,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_ball_alignment": {
+        "maximum": 0.9670840214443425,
+        "mean": -0.08644792906763074,
+        "median": -0.10747216171732839,
+        "minimum": -0.9991895488729219,
+        "p90": 0.3457581913944898,
+        "p95": 0.5365205901803223,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_ball_distance": {
+        "maximum": 7895.065396474362,
+        "mean": 5068.325948741019,
+        "median": 5099.103781624763,
+        "minimum": 2453.9923552509326,
+        "p90": 6752.956508634584,
+        "p95": 7376.649570752023,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_to_ball_velocity_projection": {
+        "maximum": 1322.8010504703473,
+        "mean": 33.16992215135288,
+        "median": 3.719945905836245,
+        "minimum": -892.7722056499007,
+        "p90": 221.92754942821966,
+        "p95": 442.73256974506427,
+        "samples": 100
+      },
+      "failed_episode_velocity_projection_change": {
+        "maximum": 1944.4971505665885,
+        "mean": 438.8696327803999,
+        "median": 401.5918423058422,
+        "minimum": -612.1561835267855,
+        "p90": 947.923251715525,
+        "p95": 1158.6847856680456,
+        "samples": 100
+      },
+      "first_touch_success_count": 0,
+      "first_touch_success_share": 0.0,
+      "goals_reward_neutral": 0,
+      "heading_reward_total": 0.0,
+      "idle_simulated_seconds": 0.0,
+      "idle_ticks": 0,
+      "initial_car_ball_alignment": {
+        "maximum": -0.0004161848335787179,
+        "mean": -0.644396936415663,
+        "median": -0.7073124942106164,
+        "minimum": -0.9990545733804682,
+        "p90": -0.16461011446171497,
+        "p95": -0.07710810897055508,
+        "samples": 100
+      },
+      "initial_car_ball_distance": {
+        "maximum": 2444.8943824247617,
+        "mean": 1452.7329454325807,
+        "median": 1510.1955093492334,
+        "minimum": 514.8258770252531,
+        "p90": 2281.3570924118626,
+        "p95": 2401.7219249234804,
+        "samples": 100
+      },
+      "initial_car_to_ball_velocity_projection": {
+        "maximum": -4.921906587651192,
+        "mean": -405.69971062904716,
+        "median": -396.16146337293964,
+        "minimum": -1174.5256906614063,
+        "p90": -35.9647481243917,
+        "p95": -22.80373128754157,
+        "samples": 100
+      },
+      "mean_button_entropy": 0.8536353735667136,
+      "mean_signed_car_progress_uu": 0.0,
+      "median_signed_car_progress_uu": 0.0,
+      "no_touch_failure_count": 100,
+      "no_touch_failure_share": 1.0,
+      "no_touch_timeout_count": 100,
+      "no_touch_timeout_share": 1.0,
+      "physical_touch_count": 0,
+      "pre_touch_idle_share": 0.0,
+      "second_touch_success_count": 0,
+      "second_touch_success_share": 0.0,
+      "successful_time_first_to_second_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_second_to_third_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_to_first_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "terminal_car_ball_alignment": {
+        "maximum": 0.9670840214443425,
+        "mean": -0.08644792906763074,
+        "median": -0.10747216171732839,
+        "minimum": -0.9991895488729219,
+        "p90": 0.3457581913944898,
+        "p95": 0.5365205901803223,
+        "samples": 100
+      },
+      "terminal_car_to_ball_velocity_projection": {
+        "maximum": 1322.8010504703473,
+        "mean": 33.16992215135288,
+        "median": 3.719945905836245,
+        "minimum": -892.7722056499007,
+        "p90": 221.92754942821966,
+        "p95": 442.73256974506427,
+        "samples": 100
+      },
+      "third_touch_success_count": 0,
+      "third_touch_success_share": 0.0,
+      "touch_reward_total": 0.0,
+      "touches_per_100k_active_learner_steps": 0.0,
+      "touches_per_episode": 0.0,
+      "velocity_to_ball_reward_total": -157.3101162480712
+    },
+    "moving_chase": {
+      "action_diagnostics": {
+        "boost_share": 0.0,
+        "handbrake_share": 0.0,
+        "jump_share": 0.0,
+        "mean_absolute_pitch": 0.07879814770003907,
+        "mean_absolute_roll": 0.06664650557164979,
+        "mean_absolute_steer": 0.04620546081634421,
+        "mean_absolute_throttle": 0.1723166278442658,
+        "mean_absolute_yaw": 0.3001873477802723,
+        "pitch_mean": -0.0766637200667509,
+        "roll_mean": -0.06279497363067003,
+        "steer_mean": -0.04354039786034557,
+        "throttle_mean": 0.1723166278442658,
+        "yaw_mean": -0.3001873477802723
+      },
+      "active_learner_steps": 131916,
+      "all_three_contacts_success_count": 0,
+      "all_three_contacts_success_share": 0.0,
+      "analog_exploration_diagnostics": {
+        "deterministic_has_zero_ar_term": true,
+        "epsilon_mean": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "epsilon_std": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "initial_transition_count": 131916,
+        "log_std": {
+          "pitch": -0.5063936119105218,
+          "roll": -0.5014182344748189,
+          "steer": -0.5043165086303711,
+          "throttle": -0.5028958879785116,
+          "yaw": -0.5047907270971201
+        },
+        "policy_mean": {
+          "pitch": -0.07703086024421299,
+          "roll": -0.06310070560680399,
+          "steer": -0.04368039420754051,
+          "throttle": 0.17497154316955585,
+          "yaw": -0.3103618505080302
+        },
+        "rho": 0.8948393168143698,
+        "saturation_share": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        }
+      },
+      "button_policy_diagnostics": {
+        "boost": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4006550583578724,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.49813619061458203,
+          "mean_effective_probability": 0.0993449416421276,
+          "mean_entropy": 0.3236238402597589,
+          "previous_bit_share": 0.0
+        },
+        "handbrake": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.40049334576853785,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4985581524022866,
+          "mean_effective_probability": 0.09950665423146215,
+          "mean_entropy": 0.323966906939973,
+          "previous_bit_share": 0.0
+        },
+        "jump": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.44800615117485665,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5102768912095847,
+          "mean_effective_probability": 0.05199384882514337,
+          "mean_entropy": 0.2043398522727756,
+          "previous_bit_share": 0.0
+        }
+      },
+      "cumulative_acquisition_time_penalty": 0.0,
+      "cumulative_idle_penalty": 0.0,
+      "dense_budget_saturation_share": 0.0,
+      "distance_reward_total": 0.0,
+      "episodes": 100,
+      "failed_episode_alignment_improvement": {
+        "maximum": -0.02077013379942616,
+        "mean": -1.0395199945157607,
+        "median": -1.019220489977677,
+        "minimum": -1.944046332133661,
+        "p90": -0.28131087989487846,
+        "p95": -0.1636724780407549,
+        "samples": 91
+      },
+      "failed_episode_initial_car_ball_alignment": {
+        "maximum": 0.9983157929680267,
+        "mean": 0.8900724783979852,
+        "median": 0.9193324645057005,
+        "minimum": 0.7070683531517181,
+        "p90": 0.9892127477954056,
+        "p95": 0.9933634554798542,
+        "samples": 91
+      },
+      "failed_episode_initial_car_ball_distance": {
+        "maximum": 2989.6934901960326,
+        "mean": 1774.5087183558144,
+        "median": 1865.6047075102786,
+        "minimum": 711.4478653369594,
+        "p90": 2794.6750123543998,
+        "p95": 2901.6667399609923,
+        "samples": 91
+      },
+      "failed_episode_initial_car_to_ball_velocity_projection": {
+        "maximum": 1045.5827861286855,
+        "mean": 477.8785986792791,
+        "median": 501.90011122725406,
+        "minimum": 3.8815628876598094,
+        "p90": 824.8279737050428,
+        "p95": 937.8077658421702,
+        "samples": 91
+      },
+      "failed_episode_terminal_car_ball_alignment": {
+        "maximum": 0.9605586664017021,
+        "mean": -0.14944751611777538,
+        "median": -0.17267690168704594,
+        "minimum": -0.9975052847826615,
+        "p90": 0.5697455965962602,
+        "p95": 0.7805589018079138,
+        "samples": 91
+      },
+      "failed_episode_terminal_car_ball_distance": {
+        "maximum": 11260.574976186243,
+        "mean": 5403.377874403727,
+        "median": 5458.514900829697,
+        "minimum": 647.1549058102021,
+        "p90": 8420.618588368072,
+        "p95": 9829.674899242937,
+        "samples": 91
+      },
+      "failed_episode_terminal_car_to_ball_velocity_projection": {
+        "maximum": 869.1861793761336,
+        "mean": -16.904970312212285,
+        "median": 2.738987693145095,
+        "minimum": -1194.4280369172589,
+        "p90": 230.82121588255353,
+        "p95": 567.5265858973441,
+        "samples": 91
+      },
+      "failed_episode_velocity_projection_change": {
+        "maximum": 608.0629134703761,
+        "mean": -494.78356899149145,
+        "median": -472.3080780025209,
+        "minimum": -1795.370204276358,
+        "p90": -107.80661169232346,
+        "p95": -49.929029511992844,
+        "samples": 91
+      },
+      "first_touch_success_count": 9,
+      "first_touch_success_share": 0.09,
+      "goals_reward_neutral": 5,
+      "heading_reward_total": 0.0,
+      "idle_simulated_seconds": 0.0,
+      "idle_ticks": 0,
+      "initial_car_ball_alignment": {
+        "maximum": 0.9983157929680267,
+        "mean": 0.8855369310452774,
+        "median": 0.9067951744316209,
+        "minimum": 0.7070683531517181,
+        "p90": 0.988227673881513,
+        "p95": 0.9931128201127107,
+        "samples": 100
+      },
+      "initial_car_ball_distance": {
+        "maximum": 2989.6934901960326,
+        "mean": 1764.674367659335,
+        "median": 1814.1569514880134,
+        "minimum": 711.4478653369594,
+        "p90": 2800.150477735715,
+        "p95": 2901.6911554068242,
+        "samples": 100
+      },
+      "initial_car_to_ball_velocity_projection": {
+        "maximum": 1045.5827861286855,
+        "mean": 480.2852297308619,
+        "median": 493.8983802380388,
+        "minimum": 3.8815628876598094,
+        "p90": 852.8154005651359,
+        "p95": 930.3741856799104,
+        "samples": 100
+      },
+      "mean_button_entropy": 0.8519305994725075,
+      "mean_signed_car_progress_uu": 0.0,
+      "median_signed_car_progress_uu": 0.0,
+      "no_touch_failure_count": 91,
+      "no_touch_failure_share": 0.91,
+      "no_touch_timeout_count": 86,
+      "no_touch_timeout_share": 0.86,
+      "physical_touch_count": 9,
+      "pre_touch_idle_share": 0.0,
+      "second_touch_success_count": 0,
+      "second_touch_success_share": 0.0,
+      "successful_time_first_to_second_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_second_to_third_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_to_first_touch_seconds": {
+        "maximum": 6.566666666666666,
+        "mean": 2.4851851851851854,
+        "median": 2.2333333333333334,
+        "minimum": 0.7083333333333334,
+        "p90": 4.133333333333334,
+        "p95": 5.349999999999999,
+        "samples": 9
+      },
+      "terminal_car_ball_alignment": {
+        "maximum": 0.9605586664017021,
+        "mean": -0.08127563830892806,
+        "median": -0.14237208316032401,
+        "minimum": -0.9975052847826615,
+        "p90": 0.7392300182782352,
+        "p95": 0.8084699055864926,
+        "samples": 100
+      },
+      "terminal_car_to_ball_velocity_projection": {
+        "maximum": 869.1861793761336,
+        "mean": 25.2088745039195,
+        "median": 3.56452250508042,
+        "minimum": -1194.4280369172589,
+        "p90": 554.7647487303866,
+        "p95": 690.8850431491146,
+        "samples": 100
+      },
+      "third_touch_success_count": 0,
+      "third_touch_success_share": 0.0,
+      "touch_reward_total": 90.0,
+      "touches_per_100k_active_learner_steps": 6.822523423997089,
+      "touches_per_episode": 0.09,
+      "velocity_to_ball_reward_total": -54.893021088188625
+    },
+    "natural_kickoff_holdout": {
+      "action_diagnostics": {
+        "boost_share": 0.0,
+        "handbrake_share": 0.0,
+        "jump_share": 0.0,
+        "mean_absolute_pitch": 0.11391849860548973,
+        "mean_absolute_roll": 0.08650334723293782,
+        "mean_absolute_steer": 0.06993117298930883,
+        "mean_absolute_throttle": 0.18759733229875564,
+        "mean_absolute_yaw": 0.3426792821288109,
+        "pitch_mean": -0.1139183647185564,
+        "roll_mean": -0.08649242676794529,
+        "steer_mean": -0.06993117298930883,
+        "throttle_mean": 0.18759733229875564,
+        "yaw_mean": -0.3426792821288109
+      },
+      "active_learner_steps": 144000,
+      "all_three_contacts_success_count": 0,
+      "all_three_contacts_success_share": 0.0,
+      "analog_exploration_diagnostics": {
+        "deterministic_has_zero_ar_term": true,
+        "epsilon_mean": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "epsilon_std": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "initial_transition_count": 144000,
+        "log_std": {
+          "pitch": -0.5063936114311218,
+          "roll": -0.5014182329177856,
+          "steer": -0.504316508769989,
+          "throttle": -0.5028958916664124,
+          "yaw": -0.504790723323822
+        },
+        "policy_mean": {
+          "pitch": -0.11468077503144741,
+          "roll": -0.0868458827584982,
+          "steer": -0.07016067206859589,
+          "throttle": 0.19088030368089676,
+          "yaw": -0.3577752539515495
+        },
+        "rho": 0.8948393168143698,
+        "saturation_share": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        }
+      },
+      "button_policy_diagnostics": {
+        "boost": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4001562280091974,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4995066886945731,
+          "mean_effective_probability": 0.09984377199080255,
+          "mean_entropy": 0.32471302816437353,
+          "previous_bit_share": 0.0
+        },
+        "handbrake": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.40295763133574897,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4915356515666677,
+          "mean_effective_probability": 0.09704236866425102,
+          "mean_entropy": 0.31847334205110867,
+          "previous_bit_share": 0.0
+        },
+        "jump": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4474581494421129,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5130445799844132,
+          "mean_effective_probability": 0.0525418505578871,
+          "mean_entropy": 0.2059285223931074,
+          "previous_bit_share": 0.0
+        }
+      },
+      "cumulative_acquisition_time_penalty": 0.0,
+      "cumulative_idle_penalty": 0.0,
+      "dense_budget_saturation_share": 0.0,
+      "distance_reward_total": 0.0,
+      "episodes": 100,
+      "failed_episode_alignment_improvement": {
+        "maximum": -0.9055062021181259,
+        "mean": -1.1462017996988576,
+        "median": -1.1410988698477353,
+        "minimum": -1.3211763951988185,
+        "p90": -0.9058781245457059,
+        "p95": -0.9058596079921212,
+        "samples": 100
+      },
+      "failed_episode_initial_car_ball_alignment": {
+        "maximum": 0.9998634801022238,
+        "mean": 0.9967956079237138,
+        "median": 0.9975898866774222,
+        "minimum": 0.9936157158898369,
+        "p90": 0.9998634801022238,
+        "p95": 0.9998634801022238,
+        "samples": 100
+      },
+      "failed_episode_initial_car_ball_distance": {
+        "maximum": 4608.62916958312,
+        "mean": 3826.343070010985,
+        "median": 3849.2769383005493,
+        "minimum": 3279.283698116473,
+        "p90": 4608.62916958312,
+        "p95": 4608.62916958312,
+        "samples": 100
+      },
+      "failed_episode_initial_car_to_ball_velocity_projection": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_ball_alignment": {
+        "maximum": 0.08810951377171099,
+        "mean": -0.14940619177514364,
+        "median": -0.1435089773561741,
+        "minimum": -0.3275606793089816,
+        "p90": 0.08773759134413098,
+        "p95": 0.08775610789771572,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_ball_distance": {
+        "maximum": 5844.875742120999,
+        "mean": 4726.269988843039,
+        "median": 4519.6792497336155,
+        "minimum": 4303.364182265608,
+        "p90": 5844.385525432007,
+        "p95": 5844.411877843713,
+        "samples": 100
+      },
+      "failed_episode_terminal_car_to_ball_velocity_projection": {
+        "maximum": 84.92522723219307,
+        "mean": -24.193389022002126,
+        "median": -32.40221511604931,
+        "minimum": -85.88559405933356,
+        "p90": 84.66910477616801,
+        "p95": 84.68174353567433,
+        "samples": 100
+      },
+      "failed_episode_velocity_projection_change": {
+        "maximum": 84.92522723219307,
+        "mean": -24.193389022002126,
+        "median": -32.40221511604931,
+        "minimum": -85.88559405933356,
+        "p90": 84.66910477616801,
+        "p95": 84.68174353567433,
+        "samples": 100
+      },
+      "first_touch_success_count": 0,
+      "first_touch_success_share": 0.0,
+      "goals_reward_neutral": 0,
+      "heading_reward_total": 0.0,
+      "idle_simulated_seconds": 0.0,
+      "idle_ticks": 0,
+      "initial_car_ball_alignment": {
+        "maximum": 0.9998634801022238,
+        "mean": 0.9967956079237138,
+        "median": 0.9975898866774222,
+        "minimum": 0.9936157158898369,
+        "p90": 0.9998634801022238,
+        "p95": 0.9998634801022238,
+        "samples": 100
+      },
+      "initial_car_ball_distance": {
+        "maximum": 4608.62916958312,
+        "mean": 3826.343070010985,
+        "median": 3849.2769383005493,
+        "minimum": 3279.283698116473,
+        "p90": 4608.62916958312,
+        "p95": 4608.62916958312,
+        "samples": 100
+      },
+      "initial_car_to_ball_velocity_projection": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "minimum": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "samples": 100
+      },
+      "mean_button_entropy": 0.8491148926085896,
+      "mean_signed_car_progress_uu": 0.0,
+      "median_signed_car_progress_uu": 0.0,
+      "no_touch_failure_count": 100,
+      "no_touch_failure_share": 1.0,
+      "no_touch_timeout_count": 100,
+      "no_touch_timeout_share": 1.0,
+      "physical_touch_count": 0,
+      "pre_touch_idle_share": 0.0,
+      "second_touch_success_count": 0,
+      "second_touch_success_share": 0.0,
+      "successful_time_first_to_second_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_second_to_third_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_to_first_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "terminal_car_ball_alignment": {
+        "maximum": 0.08810951377171099,
+        "mean": -0.14940619177514364,
+        "median": -0.1435089773561741,
+        "minimum": -0.3275606793089816,
+        "p90": 0.08773759134413098,
+        "p95": 0.08775610789771572,
+        "samples": 100
+      },
+      "terminal_car_to_ball_velocity_projection": {
+        "maximum": 84.92522723219307,
+        "mean": -24.193389022002126,
+        "median": -32.40221511604931,
+        "minimum": -85.88559405933356,
+        "p90": 84.66910477616801,
+        "p95": 84.68174353567433,
+        "samples": 100
+      },
+      "third_touch_success_count": 0,
+      "third_touch_success_share": 0.0,
+      "touch_reward_total": 0.0,
+      "touches_per_100k_active_learner_steps": 0.0,
+      "touches_per_episode": 0.0,
+      "velocity_to_ball_reward_total": -39.41793606543099
+    },
+    "stationary_close": {
+      "action_diagnostics": {
+        "boost_share": 0.0,
+        "handbrake_share": 0.0,
+        "jump_share": 0.0,
+        "mean_absolute_pitch": 0.07790622553530992,
+        "mean_absolute_roll": 0.07146697693181962,
+        "mean_absolute_steer": 0.04300038254111294,
+        "mean_absolute_throttle": 0.17000153972618984,
+        "mean_absolute_yaw": 0.30333858496135513,
+        "pitch_mean": -0.07450825064208742,
+        "roll_mean": -0.06945577198733395,
+        "steer_mean": -0.03982964702021624,
+        "throttle_mean": 0.17000153972618984,
+        "yaw_mean": -0.30333858496135513
+      },
+      "active_learner_steps": 64083,
+      "all_three_contacts_success_count": 0,
+      "all_three_contacts_success_share": 0.0,
+      "analog_exploration_diagnostics": {
+        "deterministic_has_zero_ar_term": true,
+        "epsilon_mean": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "epsilon_std": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "initial_transition_count": 64083,
+        "log_std": {
+          "pitch": -0.5063936099550272,
+          "roll": -0.5014182379246018,
+          "steer": -0.5043165141693143,
+          "throttle": -0.5028958795879217,
+          "yaw": -0.5047907364198599
+        },
+        "policy_mean": {
+          "pitch": -0.07493094622794484,
+          "roll": -0.06983975929083493,
+          "steer": -0.039956744139961774,
+          "throttle": 0.17267959743680972,
+          "yaw": -0.3140423498566305
+        },
+        "rho": 0.8948393168143698,
+        "saturation_share": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        }
+      },
+      "button_policy_diagnostics": {
+        "boost": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.40039939273856184,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4988475032225736,
+          "mean_effective_probability": 0.09960060726143813,
+          "mean_entropy": 0.32418608363922596,
+          "previous_bit_share": 0.0
+        },
+        "handbrake": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4009226842645778,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.49736822905441574,
+          "mean_effective_probability": 0.09907731573542221,
+          "mean_entropy": 0.3230248190346441,
+          "previous_bit_share": 0.0
+        },
+        "jump": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4479271303538246,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5106765339208721,
+          "mean_effective_probability": 0.05207286964617541,
+          "mean_entropy": 0.20456905216022803,
+          "previous_bit_share": 0.0
+        }
+      },
+      "cumulative_acquisition_time_penalty": 0.0,
+      "cumulative_idle_penalty": 0.0,
+      "dense_budget_saturation_share": 0.0,
+      "distance_reward_total": 0.0,
+      "episodes": 100,
+      "failed_episode_alignment_improvement": {
+        "maximum": -0.12328716593225575,
+        "mean": -1.1945977734756483,
+        "median": -1.1671732247272257,
+        "minimum": -1.9173373908236562,
+        "p90": -0.8133930987232185,
+        "p95": -0.5825760871149944,
+        "samples": 36
+      },
+      "failed_episode_initial_car_ball_alignment": {
+        "maximum": 0.9939052428724978,
+        "mean": 0.9772408722052874,
+        "median": 0.97450497563528,
+        "minimum": 0.9611821153617325,
+        "p90": 0.9926805985972647,
+        "p95": 0.993494444165596,
+        "samples": 36
+      },
+      "failed_episode_initial_car_ball_distance": {
+        "maximum": 1386.5623833361485,
+        "mean": 1053.3609715013029,
+        "median": 1096.9453630044554,
+        "minimum": 625.6956704218362,
+        "p90": 1310.5689899952124,
+        "p95": 1343.4730290087707,
+        "samples": 36
+      },
+      "failed_episode_initial_car_to_ball_velocity_projection": {
+        "maximum": 681.7178263601198,
+        "mean": 377.89973575345186,
+        "median": 414.7308510721831,
+        "minimum": 33.56357340068882,
+        "p90": 600.1586088983701,
+        "p95": 624.1418357834231,
+        "samples": 36
+      },
+      "failed_episode_terminal_car_ball_alignment": {
+        "maximum": 0.8573487006785117,
+        "mean": -0.21735690127036109,
+        "median": -0.19337788340807702,
+        "minimum": -0.9517065189392055,
+        "p90": 0.1674093361960687,
+        "p95": 0.400569537908111,
+        "samples": 36
+      },
+      "failed_episode_terminal_car_ball_distance": {
+        "maximum": 7594.323526059987,
+        "mean": 5222.295087960013,
+        "median": 5179.196947360963,
+        "minimum": 2414.310524980638,
+        "p90": 7129.766107299006,
+        "p95": 7246.120091292894,
+        "samples": 36
+      },
+      "failed_episode_terminal_car_to_ball_velocity_projection": {
+        "maximum": 491.75873598555097,
+        "mean": -52.890665548919316,
+        "median": 1.2537570197110341,
+        "minimum": -638.0607292761998,
+        "p90": 33.768184185516894,
+        "p95": 131.53344226767018,
+        "samples": 36
+      },
+      "failed_episode_velocity_projection_change": {
+        "maximum": 138.13046602558285,
+        "mean": -430.79040130237115,
+        "median": -440.3935898647651,
+        "minimum": -1101.9435252248943,
+        "p90": -97.99090064764636,
+        "p95": -33.247181735839185,
+        "samples": 36
+      },
+      "first_touch_success_count": 64,
+      "first_touch_success_share": 0.64,
+      "goals_reward_neutral": 0,
+      "heading_reward_total": 0.0,
+      "idle_simulated_seconds": 0.0,
+      "idle_ticks": 0,
+      "initial_car_ball_alignment": {
+        "maximum": 0.9979233768288623,
+        "mean": 0.984019258841217,
+        "median": 0.9856544405210259,
+        "minimum": 0.9611821153617325,
+        "p90": 0.9955541791039775,
+        "p95": 0.9965270574605596,
+        "samples": 100
+      },
+      "initial_car_ball_distance": {
+        "maximum": 1386.5623833361485,
+        "mean": 870.8471534752875,
+        "median": 842.7946051767569,
+        "minimum": 436.0032296790651,
+        "p90": 1267.3872252958715,
+        "p95": 1309.5465903119068,
+        "samples": 100
+      },
+      "initial_car_to_ball_velocity_projection": {
+        "maximum": 681.7178263601198,
+        "mean": 335.7268301056684,
+        "median": 357.88011381481135,
+        "minimum": 2.412043783295691,
+        "p90": 590.3695095730828,
+        "p95": 645.5663907226591,
+        "samples": 100
+      },
+      "mean_button_entropy": 0.8517799548340981,
+      "mean_signed_car_progress_uu": 0.0,
+      "median_signed_car_progress_uu": 0.0,
+      "no_touch_failure_count": 36,
+      "no_touch_failure_share": 0.36,
+      "no_touch_timeout_count": 36,
+      "no_touch_timeout_share": 0.36,
+      "physical_touch_count": 64,
+      "pre_touch_idle_share": 0.0,
+      "second_touch_success_count": 0,
+      "second_touch_success_share": 0.0,
+      "successful_time_first_to_second_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_second_to_third_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_to_first_touch_seconds": {
+        "maximum": 3.2583333333333333,
+        "mean": 1.594140625,
+        "median": 1.475,
+        "minimum": 0.43333333333333335,
+        "p90": 2.6008333333333336,
+        "p95": 2.9604166666666667,
+        "samples": 64
+      },
+      "terminal_car_ball_alignment": {
+        "maximum": 0.896539446886438,
+        "mean": 0.4351254004314579,
+        "median": 0.7318010363508416,
+        "minimum": -0.9517065189392055,
+        "p90": 0.8884434831004215,
+        "p95": 0.8929715740144945,
+        "samples": 100
+      },
+      "terminal_car_to_ball_velocity_projection": {
+        "maximum": 559.182874711046,
+        "mean": 221.3799661371627,
+        "median": 291.8440195516997,
+        "minimum": -638.0607292761998,
+        "p90": 491.79458919506453,
+        "p95": 518.851036132592,
+        "samples": 100
+      },
+      "third_touch_success_count": 0,
+      "third_touch_success_share": 0.0,
+      "touch_reward_total": 640.0,
+      "touches_per_100k_active_learner_steps": 99.87048047063963,
+      "touches_per_episode": 0.64,
+      "velocity_to_ball_reward_total": -48.92174782073737
+    },
+    "stationary_medium": {
+      "action_diagnostics": {
+        "boost_share": 0.0,
+        "handbrake_share": 0.0,
+        "jump_share": 0.0,
+        "mean_absolute_pitch": 0.08314781272561153,
+        "mean_absolute_roll": 0.07354580713105624,
+        "mean_absolute_steer": 0.04667970968581885,
+        "mean_absolute_throttle": 0.18319182692383337,
+        "mean_absolute_yaw": 0.30628253690259594,
+        "pitch_mean": -0.08118938401045492,
+        "roll_mean": -0.07114689349787097,
+        "steer_mean": -0.044714088967847745,
+        "throttle_mean": 0.18319182692383337,
+        "yaw_mean": -0.30628253690259594
+      },
+      "active_learner_steps": 127161,
+      "all_three_contacts_success_count": 0,
+      "all_three_contacts_success_share": 0.0,
+      "analog_exploration_diagnostics": {
+        "deterministic_has_zero_ar_term": true,
+        "epsilon_mean": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "epsilon_std": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        },
+        "initial_transition_count": 127161,
+        "log_std": {
+          "pitch": -0.5063936111695684,
+          "roll": -0.5014182341168064,
+          "steer": -0.5043165095879293,
+          "throttle": -0.502895887689207,
+          "yaw": -0.5047907275578934
+        },
+        "policy_mean": {
+          "pitch": -0.08159480214296579,
+          "roll": -0.07150586375031028,
+          "steer": -0.04484656445888497,
+          "throttle": 0.18618625287534638,
+          "yaw": -0.31710332009070874
+        },
+        "rho": 0.8948393168143698,
+        "saturation_share": {
+          "pitch": 0.0,
+          "roll": 0.0,
+          "steer": 0.0,
+          "throttle": 0.0,
+          "yaw": 0.0
+        }
+      },
+      "button_policy_diagnostics": {
+        "boost": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4000329442850224,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.4998630979485781,
+          "mean_effective_probability": 0.09996705571497759,
+          "mean_entropy": 0.32499019384033545,
+          "previous_bit_share": 0.0
+        },
+        "handbrake": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4007072284370758,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.49796627088411527,
+          "mean_effective_probability": 0.0992927715629242,
+          "mean_entropy": 0.3234979698592948,
+          "previous_bit_share": 0.0
+        },
+        "jump": {
+          "deterministic_chosen_share": 0.0,
+          "effective_distance_from_0p5_mean": 0.4479167179594034,
+          "effective_within_0p40_0p60_share": 0.0,
+          "effective_within_0p45_0p55_share": 0.0,
+          "mean_base_probability": 0.5107308337610749,
+          "mean_effective_probability": 0.052083282040596604,
+          "mean_entropy": 0.20459960774463173,
+          "previous_bit_share": 0.0
+        }
+      },
+      "cumulative_acquisition_time_penalty": 0.0,
+      "cumulative_idle_penalty": 0.0,
+      "dense_budget_saturation_share": 0.0,
+      "distance_reward_total": 0.0,
+      "episodes": 100,
+      "failed_episode_alignment_improvement": {
+        "maximum": 0.08840606188596956,
+        "mean": -1.1023655998625936,
+        "median": -1.0920697998572044,
+        "minimum": -1.9658253447031453,
+        "p90": -0.6603807530503734,
+        "p95": -0.4969784859756417,
+        "samples": 83
+      },
+      "failed_episode_initial_car_ball_alignment": {
+        "maximum": 0.9993938043565853,
+        "mean": 0.9511358623239039,
+        "median": 0.9636823205271606,
+        "minimum": 0.8685101464791073,
+        "p90": 0.994452756427738,
+        "p95": 0.9969361867290489,
+        "samples": 83
+      },
+      "failed_episode_initial_car_ball_distance": {
+        "maximum": 3498.0175602856066,
+        "mean": 2359.519540379533,
+        "median": 2229.667567013836,
+        "minimum": 1454.996156938903,
+        "p90": 3181.769138476528,
+        "p95": 3277.071767238678,
+        "samples": 83
+      },
+      "failed_episode_initial_car_to_ball_velocity_projection": {
+        "maximum": 1041.2760938105039,
+        "mean": 564.2313595295587,
+        "median": 567.6148770460534,
+        "minimum": 18.823175777168757,
+        "p90": 933.5538406388431,
+        "p95": 986.1504376510892,
+        "samples": 83
+      },
+      "failed_episode_terminal_car_ball_alignment": {
+        "maximum": 0.9790118642095242,
+        "mean": -0.15122973753868998,
+        "median": -0.13034066369045047,
+        "minimum": -0.9887026238762023,
+        "p90": 0.3181097946459038,
+        "p95": 0.4018962610266811,
+        "samples": 83
+      },
+      "failed_episode_terminal_car_ball_distance": {
+        "maximum": 8712.588971155401,
+        "mean": 5176.5657870714185,
+        "median": 5106.478433071909,
+        "minimum": 1800.0706284643775,
+        "p90": 7311.525472269969,
+        "p95": 7828.321726355362,
+        "samples": 83
+      },
+      "failed_episode_terminal_car_to_ball_velocity_projection": {
+        "maximum": 500.59784946076525,
+        "mean": -50.50304355422051,
+        "median": 4.004056058689753,
+        "minimum": -1112.483355235767,
+        "p90": 136.47096286707676,
+        "p95": 347.60355209510556,
+        "samples": 83
+      },
+      "failed_episode_velocity_projection_change": {
+        "maximum": 115.19201893033441,
+        "mean": -614.7344030837793,
+        "median": -617.1309136438931,
+        "minimum": -1684.7652170591775,
+        "p90": -124.94322454725967,
+        "p95": -63.844015885155855,
+        "samples": 83
+      },
+      "first_touch_success_count": 17,
+      "first_touch_success_share": 0.17,
+      "goals_reward_neutral": 0,
+      "heading_reward_total": 0.0,
+      "idle_simulated_seconds": 0.0,
+      "idle_ticks": 0,
+      "initial_car_ball_alignment": {
+        "maximum": 0.9996741663619487,
+        "mean": 0.9587028768995053,
+        "median": 0.9721783111356218,
+        "minimum": 0.8685101464791073,
+        "p90": 0.9980510079263744,
+        "p95": 0.9987215532034353,
+        "samples": 100
+      },
+      "initial_car_ball_distance": {
+        "maximum": 3498.0175602856066,
+        "mean": 2366.956376236948,
+        "median": 2235.7793469429507,
+        "minimum": 1454.996156938903,
+        "p90": 3183.4141589941787,
+        "p95": 3293.6928087970346,
+        "samples": 100
+      },
+      "initial_car_to_ball_velocity_projection": {
+        "maximum": 1041.2760938105039,
+        "mean": 540.3715212420457,
+        "median": 547.3353559063722,
+        "minimum": 18.823175777168757,
+        "p90": 934.6719303657441,
+        "p95": 990.8830714224091,
+        "samples": 100
+      },
+      "mean_button_entropy": 0.853087771444262,
+      "mean_signed_car_progress_uu": 0.0,
+      "median_signed_car_progress_uu": 0.0,
+      "no_touch_failure_count": 83,
+      "no_touch_failure_share": 0.83,
+      "no_touch_timeout_count": 83,
+      "no_touch_timeout_share": 0.83,
+      "physical_touch_count": 17,
+      "pre_touch_idle_share": 0.0,
+      "second_touch_success_count": 0,
+      "second_touch_success_share": 0.0,
+      "successful_time_first_to_second_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_second_to_third_touch_seconds": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      },
+      "successful_time_to_first_touch_seconds": {
+        "maximum": 6.95,
+        "mean": 3.745588235294118,
+        "median": 3.808333333333333,
+        "minimum": 1.6666666666666667,
+        "p90": 5.495,
+        "p95": 5.789999999999999,
+        "samples": 17
+      },
+      "terminal_car_ball_alignment": {
+        "maximum": 0.9790118642095242,
+        "mean": 0.008289563783585831,
+        "median": -0.07636187867208442,
+        "minimum": -0.9887026238762023,
+        "p90": 0.8385494201708448,
+        "p95": 0.8542209432842516,
+        "samples": 100
+      },
+      "terminal_car_to_ball_velocity_projection": {
+        "maximum": 896.430836003323,
+        "mean": 58.675091793330836,
+        "median": 7.257027375152641,
+        "minimum": -1112.483355235767,
+        "p90": 559.4073781165526,
+        "p95": 632.9426349158899,
+        "samples": 100
+      },
+      "third_touch_success_count": 0,
+      "third_touch_success_share": 0.0,
+      "touch_reward_total": 170.0,
+      "touches_per_100k_active_learner_steps": 13.36887882290954,
+      "touches_per_episode": 0.17,
+      "velocity_to_ball_reward_total": -85.51888328899102
+    }
+  },
+  "fixed_stochastic_seed_formula": "20261010100 + frozen episode index",
+  "frozen_corpus_evaluation_version": "RivalBallAcquisitionEvaluationV4",
+  "mode": "deterministic",
+  "overall": {
+    "action_diagnostics": {
+      "boost_share": 0.0,
+      "handbrake_share": 0.0,
+      "jump_share": 0.0,
+      "mean_absolute_pitch": 0.08578127131315103,
+      "mean_absolute_roll": 0.0728857851187775,
+      "mean_absolute_steer": 0.05431541140574835,
+      "mean_absolute_throttle": 0.18339209857006855,
+      "mean_absolute_yaw": 0.3133971507425456,
+      "pitch_mean": -0.08343574404022926,
+      "roll_mean": -0.07029206980134341,
+      "steer_mean": -0.05277057487433581,
+      "throttle_mean": 0.18339209857006855,
+      "yaw_mean": -0.3133971507425456
+    },
+    "active_learner_steps": 611160,
+    "all_three_contacts_success_count": 0,
+    "all_three_contacts_success_share": 0.0,
+    "analog_exploration_diagnostics": {
+      "deterministic_has_zero_ar_term": true,
+      "epsilon_mean": {
+        "pitch": 0.0,
+        "roll": 0.0,
+        "steer": 0.0,
+        "throttle": 0.0,
+        "yaw": 0.0
+      },
+      "epsilon_std": {
+        "pitch": 0.0,
+        "roll": 0.0,
+        "steer": 0.0,
+        "throttle": 0.0,
+        "yaw": 0.0
+      },
+      "initial_transition_count": 611160,
+      "log_std": {
+        "pitch": -0.5063936113254025,
+        "roll": -0.5014182340283264,
+        "steer": -0.5043165094761826,
+        "throttle": -0.5028958887763927,
+        "yaw": -0.5047907263924137
+      },
+      "policy_mean": {
+        "pitch": -0.0838900166458109,
+        "roll": -0.07062821874703888,
+        "steer": -0.05293626820349074,
+        "throttle": 0.18646182631969527,
+        "yaw": -0.325127443102473
+      },
+      "rho": 0.8948393168143698,
+      "saturation_share": {
+        "pitch": 0.0,
+        "roll": 0.0,
+        "steer": 0.0,
+        "throttle": 0.0,
+        "yaw": 0.0
+      }
+    },
+    "button_policy_diagnostics": {
+      "boost": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.40037476458464905,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.49891259337904814,
+        "mean_effective_probability": 0.09962523541535095,
+        "mean_entropy": 0.3242387017753394,
+        "previous_bit_share": 0.0
+      },
+      "handbrake": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.4010253219569207,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.49704564031918397,
+        "mean_effective_probability": 0.09897467804307931,
+        "mean_entropy": 0.3227825544543881,
+        "previous_bit_share": 0.0
+      },
+      "jump": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.44782240625072356,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.5112050177475936,
+        "mean_effective_probability": 0.052177593749276434,
+        "mean_entropy": 0.20487255920242817,
+        "previous_bit_share": 0.0
+      }
+    },
+    "cumulative_acquisition_time_penalty": 0.0,
+    "cumulative_idle_penalty": 0.0,
+    "dense_budget_saturation_share": 0.0,
+    "distance_reward_total": 0.0,
+    "episodes": 500,
+    "failed_episode_alignment_improvement": {
+      "maximum": 1.477919266096681,
+      "mean": -0.7022523496822815,
+      "median": -1.035343441459096,
+      "minimum": -1.9658253447031453,
+      "p90": 0.6949365554972182,
+      "p95": 0.8943219043923555,
+      "samples": 410
+    },
+    "failed_episode_initial_car_ball_alignment": {
+      "maximum": 0.9998634801022238,
+      "mean": 0.5618570991641368,
+      "median": 0.9652409394283068,
+      "minimum": -0.9990545733804682,
+      "p90": 0.9975898924915612,
+      "p95": 0.9996521260166865,
+      "samples": 410
+    },
+    "failed_episode_initial_car_ball_distance": {
+      "maximum": 4608.62916958312,
+      "mean": 2251.582955464107,
+      "median": 2061.1588598904314,
+      "minimum": 514.8258770252531,
+      "p90": 3849.2769383005493,
+      "p95": 4266.920665505929,
+      "samples": 410
+    },
+    "failed_episode_initial_car_to_ball_velocity_projection": {
+      "maximum": 1045.5827861286855,
+      "mean": 154.518474987774,
+      "median": 23.387724103544848,
+      "minimum": -1174.5256906614063,
+      "p90": 783.8934704239243,
+      "p95": 884.0499259000209,
+      "samples": 410
+    },
+    "failed_episode_terminal_car_ball_alignment": {
+      "maximum": 0.9790118642095242,
+      "mean": -0.14039525051814455,
+      "median": -0.14350306519332706,
+      "minimum": -0.9991895488729219,
+      "p90": 0.2884875840001436,
+      "p95": 0.537357297315303,
+      "samples": 410
+    },
+    "failed_episode_terminal_car_ball_distance": {
+      "maximum": 11260.574976186243,
+      "mean": 5094.6940581039835,
+      "median": 4634.63552172044,
+      "minimum": 647.1549058102021,
+      "p90": 7308.65718029028,
+      "p95": 7827.18012583731,
+      "samples": 410
+    },
+    "failed_episode_terminal_car_to_ball_velocity_projection": {
+      "maximum": 1322.8010504703473,
+      "mean": -16.430525756677174,
+      "median": -0.6063032848564474,
+      "minimum": -1194.4280369172589,
+      "p90": 119.92783265295034,
+      "p95": 364.69851576581,
+      "samples": 410
+    },
+    "failed_episode_velocity_projection_change": {
+      "maximum": 1944.4971505665885,
+      "mean": -170.94900074445113,
+      "median": -85.88508599449978,
+      "minimum": -1795.370204276358,
+      "p90": 511.0661568115815,
+      "p95": 709.2553530681749,
+      "samples": 410
+    },
+    "first_touch_success_count": 90,
+    "first_touch_success_share": 0.18,
+    "goals_reward_neutral": 5,
+    "heading_reward_total": 0.0,
+    "idle_simulated_seconds": 0.0,
+    "idle_ticks": 0,
+    "initial_car_ball_alignment": {
+      "maximum": 0.9998634801022238,
+      "mean": 0.6361315476588101,
+      "median": 0.97450497563528,
+      "minimum": -0.9990545733804682,
+      "p90": 0.9975898924915612,
+      "p95": 0.9988127430867729,
+      "samples": 500
+    },
+    "initial_car_ball_distance": {
+      "maximum": 4608.62916958312,
+      "mean": 2056.3107825630273,
+      "median": 1872.5444075689218,
+      "minimum": 436.0032296790651,
+      "p90": 3849.2769383005493,
+      "p95": 3849.2769383005493,
+      "samples": 500
+    },
+    "initial_car_to_ball_velocity_projection": {
+      "maximum": 1045.5827861286855,
+      "mean": 190.13677408990574,
+      "median": 139.54032426833902,
+      "minimum": -1174.5256906614063,
+      "p90": 774.8800086259075,
+      "p95": 876.5827928745973,
+      "samples": 500
+    },
+    "mean_button_entropy": 0.8518938154321557,
+    "mean_signed_car_progress_uu": 0.0,
+    "median_signed_car_progress_uu": 0.0,
+    "no_touch_failure_count": 410,
+    "no_touch_failure_share": 0.8200000000000001,
+    "no_touch_timeout_count": 405,
+    "no_touch_timeout_share": 0.81,
+    "physical_touch_count": 90,
+    "pre_touch_idle_share": 0.0,
+    "second_touch_success_count": 0,
+    "second_touch_success_share": 0.0,
+    "successful_time_first_to_second_touch_seconds": {
+      "maximum": null,
+      "mean": null,
+      "median": null,
+      "minimum": null,
+      "p90": null,
+      "p95": null,
+      "samples": 0
+    },
+    "successful_time_second_to_third_touch_seconds": {
+      "maximum": null,
+      "mean": null,
+      "median": null,
+      "minimum": null,
+      "p90": null,
+      "p95": null,
+      "samples": 0
+    },
+    "successful_time_to_first_touch_seconds": {
+      "maximum": 6.95,
+      "mean": 2.0896296296296297,
+      "median": 1.7625,
+      "minimum": 0.43333333333333335,
+      "p90": 3.8400000000000025,
+      "p95": 4.864999999999999,
+      "samples": 90
+    },
+    "terminal_car_ball_alignment": {
+      "maximum": 0.9790118642095242,
+      "mean": 0.025257041012668267,
+      "median": -0.10160150228040397,
+      "minimum": -0.9991895488729219,
+      "p90": 0.8246921610346949,
+      "p95": 0.8778069496679072,
+      "samples": 500
+    },
+    "terminal_car_to_ball_velocity_projection": {
+      "maximum": 1322.8010504703473,
+      "mean": 62.84809311275275,
+      "median": 4.21536351039032,
+      "minimum": -1194.4280369172589,
+      "p90": 450.1280934578935,
+      "p95": 558.0093785013909,
+      "samples": 500
+    },
+    "third_touch_success_count": 0,
+    "third_touch_success_share": 0.0,
+    "touch_reward_total": 900.0,
+    "touches_per_100k_active_learner_steps": 14.726094639701552,
+    "touches_per_episode": 0.18,
+    "velocity_to_ball_reward_total": -386.06170451141924
+  },
+  "schema_version": 1
+}
