@@ -162,19 +162,36 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         ),
         reverse=True,
     )
-    best = ranked[0]
     control_final = arms["A"]["plus_1h"]["deterministic"][
         "first_contact_success"
     ]
-    best_final = arms[best]["plus_1h"]["deterministic"]["first_contact_success"]
-    longer_clear_gain = best in {"B", "C"} and best_final - control_final >= 0.03
-    longer_monotonic = best in {"B", "C"} and arms[best]["monotonicity"][
-        "deterministic_non_decreasing"
+    qualifying_longer_arms = [
+        arm
+        for arm in ("B", "C")
+        if (
+            arms[arm]["plus_1h"]["deterministic"]["first_contact_success"]
+            - control_final
+            >= 0.03
+            and arms[arm]["monotonicity"]["deterministic_non_decreasing"]
+        )
     ]
-    credit_horizon_supported = longer_clear_gain and longer_monotonic
+    evidence_preferred_arm = (
+        max(
+            qualifying_longer_arms,
+            key=lambda arm: (
+                arms[arm]["plus_1h"]["deterministic"]["all_three_success"],
+                arms[arm]["plus_1h"]["deterministic"]["third_contact_success"],
+                arms[arm]["plus_1h"]["deterministic"]["second_contact_success"],
+                arms[arm]["plus_1h"]["deterministic"]["first_contact_success"],
+            ),
+        )
+        if qualifying_longer_arms
+        else None
+    )
+    credit_horizon_supported = evidence_preferred_arm is not None
     if credit_horizon_supported:
         conclusion = "supported_as_material_limitation"
-        carry_forward = best
+        carry_forward = evidence_preferred_arm
     else:
         conclusion = "rejected_as_primary_remaining_failure"
         carry_forward = None
@@ -184,6 +201,7 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         and arms["C"]["plus_1h"]["deterministic"]["first_contact_success"]
         < arms["B"]["plus_1h"]["deterministic"]["first_contact_success"]
         and credit_horizon_supported
+        and carry_forward == "B"
     ):
         carry_forward = "B"
 
@@ -234,11 +252,18 @@ def finalize(args: argparse.Namespace) -> dict[str, Any]:
         "arms": arms,
         "capability_ranking": ranked,
         "decision_rule_evidence": {
-            "best_arm_by_capability_priority": best,
-            "best_minus_control_deterministic_first_contact": best_final
+            "raw_first_contact_priority_leader": ranked[0],
+            "raw_leader_minus_control_deterministic_first_contact": arms[
+                ranked[0]
+            ]["plus_1h"]["deterministic"]["first_contact_success"]
             - control_final,
             "clear_gain_threshold": 0.03,
-            "best_longer_arm_monotonic": longer_monotonic,
+            "qualifying_longer_arms_with_clear_gain_and_monotonic_curve": (
+                qualifying_longer_arms
+            ),
+            "evidence_preferred_arm_after_reacquisition_priority": (
+                evidence_preferred_arm
+            ),
         },
         "credit_horizon_conclusion": conclusion,
         "lambda_to_carry_forward": (

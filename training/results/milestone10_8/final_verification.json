@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "verification_version": "RivalM10_8FinalVerificationV1",
+  "completed_utc": "2026-08-25T16:37:48.1440746Z",
+  "production_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests -q --basetemp .pytest_tmp/m10_8_final_production",
+    "passed": 91,
+    "failed": 0,
+    "warnings": 2,
+    "wall_seconds": 32.6
+  },
+  "training_tests": {
+    "command": "training/.venv/Scripts/python.exe -m pytest training/tests -q --basetemp .pytest_tmp/m10_8_final_training",
+    "passed": 200,
+    "failed": 0,
+    "warnings": 64,
+    "wall_seconds": 27.51
+  },
+  "ruff": {
+    "command": "training/.venv/Scripts/python.exe -m ruff check bot tests scripts training/rival_training training/scripts training/tests",
+    "status": "passed"
+  },
+  "compileall": {
+    "production_command": ".venv/Scripts/python.exe -m compileall -q bot tests scripts",
+    "training_command": "training/.venv/Scripts/python.exe -m compileall -q training/rival_training training/scripts training/tests",
+    "status": "passed"
+  },
+  "json_parsing": {
+    "scope": "training/results/milestone10_8/**/*.json",
+    "files_parsed": 31,
+    "status": "passed"
+  },
+  "final_checkpoint_reload_parity": {
+    "arm_A": {
+      "checkpoint": "training/checkpoints/milestone10_8/arms/arm_a/boundaries/plus-001h/000432016",
+      "all_checks_passed": true,
+      "maximum_absolute_error": 0.0
+    },
+    "arm_B": {
+      "checkpoint": "training/checkpoints/milestone10_8/arms/arm_b/boundaries/plus-001h/000432003",
+      "all_checks_passed": true,
+      "maximum_absolute_error": 0.0
+    },
+    "arm_C": {
+      "checkpoint": "training/checkpoints/milestone10_8/arms/arm_c/boundaries/plus-001h/000432008",
+      "all_checks_passed": true,
+      "maximum_absolute_error": 0.0
+    }
+  },
+  "production_wisp": {
+    "POLICY.lt_sha256": "1bd600a15f43106645de84b42379fe9ae404ecfb509dc21a2e309480ea17ebf7",
+    "SHARED_HEAD.lt_sha256": "3f7b6b363a72d7ceaba3cdb58bc13e1ae95e07b041b5e94a326c7045bebd7e42",
+    "unchanged": true
+  },
+  "process_cleanup": {
+    "remaining_m10_8_processes": [],
+    "passed": true
+  },
+  "historical_stash": {
+    "entry": "stash@{0}: On main: rival-v4-paused-superseded-before-v4.1",
+    "preserved": true
+  },
+  "git_diff_check": "passed",
+  "stage_2_authorized": false,
+  "production_promotion_authorized": false,
+  "checks": {
+    "production_tests_passed": true,
+    "training_tests_passed": true,
+    "ruff_passed": true,
+    "compileall_passed": true,
+    "json_parsing_passed": true,
+    "all_three_final_checkpoints_reload_exactly": true,
+    "no_training_workers_remain": true,
+    "frozen_production_wisp_unchanged": true,
+    "historical_stash_preserved": true,
+    "passed": true
+  }
+}
