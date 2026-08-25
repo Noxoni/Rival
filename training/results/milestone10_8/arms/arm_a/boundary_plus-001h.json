@@ -1,0 +1,5025 @@
+{
+  "arm": "A",
+  "boundary_hours": 1.0,
+  "boundary_result_version": "RivalM10_8GAEArmBoundaryResultV1",
+  "checkpoint": {
+    "actor_sha256": "eefaf2a29f0d47464cfa85386288c7a8d12a53fd46cf39659d62e58b0076ab31",
+    "actor_size_bytes": 7867500,
+    "clean_boundary": true,
+    "completed_iterations": 6,
+    "config_sha256": "ac27d5fe1f721708b9f5f2e56d9c23836e6f00c2ae7ad5f2e12ed8884910e965",
+    "config_version": "RivalM10_8Stage1GAEExperimentConfigV1",
+    "cumulative_agent_steps": 432016,
+    "cumulative_model_updates": 18,
+    "directory": "training/checkpoints/milestone10_8/arms/arm_a/boundaries/plus-001h/000432016",
+    "format": "rival-m10-7-sticky-bernoulli-ppo-checkpoint-v1",
+    "manifest_sha256": "ee8ad910d5b8ecfe00605c58db7fd98282af26b7009cbb8c78ae54c0309be627",
+    "simulated_game_hours": 1.000037037037037
+  },
+  "checks": {
+    "credit_diagnostics_passed": true,
+    "deterministic_500_episode_evaluation_passed": true,
+    "passed": true,
+    "production_promotion_authorized": false,
+    "same_checkpoint_and_corpus": true,
+    "stage_2_authorized": false,
+    "stochastic_500_episode_evaluation_passed": true,
+    "training_boundary_passed": true
+  },
+  "decision": "stop_at_plus_1h_for_controlled_gae_comparison",
+  "deterministic_capability": {
+    "actions": {
+      "boost_share": 0.0,
+      "handbrake_share": 0.0,
+      "jump_share": 0.0,
+      "mean_absolute_pitch": 0.057779561186760274,
+      "mean_absolute_roll": 0.05583155287757382,
+      "mean_absolute_steer": 0.11544393839949277,
+      "mean_absolute_throttle": 0.27078998742179455,
+      "mean_absolute_yaw": 0.26433703949250703,
+      "pitch_mean": -0.05117394642398396,
+      "roll_mean": -0.04417318837683522,
+      "steer_mean": -0.1154036017274949,
+      "throttle_mean": 0.27078998742179455,
+      "yaw_mean": -0.26433703949250703
+    },
+    "all_three_success": 0.006,
+    "button_policy_diagnostics": {
+      "boost": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.41221447134289346,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.46407037957297553,
+        "mean_effective_probability": 0.08778552865710654,
+        "mean_entropy": 0.29736154875236903,
+        "previous_bit_share": 0.0
+      },
+      "handbrake": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.3978656592893168,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.5057909852182032,
+        "mean_effective_probability": 0.10213434071068322,
+        "mean_entropy": 0.3297102034098616,
+        "previous_bit_share": 0.0
+      },
+      "jump": {
+        "deterministic_chosen_share": 0.0,
+        "effective_distance_from_0p5_mean": 0.4505266991246919,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.49718964284273975,
+        "mean_effective_probability": 0.04947330087530809,
+        "mean_entropy": 0.19695637997441554,
+        "previous_bit_share": 0.0
+      }
+    },
+    "failed_trajectory": {
+      "alignment_change_terminal_minus_initial_mean": -0.5283926024118016,
+      "distance_change_terminal_minus_initial_mean": 2933.4009512391103,
+      "initial_alignment": {
+        "maximum": 0.9998634801022238,
+        "mean": 0.5737362741546245,
+        "median": 0.9687929322171349,
+        "minimum": -0.9990545733804682,
+        "p90": 0.9975898924915612,
+        "p95": 0.9996741663619487,
+        "samples": 421
+      },
+      "initial_distance": {
+        "maximum": 4608.62916958312,
+        "mean": 2215.555310332973,
+        "median": 2017.1500174669577,
+        "minimum": 495.20686576215945,
+        "p90": 3849.2769383005493,
+        "p95": 3849.2769383005493,
+        "samples": 421
+      },
+      "terminal_alignment": {
+        "maximum": 0.973615841326827,
+        "mean": 0.04534367174282282,
+        "median": 0.011993249022789502,
+        "minimum": -0.9920545975661791,
+        "p90": 0.7569400934397968,
+        "p95": 0.8276637409892411,
+        "samples": 421
+      },
+      "terminal_distance": {
+        "maximum": 10662.53903686683,
+        "mean": 5148.956261572083,
+        "median": 5336.005548622446,
+        "minimum": 586.2042051707905,
+        "p90": 7028.033073194743,
+        "p95": 7895.735628610888,
+        "samples": 421
+      }
+    },
+    "first_contact_success": 0.158,
+    "mean_button_entropy": 0.8240281321366462,
+    "no_touch_rate": 0.978,
+    "reward_components": {
+      "acquisition_time": -8098.638333333364,
+      "distance": -553.6096193113538,
+      "heading": -467.7581478970259,
+      "touch": 910.0
+    },
+    "second_contact_success": 0.018,
+    "third_contact_success": 0.006,
+    "timing_seconds": {
+      "first_to_second": {
+        "maximum": 2.3000000000000003,
+        "mean": 1.5120370370370368,
+        "median": 1.3333333333333335,
+        "minimum": 1.0333333333333332,
+        "p90": 2.0333333333333337,
+        "p95": 2.166666666666667,
+        "samples": 9
+      },
+      "reset_to_first": {
+        "maximum": 5.05,
+        "mean": 1.7798523206751053,
+        "median": 1.5416666666666667,
+        "minimum": 0.425,
+        "p90": 3.0366666666666666,
+        "p95": 3.6241666666666625,
+        "samples": 79
+      },
+      "second_to_third": {
+        "maximum": 0.9499999999999997,
+        "mean": 0.8055555555555555,
+        "median": 0.8500000000000001,
+        "minimum": 0.6166666666666667,
+        "p90": 0.9299999999999998,
+        "p95": 0.9399999999999997,
+        "samples": 3
+      }
+    }
+  },
+  "evaluation_reports": {
+    "deterministic": "training/results/milestone10_8/arms/arm_a/evaluation_plus-001h_deterministic.json",
+    "stochastic": "training/results/milestone10_8/arms/arm_a/evaluation_plus-001h_stochastic.json"
+  },
+  "frozen_observation_button_diagnostics": {
+    "actor_state": "exact_source_transfer_before_ppo",
+    "average_button_disagreement_share": 0.07950846354166667,
+    "button_run_durations": {
+      "deterministic": {
+        "boost": {
+          "chosen_bit": 0,
+          "run_seconds_each": 12.0,
+          "run_ticks_each": 1440,
+          "runs": 32,
+          "transition_count": 0
+        },
+        "handbrake": {
+          "chosen_bit": 0,
+          "run_seconds_each": 12.0,
+          "run_ticks_each": 1440,
+          "runs": 32,
+          "transition_count": 0
+        },
+        "jump": {
+          "chosen_bit": 0,
+          "run_seconds_each": 12.0,
+          "run_ticks_each": 1440,
+          "runs": 32,
+          "transition_count": 0
+        }
+      },
+      "simulation": {
+        "initial_previous_buttons": [
+          0,
+          0,
+          0
+        ],
+        "physics_hz": 120,
+        "states": 32,
+        "ticks_per_state": 1440
+      },
+      "stochastic": {
+        "boost": {
+          "maximum_ticks": 66,
+          "mean_seconds": 0.08120109959822373,
+          "mean_ticks": 9.744131951786848,
+          "median_ticks": 7.0,
+          "p90_ticks": 22.0,
+          "p99_ticks": 43.0,
+          "runs": 4729
+        },
+        "handbrake": {
+          "maximum_ticks": 82,
+          "mean_seconds": 0.08540925266903915,
+          "mean_ticks": 10.249110320284698,
+          "median_ticks": 7.0,
+          "p90_ticks": 24.0,
+          "p99_ticks": 48.0,
+          "runs": 4496
+        },
+        "jump": {
+          "maximum_ticks": 129,
+          "mean_seconds": 0.1713520749665328,
+          "mean_ticks": 20.562248995983936,
+          "median_ticks": 14.0,
+          "p90_ticks": 48.0,
+          "p99_ticks": 87.0,
+          "runs": 2241
+        }
+      }
+    },
+    "buttons": {
+      "boost": {
+        "base_probability_histogram": {
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            256,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "deterministic_on_share": 0.0,
+        "deterministic_stochastic_disagreement_share": 0.0885009765625,
+        "effective_probability_histogram": {
+          "counts": [
+            256,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "mean_base_probability": 0.47095227241516113,
+        "mean_effective_distance_from_0p5": 0.4099814295768738,
+        "mean_effective_probability": 0.09001854807138443,
+        "mean_entropy": 0.30256593227386475,
+        "previous_bit_share": 0.0,
+        "states_effective_probability_within_0p40_0p60_share": 0.0,
+        "states_effective_probability_within_0p45_0p55_share": 0.0,
+        "stochastic_sampled_on_share": 0.0885009765625
+      },
+      "handbrake": {
+        "base_probability_histogram": {
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            120,
+            136,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "deterministic_on_share": 0.0,
+        "deterministic_stochastic_disagreement_share": 0.09967041015625,
+        "effective_probability_histogram": {
+          "counts": [
+            120,
+            136,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "mean_base_probability": 0.5002914667129517,
+        "mean_effective_distance_from_0p5": 0.39987707138061523,
+        "mean_effective_probability": 0.10012289881706238,
+        "mean_entropy": 0.32533055543899536,
+        "previous_bit_share": 0.0,
+        "states_effective_probability_within_0p40_0p60_share": 0.0,
+        "states_effective_probability_within_0p45_0p55_share": 0.0,
+        "stochastic_sampled_on_share": 0.09967041015625
+      },
+      "jump": {
+        "base_probability_histogram": {
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            256,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "deterministic_on_share": 0.0,
+        "deterministic_stochastic_disagreement_share": 0.05035400390625,
+        "effective_probability_histogram": {
+          "counts": [
+            256,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "edges": [
+            0.0,
+            0.1,
+            0.2,
+            0.30000000000000004,
+            0.4,
+            0.5,
+            0.6000000000000001,
+            0.7000000000000001,
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "mean_base_probability": 0.4915313124656677,
+        "mean_effective_distance_from_0p5": 0.45157986879348755,
+        "mean_effective_probability": 0.04842015355825424,
+        "mean_entropy": 0.19383127987384796,
+        "previous_bit_share": 0.0,
+        "states_effective_probability_within_0p40_0p60_share": 0.0,
+        "states_effective_probability_within_0p45_0p55_share": 0.0,
+        "stochastic_sampled_on_share": 0.05035400390625
+      }
+    },
+    "corpus_states": 256,
+    "deterministic_physical_action_distribution": {
+      "analog_mean": [
+        0.2891473174095154,
+        -0.15194854140281677,
+        0.043082647025585175,
+        -0.20215684175491333,
+        -0.03563837707042694
+      ],
+      "analog_mean_absolute": [
+        0.2891473174095154,
+        0.15194854140281677,
+        0.04346369206905365,
+        0.20215684175491333,
+        0.04625225067138672
+      ],
+      "counts": [
+        256,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "shares": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "deterministic_reachability": {
+      "all_button_states_absorbing": false,
+      "buttons": {
+        "boost": {
+          "deterministic_threshold": 0.5,
+          "neutral_logit_effective_probability_previous_off": 0.09999999999999998,
+          "neutral_logit_effective_probability_previous_on": 0.9,
+          "off_to_on_base_probability_threshold": 0.9,
+          "off_to_on_policy_logit_threshold": 2.1972245773362196,
+          "off_to_on_reachable": true,
+          "on_to_off_base_probability_threshold": 0.09999999999999998,
+          "on_to_off_policy_logit_threshold": -2.1972245773362196,
+          "on_to_off_reachable": true,
+          "persistence": 0.9,
+          "state_is_absorbing": false
+        },
+        "handbrake": {
+          "deterministic_threshold": 0.5,
+          "neutral_logit_effective_probability_previous_off": 0.09999999999999998,
+          "neutral_logit_effective_probability_previous_on": 0.9,
+          "off_to_on_base_probability_threshold": 0.9,
+          "off_to_on_policy_logit_threshold": 2.1972245773362196,
+          "off_to_on_reachable": true,
+          "on_to_off_base_probability_threshold": 0.09999999999999998,
+          "on_to_off_policy_logit_threshold": -2.1972245773362196,
+          "on_to_off_reachable": true,
+          "persistence": 0.9,
+          "state_is_absorbing": false
+        },
+        "jump": {
+          "deterministic_threshold": 0.5,
+          "neutral_logit_effective_probability_previous_off": 0.050000000000000044,
+          "neutral_logit_effective_probability_previous_on": 0.95,
+          "off_to_on_base_probability_threshold": 0.95,
+          "off_to_on_policy_logit_threshold": 2.9444389791664394,
+          "off_to_on_reachable": true,
+          "on_to_off_base_probability_threshold": 0.050000000000000044,
+          "on_to_off_policy_logit_threshold": -2.9444389791664394,
+          "on_to_off_reachable": true,
+          "persistence": 0.95,
+          "state_is_absorbing": false
+        }
+      },
+      "correction_reason": "The originally requested convex probability mixture is an absorbing deterministic latch whenever persistence exceeds 0.5. The log-odds prior preserves neutral-output stickiness and makes both transitions learnable.",
+      "deterministic_reset_policy_can_ever_enable_a_button": true,
+      "deterministic_rule": "effective_probability >= 0.5",
+      "formula": "sigmoid(policy_logit + (2*previous_bit-1)*logit(persistence))",
+      "initial_reset_buttons": [
+        0,
+        0,
+        0
+      ],
+      "pathological_before_ppo": false
+    },
+    "mean_button_entropy": 0.8217277526855469,
+    "stochastic_draws_per_state": 64,
+    "stochastic_physical_action_distribution": {
+      "analog_mean": [
+        0.23365692794322968,
+        -0.1143132671713829,
+        0.03325670212507248,
+        -0.16137932240962982,
+        -0.024342136457562447
+      ],
+      "analog_mean_absolute": [
+        0.4384801685810089,
+        0.41541463136672974,
+        0.3998326063156128,
+        0.41972461342811584,
+        0.4081340730190277
+      ],
+      "counts": [
+        12747,
+        684,
+        1247,
+        73,
+        1442,
+        61,
+        123,
+        7
+      ],
+      "shares": [
+        0.77801513671875,
+        0.041748046875,
+        0.07611083984375,
+        0.00445556640625,
+        0.0880126953125,
+        0.00372314453125,
+        0.00750732421875,
+        0.00042724609375
+      ]
+    }
+  },
+  "gae_lambda": 0.9872585449014338,
+  "learning_curve": [
+    {
+      "boundary_hours": 0.0,
+      "deterministic": {
+        "actions": {
+          "boost_share": 0.0,
+          "handbrake_share": 0.0,
+          "jump_share": 0.0,
+          "mean_absolute_pitch": 0.08212525261548782,
+          "mean_absolute_roll": 0.07267636552411001,
+          "mean_absolute_steer": 0.052919863079356054,
+          "mean_absolute_throttle": 0.18410038126202455,
+          "mean_absolute_yaw": 0.31091628682993333,
+          "pitch_mean": -0.07975844787024657,
+          "roll_mean": -0.07011451841831758,
+          "steer_mean": -0.05126037573887303,
+          "throttle_mean": 0.18410038126202455,
+          "yaw_mean": -0.31091628682993333
+        },
+        "all_three_success": 0.008,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.4004311169018865,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4987553476511631,
+            "mean_effective_probability": 0.09956888309811353,
+            "mean_entropy": 0.3241145684971183,
+            "previous_bit_share": 0.0
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.4007112115592031,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4979217121008933,
+            "mean_effective_probability": 0.09928878844079692,
+            "mean_entropy": 0.32347424363836746,
+            "previous_bit_share": 0.0
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.4478348739256867,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5111427743267422,
+            "mean_effective_probability": 0.05216512607431326,
+            "mean_entropy": 0.2048365718668093,
+            "previous_bit_share": 0.0
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.7022523496822815,
+          "distance_change_terminal_minus_initial_mean": 2843.1111026398767,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.5618570991641368,
+            "median": 0.9652409394283068,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9996521260166865,
+            "samples": 410
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2251.582955464107,
+            "median": 2061.1588598904314,
+            "minimum": 514.8258770252531,
+            "p90": 3849.2769383005493,
+            "p95": 4266.920665505929,
+            "samples": 410
+          },
+          "terminal_alignment": {
+            "maximum": 0.9790118642095242,
+            "mean": -0.14039525051814455,
+            "median": -0.14350306519332706,
+            "minimum": -0.9991895488729219,
+            "p90": 0.2884875840001436,
+            "p95": 0.537357297315303,
+            "samples": 410
+          },
+          "terminal_distance": {
+            "maximum": 11260.574976186243,
+            "mean": 5094.6940581039835,
+            "median": 4634.63552172044,
+            "minimum": 647.1549058102021,
+            "p90": 7308.65718029028,
+            "p95": 7827.18012583731,
+            "samples": 410
+          }
+        },
+        "first_contact_success": 0.18,
+        "mean_button_entropy": 0.8524253840022951,
+        "no_touch_rate": 0.97,
+        "reward_components": {
+          "acquisition_time": -8152.060000000031,
+          "distance": -479.6460884067937,
+          "heading": -608.7399203775713,
+          "touch": 1100.0
+        },
+        "second_contact_success": 0.032,
+        "third_contact_success": 0.008,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 2.7333333333333334,
+            "mean": 1.7005208333333333,
+            "median": 1.8041666666666665,
+            "minimum": 0.875,
+            "p90": 2.3041666666666667,
+            "p95": 2.458333333333333,
+            "samples": 16
+          },
+          "reset_to_first": {
+            "maximum": 6.95,
+            "mean": 2.0896296296296297,
+            "median": 1.7625,
+            "minimum": 0.43333333333333335,
+            "p90": 3.8400000000000025,
+            "p95": 4.864999999999999,
+            "samples": 90
+          },
+          "second_to_third": {
+            "maximum": 1.4416666666666673,
+            "mean": 0.9416666666666668,
+            "median": 0.8499999999999999,
+            "minimum": 0.625,
+            "p90": 1.2916666666666672,
+            "p95": 1.366666666666667,
+            "samples": 4
+          }
+        }
+      },
+      "stochastic": {
+        "actions": {
+          "boost_share": 0.5150005459158863,
+          "handbrake_share": 0.4795157714218322,
+          "jump_share": 0.5265012610493689,
+          "mean_absolute_pitch": 0.4061953111501541,
+          "mean_absolute_roll": 0.40641216253145473,
+          "mean_absolute_steer": 0.41556726509523373,
+          "mean_absolute_throttle": 0.4350350785384925,
+          "mean_absolute_yaw": 0.47772258317143107,
+          "pitch_mean": -0.05916189904148006,
+          "roll_mean": -0.033995110024421654,
+          "steer_mean": -0.12515241642824604,
+          "throttle_mean": 0.2130575652196638,
+          "yaw_mean": -0.3322473872886066
+        },
+        "all_three_success": 0.0,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.5146587618636307,
+            "effective_distance_from_0p5_mean": 0.4003101942377783,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5099540375068553,
+            "mean_effective_probability": 0.515299569711356,
+            "mean_entropy": 0.3242823282319021,
+            "previous_bit_share": 0.5146587618636307
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.4791946612551607,
+            "effective_distance_from_0p5_mean": 0.40030357993157495,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4903023985795731,
+            "mean_effective_probability": 0.4798750430863354,
+            "mean_entropy": 0.32430417583777216,
+            "previous_bit_share": 0.4791946612551607
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.5261167543284931,
+            "effective_distance_from_0p5_mean": 0.44997801335216636,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5153639349328755,
+            "mean_effective_probability": 0.526427694096538,
+            "mean_entropy": 0.19847514292809257,
+            "previous_bit_share": 0.5261167543284931
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.6453754724123124,
+          "distance_change_terminal_minus_initial_mean": 2090.689420878492,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.6169003654930775,
+            "median": 0.97450497563528,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9994056981725693,
+            "samples": 458
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2101.3309367328716,
+            "median": 1906.929657248743,
+            "minimum": 442.47720884204824,
+            "p90": 3849.2769383005493,
+            "p95": 3849.2769383005493,
+            "samples": 458
+          },
+          "terminal_alignment": {
+            "maximum": 0.9994561778192609,
+            "mean": -0.028475106919234994,
+            "median": -0.0810699278922434,
+            "minimum": -0.9987850093851539,
+            "p90": 0.8619220266834812,
+            "p95": 0.9381385445283691,
+            "samples": 458
+          },
+          "terminal_distance": {
+            "maximum": 11222.705722788067,
+            "mean": 4192.020357611364,
+            "median": 4077.58144460586,
+            "minimum": 386.13771419825156,
+            "p90": 6555.840004200577,
+            "p95": 7122.292799498688,
+            "samples": 458
+          }
+        },
+        "first_contact_success": 0.084,
+        "mean_button_entropy": 0.8470616469977669,
+        "no_touch_rate": 0.982,
+        "reward_components": {
+          "acquisition_time": -8085.4433333333645,
+          "distance": -359.1251770359275,
+          "heading": -501.20797673304855,
+          "touch": 430.0
+        },
+        "second_contact_success": 0.002,
+        "third_contact_success": 0.0,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 2.025,
+            "mean": 2.025,
+            "median": 2.025,
+            "minimum": 2.025,
+            "p90": 2.025,
+            "p95": 2.025,
+            "samples": 1
+          },
+          "reset_to_first": {
+            "maximum": 10.458333333333334,
+            "mean": 1.9583333333333337,
+            "median": 1.2625,
+            "minimum": 0.375,
+            "p90": 3.872499999999999,
+            "p95": 7.734583333333318,
+            "samples": 42
+          },
+          "second_to_third": {
+            "maximum": null,
+            "mean": null,
+            "median": null,
+            "minimum": null,
+            "p90": null,
+            "p95": null,
+            "samples": 0
+          }
+        }
+      }
+    },
+    {
+      "boundary_hours": 0.5,
+      "deterministic": {
+        "actions": {
+          "boost_share": 0.0,
+          "handbrake_share": 0.0,
+          "jump_share": 0.0,
+          "mean_absolute_pitch": 0.08673686542272736,
+          "mean_absolute_roll": 0.08073639086295496,
+          "mean_absolute_steer": 0.07588719680528294,
+          "mean_absolute_throttle": 0.23783052114497352,
+          "mean_absolute_yaw": 0.296471304356048,
+          "pitch_mean": -0.08531142421410468,
+          "roll_mean": -0.07826696324564092,
+          "steer_mean": -0.0754331047741756,
+          "throttle_mean": 0.23783052114497352,
+          "yaw_mean": -0.296471304356048
+        },
+        "all_three_success": 0.01,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.40809177213379616,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.47664085596883676,
+            "mean_effective_probability": 0.09190822786620385,
+            "mean_entropy": 0.3069117821851353,
+            "previous_bit_share": 0.0
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.3984752040829215,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5041194966276483,
+            "mean_effective_probability": 0.10152479591707854,
+            "mean_entropy": 0.32838080801402725,
+            "previous_bit_share": 0.0
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.44905503859006524,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5049020662898513,
+            "mean_effective_probability": 0.05094496140993474,
+            "mean_entropy": 0.2012824840945629,
+            "previous_bit_share": 0.0
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.5365158337661712,
+          "distance_change_terminal_minus_initial_mean": 2832.950489024739,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.5733373047814396,
+            "median": 0.9683234374248015,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9996741663619487,
+            "samples": 421
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2242.4354535019793,
+            "median": 2061.016271064244,
+            "minimum": 514.8258770252531,
+            "p90": 3849.2769383005493,
+            "p95": 3849.2769383005493,
+            "samples": 421
+          },
+          "terminal_alignment": {
+            "maximum": 0.9895954874629866,
+            "mean": 0.036821471015268455,
+            "median": 0.13150519086554552,
+            "minimum": -0.9993509725378308,
+            "p90": 0.6160538866433218,
+            "p95": 0.657843298436068,
+            "samples": 421
+          },
+          "terminal_distance": {
+            "maximum": 11259.70722425811,
+            "mean": 5075.385942526718,
+            "median": 4880.463473987973,
+            "minimum": 223.56855845699206,
+            "p90": 7113.822461562157,
+            "p95": 7683.481401930329,
+            "samples": 421
+          }
+        },
+        "first_contact_success": 0.158,
+        "mean_button_entropy": 0.8365750742937255,
+        "no_touch_rate": 0.976,
+        "reward_components": {
+          "acquisition_time": -8048.798333333364,
+          "distance": -513.2742846235524,
+          "heading": -482.86956189961876,
+          "touch": 990.0
+        },
+        "second_contact_success": 0.03,
+        "third_contact_success": 0.01,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 2.4083333333333337,
+            "mean": 1.597777777777778,
+            "median": 1.5583333333333336,
+            "minimum": 1.0916666666666666,
+            "p90": 2.1300000000000003,
+            "p95": 2.2274999999999996,
+            "samples": 15
+          },
+          "reset_to_first": {
+            "maximum": 5.033333333333333,
+            "mean": 1.7080168776371312,
+            "median": 1.5583333333333333,
+            "minimum": 0.425,
+            "p90": 2.8383333333333334,
+            "p95": 3.45083333333333,
+            "samples": 79
+          },
+          "second_to_third": {
+            "maximum": 1.1333333333333337,
+            "mean": 0.9250000000000002,
+            "median": 0.9416666666666669,
+            "minimum": 0.7416666666666667,
+            "p90": 1.086666666666667,
+            "p95": 1.1100000000000003,
+            "samples": 5
+          }
+        }
+      },
+      "stochastic": {
+        "actions": {
+          "boost_share": 0.46919769439065584,
+          "handbrake_share": 0.48817972226757783,
+          "jump_share": 0.5122353130710514,
+          "mean_absolute_pitch": 0.4075007275536164,
+          "mean_absolute_roll": 0.40795020943467136,
+          "mean_absolute_steer": 0.41858958973825133,
+          "mean_absolute_throttle": 0.4493112838357157,
+          "mean_absolute_yaw": 0.4678941909834923,
+          "pitch_mean": -0.07440640890535057,
+          "roll_mean": -0.058337467133890805,
+          "steer_mean": -0.14231204937158498,
+          "throttle_mean": 0.2598483356459412,
+          "yaw_mean": -0.308925091069744
+        },
+        "all_three_success": 0.0,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.46889771942880665,
+            "effective_distance_from_0p5_mean": 0.40033899226077113,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4835747851180538,
+            "mean_effective_probability": 0.4692175884625274,
+            "mean_entropy": 0.3241049396075101,
+            "previous_bit_share": 0.46889771942880665
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.4878564611444072,
+            "effective_distance_from_0p5_mean": 0.4003121775258839,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4948465628654458,
+            "mean_effective_probability": 0.48843678474457214,
+            "mean_entropy": 0.32433393486375683,
+            "previous_bit_share": 0.4878564611444072
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.5118654795261635,
+            "effective_distance_from_0p5_mean": 0.4499165379838732,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.50691390859406,
+            "mean_effective_probability": 0.5119951863841841,
+            "mean_entropy": 0.19872879988395487,
+            "previous_bit_share": 0.5118654795261635
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.7173981226364797,
+          "distance_change_terminal_minus_initial_mean": 2091.878958979784,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.6036573771455066,
+            "median": 0.9746236026660848,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9994453442258492,
+            "samples": 448
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2108.2250964063155,
+            "median": 1914.4136249062806,
+            "minimum": 442.47720884204824,
+            "p90": 3849.2769383005493,
+            "p95": 3849.2769383005493,
+            "samples": 448
+          },
+          "terminal_alignment": {
+            "maximum": 0.9992126072371278,
+            "mean": -0.11374074549097316,
+            "median": -0.18278811591654326,
+            "minimum": -0.9987549161507021,
+            "p90": 0.7830352998565283,
+            "p95": 0.8886024359660221,
+            "samples": 448
+          },
+          "terminal_distance": {
+            "maximum": 11121.446798661003,
+            "mean": 4200.104055386099,
+            "median": 3914.797149644033,
+            "minimum": 305.9075459638493,
+            "p90": 6956.487607967137,
+            "p95": 7628.586148373896,
+            "samples": 448
+          }
+        },
+        "first_contact_success": 0.104,
+        "mean_button_entropy": 0.8471676743552218,
+        "no_touch_rate": 0.982,
+        "reward_components": {
+          "acquisition_time": -8130.301666666698,
+          "distance": -367.64163886482675,
+          "heading": -559.3545579403683,
+          "touch": 530.0
+        },
+        "second_contact_success": 0.002,
+        "third_contact_success": 0.0,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 1.3166666666666667,
+            "mean": 1.3166666666666667,
+            "median": 1.3166666666666667,
+            "minimum": 1.3166666666666667,
+            "p90": 1.3166666666666667,
+            "p95": 1.3166666666666667,
+            "samples": 1
+          },
+          "reset_to_first": {
+            "maximum": 11.083333333333334,
+            "mean": 2.3762820512820513,
+            "median": 1.5583333333333333,
+            "minimum": 0.36666666666666664,
+            "p90": 4.7799999999999985,
+            "p95": 7.837083333333328,
+            "samples": 52
+          },
+          "second_to_third": {
+            "maximum": null,
+            "mean": null,
+            "median": null,
+            "minimum": null,
+            "p90": null,
+            "p95": null,
+            "samples": 0
+          }
+        }
+      }
+    },
+    {
+      "boundary_hours": 1.0,
+      "deterministic": {
+        "actions": {
+          "boost_share": 0.0,
+          "handbrake_share": 0.0,
+          "jump_share": 0.0,
+          "mean_absolute_pitch": 0.057779561186760274,
+          "mean_absolute_roll": 0.05583155287757382,
+          "mean_absolute_steer": 0.11544393839949277,
+          "mean_absolute_throttle": 0.27078998742179455,
+          "mean_absolute_yaw": 0.26433703949250703,
+          "pitch_mean": -0.05117394642398396,
+          "roll_mean": -0.04417318837683522,
+          "steer_mean": -0.1154036017274949,
+          "throttle_mean": 0.27078998742179455,
+          "yaw_mean": -0.26433703949250703
+        },
+        "all_three_success": 0.006,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.41221447134289346,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.46407037957297553,
+            "mean_effective_probability": 0.08778552865710654,
+            "mean_entropy": 0.29736154875236903,
+            "previous_bit_share": 0.0
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.3978656592893168,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.5057909852182032,
+            "mean_effective_probability": 0.10213434071068322,
+            "mean_entropy": 0.3297102034098616,
+            "previous_bit_share": 0.0
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.0,
+            "effective_distance_from_0p5_mean": 0.4505266991246919,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.49718964284273975,
+            "mean_effective_probability": 0.04947330087530809,
+            "mean_entropy": 0.19695637997441554,
+            "previous_bit_share": 0.0
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.5283926024118016,
+          "distance_change_terminal_minus_initial_mean": 2933.4009512391103,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.5737362741546245,
+            "median": 0.9687929322171349,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9996741663619487,
+            "samples": 421
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2215.555310332973,
+            "median": 2017.1500174669577,
+            "minimum": 495.20686576215945,
+            "p90": 3849.2769383005493,
+            "p95": 3849.2769383005493,
+            "samples": 421
+          },
+          "terminal_alignment": {
+            "maximum": 0.973615841326827,
+            "mean": 0.04534367174282282,
+            "median": 0.011993249022789502,
+            "minimum": -0.9920545975661791,
+            "p90": 0.7569400934397968,
+            "p95": 0.8276637409892411,
+            "samples": 421
+          },
+          "terminal_distance": {
+            "maximum": 10662.53903686683,
+            "mean": 5148.956261572083,
+            "median": 5336.005548622446,
+            "minimum": 586.2042051707905,
+            "p90": 7028.033073194743,
+            "p95": 7895.735628610888,
+            "samples": 421
+          }
+        },
+        "first_contact_success": 0.158,
+        "mean_button_entropy": 0.8240281321366462,
+        "no_touch_rate": 0.978,
+        "reward_components": {
+          "acquisition_time": -8098.638333333364,
+          "distance": -553.6096193113538,
+          "heading": -467.7581478970259,
+          "touch": 910.0
+        },
+        "second_contact_success": 0.018,
+        "third_contact_success": 0.006,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 2.3000000000000003,
+            "mean": 1.5120370370370368,
+            "median": 1.3333333333333335,
+            "minimum": 1.0333333333333332,
+            "p90": 2.0333333333333337,
+            "p95": 2.166666666666667,
+            "samples": 9
+          },
+          "reset_to_first": {
+            "maximum": 5.05,
+            "mean": 1.7798523206751053,
+            "median": 1.5416666666666667,
+            "minimum": 0.425,
+            "p90": 3.0366666666666666,
+            "p95": 3.6241666666666625,
+            "samples": 79
+          },
+          "second_to_third": {
+            "maximum": 0.9499999999999997,
+            "mean": 0.8055555555555555,
+            "median": 0.8500000000000001,
+            "minimum": 0.6166666666666667,
+            "p90": 0.9299999999999998,
+            "p95": 0.9399999999999997,
+            "samples": 3
+          }
+        }
+      },
+      "stochastic": {
+        "actions": {
+          "boost_share": 0.44178575590471486,
+          "handbrake_share": 0.4915308308689674,
+          "jump_share": 0.4937670989437051,
+          "mean_absolute_pitch": 0.4050753982231202,
+          "mean_absolute_roll": 0.4057391470261234,
+          "mean_absolute_steer": 0.4242122121078227,
+          "mean_absolute_throttle": 0.4578919399040296,
+          "mean_absolute_yaw": 0.45597195205233226,
+          "pitch_mean": -0.045503663285438874,
+          "roll_mean": -0.022872244576681383,
+          "steer_mean": -0.1688145855891876,
+          "throttle_mean": 0.2837349164121058,
+          "yaw_mean": -0.27798976445830287
+        },
+        "all_three_success": 0.0,
+        "button_policy_diagnostics": {
+          "boost": {
+            "deterministic_chosen_share": 0.44150469538492143,
+            "effective_distance_from_0p5_mean": 0.4007133818016015,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4682951868199934,
+            "mean_effective_probability": 0.4418261465725331,
+            "mean_entropy": 0.3227514271430666,
+            "previous_bit_share": 0.44150469538492143
+          },
+          "handbrake": {
+            "deterministic_chosen_share": 0.49119274400287466,
+            "effective_distance_from_0p5_mean": 0.4002977374038461,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.4968160095769231,
+            "mean_effective_probability": 0.4918123057259783,
+            "mean_entropy": 0.3243756199076237,
+            "previous_bit_share": 0.49119274400287466
+          },
+          "jump": {
+            "deterministic_chosen_share": 0.49342901132856337,
+            "effective_distance_from_0p5_mean": 0.4498805098101516,
+            "effective_within_0p40_0p60_share": 0.0,
+            "effective_within_0p45_0p55_share": 0.0,
+            "mean_base_probability": 0.496834110764279,
+            "mean_effective_probability": 0.4934838321259612,
+            "mean_entropy": 0.19884989914765813,
+            "previous_bit_share": 0.49342901132856337
+          }
+        },
+        "failed_trajectory": {
+          "alignment_change_terminal_minus_initial_mean": -0.6657270749338101,
+          "distance_change_terminal_minus_initial_mean": 2129.845357414199,
+          "initial_alignment": {
+            "maximum": 0.9998634801022238,
+            "mean": 0.6103235621632958,
+            "median": 0.9739276001856114,
+            "minimum": -0.9990545733804682,
+            "p90": 0.9975898924915612,
+            "p95": 0.9994453442258492,
+            "samples": 448
+          },
+          "initial_distance": {
+            "maximum": 4608.62916958312,
+            "mean": 2127.9967626031353,
+            "median": 1932.5466616903327,
+            "minimum": 442.47720884204824,
+            "p90": 3849.2769383005493,
+            "p95": 3849.2769383005493,
+            "samples": 448
+          },
+          "terminal_alignment": {
+            "maximum": 0.9998174612248247,
+            "mean": -0.05540351277051435,
+            "median": -0.09455558456389863,
+            "minimum": -0.9982769687121317,
+            "p90": 0.845775820158971,
+            "p95": 0.9407473273265486,
+            "samples": 448
+          },
+          "terminal_distance": {
+            "maximum": 10657.307369787792,
+            "mean": 4257.842120017334,
+            "median": 4107.165659506414,
+            "minimum": 246.27308765757638,
+            "p90": 6662.633052656405,
+            "p95": 7508.175300887668,
+            "samples": 448
+          }
+        },
+        "first_contact_success": 0.104,
+        "mean_button_entropy": 0.8459769461983484,
+        "no_touch_rate": 0.982,
+        "reward_components": {
+          "acquisition_time": -8204.03500000003,
+          "distance": -360.7823712871771,
+          "heading": -537.2356709514122,
+          "touch": 550.0
+        },
+        "second_contact_success": 0.006,
+        "third_contact_success": 0.0,
+        "timing_seconds": {
+          "first_to_second": {
+            "maximum": 11.608333333333334,
+            "mean": 5.808333333333334,
+            "median": 5.408333333333333,
+            "minimum": 0.4083333333333332,
+            "p90": 10.368333333333334,
+            "p95": 10.988333333333333,
+            "samples": 3
+          },
+          "reset_to_first": {
+            "maximum": 11.95,
+            "mean": 2.994391025641025,
+            "median": 1.4666666666666668,
+            "minimum": 0.375,
+            "p90": 9.010833333333332,
+            "p95": 10.242916666666666,
+            "samples": 52
+          },
+          "second_to_third": {
+            "maximum": null,
+            "mean": null,
+            "median": null,
+            "minimum": null,
+            "p90": null,
+            "p95": null,
+            "samples": 0
+          }
+        }
+      }
+    }
+  ],
+  "monotonicity": {
+    "deterministic_first_contact_non_decreasing": false,
+    "deterministic_gain_from_initialization": -0.021999999999999992,
+    "stochastic_first_contact_non_decreasing": true,
+    "stochastic_gain_from_initialization": 0.01999999999999999
+  },
+  "next_authorized_boundary_hours": null,
+  "production_promotion_authorized": false,
+  "schema_version": 1,
+  "stage_2_authorized": false,
+  "stochastic_capability": {
+    "actions": {
+      "boost_share": 0.44178575590471486,
+      "handbrake_share": 0.4915308308689674,
+      "jump_share": 0.4937670989437051,
+      "mean_absolute_pitch": 0.4050753982231202,
+      "mean_absolute_roll": 0.4057391470261234,
+      "mean_absolute_steer": 0.4242122121078227,
+      "mean_absolute_throttle": 0.4578919399040296,
+      "mean_absolute_yaw": 0.45597195205233226,
+      "pitch_mean": -0.045503663285438874,
+      "roll_mean": -0.022872244576681383,
+      "steer_mean": -0.1688145855891876,
+      "throttle_mean": 0.2837349164121058,
+      "yaw_mean": -0.27798976445830287
+    },
+    "all_three_success": 0.0,
+    "button_policy_diagnostics": {
+      "boost": {
+        "deterministic_chosen_share": 0.44150469538492143,
+        "effective_distance_from_0p5_mean": 0.4007133818016015,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.4682951868199934,
+        "mean_effective_probability": 0.4418261465725331,
+        "mean_entropy": 0.3227514271430666,
+        "previous_bit_share": 0.44150469538492143
+      },
+      "handbrake": {
+        "deterministic_chosen_share": 0.49119274400287466,
+        "effective_distance_from_0p5_mean": 0.4002977374038461,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.4968160095769231,
+        "mean_effective_probability": 0.4918123057259783,
+        "mean_entropy": 0.3243756199076237,
+        "previous_bit_share": 0.49119274400287466
+      },
+      "jump": {
+        "deterministic_chosen_share": 0.49342901132856337,
+        "effective_distance_from_0p5_mean": 0.4498805098101516,
+        "effective_within_0p40_0p60_share": 0.0,
+        "effective_within_0p45_0p55_share": 0.0,
+        "mean_base_probability": 0.496834110764279,
+        "mean_effective_probability": 0.4934838321259612,
+        "mean_entropy": 0.19884989914765813,
+        "previous_bit_share": 0.49342901132856337
+      }
+    },
+    "failed_trajectory": {
+      "alignment_change_terminal_minus_initial_mean": -0.6657270749338101,
+      "distance_change_terminal_minus_initial_mean": 2129.845357414199,
+      "initial_alignment": {
+        "maximum": 0.9998634801022238,
+        "mean": 0.6103235621632958,
+        "median": 0.9739276001856114,
+        "minimum": -0.9990545733804682,
+        "p90": 0.9975898924915612,
+        "p95": 0.9994453442258492,
+        "samples": 448
+      },
+      "initial_distance": {
+        "maximum": 4608.62916958312,
+        "mean": 2127.9967626031353,
+        "median": 1932.5466616903327,
+        "minimum": 442.47720884204824,
+        "p90": 3849.2769383005493,
+        "p95": 3849.2769383005493,
+        "samples": 448
+      },
+      "terminal_alignment": {
+        "maximum": 0.9998174612248247,
+        "mean": -0.05540351277051435,
+        "median": -0.09455558456389863,
+        "minimum": -0.9982769687121317,
+        "p90": 0.845775820158971,
+        "p95": 0.9407473273265486,
+        "samples": 448
+      },
+      "terminal_distance": {
+        "maximum": 10657.307369787792,
+        "mean": 4257.842120017334,
+        "median": 4107.165659506414,
+        "minimum": 246.27308765757638,
+        "p90": 6662.633052656405,
+        "p95": 7508.175300887668,
+        "samples": 448
+      }
+    },
+    "first_contact_success": 0.104,
+    "mean_button_entropy": 0.8459769461983484,
+    "no_touch_rate": 0.982,
+    "reward_components": {
+      "acquisition_time": -8204.03500000003,
+      "distance": -360.7823712871771,
+      "heading": -537.2356709514122,
+      "touch": 550.0
+    },
+    "second_contact_success": 0.006,
+    "third_contact_success": 0.0,
+    "timing_seconds": {
+      "first_to_second": {
+        "maximum": 11.608333333333334,
+        "mean": 5.808333333333334,
+        "median": 5.408333333333333,
+        "minimum": 0.4083333333333332,
+        "p90": 10.368333333333334,
+        "p95": 10.988333333333333,
+        "samples": 3
+      },
+      "reset_to_first": {
+        "maximum": 11.95,
+        "mean": 2.994391025641025,
+        "median": 1.4666666666666668,
+        "minimum": 0.375,
+        "p90": 9.010833333333332,
+        "p95": 10.242916666666666,
+        "samples": 52
+      },
+      "second_to_third": {
+        "maximum": null,
+        "mean": null,
+        "median": null,
+        "minimum": null,
+        "p90": null,
+        "p95": null,
+        "samples": 0
+      }
+    }
+  },
+  "stochastic_vs_deterministic_capability_gap": {
+    "all_three_contacts_success_share": -0.006,
+    "definition": "stochastic share minus deterministic deployment share",
+    "first_touch_success_share": -0.054000000000000006,
+    "no_touch_timeout_share": 0.0040000000000000036,
+    "second_touch_success_share": -0.011999999999999999,
+    "stochastic_materially_better_first_touch_by_5_points": false,
+    "third_touch_success_share": -0.006
+  },
+  "training_diagnostics": {
+    "aggregate_credit_assignment": {
+      "checks": {
+        "all_four_windows_present": true,
+        "all_iterations_passed": true,
+        "passed": true
+      },
+      "failed_timeout_like": {
+        "0p5_to_1p0_seconds_before_anchor": {
+          "eligible_trajectories": 54,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 15.664306640625,
+              "mean": -0.014925902566792052,
+              "minimum": -18.1640625,
+              "samples": 3240,
+              "standard_deviation": 6.545381860584976,
+              "sum": -48.35992431640625,
+              "sum_squares": 138808.87860635296,
+              "variance": 42.84202370087483
+            },
+            "heading_improvement": {
+              "maximum": 0.05029305815696716,
+              "mean": -0.0019091105872957772,
+              "minimum": -0.08285921066999435,
+              "samples": 3240,
+              "standard_deviation": 0.015846175497143244,
+              "sum": -6.185518302838318,
+              "sum_squares": 0.8253769788313524,
+              "variance": 0.00025110127788626293
+            },
+            "normalized_advantage": {
+              "maximum": 2.564140558242798,
+              "mean": 0.21214150639477372,
+              "minimum": -1.9737619161605835,
+              "samples": 3240,
+              "standard_deviation": 0.7307476383914324,
+              "sum": 687.3384807190669,
+              "sum_squares": 1875.9474603903225,
+              "variance": 0.5339921110146557
+            },
+            "raw_advantage": {
+              "maximum": 1.4837840795516968,
+              "mean": -0.48792737037491846,
+              "minimum": -2.350496530532837,
+              "samples": 3240,
+              "standard_deviation": 0.6185225737652401,
+              "sum": -1580.8846800147357,
+              "sum_squares": 2010.8842693788379,
+              "variance": 0.38257017425717693
+            },
+            "steer_magnitude": {
+              "maximum": 0.9873103499412537,
+              "mean": 0.42140962397130843,
+              "minimum": 3.2320618629455566e-05,
+              "samples": 3240,
+              "standard_deviation": 0.25401437262044907,
+              "sum": 1365.3671816670394,
+              "sum_squares": 784.4343674618157,
+              "variance": 0.06452330149776034
+            },
+            "throttle": {
+              "maximum": 0.984160840511322,
+              "mean": 0.2598951192970555,
+              "minimum": -0.9098770618438721,
+              "samples": 3240,
+              "standard_deviation": 0.4511130775035232,
+              "sum": 842.0601865224598,
+              "sum_squares": 878.1970808023825,
+              "variance": 0.20350300869469973
+            }
+          },
+          "newer_offset_ticks": 60,
+          "older_offset_ticks": 120
+        },
+        "1p0_to_2p0_seconds_before_anchor": {
+          "eligible_trajectories": 54,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 15.66455078125,
+              "mean": 0.15102467478057485,
+              "minimum": -20.48486328125,
+              "samples": 6480,
+              "standard_deviation": 6.198968132278828,
+              "sum": 978.639892578125,
+              "sum_squares": 249156.0930359587,
+              "variance": 38.42720590500846
+            },
+            "heading_improvement": {
+              "maximum": 0.10112110525369644,
+              "mean": 0.00042207474499814394,
+              "minimum": -0.04744569957256317,
+              "samples": 6480,
+              "standard_deviation": 0.013640464001896141,
+              "sum": 2.735044347587973,
+              "sum_squares": 1.2068378261974855,
+              "variance": 0.0001860622581870245
+            },
+            "normalized_advantage": {
+              "maximum": 2.3318700790405273,
+              "mean": 0.029801115572628573,
+              "minimum": -2.297793388366699,
+              "samples": 6480,
+              "standard_deviation": 0.6571737646555275,
+              "sum": 193.11122891063314,
+              "sum_squares": 2804.3202030969783,
+              "variance": 0.4318773569515186
+            },
+            "raw_advantage": {
+              "maximum": 1.287528157234192,
+              "mean": -0.6425489688784525,
+              "minimum": -2.6242854595184326,
+              "samples": 6480,
+              "standard_deviation": 0.5521359725001365,
+              "sum": -4163.717318332372,
+              "sum_squares": 4650.847045789612,
+              "variance": 0.30485413212867146
+            },
+            "steer_magnitude": {
+              "maximum": 0.9794435501098633,
+              "mean": 0.4213667379558265,
+              "minimum": 5.27799129486084e-05,
+              "samples": 6480,
+              "standard_deviation": 0.25558567309625435,
+              "sum": 2730.456461953756,
+              "sum_squares": 1573.8232876764453,
+              "variance": 0.0653240362920654
+            },
+            "throttle": {
+              "maximum": 0.9900920987129211,
+              "mean": 0.2560983657992494,
+              "minimum": -0.9552581310272217,
+              "samples": 6480,
+              "standard_deviation": 0.45233433582703525,
+              "sum": 1659.517410379136,
+              "sum_squares": 1750.8488536786904,
+              "variance": 0.20460635136808508
+            }
+          },
+          "newer_offset_ticks": 120,
+          "older_offset_ticks": 240
+        },
+        "2p0_to_3p0_seconds_before_anchor": {
+          "eligible_trajectories": 54,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 15.309326171875,
+              "mean": 0.4092728555938344,
+              "minimum": -16.4619140625,
+              "samples": 6480,
+              "standard_deviation": 5.183754529154006,
+              "sum": 2652.088104248047,
+              "sum_squares": 175211.52307175193,
+              "variance": 26.871311018524676
+            },
+            "heading_improvement": {
+              "maximum": 0.06563293933868408,
+              "mean": -0.0006775676573549087,
+              "minimum": -0.09078148007392883,
+              "samples": 6480,
+              "standard_deviation": 0.014433462382386101,
+              "sum": -4.390638419659808,
+              "sum_squares": 1.3529198940958318,
+              "variance": 0.0002083248363437547
+            },
+            "normalized_advantage": {
+              "maximum": 2.27730131149292,
+              "mean": -0.008598996767613592,
+              "minimum": -2.138378143310547,
+              "samples": 6480,
+              "standard_deviation": 0.6794006589582373,
+              "sum": -55.721499054136075,
+              "sum_squares": 2991.5516039361614,
+              "variance": 0.4615852553928871
+            },
+            "raw_advantage": {
+              "maximum": 1.2414203882217407,
+              "mean": -0.6746885632770516,
+              "minimum": -2.4895882606506348,
+              "samples": 6480,
+              "standard_deviation": 0.5760852468241523,
+              "sum": -4371.981890035295,
+              "sum_squares": 5100.271071283922,
+              "variance": 0.3318742116084445
+            },
+            "steer_magnitude": {
+              "maximum": 0.9804985523223877,
+              "mean": 0.4153838476322472,
+              "minimum": 0.00010505318641662598,
+              "samples": 6480,
+              "standard_deviation": 0.2541337080938797,
+              "sum": 2691.687332656962,
+              "sum_squares": 1536.5873823622826,
+              "variance": 0.06458394158954525
+            },
+            "throttle": {
+              "maximum": 0.9924116134643555,
+              "mean": 0.2520385401841019,
+              "minimum": -0.9655380845069885,
+              "samples": 6480,
+              "standard_deviation": 0.45917926844509854,
+              "sum": 1633.2097403929802,
+              "sum_squares": 1777.9112904752503,
+              "variance": 0.21084560056977586
+            }
+          },
+          "newer_offset_ticks": 240,
+          "older_offset_ticks": 360
+        },
+        "zero_to_0p5_seconds_before_anchor": {
+          "eligible_trajectories": 54,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 64.0,
+              "mean": 0.7252893518518518,
+              "minimum": -64.0,
+              "samples": 3240,
+              "standard_deviation": 10.278950764702905,
+              "sum": 2349.9375,
+              "sum_squares": 344032.5100333914,
+              "variance": 105.65682882318643
+            },
+            "heading_improvement": {
+              "maximum": 1.9733405113220215,
+              "mean": 0.01155710386954547,
+              "minimum": -1.9056854248046875,
+              "samples": 3240,
+              "standard_deviation": 0.14291505173957061,
+              "sum": 37.44501653732732,
+              "sum_squares": 66.60882286998496,
+              "variance": 0.020424712013724144
+            },
+            "normalized_advantage": {
+              "maximum": 2.4356181621551514,
+              "mean": 0.7129762402983639,
+              "minimum": -0.9966632127761841,
+              "samples": 3240,
+              "standard_deviation": 0.5324291415249938,
+              "sum": 2310.043018566699,
+              "sum_squares": 2565.4835483191046,
+              "variance": 0.28348079074504184
+            },
+            "raw_advantage": {
+              "maximum": 1.5505585670471191,
+              "mean": -0.06356987045008192,
+              "minimum": -1.524901270866394,
+              "samples": 3240,
+              "standard_deviation": 0.4572817736480671,
+              "sum": -205.96638025826542,
+              "sum_squares": 690.5987065648297,
+              "variance": 0.20910662051072207
+            },
+            "steer_magnitude": {
+              "maximum": 0.9770455956459045,
+              "mean": 0.413371505555686,
+              "minimum": 0.0004972218885086477,
+              "samples": 3240,
+              "standard_deviation": 0.2543127257109438,
+              "sum": 1339.3236780004227,
+              "sum_squares": 763.1851235670499,
+              "variance": 0.06467496245852974
+            },
+            "throttle": {
+              "maximum": 0.9927453994750977,
+              "mean": 0.24459374387321683,
+              "minimum": -0.971325695514679,
+              "samples": 3240,
+              "standard_deviation": 0.4602588065705595,
+              "sum": 792.4837301492225,
+              "sum_squares": 880.1922301592589,
+              "variance": 0.2118381690257557
+            }
+          },
+          "newer_offset_ticks": 0,
+          "older_offset_ticks": 60
+        }
+      },
+      "iterations": 3,
+      "successful_first_contact": {
+        "0p5_to_1p0_seconds_before_anchor": {
+          "eligible_trajectories": 11,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 17.952392578125,
+              "mean": 8.811070390181108,
+              "minimum": 1.692138671875,
+              "samples": 660,
+              "standard_deviation": 3.365044375441896,
+              "sum": 5815.306457519531,
+              "sum_squares": 58712.6001458168,
+              "variance": 11.32352364869314
+            },
+            "heading_improvement": {
+              "maximum": 0.04546688124537468,
+              "mean": -0.0022866088784102238,
+              "minimum": -0.06080672889947891,
+              "samples": 660,
+              "standard_deviation": 0.01472022289580285,
+              "sum": -1.5091618597507477,
+              "sum_squares": 0.1464629378948623,
+              "variance": 0.00021668496210211843
+            },
+            "normalized_advantage": {
+              "maximum": 6.99001932144165,
+              "mean": 3.4961183620221687,
+              "minimum": 1.3031314611434937,
+              "samples": 660,
+              "standard_deviation": 1.0778356363102404,
+              "sum": 2307.4381189346313,
+              "sum_squares": 8833.818351711456,
+              "variance": 1.1617296589003008
+            },
+            "raw_advantage": {
+              "maximum": 5.223410606384277,
+              "mean": 2.339403356972969,
+              "minimum": 0.41829997301101685,
+              "samples": 660,
+              "standard_deviation": 0.9024027134539041,
+              "sum": 1544.0062156021595,
+              "sum_squares": 4149.511557751141,
+              "variance": 0.814330657248969
+            },
+            "steer_magnitude": {
+              "maximum": 0.9775866270065308,
+              "mean": 0.4200573937949781,
+              "minimum": 0.003462971420958638,
+              "samples": 660,
+              "standard_deviation": 0.2579866810091059,
+              "sum": 277.23787990468554,
+              "sum_squares": 160.38352549554946,
+              "variance": 0.06655712757809415
+            },
+            "throttle": {
+              "maximum": 0.9672161340713501,
+              "mean": 0.2952388223435264,
+              "minimum": -0.8634030818939209,
+              "samples": 660,
+              "standard_deviation": 0.4518684886892196,
+              "sum": 194.85762274672743,
+              "sum_squares": 192.29172157078733,
+              "variance": 0.20418513107027939
+            }
+          },
+          "newer_offset_ticks": 60,
+          "older_offset_ticks": 120
+        },
+        "1p0_to_2p0_seconds_before_anchor": {
+          "eligible_trajectories": 4,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 11.501708984375,
+              "mean": 8.657369995117188,
+              "minimum": 5.740478515625,
+              "samples": 480,
+              "standard_deviation": 1.9168398114726086,
+              "sum": 4155.53759765625,
+              "sum_squares": 37739.67844569683,
+              "variance": 3.674274862846346
+            },
+            "heading_improvement": {
+              "maximum": 0.05463552474975586,
+              "mean": 0.0018011000007390975,
+              "minimum": -0.05204302817583084,
+              "samples": 480,
+              "standard_deviation": 0.019605590352470788,
+              "sum": 0.8645280003547668,
+              "sum_squares": 0.1860591044551478,
+              "variance": 0.0003843791730688956
+            },
+            "normalized_advantage": {
+              "maximum": 3.9105656147003174,
+              "mean": 1.5837986615373665,
+              "minimum": -0.1115381270647049,
+              "samples": 480,
+              "standard_deviation": 0.9804321427012929,
+              "sum": 760.223357537936,
+              "sum_squares": 1665.4393856301128,
+              "variance": 0.9612471864418484
+            },
+            "raw_advantage": {
+              "maximum": 2.8190977573394775,
+              "mean": 0.7753160057783437,
+              "minimum": -0.6401408910751343,
+              "samples": 480,
+              "standard_deviation": 0.8223788334587984,
+              "sum": 372.151682773605,
+              "sum_squares": 613.1624901778266,
+              "variance": 0.6763069457210541
+            },
+            "steer_magnitude": {
+              "maximum": 0.9784506559371948,
+              "mean": 0.4195702790103193,
+              "minimum": 0.0009031665977090597,
+              "samples": 480,
+              "standard_deviation": 0.25387375950589375,
+              "sum": 201.39373392495327,
+              "sum_squares": 115.43573030133771,
+              "variance": 0.06445188576565639
+            },
+            "throttle": {
+              "maximum": 0.9840782284736633,
+              "mean": 0.2769500125519092,
+              "minimum": -0.83942049741745,
+              "samples": 480,
+              "standard_deviation": 0.4562452485658388,
+              "sum": 132.93600602491642,
+              "sum_squares": 136.7332974198752,
+              "variance": 0.20815972683890402
+            }
+          },
+          "newer_offset_ticks": 120,
+          "older_offset_ticks": 240
+        },
+        "2p0_to_3p0_seconds_before_anchor": {
+          "eligible_trajectories": 1,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 8.317138671875,
+              "mean": 8.253782145182292,
+              "minimum": 8.22607421875,
+              "samples": 120,
+              "standard_deviation": 0.020138000680166857,
+              "sum": 990.453857421875,
+              "sum_squares": 8175.039028704166,
+              "variance": 0.0004055390713944007
+            },
+            "heading_improvement": {
+              "maximum": 0.05813407897949219,
+              "mean": -0.001660489042599996,
+              "minimum": -0.06075470149517059,
+              "samples": 120,
+              "standard_deviation": 0.03540336937189603,
+              "sum": -0.1992586851119995,
+              "sum_squares": 0.1507386944092201,
+              "variance": 0.0012533985628829063
+            },
+            "normalized_advantage": {
+              "maximum": 2.4390811920166016,
+              "mean": 0.9132362266323374,
+              "minimum": -1.1438844203948975,
+              "samples": 120,
+              "standard_deviation": 1.0766295274514486,
+              "sum": 109.58834719588049,
+              "sum_squares": 239.17578540167995,
+              "variance": 1.1591311393803294
+            },
+            "raw_advantage": {
+              "maximum": 1.553537130355835,
+              "mean": 0.24122346166125982,
+              "minimum": -1.528017520904541,
+              "samples": 120,
+              "standard_deviation": 0.9259627591295868,
+              "sum": 28.94681539935118,
+              "sum_squares": 109.87149477008622,
+              "variance": 0.8574070312948772
+            },
+            "steer_magnitude": {
+              "maximum": 0.9645437598228455,
+              "mean": 0.4625503937810815,
+              "minimum": 0.003802191698923707,
+              "samples": 120,
+              "standard_deviation": 0.2693950928326308,
+              "sum": 55.506047253729776,
+              "sum_squares": 34.383189939520236,
+              "variance": 0.07257371604230176
+            },
+            "throttle": {
+              "maximum": 0.9742122292518616,
+              "mean": 0.23681958053299848,
+              "minimum": -0.8996209502220154,
+              "samples": 120,
+              "standard_deviation": 0.4443453726783108,
+              "sum": 28.418349663959816,
+              "sum_squares": 30.423158873334277,
+              "variance": 0.19744281022062693
+            }
+          },
+          "newer_offset_ticks": 240,
+          "older_offset_ticks": 360
+        },
+        "zero_to_0p5_seconds_before_anchor": {
+          "eligible_trajectories": 15,
+          "metrics": {
+            "distance_progress_uu": {
+              "maximum": 21.61187744140625,
+              "mean": 8.62454970465766,
+              "minimum": 1.883331298828125,
+              "samples": 900,
+              "standard_deviation": 3.8578216495059543,
+              "sum": 7762.0947341918945,
+              "sum_squares": 80339.08093875664,
+              "variance": 14.882787879396844
+            },
+            "heading_improvement": {
+              "maximum": 0.05585649609565735,
+              "mean": -0.004675973976651828,
+              "minimum": -0.05388146638870239,
+              "samples": 900,
+              "standard_deviation": 0.015217244156075387,
+              "sum": -4.208376578986645,
+              "sum_squares": 0.22808632710234208,
+              "variance": 0.00023156451970561052
+            },
+            "normalized_advantage": {
+              "maximum": 13.323172569274902,
+              "mean": 8.103319320678711,
+              "minimum": 4.141149044036865,
+              "samples": 900,
+              "standard_deviation": 2.1281451550190496,
+              "sum": 7292.98738861084,
+              "sum_squares": 63173.50723234435,
+              "variance": 4.529001800831054
+            },
+            "raw_advantage": {
+              "maximum": 10.91447639465332,
+              "mean": 6.267076969411638,
+              "minimum": 3.0174124240875244,
+              "samples": 900,
+              "standard_deviation": 1.805484974099687,
+              "sum": 5640.369272470474,
+              "sum_squares": 38282.426759006565,
+              "variance": 3.2597759916997475
+            },
+            "steer_magnitude": {
+              "maximum": 0.9715237021446228,
+              "mean": 0.41681493770926153,
+              "minimum": 0.0017872434109449387,
+              "samples": 900,
+              "standard_deviation": 0.25751439115693603,
+              "sum": 375.1334439383354,
+              "sum_squares": 216.04351855545272,
+              "variance": 0.06631366165292746
+            },
+            "throttle": {
+              "maximum": 0.9722325801849365,
+              "mean": 0.2919031845209085,
+              "minimum": -0.8821961879730225,
+              "samples": 900,
+              "standard_deviation": 0.45117702909342733,
+              "sum": 262.7128660688177,
+              "sum_squares": 259.891362643517,
+              "variance": 0.20356071158157135
+            }
+          },
+          "newer_offset_ticks": 0,
+          "older_offset_ticks": 60
+        }
+      },
+      "trajectory_counts": {
+        "contact_events": 20,
+        "excluded_collection_cut_or_short_failures": 205,
+        "failed_timeout_like_trajectories": 54,
+        "segments": 279,
+        "successful_first_contact_trajectories": 19,
+        "touch_age_confirmed_contact_events": 20
+      },
+      "version": "RivalM10_8AggregateCreditAssignmentWindowsV1"
+    },
+    "iterations": [
+      {
+        "actions": {
+          "all_actions_finite": true,
+          "all_eight_button_combos_sampled": true,
+          "analog": [
+            {
+              "absolute_over_0_95_share": 0.0070516426056704785,
+              "field": "throttle",
+              "maximum": 0.995104968547821,
+              "mean": 0.2554979950528779,
+              "minimum": -0.9816267490386963,
+              "nontrivial_range": true,
+              "p01": -0.7912093669176101,
+              "p50": 0.32609033584594727,
+              "p95": 0.8717035502195358,
+              "p99": 0.9410855740308761,
+              "samples": 96006,
+              "standard_deviation": 0.4540631500363318
+            },
+            {
+              "absolute_over_0_95_share": 0.003489365248005333,
+              "field": "steer",
+              "maximum": 0.9804985523223877,
+              "mean": -0.1380897887650476,
+              "minimum": -0.9906117916107178,
+              "nontrivial_range": true,
+              "p01": -0.9190954089164733,
+              "p50": -0.17693405598402023,
+              "p95": 0.6746159642934799,
+              "p99": 0.8400004744529721,
+              "samples": 96006,
+              "standard_deviation": 0.4693481507483714
+            },
+            {
+              "absolute_over_0_95_share": 0.0028852363393954542,
+              "field": "pitch",
+              "maximum": 0.984856903553009,
+              "mean": -0.07902039622968304,
+              "minimum": -0.9915515780448914,
+              "nontrivial_range": true,
+              "p01": -0.9076817810535431,
+              "p50": -0.10344072431325912,
+              "p95": 0.7185960114002228,
+              "p99": 0.8668830096721648,
+              "samples": 96006,
+              "standard_deviation": 0.47365748077161607
+            },
+            {
+              "absolute_over_0_95_share": 0.00939524613045018,
+              "field": "yaw",
+              "maximum": 0.9711207747459412,
+              "mean": -0.30574175370006623,
+              "minimum": -0.9965531229972839,
+              "nontrivial_range": true,
+              "p01": -0.948682326078415,
+              "p50": -0.38464541733264923,
+              "p95": 0.5319356173276901,
+              "p99": 0.7648138493299482,
+              "samples": 96006,
+              "standard_deviation": 0.44292812174310203
+            },
+            {
+              "absolute_over_0_95_share": 0.0026665000104160157,
+              "field": "roll",
+              "maximum": 0.9826916456222534,
+              "mean": -0.05328851262038008,
+              "minimum": -0.9917646050453186,
+              "nontrivial_range": true,
+              "p01": -0.9039401531219482,
+              "p50": -0.06943633779883385,
+              "p95": 0.7379144132137299,
+              "p99": 0.8750840187072753,
+              "samples": 96006,
+              "standard_deviation": 0.4786941894599919
+            }
+          ],
+          "button_combo_counts": [
+            13017,
+            13303,
+            11312,
+            12085,
+            12091,
+            12669,
+            10115,
+            11414
+          ],
+          "button_combo_shares": [
+            0.135585275920255,
+            0.13856425640064163,
+            0.11782596921025769,
+            0.12587754931983416,
+            0.1259400454138283,
+            0.13196050246859573,
+            0.10535799845842968,
+            0.11888840280815782
+          ],
+          "marginal_button_shares": {
+            "boost": 0.4679499197966794,
+            "handbrake": 0.4821469491490115,
+            "jump": 0.5152907109972293
+          },
+          "sample_count": 96006
+        },
+        "active_learner_steps_per_second": 2726.702231469863,
+        "collected_active_learner_steps": 96006,
+        "collection_seconds": 35.20956520002801,
+        "credit_assignment": {
+          "checks": {
+            "all_four_windows_present": true,
+            "all_metrics_finite": true,
+            "contact_reward_events_touch_age_confirmed": true,
+            "passed": true,
+            "trajectory_boundaries_cover_rollout": true
+          },
+          "contact_event_definition": "reward > 5 and next touch age confirms contact",
+          "failed_cohort_definition": "no rewarded contact and at least 1430 ticks; short collection-cut segments excluded",
+          "failed_timeout_like": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 48,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 11.06005859375,
+                  "mean": -0.1477091259426541,
+                  "minimum": -15.025390625,
+                  "samples": 2880,
+                  "standard_deviation": 5.924806797291223,
+                  "sum": -425.40228271484375,
+                  "sum_squares": 101160.44228481129,
+                  "variance": 35.10333558522828
+                },
+                "heading_improvement": {
+                  "maximum": 0.05029305815696716,
+                  "mean": -0.0018977135445311434,
+                  "minimum": -0.059968002140522,
+                  "samples": 2880,
+                  "standard_deviation": 0.015098836785123124,
+                  "sum": -5.465415008249693,
+                  "sum_squares": 0.6669394242073463,
+                  "variance": 0.0002279748722637872
+                },
+                "normalized_advantage": {
+                  "maximum": 2.564140558242798,
+                  "mean": 0.22348574726838452,
+                  "minimum": -1.9737619161605835,
+                  "samples": 2880,
+                  "standard_deviation": 0.7223627993876562,
+                  "sum": 643.6389521329475,
+                  "sum_squares": 1646.6512123332855,
+                  "variance": 0.5218080139391713
+                },
+                "raw_advantage": {
+                  "maximum": 1.4837840795516968,
+                  "mean": -0.4939418528089716,
+                  "minimum": -2.350496530532837,
+                  "samples": 2880,
+                  "standard_deviation": 0.6103572322618527,
+                  "sum": -1422.5525360898382,
+                  "sum_squares": 1775.561774200442,
+                  "variance": 0.37253595097434916
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9873103499412537,
+                  "mean": 0.4228593187520548,
+                  "minimum": 3.2320618629455566e-05,
+                  "samples": 2880,
+                  "standard_deviation": 0.2547419555375667,
+                  "sum": 1217.8348380059178,
+                  "sum_squares": 701.8659860156798,
+                  "variance": 0.0648934639111036
+                },
+                "throttle": {
+                  "maximum": 0.9837151169776917,
+                  "mean": 0.2523222118943219,
+                  "minimum": -0.9098770618438721,
+                  "samples": 2880,
+                  "standard_deviation": 0.45075371902208605,
+                  "sum": 726.6879702556471,
+                  "sum_squares": 768.5147918231562,
+                  "variance": 0.2031789152122417
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 48,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 13.466796875,
+                  "mean": 0.1484792285495334,
+                  "minimum": -15.54638671875,
+                  "samples": 5760,
+                  "standard_deviation": 5.44786383796657,
+                  "sum": 855.2403564453125,
+                  "sum_squares": 171079.29491520673,
+                  "variance": 29.67922039702384
+                },
+                "heading_improvement": {
+                  "maximum": 0.10112110525369644,
+                  "mean": 0.0004629212306301472,
+                  "minimum": -0.04744569957256317,
+                  "samples": 5760,
+                  "standard_deviation": 0.013714442446486192,
+                  "sum": 2.6664262884296477,
+                  "sum_squares": 1.0846093114584017,
+                  "variance": 0.00018808593161798217
+                },
+                "normalized_advantage": {
+                  "maximum": 2.3318700790405273,
+                  "mean": 0.05958873609336024,
+                  "minimum": -2.297793388366699,
+                  "samples": 5760,
+                  "standard_deviation": 0.666504230709339,
+                  "sum": 343.231119897755,
+                  "sum_squares": 2579.2053524504745,
+                  "variance": 0.4442278895534478
+                },
+                "raw_advantage": {
+                  "maximum": 1.287528157234192,
+                  "mean": -0.6324259026652871,
+                  "minimum": -2.6242854595184326,
+                  "samples": 5760,
+                  "standard_deviation": 0.563159784560685,
+                  "sum": -3642.773199352054,
+                  "sum_squares": 4130.562040176617,
+                  "variance": 0.31714894294643725
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9794435501098633,
+                  "mean": 0.42387242400255776,
+                  "minimum": 5.27799129486084e-05,
+                  "samples": 5760,
+                  "standard_deviation": 0.2551912011795522,
+                  "sum": 2441.5051622547326,
+                  "sum_squares": 1409.9925944981765,
+                  "variance": 0.06512254915946267
+                },
+                "throttle": {
+                  "maximum": 0.9900920987129211,
+                  "mean": 0.25051674492749754,
+                  "minimum": -0.9552581310272217,
+                  "samples": 5760,
+                  "standard_deviation": 0.45428525424565125,
+                  "sum": 1442.9764507823857,
+                  "sum_squares": 1550.2102946732437,
+                  "variance": 0.206375092225036
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 48,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 13.04150390625,
+                  "mean": 0.44811628659566244,
+                  "minimum": -13.23193359375,
+                  "samples": 5760,
+                  "standard_deviation": 4.685523872146165,
+                  "sum": 2581.1498107910156,
+                  "sum_squares": 127612.46685751993,
+                  "variance": 21.954133956451592
+                },
+                "heading_improvement": {
+                  "maximum": 0.06563293933868408,
+                  "mean": -0.000528924074226072,
+                  "minimum": -0.09078148007392883,
+                  "samples": 5760,
+                  "standard_deviation": 0.014487315795293188,
+                  "sum": -3.0466026675421745,
+                  "sum_squares": 1.2105335786621612,
+                  "variance": 0.00020988231895255148
+                },
+                "normalized_advantage": {
+                  "maximum": 2.27730131149292,
+                  "mean": -0.006422610707234197,
+                  "minimum": -2.138378143310547,
+                  "samples": 5760,
+                  "standard_deviation": 0.6927969401330154,
+                  "sum": -36.99423767366898,
+                  "sum_squares": 2764.8509770711617,
+                  "variance": 0.4799676002576689
+                },
+                "raw_advantage": {
+                  "maximum": 1.2414203882217407,
+                  "mean": -0.6882018961889059,
+                  "minimum": -2.4895882606506348,
+                  "samples": 5760,
+                  "standard_deviation": 0.5853756919477618,
+                  "sum": -3964.0429220480983,
+                  "sum_squares": 4701.810531694042,
+                  "variance": 0.34266470072332095
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9804985523223877,
+                  "mean": 0.4166353302583199,
+                  "minimum": 0.00010505318641662598,
+                  "samples": 5760,
+                  "standard_deviation": 0.2537531059575107,
+                  "sum": 2399.8195022879227,
+                  "sum_squares": 1370.7396702866474,
+                  "variance": 0.06439063878308365
+                },
+                "throttle": {
+                  "maximum": 0.9924116134643555,
+                  "mean": 0.25224712811749567,
+                  "minimum": -0.9655380845069885,
+                  "samples": 5760,
+                  "standard_deviation": 0.45761688024501523,
+                  "sum": 1452.943457956775,
+                  "sum_squares": 1572.72089891734,
+                  "variance": 0.20941320908518063
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 48,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 64.0,
+                  "mean": 0.5303335401746961,
+                  "minimum": -64.0,
+                  "samples": 2880,
+                  "standard_deviation": 10.096733367397581,
+                  "sum": 1527.360595703125,
+                  "sum_squares": 294408.8016657233,
+                  "variance": 101.9440246923197
+                },
+                "heading_improvement": {
+                  "maximum": 1.9733405113220215,
+                  "mean": 0.01053453751228517,
+                  "minimum": -1.9056854248046875,
+                  "samples": 2880,
+                  "standard_deviation": 0.14063395609924328,
+                  "sum": 30.339468035381287,
+                  "sum_squares": 57.27999193551828,
+                  "variance": 0.019777909608123888
+                },
+                "normalized_advantage": {
+                  "maximum": 2.296295404434204,
+                  "mean": 0.6991207316421701,
+                  "minimum": -0.9966632127761841,
+                  "samples": 2880,
+                  "standard_deviation": 0.509246732235284,
+                  "sum": 2013.46770712945,
+                  "sum_squares": 2154.5338513080915,
+                  "variance": 0.25933223429231506
+                },
+                "raw_advantage": {
+                  "maximum": 1.2574694156646729,
+                  "mean": -0.09205618845917343,
+                  "minimum": -1.524901270866394,
+                  "samples": 2880,
+                  "standard_deviation": 0.4302857604143763,
+                  "sum": -265.12182276241947,
+                  "sum_squares": 557.6261110531456,
+                  "variance": 0.185145835615378
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9770455956459045,
+                  "mean": 0.41296723919013956,
+                  "minimum": 0.0004972218885086477,
+                  "samples": 2880,
+                  "standard_deviation": 0.25345854501371645,
+                  "sum": 1189.345648867602,
+                  "sum_squares": 676.1755430922128,
+                  "variance": 0.06424123404047014
+                },
+                "throttle": {
+                  "maximum": 0.9927453994750977,
+                  "mean": 0.24291919490776007,
+                  "minimum": -0.971325695514679,
+                  "samples": 2880,
+                  "standard_deviation": 0.4598633033039095,
+                  "sum": 699.607281334349,
+                  "sum_squares": 778.9938997830271,
+                  "variance": 0.21147425772558345
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "physics_hz": 120,
+          "successful_cohort_definition": "first visible rewarded contact in a trajectory segment whose initial self-touch age is reset/saturated",
+          "successful_first_contact": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 7,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 17.952392578125,
+                  "mean": 8.616360764276413,
+                  "minimum": 1.692138671875,
+                  "samples": 420,
+                  "standard_deviation": 3.97746400000342,
+                  "sum": 3618.8715209960938,
+                  "sum_squares": 37825.994930423796,
+                  "variance": 15.820219871323204
+                },
+                "heading_improvement": {
+                  "maximum": 0.029068320989608765,
+                  "mean": -0.0053921132570221315,
+                  "minimum": -0.06080672889947891,
+                  "samples": 420,
+                  "standard_deviation": 0.015819229026987007,
+                  "sum": -2.264687567949295,
+                  "sum_squares": 0.1173156148016253,
+                  "variance": 0.0002502480070082683
+                },
+                "normalized_advantage": {
+                  "maximum": 6.99001932144165,
+                  "mean": 3.6468274099486213,
+                  "minimum": 1.3031314611434937,
+                  "samples": 420,
+                  "standard_deviation": 1.1511857406366472,
+                  "sum": 1531.667512178421,
+                  "sum_squares": 6142.323082307041,
+                  "variance": 1.325228609445146
+                },
+                "raw_advantage": {
+                  "maximum": 5.223410606384277,
+                  "mean": 2.3985954682741846,
+                  "minimum": 0.41829997301101685,
+                  "samples": 420,
+                  "standard_deviation": 0.9726892833785589,
+                  "sum": 1007.4100966751575,
+                  "sum_squares": 2813.7415582184785,
+                  "variance": 0.9461244419994944
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9426441192626953,
+                  "mean": 0.41173946117328125,
+                  "minimum": 0.003462971420958638,
+                  "samples": 420,
+                  "standard_deviation": 0.2580164086051065,
+                  "sum": 172.93057369277813,
+                  "sum_squares": 99.16277741863132,
+                  "variance": 0.06657246710947727
+                },
+                "throttle": {
+                  "maximum": 0.9672161340713501,
+                  "mean": 0.2712222141862315,
+                  "minimum": -0.8634030818939209,
+                  "samples": 420,
+                  "standard_deviation": 0.46260600881761554,
+                  "sum": 113.91332995821722,
+                  "sum_squares": 120.77763972214323,
+                  "variance": 0.21400431939416378
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 1,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 8.445068359375,
+                  "mean": 6.955248006184896,
+                  "minimum": 6.15966796875,
+                  "samples": 120,
+                  "standard_deviation": 0.6478507860079264,
+                  "sum": 834.6297607421875,
+                  "sum_squares": 5855.422256216407,
+                  "variance": 0.41971064093108806
+                },
+                "heading_improvement": {
+                  "maximum": 0.05463552474975586,
+                  "mean": 0.014879342913627625,
+                  "minimum": -0.028010845184326172,
+                  "samples": 120,
+                  "standard_deviation": 0.01675150629970002,
+                  "sum": 1.785521149635315,
+                  "sum_squares": 0.06024093706202521,
+                  "variance": 0.0002806129633088895
+                },
+                "normalized_advantage": {
+                  "maximum": 3.003068208694458,
+                  "mean": 2.114561042189598,
+                  "minimum": 1.5017492771148682,
+                  "samples": 120,
+                  "standard_deviation": 0.4419473141434882,
+                  "sum": 253.74732506275177,
+                  "sum_squares": 560.0022995549523,
+                  "variance": 0.19531742847864306
+                },
+                "raw_advantage": {
+                  "maximum": 1.8546539545059204,
+                  "mean": 1.1039137974381448,
+                  "minimum": 0.586121141910553,
+                  "samples": 120,
+                  "standard_deviation": 0.37342142531649863,
+                  "sum": 132.46965569257736,
+                  "sum_squares": 162.9683079671653,
+                  "variance": 0.13944356088540538
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9447925090789795,
+                  "mean": 0.39060330846502134,
+                  "minimum": 0.003882954828441143,
+                  "samples": 120,
+                  "standard_deviation": 0.275807995052473,
+                  "sum": 46.87239701580256,
+                  "sum_squares": 27.43691936624227,
+                  "variance": 0.07607005013486498
+                },
+                "throttle": {
+                  "maximum": 0.9424487352371216,
+                  "mean": 0.2642920083443945,
+                  "minimum": -0.7820950746536255,
+                  "samples": 120,
+                  "standard_deviation": 0.44461008018518505,
+                  "sum": 31.715041001327336,
+                  "sum_squares": 32.103406689238824,
+                  "variance": 0.1976781234022767
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 9,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 21.61187744140625,
+                  "mean": 8.804625744289822,
+                  "minimum": 1.883331298828125,
+                  "samples": 540,
+                  "standard_deviation": 4.465236937643604,
+                  "sum": 4754.497901916504,
+                  "sum_squares": 52628.278719406284,
+                  "variance": 19.938340909296826
+                },
+                "heading_improvement": {
+                  "maximum": 0.05585649609565735,
+                  "mean": -0.0010472800996568468,
+                  "minimum": -0.05388146638870239,
+                  "samples": 540,
+                  "standard_deviation": 0.016015088809051923,
+                  "sum": -0.5655312538146973,
+                  "sum_squares": 0.139093127191237,
+                  "variance": 0.0002564830695618201
+                },
+                "normalized_advantage": {
+                  "maximum": 13.15328598022461,
+                  "mean": 8.259714409157082,
+                  "minimum": 4.492598533630371,
+                  "samples": 540,
+                  "standard_deviation": 2.041897367330761,
+                  "sum": 4460.245780944824,
+                  "sum_squares": 39091.802568956686,
+                  "variance": 4.169344858712293
+                },
+                "raw_advantage": {
+                  "maximum": 10.431035041809082,
+                  "mean": 6.296233783827888,
+                  "minimum": 3.1132259368896484,
+                  "samples": 540,
+                  "standard_deviation": 1.7252919595209273,
+                  "sum": 3399.9662432670593,
+                  "sum_squares": 23014.363791349726,
+                  "variance": 2.976632345587561
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9715237021446228,
+                  "mean": 0.42502798493046107,
+                  "minimum": 0.0017872434109449387,
+                  "samples": 540,
+                  "standard_deviation": 0.26085444060694785,
+                  "sum": 229.51511186244898,
+                  "sum_squares": 134.29466666554242,
+                  "variance": 0.06804503918436369
+                },
+                "throttle": {
+                  "maximum": 0.9722325801849365,
+                  "mean": 0.2726524589954082,
+                  "minimum": -0.8821961879730225,
+                  "samples": 540,
+                  "standard_deviation": 0.4597830638230485,
+                  "sum": 147.23232785752043,
+                  "sum_squares": 154.29950775436618,
+                  "variance": 0.2114004657785095
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "trajectory_counts": {
+            "contact_events": 9,
+            "excluded_collection_cut_or_short_failures": 49,
+            "failed_timeout_like_trajectories": 48,
+            "segments": 106,
+            "successful_first_contact_trajectories": 9,
+            "touch_age_confirmed_contact_events": 9
+          },
+          "version": "RivalM10_8CreditAssignmentWindowsV1"
+        },
+        "cuda_peak_allocated_mib": 2358.7978515625,
+        "cumulative_active_learner_steps": 312035,
+        "experience_records": 96006,
+        "gae": {
+          "advantage": {
+            "maximum": 10.431035041809082,
+            "mean": -0.6827751376259388,
+            "minimum": -2.930589437484741,
+            "p01": -2.2592788100242616,
+            "p50": -0.727947860956192,
+            "p95": 0.29653896391391754,
+            "p99": 1.495692801475516,
+            "samples": 96006,
+            "standard_deviation": 0.8449455248131393
+          },
+          "finite": true,
+          "gamma": 0.9987444968227265,
+          "lambda": 0.9872585449014338,
+          "normalized_advantage": {
+            "maximum": 13.15328598022461,
+            "mean": 2.7079799784924335e-09,
+            "minimum": -2.660306453704834,
+            "p01": -1.8658050775527955,
+            "p50": -0.05346228741109371,
+            "p95": 1.1590262949466705,
+            "p99": 2.5782347202300917,
+            "samples": 96006,
+            "standard_deviation": 0.9999999722952506
+          },
+          "return": {
+            "maximum": 8.971037864685059,
+            "mean": -2.0826753125585244,
+            "minimum": -4.292604923248291,
+            "p01": -3.6762399435043336,
+            "p50": -2.1243501901626587,
+            "p95": -1.0882687866687775,
+            "p99": 0.07900426387785522,
+            "samples": 96006,
+            "standard_deviation": 0.8523617565227312
+          },
+          "true_termination_suppresses_bootstrap": true,
+          "truncation_bootstraps_but_stops_recurrence": true
+        },
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 4,
+        "iteration_wall_seconds": 37.24599840003066,
+        "ppo": {
+          "actor_gradient_norm": {
+            "maximum": 0.38477545976638794,
+            "mean": 0.32951175421476364,
+            "minimum": 0.2612455487251282,
+            "p01": 0.2634521797299385,
+            "p50": 0.3360130041837692,
+            "p95": 0.3776430547237396,
+            "p99": 0.3833489787578583,
+            "samples": 4,
+            "standard_deviation": 0.0441639774975747
+          },
+          "actor_loss": {
+            "maximum": 0.0021203455980867147,
+            "mean": -0.0005894093192182481,
+            "minimum": -0.003563650418072939,
+            "p01": -0.003504740544594824,
+            "p50": -0.00045716622844338417,
+            "p95": 0.0019051420851610595,
+            "p99": 0.0020773048955015833,
+            "samples": 4,
+            "standard_deviation": 0.0021700196633075023
+          },
+          "actor_update_magnitude": 0.12399910390377045,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "analog_entropy": {
+            "maximum": 2.732736587524414,
+            "mean": 2.723677396774292,
+            "minimum": 2.713318109512329,
+            "p01": 2.713559837341309,
+            "p50": 2.7243274450302124,
+            "p95": 2.731917977333069,
+            "p99": 2.732572865486145,
+            "samples": 4,
+            "standard_deviation": 0.0072051101229576595
+          },
+          "analog_log_std": [
+            -0.5021674036979675,
+            -0.5048056244850159,
+            -0.5058218240737915,
+            -0.505038321018219,
+            -0.5020963549613953
+          ],
+          "analog_std": [
+            0.6052175164222717,
+            0.6036228537559509,
+            0.603009819984436,
+            0.6034824252128601,
+            0.6052605509757996
+          ],
+          "approximate_kl": {
+            "maximum": 0.0038110960740596056,
+            "mean": 0.0015520860003501481,
+            "minimum": -9.934107703113426e-11,
+            "p01": 1.052366159468035e-05,
+            "p50": 0.001198624013341032,
+            "p95": 0.0035464000771753485,
+            "p99": 0.0037581568746827537,
+            "samples": 4,
+            "standard_deviation": 0.0015165426966709833
+          },
+          "batch_agent_steps": 96000,
+          "button_entropy": {
+            "maximum": 0.8469821214675903,
+            "mean": 0.8468456268310547,
+            "minimum": 0.8467549681663513,
+            "p01": 0.8467551916837692,
+            "p50": 0.8468227088451385,
+            "p95": 0.8469672530889512,
+            "p99": 0.8469791477918625,
+            "samples": 4,
+            "standard_deviation": 9.376838396455126e-05
+          },
+          "button_entropy_by_field": {
+            "boost": {
+              "maximum": 0.324081689119339,
+              "mean": 0.32389000803232193,
+              "minimum": 0.323794424533844,
+              "p01": 0.3237953060865402,
+              "p50": 0.32384195923805237,
+              "p95": 0.3240484520792961,
+              "p99": 0.3240750417113304,
+              "samples": 4,
+              "standard_deviation": 0.00011308628847454714
+            },
+            "handbrake": {
+              "maximum": 0.3242935836315155,
+              "mean": 0.3242376744747162,
+              "minimum": 0.32419317960739136,
+              "p01": 0.32419354259967803,
+              "p50": 0.32423196732997894,
+              "p95": 0.3242883443832397,
+              "p99": 0.32429253578186035,
+              "samples": 4,
+              "standard_deviation": 4.060562324084389e-05
+            },
+            "jump": {
+              "maximum": 0.19872932136058807,
+              "mean": 0.19871793687343597,
+              "minimum": 0.1987072080373764,
+              "p01": 0.19870727241039277,
+              "p50": 0.1987176090478897,
+              "p95": 0.19872880280017852,
+              "p99": 0.19872921764850615,
+              "samples": 4,
+              "standard_deviation": 9.762523931050906e-06
+            }
+          },
+          "button_entropy_coefficient": 0.0,
+          "button_entropy_schedule_active_learner_step": 264032,
+          "clip_fraction": {
+            "maximum": 0.02666666731238365,
+            "mean": 0.007541666796896607,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0017499999376013875,
+            "p95": 0.02319166719680651,
+            "p99": 0.02597166728926822,
+            "samples": 4,
+            "standard_deviation": 0.0111338918664378
+          },
+          "controller_branch_gradient_absolute_sums": {
+            "boost": {
+              "logit_weight_absolute_sum": 1.5547652840614319
+            },
+            "handbrake": {
+              "logit_weight_absolute_sum": 1.4348344653844833
+            },
+            "jump": {
+              "logit_weight_absolute_sum": 1.0489450246095657
+            },
+            "pitch": {
+              "log_std_absolute_sum": 0.01873359689489007,
+              "mean_weight_absolute_sum": 5.032421410083771
+            },
+            "roll": {
+              "log_std_absolute_sum": 0.03678807243704796,
+              "mean_weight_absolute_sum": 9.01484477519989
+            },
+            "steer": {
+              "log_std_absolute_sum": 0.037436462473124266,
+              "mean_weight_absolute_sum": 6.215357482433319
+            },
+            "throttle": {
+              "log_std_absolute_sum": 0.03144745668396354,
+              "mean_weight_absolute_sum": 8.978742957115173
+            },
+            "yaw": {
+              "log_std_absolute_sum": 0.037510760012082756,
+              "mean_weight_absolute_sum": 8.471579909324646
+            }
+          },
+          "critic_gradient_norm": {
+            "maximum": 36.43232345581055,
+            "mean": 20.415614932775497,
+            "minimum": 1.136588454246521,
+            "p01": 1.5880121743679045,
+            "p50": 22.04677391052246,
+            "p95": 35.1539002418518,
+            "p99": 36.1766388130188,
+            "samples": 4,
+            "standard_deviation": 13.250286176959094
+          },
+          "critic_loss": {
+            "maximum": 1.1664892435073853,
+            "mean": 0.8988856971263885,
+            "minimum": 0.700932502746582,
+            "p01": 0.7042229598760605,
+            "p50": 0.8640605211257935,
+            "p95": 1.129141852259636,
+            "p99": 1.1590197652578353,
+            "samples": 4,
+            "standard_deviation": 0.1724352669733828
+          },
+          "critic_update_magnitude": 0.4162263870239258,
+          "epochs": 1,
+          "explained_variance_before_update": 0.017325877535576573,
+          "head_gradient_absolute_sums": {
+            "analog_log_std_abs_by_axis": [
+              0.03144745668396354,
+              0.037436462473124266,
+              0.01873359689489007,
+              0.037510760012082756,
+              0.03678807243704796
+            ],
+            "analog_mean_abs_sum_by_axis": [
+              8.978742957115173,
+              6.215357482433319,
+              5.032421410083771,
+              8.471579909324646,
+              9.01484477519989
+            ],
+            "button_logit_abs_sum_by_button": [
+              1.0489450246095657,
+              1.5547652840614319,
+              1.4348344653844833
+            ]
+          },
+          "maximum_absolute_log_ratio_per_minibatch": [
+            3.337860107421875e-06,
+            0.1150522232055664,
+            0.30131006240844727,
+            0.44620418548583984
+          ],
+          "maximum_allowed_worker_segment_shortfall": 224,
+          "minibatch_agent_steps": 24000,
+          "nominal_batch_agent_steps": 96000,
+          "value_prediction_before_update": {
+            "maximum": -0.9987049102783203,
+            "mean": -1.3999001748588729,
+            "minimum": -1.6608175039291382,
+            "p01": -1.5675024032592773,
+            "p50": -1.4047881960868835,
+            "p95": -1.2575905323028564,
+            "p99": -1.1942615568637849,
+            "samples": 96006,
+            "standard_deviation": 0.08130347081664009
+          },
+          "worker_segment_record_shortfall": 0
+        },
+        "reward": {
+          "maximum": 10.021933555603027,
+          "mean": -0.011817903697404914,
+          "minimum": -0.1683042347431183,
+          "p01": -0.07331787422299385,
+          "p50": -0.01251367200165987,
+          "p95": 0.021822788286954165,
+          "p99": 0.04995766524225467,
+          "samples": 96006,
+          "standard_deviation": 0.09920055305536536
+        },
+        "rollout_inference": {
+          "batch_size": {
+            "maximum": 56.0,
+            "mean": 24.56393861892583,
+            "minimum": 16.0,
+            "p01": 16.0,
+            "p50": 22.0,
+            "p95": 40.0,
+            "p99": 42.0,
+            "samples": 3910,
+            "standard_deviation": 7.638265415248224
+          },
+          "batches": 3910,
+          "per_agent_microseconds": {
+            "maximum": 7023.139285073349,
+            "mean": 280.8529449410668,
+            "minimum": 98.27907088884088,
+            "p01": 115.87329336491946,
+            "p50": 271.6204027308892,
+            "p95": 467.17137949915724,
+            "p99": 700.1622769490083,
+            "samples": 3910,
+            "standard_deviation": 185.78814831273507
+          }
+        },
+        "simulated_game_hours": 0.7223032407407407,
+        "update_wall_seconds": 0.7383083000313491
+      },
+      {
+        "actions": {
+          "all_actions_finite": true,
+          "all_eight_button_combos_sampled": true,
+          "analog": [
+            {
+              "absolute_over_0_95_share": 0.008427434476436518,
+              "field": "throttle",
+              "maximum": 0.9944297075271606,
+              "mean": 0.27713501036922134,
+              "minimum": -0.990313708782196,
+              "nontrivial_range": true,
+              "p01": -0.7843448728322983,
+              "p50": 0.35176804661750793,
+              "p95": 0.875698134303093,
+              "p99": 0.945256945490837,
+              "samples": 95996,
+              "standard_deviation": 0.4485410547120618
+            },
+            {
+              "absolute_over_0_95_share": 0.003791824659360807,
+              "field": "steer",
+              "maximum": 0.9901317954063416,
+              "mean": -0.13798441541153067,
+              "minimum": -0.9934920072555542,
+              "nontrivial_range": true,
+              "p01": -0.9211640626192092,
+              "p50": -0.177385576069355,
+              "p95": 0.6778995990753174,
+              "p99": 0.8428682059049607,
+              "samples": 95996,
+              "standard_deviation": 0.4706908033360941
+            },
+            {
+              "absolute_over_0_95_share": 0.0028959539980832534,
+              "field": "pitch",
+              "maximum": 0.9905498027801514,
+              "mean": -0.07146214490464825,
+              "minimum": -0.9954904317855835,
+              "nontrivial_range": true,
+              "p01": -0.9052609741687775,
+              "p50": -0.09188428148627281,
+              "p95": 0.7180775254964828,
+              "p99": 0.8649208813905718,
+              "samples": 95996,
+              "standard_deviation": 0.473511211117229
+            },
+            {
+              "absolute_over_0_95_share": 0.010229592899704154,
+              "field": "yaw",
+              "maximum": 0.969590425491333,
+              "mean": -0.3157826889391825,
+              "minimum": -0.9969449043273926,
+              "nontrivial_range": true,
+              "p01": -0.9502747178077697,
+              "p50": -0.3965923488140106,
+              "p95": 0.5220184922218323,
+              "p99": 0.7600688010454179,
+              "samples": 95996,
+              "standard_deviation": 0.43997867144961234
+            },
+            {
+              "absolute_over_0_95_share": 0.0029063710987957832,
+              "field": "roll",
+              "maximum": 0.9930076599121094,
+              "mean": -0.03185636244601877,
+              "minimum": -0.9919479489326477,
+              "nontrivial_range": true,
+              "p01": -0.8974421411752701,
+              "p50": -0.038550833240151405,
+              "p95": 0.7454207241535187,
+              "p99": 0.8820078909397125,
+              "samples": 95996,
+              "standard_deviation": 0.47686769038730265
+            }
+          ],
+          "button_combo_counts": [
+            13595,
+            13300,
+            11562,
+            11184,
+            12794,
+            12808,
+            10398,
+            10355
+          ],
+          "button_combo_shares": [
+            0.14162048418684112,
+            0.13854743947664486,
+            0.12044251843826827,
+            0.11650485436893204,
+            0.13327638651610485,
+            0.13342222592608025,
+            0.1083170132088837,
+            0.10786907787824493
+          ],
+          "marginal_button_shares": {
+            "boost": 0.4531334638943289,
+            "handbrake": 0.48288470352931373,
+            "jump": 0.4963435976499021
+          },
+          "sample_count": 95996
+        },
+        "active_learner_steps_per_second": 2806.7043207048673,
+        "collected_active_learner_steps": 96035,
+        "collection_seconds": 34.21628679998685,
+        "credit_assignment": {
+          "checks": {
+            "all_four_windows_present": true,
+            "all_metrics_finite": true,
+            "contact_reward_events_touch_age_confirmed": true,
+            "passed": true,
+            "trajectory_boundaries_cover_rollout": true
+          },
+          "contact_event_definition": "reward > 5 and next touch age confirms contact",
+          "failed_cohort_definition": "no rewarded contact and at least 1430 ticks; short collection-cut segments excluded",
+          "failed_timeout_like": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 6,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 15.664306640625,
+                  "mean": 1.047339884440104,
+                  "minimum": -18.1640625,
+                  "samples": 360,
+                  "standard_deviation": 10.172613673413592,
+                  "sum": 377.0423583984375,
+                  "sum_squares": 37648.43632154167,
+                  "variance": 103.48206894852117
+                },
+                "heading_improvement": {
+                  "maximum": 0.044476740062236786,
+                  "mean": -0.0020002869294128483,
+                  "minimum": -0.08285921066999435,
+                  "samples": 360,
+                  "standard_deviation": 0.020883083359505058,
+                  "sum": -0.7201032945886254,
+                  "sum_squares": 0.15843755462400608,
+                  "variance": 0.000436103170600037
+                },
+                "normalized_advantage": {
+                  "maximum": 2.1269400119781494,
+                  "mean": 0.12138757940588726,
+                  "minimum": -1.3975111246109009,
+                  "samples": 360,
+                  "standard_deviation": 0.7887959672479556,
+                  "sum": 43.69952858611941,
+                  "sum_squares": 229.29624805703705,
+                  "variance": 0.622199077946638
+                },
+                "raw_advantage": {
+                  "maximum": 1.2850778102874756,
+                  "mean": -0.43981151090249315,
+                  "minimum": -1.7461509704589844,
+                  "samples": 360,
+                  "standard_deviation": 0.6784094874008122,
+                  "sum": -158.33214392489754,
+                  "sum_squares": 235.322495178396,
+                  "variance": 0.4602394325954327
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9520151019096375,
+                  "mean": 0.4098120657253377,
+                  "minimum": 0.0006360411061905324,
+                  "samples": 360,
+                  "standard_deviation": 0.24781179534898404,
+                  "sum": 147.53234366112156,
+                  "sum_squares": 82.56838144613589,
+                  "variance": 0.06141068591408675
+                },
+                "throttle": {
+                  "maximum": 0.984160840511322,
+                  "mean": 0.3204783785189243,
+                  "minimum": -0.8782501816749573,
+                  "samples": 360,
+                  "standard_deviation": 0.44940698019075803,
+                  "sum": 115.37221626681276,
+                  "sum_squares": 109.68228897922631,
+                  "variance": 0.2019666338441764
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 6,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 15.66455078125,
+                  "mean": 0.17138824462890626,
+                  "minimum": -20.48486328125,
+                  "samples": 720,
+                  "standard_deviation": 10.412042232892466,
+                  "sum": 123.3995361328125,
+                  "sum_squares": 78076.79812075198,
+                  "variance": 108.41062345953632
+                },
+                "heading_improvement": {
+                  "maximum": 0.04861932992935181,
+                  "mean": 9.530285994211833e-05,
+                  "minimum": -0.04677264392375946,
+                  "samples": 720,
+                  "standard_deviation": 0.013028919502068933,
+                  "sum": 0.0686180591583252,
+                  "sum_squares": 0.12222851473908385,
+                  "variance": 0.00016975274339139218
+                },
+                "normalized_advantage": {
+                  "maximum": 1.6391862630844116,
+                  "mean": -0.20849984859322476,
+                  "minimum": -1.322873592376709,
+                  "samples": 720,
+                  "standard_deviation": 0.5188326588828167,
+                  "sum": -150.11989098712183,
+                  "sum_squares": 225.11485064650384,
+                  "variance": 0.2691873279234132
+                },
+                "raw_advantage": {
+                  "maximum": 0.8655818104743958,
+                  "mean": -0.7235334985837755,
+                  "minimum": -1.6819584369659424,
+                  "samples": 720,
+                  "standard_deviation": 0.44622566015246506,
+                  "sum": -520.9441189803183,
+                  "sum_squares": 520.2850056129946,
+                  "variance": 0.19911733977850324
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9713613390922546,
+                  "mean": 0.4013212495819769,
+                  "minimum": 0.0033546858467161655,
+                  "samples": 720,
+                  "standard_deviation": 0.2578446897809277,
+                  "sum": 288.95129969902337,
+                  "sum_squares": 163.8306931782688,
+                  "variance": 0.06648388404822286
+                },
+                "throttle": {
+                  "maximum": 0.9506081342697144,
+                  "mean": 0.3007513327732643,
+                  "minimum": -0.9130953550338745,
+                  "samples": 720,
+                  "standard_deviation": 0.43383556922000766,
+                  "sum": 216.54095959675033,
+                  "sum_squares": 200.6385590054468,
+                  "variance": 0.18821330112044804
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 6,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 15.309326171875,
+                  "mean": 0.09852540757921006,
+                  "minimum": -16.4619140625,
+                  "samples": 720,
+                  "standard_deviation": 8.13019637165092,
+                  "sum": 70.93829345703125,
+                  "sum_squares": 47599.056214232,
+                  "variance": 66.10009304160579
+                },
+                "heading_improvement": {
+                  "maximum": 0.03322833776473999,
+                  "mean": -0.0018667163223856026,
+                  "minimum": -0.04923929274082184,
+                  "samples": 720,
+                  "standard_deviation": 0.013938225913199745,
+                  "sum": -1.3440357521176338,
+                  "sum_squares": 0.1423863154336707,
+                  "variance": 0.0001942741416073929
+                },
+                "normalized_advantage": {
+                  "maximum": 1.7686611413955688,
+                  "mean": -0.026010085250648747,
+                  "minimum": -1.1920119524002075,
+                  "samples": 720,
+                  "standard_deviation": 0.5605224859202333,
+                  "sum": -18.727261380467098,
+                  "sum_squares": 226.70062686499978,
+                  "variance": 0.31418545722219815
+                },
+                "raw_advantage": {
+                  "maximum": 0.9769375920295715,
+                  "mean": -0.5665818999822174,
+                  "minimum": -1.569409966468811,
+                  "samples": 720,
+                  "standard_deviation": 0.4820812864129828,
+                  "sum": -407.9389679871965,
+                  "sum_squares": 398.4605395898801,
+                  "variance": 0.23240236670959638
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9789756536483765,
+                  "mean": 0.4053719866236659,
+                  "minimum": 0.0016603082185611129,
+                  "samples": 720,
+                  "standard_deviation": 0.2569388974255861,
+                  "sum": 291.86783036903944,
+                  "sum_squares": 165.84771207563526,
+                  "variance": 0.06601759701027586
+                },
+                "throttle": {
+                  "maximum": 0.9859441518783569,
+                  "mean": 0.2503698367169515,
+                  "minimum": -0.9432407021522522,
+                  "samples": 720,
+                  "standard_deviation": 0.4714887059133752,
+                  "sum": 180.26628243620507,
+                  "sum_squares": 205.19039155791037,
+                  "variance": 0.22230159980386924
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 6,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 64.0,
+                  "mean": 2.2849358452690973,
+                  "minimum": -12.12890625,
+                  "samples": 360,
+                  "standard_deviation": 11.516193057501162,
+                  "sum": 822.576904296875,
+                  "sum_squares": 49623.70836766809,
+                  "variance": 132.62270253763796
+                },
+                "heading_improvement": {
+                  "maximum": 1.6662235260009766,
+                  "mean": 0.019737634727627868,
+                  "minimum": -0.04462933540344238,
+                  "samples": 360,
+                  "standard_deviation": 0.15976183849019193,
+                  "sum": 7.105548501946032,
+                  "sum_squares": 9.328830934466675,
+                  "variance": 0.02552384503776617
+                },
+                "normalized_advantage": {
+                  "maximum": 2.4356181621551514,
+                  "mean": 0.8238203095479144,
+                  "minimum": -0.5397776961326599,
+                  "samples": 360,
+                  "standard_deviation": 0.6803286218571741,
+                  "sum": 296.5753114372492,
+                  "sum_squares": 410.9496970110132,
+                  "variance": 0.4628470337180818
+                },
+                "raw_advantage": {
+                  "maximum": 1.5505585670471191,
+                  "mean": 0.16432067362265015,
+                  "minimum": -1.0084513425827026,
+                  "samples": 360,
+                  "standard_deviation": 0.5851213866250216,
+                  "sum": 59.15544250415405,
+                  "sum_squares": 132.97259551168418,
+                  "variance": 0.3423670370859879
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9493130445480347,
+                  "mean": 0.4166056364800574,
+                  "minimum": 0.003907511476427317,
+                  "samples": 360,
+                  "standard_deviation": 0.26102303107162045,
+                  "sum": 149.97802913282067,
+                  "sum_squares": 87.00958047483715,
+                  "variance": 0.06813302274981613
+                },
+                "throttle": {
+                  "maximum": 0.9458673000335693,
+                  "mean": 0.25799013559687106,
+                  "minimum": -0.8394191265106201,
+                  "samples": 360,
+                  "standard_deviation": 0.4631927926922207,
+                  "sum": 92.87644881487358,
+                  "sum_squares": 101.19833037623175,
+                  "variance": 0.2145475632020185
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "physics_hz": 120,
+          "successful_cohort_definition": "first visible rewarded contact in a trajectory segment whose initial self-touch age is reset/saturated",
+          "successful_first_contact": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 4,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 11.195068359375,
+                  "mean": 9.151812235514322,
+                  "minimum": 5.6339111328125,
+                  "samples": 240,
+                  "standard_deviation": 1.8088268398867058,
+                  "sum": 2196.4349365234375,
+                  "sum_squares": 20886.605215393007,
+                  "variance": 3.271854536694526
+                },
+                "heading_improvement": {
+                  "maximum": 0.04546688124537468,
+                  "mean": 0.003148023784160614,
+                  "minimum": -0.013703346252441406,
+                  "samples": 240,
+                  "standard_deviation": 0.010561113852691546,
+                  "sum": 0.7555257081985474,
+                  "sum_squares": 0.029147323093237004,
+                  "variance": 0.00011153712580951329
+                },
+                "normalized_advantage": {
+                  "maximum": 5.1577558517456055,
+                  "mean": 3.2323775281508764,
+                  "minimum": 1.3905011415481567,
+                  "samples": 240,
+                  "standard_deviation": 0.8753851369675077,
+                  "sum": 775.7706067562103,
+                  "sum_squares": 2691.495269404414,
+                  "variance": 0.7662991380236224
+                },
+                "raw_advantage": {
+                  "maximum": 3.891752243041992,
+                  "mean": 2.2358171621958416,
+                  "minimum": 0.6516985297203064,
+                  "samples": 240,
+                  "standard_deviation": 0.7528810985916876,
+                  "sum": 536.596118927002,
+                  "sum_squares": 1335.769999532662,
+                  "variance": 0.5668299486166265
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9775866270065308,
+                  "mean": 0.4346137758829476,
+                  "minimum": 0.00535269919782877,
+                  "samples": 240,
+                  "standard_deviation": 0.2572883909803536,
+                  "sum": 104.30730621190742,
+                  "sum_squares": 61.22074807691815,
+                  "variance": 0.06619731613325931
+                },
+                "throttle": {
+                  "maximum": 0.9577236175537109,
+                  "mean": 0.33726788661879253,
+                  "minimum": -0.685275673866272,
+                  "samples": 240,
+                  "standard_deviation": 0.4292152300323351,
+                  "sum": 80.94429278851021,
+                  "sum_squares": 71.51408184864408,
+                  "variance": 0.1842257136917103
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 3,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 11.501708984375,
+                  "mean": 9.224743991427951,
+                  "minimum": 5.740478515625,
+                  "samples": 360,
+                  "standard_deviation": 1.8631898981923978,
+                  "sum": 3320.9078369140625,
+                  "sum_squares": 31884.256189480424,
+                  "variance": 3.4714765967261974
+                },
+                "heading_improvement": {
+                  "maximum": 0.04846201837062836,
+                  "mean": -0.0025583143035570782,
+                  "minimum": -0.05204302817583084,
+                  "samples": 360,
+                  "standard_deviation": 0.018518907563610652,
+                  "sum": -0.9209931492805481,
+                  "sum_squares": 0.1258181673931226,
+                  "variance": 0.0003429499373495558
+                },
+                "normalized_advantage": {
+                  "maximum": 3.9105656147003174,
+                  "mean": 1.4068778679866227,
+                  "minimum": -0.1115381270647049,
+                  "samples": 360,
+                  "standard_deviation": 1.0446785328513346,
+                  "sum": 506.4760324751842,
+                  "sum_squares": 1105.4370860751606,
+                  "variance": 1.0913532370004169
+                },
+                "raw_advantage": {
+                  "maximum": 2.8190977573394775,
+                  "mean": 0.6657834085584101,
+                  "minimum": -0.6401408910751343,
+                  "samples": 360,
+                  "standard_deviation": 0.8984830815980677,
+                  "sum": 239.68202708102763,
+                  "sum_squares": 450.1941822106613,
+                  "variance": 0.8072718479179599
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9784506559371948,
+                  "mean": 0.42922593585875196,
+                  "minimum": 0.0009031665977090597,
+                  "samples": 360,
+                  "standard_deviation": 0.24536959361859573,
+                  "sum": 154.5213369091507,
+                  "sum_squares": 87.99881093509545,
+                  "variance": 0.06020623747255481
+                },
+                "throttle": {
+                  "maximum": 0.9840782284736633,
+                  "mean": 0.28116934728774745,
+                  "minimum": -0.83942049741745,
+                  "samples": 360,
+                  "standard_deviation": 0.4599808512412891,
+                  "sum": 101.22096502358909,
+                  "sum_squares": 104.62989073063639,
+                  "variance": 0.21158238350866093
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 1,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 8.317138671875,
+                  "mean": 8.253782145182292,
+                  "minimum": 8.22607421875,
+                  "samples": 120,
+                  "standard_deviation": 0.02013800068016529,
+                  "sum": 990.453857421875,
+                  "sum_squares": 8175.039028704166,
+                  "variance": 0.00040553907139433766
+                },
+                "heading_improvement": {
+                  "maximum": 0.05813407897949219,
+                  "mean": -0.001660489042599996,
+                  "minimum": -0.06075470149517059,
+                  "samples": 120,
+                  "standard_deviation": 0.03540336937189604,
+                  "sum": -0.1992586851119995,
+                  "sum_squares": 0.1507386944092201,
+                  "variance": 0.0012533985628829065
+                },
+                "normalized_advantage": {
+                  "maximum": 2.4390811920166016,
+                  "mean": 0.9132362266323374,
+                  "minimum": -1.1438844203948975,
+                  "samples": 120,
+                  "standard_deviation": 1.0766295274514486,
+                  "sum": 109.58834719588049,
+                  "sum_squares": 239.17578540167995,
+                  "variance": 1.1591311393803296
+                },
+                "raw_advantage": {
+                  "maximum": 1.553537130355835,
+                  "mean": 0.24122346166125982,
+                  "minimum": -1.528017520904541,
+                  "samples": 120,
+                  "standard_deviation": 0.9259627591295867,
+                  "sum": 28.94681539935118,
+                  "sum_squares": 109.87149477008622,
+                  "variance": 0.857407031294877
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9645437598228455,
+                  "mean": 0.4625503937810815,
+                  "minimum": 0.003802191698923707,
+                  "samples": 120,
+                  "standard_deviation": 0.2693950928326308,
+                  "sum": 55.506047253729776,
+                  "sum_squares": 34.383189939520236,
+                  "variance": 0.07257371604230176
+                },
+                "throttle": {
+                  "maximum": 0.9742122292518616,
+                  "mean": 0.23681958053299848,
+                  "minimum": -0.8996209502220154,
+                  "samples": 120,
+                  "standard_deviation": 0.44434537267831087,
+                  "sum": 28.418349663959816,
+                  "sum_squares": 30.423158873334277,
+                  "variance": 0.19744281022062699
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 6,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": 12.9154052734375,
+                  "mean": 8.354435645209419,
+                  "minimum": 2.3464202880859375,
+                  "samples": 360,
+                  "standard_deviation": 2.6791520411056995,
+                  "sum": 3007.5968322753906,
+                  "sum_squares": 27710.802219350357,
+                  "variance": 7.177855659360835
+                },
+                "heading_improvement": {
+                  "maximum": 0.03870486468076706,
+                  "mean": -0.010119014792144299,
+                  "minimum": -0.04657289385795593,
+                  "samples": 360,
+                  "standard_deviation": 0.012033655833651211,
+                  "sum": -3.6428453251719475,
+                  "sum_squares": 0.08899319991110508,
+                  "variance": 0.00014480887272276785
+                },
+                "normalized_advantage": {
+                  "maximum": 13.323172569274902,
+                  "mean": 7.868726687961154,
+                  "minimum": 4.141149044036865,
+                  "samples": 360,
+                  "standard_deviation": 2.2308662835619755,
+                  "sum": 2832.7416076660156,
+                  "sum_squares": 24081.704663387667,
+                  "variance": 4.9767643751336195
+                },
+                "raw_advantage": {
+                  "maximum": 10.91447639465332,
+                  "mean": 6.223341747787264,
+                  "minimum": 3.0174124240875244,
+                  "samples": 360,
+                  "standard_deviation": 1.9186723304194404,
+                  "sum": 2240.403029203415,
+                  "sum_squares": 15268.06296765684,
+                  "variance": 3.6813035115171666
+                },
+                "steer_magnitude": {
+                  "maximum": 0.9356876015663147,
+                  "mean": 0.4044953668774623,
+                  "minimum": 0.0034356429241597652,
+                  "samples": 360,
+                  "standard_deviation": 0.2519199124986092,
+                  "sum": 145.61833207588643,
+                  "sum_squares": 81.7488518899103,
+                  "variance": 0.06346364231330691
+                },
+                "throttle": {
+                  "maximum": 0.9565718770027161,
+                  "mean": 0.320779272809159,
+                  "minimum": -0.847282350063324,
+                  "samples": 360,
+                  "standard_deviation": 0.4363615085699541,
+                  "sum": 115.48053821129724,
+                  "sum_squares": 105.59185488915082,
+                  "variance": 0.19041136616144613
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "trajectory_counts": {
+            "contact_events": 10,
+            "excluded_collection_cut_or_short_failures": 98,
+            "failed_timeout_like_trajectories": 6,
+            "segments": 114,
+            "successful_first_contact_trajectories": 9,
+            "touch_age_confirmed_contact_events": 10
+          },
+          "version": "RivalM10_8CreditAssignmentWindowsV1"
+        },
+        "cuda_peak_allocated_mib": 2358.7978515625,
+        "cumulative_active_learner_steps": 408070,
+        "experience_records": 95996,
+        "gae": {
+          "advantage": {
+            "maximum": 11.326939582824707,
+            "mean": -0.5442117259620747,
+            "minimum": -3.012171506881714,
+            "p01": -2.0707093358039854,
+            "p50": -0.5868786871433258,
+            "p95": 0.3980841413140297,
+            "p99": 1.8288260638714013,
+            "samples": 95996,
+            "standard_deviation": 0.8600570464759473
+          },
+          "finite": true,
+          "gamma": 0.9987444968227265,
+          "lambda": 0.9872585449014338,
+          "normalized_advantage": {
+            "maximum": 13.802748680114746,
+            "mean": 2.216273041918457e-08,
+            "minimum": -2.86953067779541,
+            "p01": -1.7748795986175536,
+            "p50": -0.049609435722231865,
+            "p95": 1.0956202745437622,
+            "p99": 2.7591634035110677,
+            "samples": 95996,
+            "standard_deviation": 1.0000000524361343
+          },
+          "return": {
+            "maximum": 9.147315979003906,
+            "mean": -2.8173120968604795,
+            "minimum": -5.2530927658081055,
+            "p01": -4.396042203903198,
+            "p50": -2.8550009727478027,
+            "p95": -1.8556220531463623,
+            "p99": -0.5056117296218681,
+            "samples": 95996,
+            "standard_deviation": 0.8670364330628785
+          },
+          "true_termination_suppresses_bootstrap": true,
+          "truncation_bootstraps_but_stops_recurrence": true
+        },
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 5,
+        "iteration_wall_seconds": 35.61318270000629,
+        "ppo": {
+          "actor_gradient_norm": {
+            "maximum": 0.3265242576599121,
+            "mean": 0.2384161576628685,
+            "minimum": 0.1871124505996704,
+            "p01": 0.1879214432835579,
+            "p50": 0.22001396119594574,
+            "p95": 0.311437976360321,
+            "p99": 0.3235070013999939,
+            "samples": 4,
+            "standard_deviation": 0.05277982533013434
+          },
+          "actor_loss": {
+            "maximum": 0.004207772668451071,
+            "mean": -0.0004829660610994324,
+            "minimum": -0.007813585922122002,
+            "p01": -0.007570466985343955,
+            "p50": 0.0008369745046366006,
+            "p95": 0.0037841423240024584,
+            "p99": 0.004123046599561348,
+            "samples": 4,
+            "standard_deviation": 0.004467186968736307
+          },
+          "actor_update_magnitude": 0.1133207157254219,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "analog_entropy": {
+            "maximum": 2.7097785472869873,
+            "mean": 2.700493335723877,
+            "minimum": 2.6913902759552,
+            "p01": 2.6914550280570984,
+            "p50": 2.70040225982666,
+            "p95": 2.709400141239166,
+            "p99": 2.709702866077423,
+            "samples": 4,
+            "standard_deviation": 0.008109262778029114
+          },
+          "analog_log_std": [
+            -0.5021019577980042,
+            -0.5048084259033203,
+            -0.5058773756027222,
+            -0.505148708820343,
+            -0.5021100640296936
+          ],
+          "analog_std": [
+            0.6052571535110474,
+            0.603621244430542,
+            0.6029763221740723,
+            0.603415846824646,
+            0.6052522659301758
+          ],
+          "approximate_kl": {
+            "maximum": 0.0026088084559887648,
+            "mean": 0.0011577694456015412,
+            "minimum": -1.4652808133508444e-10,
+            "p01": 1.2556952900877743e-05,
+            "p50": 0.0010111347364727408,
+            "p95": 0.002458042133366689,
+            "p99": 0.0025786551914643496,
+            "samples": 4,
+            "standard_deviation": 0.0010236227869944122
+          },
+          "batch_agent_steps": 95996,
+          "button_entropy": {
+            "maximum": 0.8464075326919556,
+            "mean": 0.8463256806135178,
+            "minimum": 0.8461258411407471,
+            "p01": 0.8461331725120544,
+            "p50": 0.8463846743106842,
+            "p95": 0.8464062720537185,
+            "p99": 0.8464072805643081,
+            "samples": 4,
+            "standard_deviation": 0.00011620448976925998
+          },
+          "button_entropy_by_field": {
+            "boost": {
+              "maximum": 0.32331836223602295,
+              "mean": 0.3232305496931076,
+              "minimum": 0.3230689465999603,
+              "p01": 0.32307472318410874,
+              "p50": 0.32326744496822357,
+              "p95": 0.3233116164803505,
+              "p99": 0.32331701308488847,
+              "samples": 4,
+              "standard_deviation": 9.568153492979985e-05
+            },
+            "handbrake": {
+              "maximum": 0.3242931365966797,
+              "mean": 0.32426072657108307,
+              "minimum": 0.3242376744747162,
+              "p01": 0.32423804014921187,
+              "p50": 0.3242560476064682,
+              "p95": 0.32428850084543226,
+              "p99": 0.3242922094464302,
+              "samples": 4,
+              "standard_deviation": 2.0628121521252906e-05
+            },
+            "jump": {
+              "maximum": 0.19885286688804626,
+              "mean": 0.1988343857228756,
+              "minimum": 0.19881922006607056,
+              "p01": 0.198819570094347,
+              "p50": 0.19883272796869278,
+              "p95": 0.19885012209415437,
+              "p99": 0.19885231792926789,
+              "samples": 4,
+              "standard_deviation": 1.2081186509465856e-05
+            }
+          },
+          "button_entropy_coefficient": 0.0,
+          "button_entropy_schedule_active_learner_step": 360052,
+          "clip_fraction": {
+            "maximum": 0.007292882073670626,
+            "mean": 0.0020940538379363716,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0005416666390374303,
+            "p95": 0.006361449754331259,
+            "p99": 0.007106595609802751,
+            "samples": 4,
+            "standard_deviation": 0.0030339534450592102
+          },
+          "controller_branch_gradient_absolute_sums": {
+            "boost": {
+              "logit_weight_absolute_sum": 0.9658243954181671
+            },
+            "handbrake": {
+              "logit_weight_absolute_sum": 1.2646134942770004
+            },
+            "jump": {
+              "logit_weight_absolute_sum": 0.9483585506677628
+            },
+            "pitch": {
+              "log_std_absolute_sum": 0.03132519777864218,
+              "mean_weight_absolute_sum": 6.832098960876465
+            },
+            "roll": {
+              "log_std_absolute_sum": 0.02560858870856464,
+              "mean_weight_absolute_sum": 5.869294464588165
+            },
+            "steer": {
+              "log_std_absolute_sum": 0.028270233422517776,
+              "mean_weight_absolute_sum": 7.271745681762695
+            },
+            "throttle": {
+              "log_std_absolute_sum": 0.022146166302263737,
+              "mean_weight_absolute_sum": 4.172970533370972
+            },
+            "yaw": {
+              "log_std_absolute_sum": 0.00909496285021305,
+              "mean_weight_absolute_sum": 4.814013600349426
+            }
+          },
+          "critic_gradient_norm": {
+            "maximum": 40.194053649902344,
+            "mean": 22.223878622055054,
+            "minimum": 6.280304908752441,
+            "p01": 6.5986510181427,
+            "p50": 21.210577964782715,
+            "p95": 37.99434270858764,
+            "p99": 39.754111461639404,
+            "samples": 4,
+            "standard_deviation": 12.414520251719935
+          },
+          "critic_loss": {
+            "maximum": 1.042103886604309,
+            "mean": 0.8420690298080444,
+            "minimum": 0.7085181474685669,
+            "p01": 0.7089228159189225,
+            "p50": 0.8088270425796509,
+            "p95": 1.0201353520154952,
+            "p99": 1.0377101796865462,
+            "samples": 4,
+            "standard_deviation": 0.13705404759601933
+          },
+          "critic_update_magnitude": 0.3446305990219116,
+          "epochs": 1,
+          "explained_variance_before_update": 0.016034732418940933,
+          "head_gradient_absolute_sums": {
+            "analog_log_std_abs_by_axis": [
+              0.022146166302263737,
+              0.028270233422517776,
+              0.03132519777864218,
+              0.00909496285021305,
+              0.02560858870856464
+            ],
+            "analog_mean_abs_sum_by_axis": [
+              4.172970533370972,
+              7.271745681762695,
+              6.832098960876465,
+              4.814013600349426,
+              5.869294464588165
+            ],
+            "button_logit_abs_sum_by_button": [
+              0.9483585506677628,
+              0.9658243954181671,
+              1.2646134942770004
+            ]
+          },
+          "maximum_absolute_log_ratio_per_minibatch": [
+            3.814697265625e-06,
+            0.13463163375854492,
+            0.28861522674560547,
+            0.31359195709228516
+          ],
+          "maximum_allowed_worker_segment_shortfall": 224,
+          "minibatch_agent_steps": 24000,
+          "nominal_batch_agent_steps": 96000,
+          "value_prediction_before_update": {
+            "maximum": -1.612309455871582,
+            "mean": -2.2731003707545745,
+            "minimum": -2.660926103591919,
+            "p01": -2.5005910634994506,
+            "p50": -2.2816632986068726,
+            "p95": -2.0728617310523987,
+            "p99": -1.9805073142051692,
+            "samples": 95996,
+            "standard_deviation": 0.11395514240587422
+          },
+          "worker_segment_record_shortfall": 4
+        },
+        "reward": {
+          "maximum": 10.065046310424805,
+          "mean": -0.011055281078193088,
+          "minimum": -0.38328564167022705,
+          "p01": -0.07295268960297108,
+          "p50": -0.01216879952698946,
+          "p95": 0.024397522676736116,
+          "p99": 0.05099669471383108,
+          "samples": 95996,
+          "standard_deviation": 0.10925735349892914
+        },
+        "rollout_inference": {
+          "batch_size": {
+            "maximum": 46.0,
+            "mean": 24.77806451612903,
+            "minimum": 16.0,
+            "p01": 16.0,
+            "p50": 23.0,
+            "p95": 39.0,
+            "p99": 42.0,
+            "samples": 3875,
+            "standard_deviation": 7.4648965247262415
+          },
+          "batches": 3875,
+          "per_agent_microseconds": {
+            "maximum": 8292.257896085319,
+            "mean": 278.7333110051974,
+            "minimum": 95.22790652374889,
+            "p01": 114.73876086707632,
+            "p50": 265.722729223357,
+            "p95": 471.9566594607583,
+            "p99": 730.2199979312715,
+            "samples": 3875,
+            "standard_deviation": 207.06083340240696
+          }
+        },
+        "simulated_game_hours": 0.9446064814814815,
+        "update_wall_seconds": 0.2926712000044063
+      },
+      {
+        "actions": {
+          "all_actions_finite": true,
+          "all_eight_button_combos_sampled": true,
+          "analog": [
+            {
+              "absolute_over_0_95_share": 0.009152839887992644,
+              "field": "throttle",
+              "maximum": 0.9943004846572876,
+              "mean": 0.28428915256040516,
+              "minimum": -0.9673032164573669,
+              "nontrivial_range": true,
+              "p01": -0.7780147910118103,
+              "p50": 0.36213380098342896,
+              "p95": 0.880059313774109,
+              "p99": 0.9479967713356021,
+              "samples": 23927,
+              "standard_deviation": 0.4487101013690976
+            },
+            {
+              "absolute_over_0_95_share": 0.0038032348393028798,
+              "field": "steer",
+              "maximum": 0.9850174784660339,
+              "mean": -0.1568435441000147,
+              "minimum": -0.987754762172699,
+              "nontrivial_range": true,
+              "p01": -0.9223462569713593,
+              "p50": -0.20404767990112305,
+              "p95": 0.6719270110130311,
+              "p99": 0.840888243913651,
+              "samples": 23927,
+              "standard_deviation": 0.47033353009990064
+            },
+            {
+              "absolute_over_0_95_share": 0.0025076273665733274,
+              "field": "pitch",
+              "maximum": 0.985044002532959,
+              "mean": -0.05332188119891331,
+              "minimum": -0.9828703999519348,
+              "nontrivial_range": true,
+              "p01": -0.9001135003566741,
+              "p50": -0.07106099277734756,
+              "p95": 0.7347985923290253,
+              "p99": 0.871126035451889,
+              "samples": 23927,
+              "standard_deviation": 0.4750400039233037
+            },
+            {
+              "absolute_over_0_95_share": 0.008734901993563757,
+              "field": "yaw",
+              "maximum": 0.9765384793281555,
+              "mean": -0.2820749605177533,
+              "minimum": -0.9924066662788391,
+              "nontrivial_range": true,
+              "p01": -0.946403204202652,
+              "p50": -0.356375515460968,
+              "p95": 0.5583866238594057,
+              "p99": 0.7799662518501285,
+              "samples": 23927,
+              "standard_deviation": 0.4479608337104214
+            },
+            {
+              "absolute_over_0_95_share": 0.0025076273665733274,
+              "field": "roll",
+              "maximum": 0.9866572022438049,
+              "mean": -0.024052907261366628,
+              "minimum": -0.9866938591003418,
+              "nontrivial_range": true,
+              "p01": -0.8906048476696015,
+              "p50": -0.028847189620137215,
+              "p95": 0.7540342390537264,
+              "p99": 0.8846220874786379,
+              "samples": 23927,
+              "standard_deviation": 0.4765111188782036
+            }
+          ],
+          "button_combo_counts": [
+            3250,
+            3343,
+            2580,
+            2925,
+            3046,
+            3263,
+            2523,
+            2997
+          ],
+          "button_combo_shares": [
+            0.13582981568938857,
+            0.1397166381075772,
+            0.10782797676265307,
+            0.1222468341204497,
+            0.12730388264303924,
+            0.13637313495214612,
+            0.10544573076440841,
+            0.12525598696033768
+          ],
+          "marginal_button_shares": {
+            "boost": 0.4607765286078489,
+            "handbrake": 0.4943787353199315,
+            "jump": 0.5235925941405107
+          },
+          "sample_count": 23927
+        },
+        "active_learner_steps_per_second": 2652.5065838300557,
+        "collected_active_learner_steps": 23946,
+        "collection_seconds": 9.027687299996614,
+        "credit_assignment": {
+          "checks": {
+            "all_four_windows_present": true,
+            "all_metrics_finite": true,
+            "contact_reward_events_touch_age_confirmed": true,
+            "passed": true,
+            "trajectory_boundaries_cover_rollout": true
+          },
+          "contact_event_definition": "reward > 5 and next touch age confirms contact",
+          "failed_cohort_definition": "no rewarded contact and at least 1430 ticks; short collection-cut segments excluded",
+          "failed_timeout_like": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "physics_hz": 120,
+          "successful_cohort_definition": "first visible rewarded contact in a trajectory segment whose initial self-touch age is reset/saturated",
+          "successful_first_contact": {
+            "0p5_to_1p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 60,
+              "older_offset_ticks": 120
+            },
+            "1p0_to_2p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 120,
+              "older_offset_ticks": 240
+            },
+            "2p0_to_3p0_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 240,
+              "older_offset_ticks": 360
+            },
+            "zero_to_0p5_seconds_before_anchor": {
+              "eligible_trajectories": 0,
+              "metrics": {
+                "distance_progress_uu": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "heading_improvement": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "normalized_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "raw_advantage": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "steer_magnitude": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                },
+                "throttle": {
+                  "maximum": null,
+                  "mean": null,
+                  "minimum": null,
+                  "samples": 0,
+                  "standard_deviation": null,
+                  "sum": 0.0,
+                  "sum_squares": 0.0,
+                  "variance": null
+                }
+              },
+              "newer_offset_ticks": 0,
+              "older_offset_ticks": 60
+            }
+          },
+          "trajectory_counts": {
+            "contact_events": 1,
+            "excluded_collection_cut_or_short_failures": 58,
+            "failed_timeout_like_trajectories": 0,
+            "segments": 59,
+            "successful_first_contact_trajectories": 1,
+            "touch_age_confirmed_contact_events": 1
+          },
+          "version": "RivalM10_8CreditAssignmentWindowsV1"
+        },
+        "cuda_peak_allocated_mib": 2349.0244140625,
+        "cumulative_active_learner_steps": 432016,
+        "experience_records": 23927,
+        "gae": {
+          "advantage": {
+            "maximum": 13.18024730682373,
+            "mean": -0.4027026763148385,
+            "minimum": -2.792041063308716,
+            "p01": -1.9973590993881225,
+            "p50": -0.4715702533721924,
+            "p95": 0.4572855949401858,
+            "p99": 3.191149468421936,
+            "samples": 23927,
+            "standard_deviation": 0.9617413841497571
+          },
+          "finite": true,
+          "gamma": 0.9987444968227265,
+          "lambda": 0.9872585449014338,
+          "normalized_advantage": {
+            "maximum": 14.123287200927734,
+            "mean": -1.4284541955413582e-08,
+            "minimum": -2.4843876361846924,
+            "p01": -1.658092782497406,
+            "p50": -0.07160718739032745,
+            "p95": 0.8941990971565249,
+            "p99": 3.73681752204895,
+            "samples": 23927,
+            "standard_deviation": 0.9999999833516752
+          },
+          "return": {
+            "maximum": 9.939321517944336,
+            "mean": -3.5998563142856526,
+            "minimum": -6.134377479553223,
+            "p01": -5.201948862075806,
+            "p50": -3.6533091068267822,
+            "p95": -2.660226273536682,
+            "p99": -0.01525806427001688,
+            "samples": 23927,
+            "standard_deviation": 0.9923137941565057
+          },
+          "true_termination_suppresses_bootstrap": true,
+          "truncation_bootstraps_but_stops_recurrence": true
+        },
+        "health": {
+          "actor_updated": true,
+          "all_analog_axes_explored": true,
+          "all_button_combos_sampled": true,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "all_update_metrics_finite": true,
+          "analog_stds_finite_and_positive": true,
+          "authorized_agent_step_ceiling_respected": true,
+          "button_entropy_finite_and_positive": true,
+          "critic_updated": true,
+          "gae_finite": true,
+          "passed": true,
+          "pilot_metrics_finite": true,
+          "rollout_log_probabilities_reproduced": true,
+          "rollout_workers_alive": true
+        },
+        "iteration": 6,
+        "iteration_wall_seconds": 9.307293599937111,
+        "ppo": {
+          "actor_gradient_norm": {
+            "maximum": 0.32628440856933594,
+            "mean": 0.32628440856933594,
+            "minimum": 0.32628440856933594,
+            "p01": 0.32628440856933594,
+            "p50": 0.32628440856933594,
+            "p95": 0.32628440856933594,
+            "p99": 0.32628440856933594,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "actor_loss": {
+            "maximum": -0.000544762471690774,
+            "mean": -0.000544762471690774,
+            "minimum": -0.000544762471690774,
+            "p01": -0.000544762471690774,
+            "p50": -0.000544762471690774,
+            "p95": -0.000544762471690774,
+            "p99": -0.000544762471690774,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "actor_update_magnitude": 0.030534401535987854,
+          "all_hybrid_head_gradient_rows_nonzero": true,
+          "analog_entropy": {
+            "maximum": 2.7238922119140625,
+            "mean": 2.7238922119140625,
+            "minimum": 2.7238922119140625,
+            "p01": 2.7238922119140625,
+            "p50": 2.7238922119140625,
+            "p95": 2.7238922119140625,
+            "p99": 2.7238922119140625,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "analog_log_std": [
+            -0.5021278858184814,
+            -0.5048114061355591,
+            -0.5059080719947815,
+            -0.5051611661911011,
+            -0.5021215677261353
+          ],
+          "analog_std": [
+            0.6052414178848267,
+            0.603619396686554,
+            0.6029578447341919,
+            0.6034082770347595,
+            0.6052452325820923
+          ],
+          "approximate_kl": {
+            "maximum": -1.3202851312232866e-10,
+            "mean": -1.3202851312232866e-10,
+            "minimum": -1.3202851312232866e-10,
+            "p01": -1.3202851312232866e-10,
+            "p50": -1.3202851312232866e-10,
+            "p95": -1.3202851312232866e-10,
+            "p99": -1.3202851312232866e-10,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "batch_agent_steps": 23927,
+          "button_entropy": {
+            "maximum": 0.8472331762313843,
+            "mean": 0.8472331762313843,
+            "minimum": 0.8472331762313843,
+            "p01": 0.8472331762313843,
+            "p50": 0.8472331762313843,
+            "p95": 0.8472331762313843,
+            "p99": 0.8472331762313843,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "button_entropy_by_field": {
+            "boost": {
+              "maximum": 0.32381829619407654,
+              "mean": 0.32381829619407654,
+              "minimum": 0.32381829619407654,
+              "p01": 0.32381829619407654,
+              "p50": 0.32381829619407654,
+              "p95": 0.32381829619407654,
+              "p99": 0.32381829619407654,
+              "samples": 1,
+              "standard_deviation": 0.0
+            },
+            "handbrake": {
+              "maximum": 0.3244841396808624,
+              "mean": 0.3244841396808624,
+              "minimum": 0.3244841396808624,
+              "p01": 0.3244841396808624,
+              "p50": 0.3244841396808624,
+              "p95": 0.3244841396808624,
+              "p99": 0.3244841396808624,
+              "samples": 1,
+              "standard_deviation": 0.0
+            },
+            "jump": {
+              "maximum": 0.19893068075180054,
+              "mean": 0.19893068075180054,
+              "minimum": 0.19893068075180054,
+              "p01": 0.19893068075180054,
+              "p50": 0.19893068075180054,
+              "p95": 0.19893068075180054,
+              "p99": 0.19893068075180054,
+              "samples": 1,
+              "standard_deviation": 0.0
+            }
+          },
+          "button_entropy_coefficient": 0.0,
+          "button_entropy_schedule_active_learner_step": 420043,
+          "clip_fraction": {
+            "maximum": 0.0,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "p01": 0.0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "controller_branch_gradient_absolute_sums": {
+            "boost": {
+              "logit_weight_absolute_sum": 0.4641268849372864
+            },
+            "handbrake": {
+              "logit_weight_absolute_sum": 0.13816922903060913
+            },
+            "jump": {
+              "logit_weight_absolute_sum": 0.09357790648937225
+            },
+            "pitch": {
+              "log_std_absolute_sum": 0.004779617302119732,
+              "mean_weight_absolute_sum": 3.3373777866363525
+            },
+            "roll": {
+              "log_std_absolute_sum": 0.0009380169794894755,
+              "mean_weight_absolute_sum": 1.1540601253509521
+            },
+            "steer": {
+              "log_std_absolute_sum": 0.004531376529484987,
+              "mean_weight_absolute_sum": 1.6209595203399658
+            },
+            "throttle": {
+              "log_std_absolute_sum": 0.01448870450258255,
+              "mean_weight_absolute_sum": 0.7921643257141113
+            },
+            "yaw": {
+              "log_std_absolute_sum": 0.006522876210510731,
+              "mean_weight_absolute_sum": 2.3131446838378906
+            }
+          },
+          "critic_gradient_norm": {
+            "maximum": 39.08354568481445,
+            "mean": 39.08354568481445,
+            "minimum": 39.08354568481445,
+            "p01": 39.08354568481445,
+            "p50": 39.08354568481445,
+            "p95": 39.08354568481445,
+            "p99": 39.08354568481445,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "critic_loss": {
+            "maximum": 1.0871158838272095,
+            "mean": 1.0871158838272095,
+            "minimum": 1.0871158838272095,
+            "p01": 1.0871158838272095,
+            "p50": 1.0871158838272095,
+            "p95": 1.0871158838272095,
+            "p99": 1.0871158838272095,
+            "samples": 1,
+            "standard_deviation": 0.0
+          },
+          "critic_update_magnitude": 0.07292137295007706,
+          "epochs": 1,
+          "explained_variance_before_update": 0.06066905931908373,
+          "head_gradient_absolute_sums": {
+            "analog_log_std_abs_by_axis": [
+              0.01448870450258255,
+              0.004531376529484987,
+              0.004779617302119732,
+              0.006522876210510731,
+              0.0009380169794894755
+            ],
+            "analog_mean_abs_sum_by_axis": [
+              0.7921643257141113,
+              1.6209595203399658,
+              3.3373777866363525,
+              2.3131446838378906,
+              1.1540601253509521
+            ],
+            "button_logit_abs_sum_by_button": [
+              0.09357790648937225,
+              0.4641268849372864,
+              0.13816922903060913
+            ]
+          },
+          "maximum_absolute_log_ratio_per_minibatch": [
+            3.337860107421875e-06
+          ],
+          "maximum_allowed_worker_segment_shortfall": 224,
+          "minibatch_agent_steps": 24000,
+          "nominal_batch_agent_steps": 23930,
+          "value_prediction_before_update": {
+            "maximum": -2.5324957370758057,
+            "mean": -3.1971536375404415,
+            "minimum": -3.638219118118286,
+            "p01": -3.506265125274658,
+            "p50": -3.2061896324157715,
+            "p95": -2.925663423538208,
+            "p99": -2.812702360153198,
+            "samples": 23927,
+            "standard_deviation": 0.15995782863897898
+          },
+          "worker_segment_record_shortfall": 3
+        },
+        "reward": {
+          "maximum": 10.010724067687988,
+          "mean": -0.011122514643455553,
+          "minimum": -0.23838283121585846,
+          "p01": -0.07846971362829208,
+          "p50": -0.01290140487253666,
+          "p95": 0.0239109605550766,
+          "p99": 0.05196218334138409,
+          "samples": 23927,
+          "standard_deviation": 0.11422989062928557
+        },
+        "rollout_inference": {
+          "batch_size": {
+            "maximum": 46.0,
+            "mean": 24.806418219461698,
+            "minimum": 16.0,
+            "p01": 16.0,
+            "p50": 22.0,
+            "p95": 40.0,
+            "p99": 43.35000000000002,
+            "samples": 966,
+            "standard_deviation": 8.029500486401213
+          },
+          "batches": 966,
+          "per_agent_microseconds": {
+            "maximum": 3414.454547138038,
+            "mean": 286.0318212491222,
+            "minimum": 103.0659080821682,
+            "p01": 117.81833773973405,
+            "p50": 275.1915503592629,
+            "p95": 477.9546162310345,
+            "p99": 716.7228942030904,
+            "samples": 966,
+            "standard_deviation": 154.52944827881754
+          }
+        },
+        "simulated_game_hours": 1.000037037037037,
+        "update_wall_seconds": 0.07259240001440048
+      }
+    ]
+  },
+  "training_result": "training/results/milestone10_8/arms/arm_a/training_plus-001h.json"
+}
