@@ -266,6 +266,7 @@ class RivalV9PPOTrainer:
         aggregate_metrics_fn: Callable | None = None,
         policy_factory: Callable[[nn.Module, str | torch.device], Any] | None = None,
         button_entropy_coefficient_fn: Callable[[int], float] | None = None,
+        credit_assignment_diagnostics_fn: Callable[..., dict[str, Any]] | None = None,
     ) -> None:
         self.config = config
         self.device = torch.device(device)
@@ -279,6 +280,7 @@ class RivalV9PPOTrainer:
             else policy_factory(self.actor, self.device)
         )
         self.button_entropy_coefficient_fn = button_entropy_coefficient_fn
+        self.credit_assignment_diagnostics_fn = credit_assignment_diagnostics_fn
         ppo = config["ppo"]
         self.actor_optimizer = actor_optimizer or torch.optim.Adam(
             self.actor.parameters(), lr=float(ppo["actor_learning_rate"])
@@ -496,6 +498,20 @@ class RivalV9PPOTrainer:
             raise FloatingPointError("GAE produced a non-finite value")
         normalized_advantages = (advantages - advantages.mean()) / max(
             float(advantages.std()), float(ppo["advantage_epsilon"])
+        )
+        credit_assignment_diagnostics = (
+            None
+            if self.credit_assignment_diagnostics_fn is None
+            else self.credit_assignment_diagnostics_fn(
+                observations=observations,
+                actions=actions,
+                rewards=rewards,
+                next_observations=np.asarray(next_observations, dtype=np.float32),
+                terminated=np.asarray(terminated).reshape(-1),
+                truncated=np.asarray(truncated).reshape(-1),
+                advantages=advantages,
+                normalized_advantages=normalized_advantages,
+            )
         )
 
         rng = np.random.default_rng(int(self.config["gate11"]["seed"]) + self.completed_iterations)
@@ -806,6 +822,8 @@ class RivalV9PPOTrainer:
             },
         }
         report["health"]["passed"] = all(report["health"].values())
+        if credit_assignment_diagnostics is not None:
+            report["credit_assignment"] = credit_assignment_diagnostics
         if not report["health"]["passed"]:
             raise RuntimeError(f"Rival v9 PPO iteration failed health checks: {report}")
         held_count = int(self.config["gate11"]["held_reload_observation_count"])

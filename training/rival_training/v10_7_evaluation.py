@@ -80,10 +80,14 @@ def _finish_with_policy_diagnostics(state: dict[str, Any]) -> dict[str, Any]:
     effective = np.asarray(state["button_effective_probabilities"], dtype=np.float64)
     entropy = np.asarray(state["button_entropies"], dtype=np.float64)
     row["action_diagnostics"] = {
-        "throttle_mean": float(applied[:, 0].mean()),
-        "steer_mean": float(applied[:, 1].mean()),
-        "mean_absolute_throttle": float(np.abs(applied[:, 0]).mean()),
-        "mean_absolute_steer": float(np.abs(applied[:, 1]).mean()),
+        **{
+            f"{name}_mean": float(applied[:, index].mean())
+            for index, name in enumerate(("throttle", "steer", "pitch", "yaw", "roll"))
+        },
+        **{
+            f"mean_absolute_{name}": float(np.abs(applied[:, index]).mean())
+            for index, name in enumerate(("throttle", "steer", "pitch", "yaw", "roll"))
+        },
         **{
             f"{name}_share": float(applied[:, ANALOG_DIM + index].mean())
             for index, name in enumerate(BUTTON_FIELDS)
@@ -237,8 +241,14 @@ def _aggregate(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         for name in (
             "throttle_mean",
             "steer_mean",
+            "pitch_mean",
+            "yaw_mean",
+            "roll_mean",
             "mean_absolute_throttle",
             "mean_absolute_steer",
+            "mean_absolute_pitch",
+            "mean_absolute_yaw",
+            "mean_absolute_roll",
             "jump_share",
             "boost_share",
             "handbrake_share",

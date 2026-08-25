@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "config_version": "RivalM10_8Stage1GAEExperimentConfigV1",
+  "campaign_id": "rival-v10-8-stage1-gae-credit-assignment",
+  "stage": 1,
+  "skill": "ball_acquisition",
+  "scope": "stage_1_only",
+  "policy_version": "RivalPolicyV1IndependentStickyButtonsV1",
+  "critic_version": "RivalCriticV1",
+  "observation_version": "RivalObsV1",
+  "observation_schema_sha256": "569a99a5d19c3c1348658d637e1b2220c185e01aec45661c6e35141462a9ca95",
+  "action_version": "RivalActionV1",
+  "action_schema_sha256": "0121360ac73546911cc04dd6971ab5c53d1629c82589c00c45cb6b298a8f4163",
+  "button_policy_version": "RivalIndependentStickyBernoulliButtonsV1",
+  "canonical_state_version": "RivalCanonicalStateV1",
+  "canonical_adapter_version": "RivalCanonicalAdapterV1",
+  "reward_version": "RivalBallAcquisitionRewardV5",
+  "reward_schedule_version": "RivalBallAcquisitionRewardScheduleV5",
+  "curriculum_version": "RivalBallAcquisitionCurriculumV2",
+  "environment_version": "RivalBallAcquisitionEnvV5",
+  "evaluation_version": "RivalBallAcquisitionEvaluationV7GAEExperiment",
+  "experiment": {
+    "variable": "ppo.gae_lambda",
+    "selected_arm": null,
+    "paired_initialization": "exact_m10_7_pre_ppo_initialization_checkpoint",
+    "arms": {
+      "A": {
+        "label": "control_m10_7_horizon",
+        "gae_lambda": 0.9872585449014338
+      },
+      "B": {
+        "label": "physical_time_conversion_0p95_pow_1_over_8",
+        "gae_lambda": 0.993608849045455
+      },
+      "C": {
+        "label": "two_second_half_life",
+        "gae_lambda": 0.9983695094257663
+      }
+    }
+  },
+  "button_policy": {
+    "distribution": "three_independent_sticky_bernoulli_log_odds_prior",
+    "effective_probability_formula": "sigmoid(policy_logit + (2*previous_bit-1)*logit(persistence))",
+    "correction_reason": "The original convex probability mixture is an absorbing deterministic latch above persistence 0.5; the log-odds prior preserves neutral stickiness while allowing learned transitions both ways.",
+    "previous_state_source": "RivalObsV1 newest actually-applied self controller",
+    "persistence": {
+      "jump": 0.95,
+      "boost": 0.9,
+      "handbrake": 0.9
+    },
+    "deterministic_rule": "effective_probability >= 0.5",
+    "state_dependent_action_mask": false,
+    "action_repeat": false
+  },
+  "reward_contract": {
+    "rewarded_contact_limit": 3,
+    "first_physical_touch_reward": 10.0,
+    "second_physical_touch_reward": 10.0,
+    "third_physical_touch_reward": 10.0,
+    "fourth_and_later_touch_reward": 0.0,
+    "maximum_touch_reward_per_episode": 30.0,
+    "requires_separated_new_contact": true,
+    "heading_alignment_formula": "dot(car_forward,normalize(ball_position-car_position))",
+    "heading_delta_scale": 1.5,
+    "heading_positive_episode_budget": null,
+    "heading_negative_episode_budget": null,
+    "holding_heading_reward": 0.0,
+    "distance_progress_formula": "distance(previous_car,current_ball)-distance(current_car,current_ball)",
+    "distance_progress_scale_uu": 2300.0,
+    "distance_progress_safety_clip_uu": 64.0,
+    "distance_positive_episode_budget": null,
+    "distance_negative_episode_budget": null,
+    "acquisition_grace_seconds": 0.5,
+    "acquisition_time_penalty_rate_per_second": -1.4,
+    "acquisition_time_penalty_per_eligible_tick": -0.011666666666666665,
+    "failed_acquisition_window_penalty": -16.1,
+    "time_penalty_depends_on_speed": false,
+    "goal_reward": 0.0,
+    "concede_reward": 0.0,
+    "generic_speed_reward": 0.0,
+    "boost_reward": 0.0,
+    "throttle_reward": 0.0,
+    "steer_reward": 0.0,
+    "action_magnitude_reward": 0.0,
+    "jump_reward": 0.0,
+    "handbrake_reward": 0.0,
+    "named_mechanic_reward": 0.0,
+    "possession_reward": 0.0,
+    "aerial_reward": 0.0,
+    "recovery_reward": 0.0
+  },
+  "backend": {
+    "name": "rlgym-ppo",
+    "version": "1.3.13",
+    "source_commit": "4ffd2e924198bf4b2d59f4bf280b29919d7c07ea",
+    "worker_count": 56,
+    "minimum_inference_size": 16,
+    "standardize_observations": false
+  },
+  "time_base": {
+    "physics_hz": 120,
+    "policy_hz": 120,
+    "agents_per_environment": 2,
+    "trainable_agents_per_environment": 1,
+    "dummy_agents_per_environment": 1,
+    "agent_steps_per_simulated_game_second": 120,
+    "agent_steps_per_simulated_game_hour": 432000,
+    "active_learner_steps_per_simulated_game_second": 120,
+    "active_learner_steps_per_simulated_game_hour": 432000,
+    "repeat_action": false,
+    "one_tick_action_delay": true
+  },
+  "ppo": {
+    "gamma": 0.9987444968227265,
+    "gae_lambda": 0.9872585449014338,
+    "rollout_agent_steps_per_iteration": 96000,
+    "experience_buffer_capacity_agent_steps": 300000,
+    "ppo_batch_agent_steps": 96000,
+    "minibatch_agent_steps": 24000,
+    "epochs": 1,
+    "clip_range": 0.2,
+    "actor_learning_rate": 0.0001,
+    "critic_learning_rate": 0.0001,
+    "analog_entropy_coefficient": 0.0002,
+    "button_entropy_coefficient": 0.001,
+    "max_gradient_norm": 1.0,
+    "advantage_epsilon": 0.000001,
+    "button_entropy_schedule": {
+      "initial_coefficient": 0.001,
+      "final_coefficient": 0.0,
+      "anneal_active_learner_simulated_hours": 0.5,
+      "remain_at_final_after_anneal": true
+    }
+  },
+  "gate11": {
+    "iterations_before_fresh_reload": 1,
+    "iterations_after_fresh_reload": 1,
+    "held_reload_observation_count": 32,
+    "seed": 20261071
+  },
+  "stage_contract": {
+    "source_checkpoint": "training/checkpoints/milestone10_7/stage_1/initialization/000000000",
+    "source_actor_sha256": "1e58fa4f6ad107344fa7d163b53e1af2aad871ec01d16ed47776d61b20397548",
+    "source_manifest_sha256": "301b6f3a65cf998bdffe39fcd23c353c5187d2c760cfd74ebbec356bf5fd2824",
+    "identical_actor_initialization": true,
+    "identical_critic_initialization": true,
+    "identical_fresh_actor_optimizer": true,
+    "identical_fresh_critic_optimizer": true,
+    "dummy_excluded_from_ppo": true,
+    "only_experimental_variable": "ppo.gae_lambda",
+    "maximum_active_learner_steps_per_arm": 432000,
+    "maximum_learner_simulated_hours_per_arm": 1.0,
+    "evaluation_boundaries_simulated_hours": [0.5, 1.0],
+    "automatically_continue_beyond_1h": false,
+    "rolling_recovery_checkpoints_to_keep": 2,
+    "stage_2_authorized": false,
+    "production_promotion_authorized": false
+  }
+}
