@@ -56,6 +56,11 @@ therefore broadcasts the aggregate ground-contact state to all four frozen wheel
 fields. This is exact when all four wheels are either in or out of contact and is
 an explicit approximation during partial-wheel wall, edge, and landing contacts.
 
+RLBot's live field metadata reports each boost pad's rendered floor elevation,
+whereas RivalSim stores the pickup trigger height. The adapter maps the same 34
+pads by their unique horizontal centers and retains RivalSim's canonical order;
+pad active/cooldown state still comes directly from the live packet.
+
 Jump, air, boost and supersonic timers not carried literally in the live packet
 are maintained from authoritative `frame_num`, `AirState`, controller, boost and
 supersonic transitions. Ball/car kinematics, orientation, boost, jump/dodge state,

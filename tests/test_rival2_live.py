@@ -48,7 +48,14 @@ def _packet(manifest, frame=0, phase="Kickoff"):
     order = sorted(range(34), key=lambda i: (positions[i][1], positions[i][0]))
     field_info = SimpleNamespace(
         boost_pads=[
-            SimpleNamespace(location=_vec(*positions[index])) for index in order
+            SimpleNamespace(
+                location=_vec(
+                    positions[index][0],
+                    positions[index][1],
+                    8.0 if index < 6 else 0.0820159912109375,
+                )
+            )
+            for index in order
         ]
     )
     def physics(x, y, yaw):

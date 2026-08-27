@@ -93,7 +93,18 @@ def main() -> int:
     packet_order = rng.permutation(34)
     field_info = SimpleNamespace(
         boost_pads=[
-            SimpleNamespace(location=_vec(canonical_positions[index]))
+            SimpleNamespace(
+                location=_vec(
+                    np.asarray(
+                        (
+                            canonical_positions[index, 0],
+                            canonical_positions[index, 1],
+                            8.0 if index < 6 else 0.0820159912109375,
+                        ),
+                        dtype=np.float32,
+                    )
+                )
+            )
             for index in packet_order
         ]
     )

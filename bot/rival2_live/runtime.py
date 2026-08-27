@@ -163,11 +163,17 @@ class Rival2LiveAdapter:
         actual = np.stack([_vec3(pad.location) for pad in static])
         mapping = []
         for position in expected:
-            distances = np.linalg.norm(actual - position, axis=1)
+            # RivalSim records the boost pickup trigger height, while RLBot's
+            # live FieldInfo reports the pad's rendered floor elevation. The
+            # horizontal centers are the authoritative stable pad identity.
+            distances = np.linalg.norm(actual[:, :2] - position[:2], axis=1)
             candidates = np.flatnonzero(distances <= 1.0)
             if candidates.size != 1:
+                nearest = int(np.argmin(distances))
                 raise RuntimeError(
-                    f"failed to map canonical boost pad at {position.tolist()}"
+                    "failed to map canonical boost pad by horizontal center at "
+                    f"{position.tolist()}; nearest live pad={actual[nearest].tolist()} "
+                    f"xy_distance={float(distances[nearest])}"
                 )
             mapping.append(int(candidates[0]))
         if len(set(mapping)) != 34:
