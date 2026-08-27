@@ -46,15 +46,16 @@ def _packet(manifest, frame=0, phase="Kickoff"):
     positions = manifest["observation"]["canonical_boost_pad_positions"]
     # Stable packet order independent of the canonical six-big-first order.
     order = sorted(range(34), key=lambda i: (positions[i][1], positions[i][0]))
+
+    def live_position(index):
+        x, y, _z = positions[index]
+        if abs(y) == 2300.0:
+            y += 2.0 if y > 0 else -2.0
+        return x, y, 8.0 if index < 6 else 0.0820159912109375
+
     field_info = SimpleNamespace(
         boost_pads=[
-            SimpleNamespace(
-                location=_vec(
-                    positions[index][0],
-                    positions[index][1],
-                    8.0 if index < 6 else 0.0820159912109375,
-                )
-            )
+            SimpleNamespace(location=_vec(*live_position(index)))
             for index in order
         ]
     )

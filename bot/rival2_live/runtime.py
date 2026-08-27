@@ -167,7 +167,7 @@ class Rival2LiveAdapter:
             # live FieldInfo reports the pad's rendered floor elevation. The
             # horizontal centers are the authoritative stable pad identity.
             distances = np.linalg.norm(actual[:, :2] - position[:2], axis=1)
-            candidates = np.flatnonzero(distances <= 1.0)
+            candidates = np.flatnonzero(distances <= 4.0)
             if candidates.size != 1:
                 nearest = int(np.argmin(distances))
                 raise RuntimeError(

@@ -220,8 +220,9 @@ def main() -> int:
         "live_packet_qualifications": {
             "boost_pad_mapping": (
                 "canonical pads are matched to live FieldInfo by unique horizontal "
-                "center because RLBot reports rendered floor elevation rather than "
-                "RivalSim's pickup trigger height"
+                "center within the measured 2-unit Soccar coordinate delta because "
+                "RLBot reports rendered pad coordinates rather than RivalSim's pickup "
+                "trigger coordinates"
             ),
             "individual_wheel_contacts": (
                 "RLBot v5 exposes authoritative aggregate AirState.OnGround but not "

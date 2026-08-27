@@ -91,20 +91,19 @@ def main() -> int:
         manifest["observation"]["canonical_boost_pad_positions"], dtype=np.float32
     )
     packet_order = rng.permutation(34)
+
+    def live_pad_position(index: int) -> np.ndarray:
+        x, y, _z = canonical_positions[index]
+        if abs(float(y)) == 2300.0:
+            y += 2.0 if y > 0 else -2.0
+        return np.asarray(
+            (x, y, 8.0 if index < 6 else 0.0820159912109375),
+            dtype=np.float32,
+        )
+
     field_info = SimpleNamespace(
         boost_pads=[
-            SimpleNamespace(
-                location=_vec(
-                    np.asarray(
-                        (
-                            canonical_positions[index, 0],
-                            canonical_positions[index, 1],
-                            8.0 if index < 6 else 0.0820159912109375,
-                        ),
-                        dtype=np.float32,
-                    )
-                )
-            )
+            SimpleNamespace(location=_vec(live_pad_position(index)))
             for index in packet_order
         ]
     )
