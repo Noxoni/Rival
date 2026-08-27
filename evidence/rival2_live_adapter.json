@@ -1,0 +1,45 @@
+{
+  "corpus": {
+    "all_five_air_states": true,
+    "boost_pad_order_permuted": true,
+    "packet_player_order_swapped_states": 1024,
+    "physical_states": 2048,
+    "seed": 2026082702,
+    "team_observations": 4096
+  },
+  "created_utc": "2026-08-27T20:32:34.908386+00:00",
+  "deterministic_action_parity": {
+    "analog_max_abs_error": 0.0,
+    "binary_button_exact_fraction": 1.0
+  },
+  "gates": {
+    "analog_action_max_abs_le_1e6": true,
+    "binary_buttons_exact": true,
+    "observation_exact": true
+  },
+  "identity": {
+    "action_contract_sha256": "145AF5B49E1A0C85209022A6DE862F05EF996EB89B90B124072A59BC9936727B",
+    "artifact_sha256": "DC32E43467CA07C573A3679BC046927871D692186091529F5DC7C7F7B17E3CF1",
+    "checkpoint_sha256": "3B994E118A9498713DC6115D38F061958A900EA8F4D00CE568F916942E851D9A",
+    "observation_contract_sha256": "10669E7D240D553BEA601F8AD7AEF9F9029310E55EA6DC4072E866F34BB218AF",
+    "policy_version": 479
+  },
+  "live_packet_qualifications": {
+    "individual_wheel_contacts": "RLBot v5 exposes authoritative aggregate AirState.OnGround but not four individual wheel-contact bits; live deployment broadcasts the aggregate state to the four frozen observation fields",
+    "internal_vehicle_timers": "jump/air/boost/supersonic timers omitted by live packets are maintained from authoritative packet transitions and frame_num at 120 Hz"
+  },
+  "observation_parity": {
+    "block_max_abs_error": {
+      "ball": 0.0,
+      "boost_pads": 0.0,
+      "lifecycle": 0.0,
+      "opponent_car": 0.0,
+      "previous_action": 0.0,
+      "relative": 0.0,
+      "self_car": 0.0
+    },
+    "overall_max_abs_error": 0.0
+  },
+  "schema_version": 1,
+  "verdict": "PASS_GREEN"
+}

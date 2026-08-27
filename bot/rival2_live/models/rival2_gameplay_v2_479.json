@@ -1,0 +1,316 @@
+{
+  "artifact": {
+    "path": "rival2_gameplay_v2_479.ts",
+    "sha256": "DC32E43467CA07C573A3679BC046927871D692186091529F5DC7C7F7B17E3CF1",
+    "size_bytes": 2507850
+  },
+  "contracts": {
+    "action": "RIVAL2_ACTION_V1",
+    "action_contract_sha256": "145AF5B49E1A0C85209022A6DE862F05EF996EB89B90B124072A59BC9936727B",
+    "controller_fields": [
+      "throttle",
+      "steer",
+      "pitch",
+      "yaw",
+      "roll",
+      "jump",
+      "boost",
+      "handbrake"
+    ],
+    "deployment_action": "deterministic tanh(mean), sigmoid(logit)>=0.5",
+    "hold_ticks": 4,
+    "observation": "RIVAL2_OBS_V1",
+    "observation_schema_sha256": "10669E7D240D553BEA601F8AD7AEF9F9029310E55EA6DC4072E866F34BB218AF",
+    "physics_hz": 120,
+    "policy_hz": 30
+  },
+  "export_parity": {
+    "analog_max_abs_error": 0.0,
+    "buttons_exact": true,
+    "observations": 4096,
+    "pass": true,
+    "seed": 2026082701
+  },
+  "format": "RIVAL2_RLBOT_DEPLOY_V1",
+  "live_packet_qualifications": {
+    "individual_wheel_contacts": "RLBot v5 exposes authoritative aggregate AirState.OnGround but not four individual wheel-contact bits; live deployment broadcasts the aggregate state to the four frozen observation fields",
+    "internal_vehicle_timers": "jump/air/boost/supersonic timers omitted by live packets are maintained from authoritative packet transitions and frame_num at 120 Hz"
+  },
+  "observation": {
+    "air_time_scale": 1.25,
+    "angular_speed_scale": 6.0,
+    "ball_linear_speed_scale": 6000.0,
+    "boost_scale": 100.0,
+    "boosting_time_scale": 0.1,
+    "canonical_boost_pad_durations": [
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "canonical_boost_pad_positions": [
+      [
+        -3584.0,
+        0.0,
+        73.0
+      ],
+      [
+        3584.0,
+        0.0,
+        73.0
+      ],
+      [
+        -3072.0,
+        4096.0,
+        73.0
+      ],
+      [
+        3072.0,
+        4096.0,
+        73.0
+      ],
+      [
+        -3072.0,
+        -4096.0,
+        73.0
+      ],
+      [
+        3072.0,
+        -4096.0,
+        73.0
+      ],
+      [
+        0.0,
+        -4240.0,
+        70.0
+      ],
+      [
+        -1792.0,
+        -4184.0,
+        70.0
+      ],
+      [
+        1792.0,
+        -4184.0,
+        70.0
+      ],
+      [
+        -940.0,
+        -3308.0,
+        70.0
+      ],
+      [
+        940.0,
+        -3308.0,
+        70.0
+      ],
+      [
+        0.0,
+        -2816.0,
+        70.0
+      ],
+      [
+        -3584.0,
+        -2484.0,
+        70.0
+      ],
+      [
+        3584.0,
+        -2484.0,
+        70.0
+      ],
+      [
+        -1788.0,
+        -2300.0,
+        70.0
+      ],
+      [
+        1788.0,
+        -2300.0,
+        70.0
+      ],
+      [
+        -2048.0,
+        -1036.0,
+        70.0
+      ],
+      [
+        0.0,
+        -1024.0,
+        70.0
+      ],
+      [
+        2048.0,
+        -1036.0,
+        70.0
+      ],
+      [
+        -1024.0,
+        0.0,
+        70.0
+      ],
+      [
+        1024.0,
+        0.0,
+        70.0
+      ],
+      [
+        -2048.0,
+        1036.0,
+        70.0
+      ],
+      [
+        0.0,
+        1024.0,
+        70.0
+      ],
+      [
+        2048.0,
+        1036.0,
+        70.0
+      ],
+      [
+        -1788.0,
+        2300.0,
+        70.0
+      ],
+      [
+        1788.0,
+        2300.0,
+        70.0
+      ],
+      [
+        -3584.0,
+        2484.0,
+        70.0
+      ],
+      [
+        3584.0,
+        2484.0,
+        70.0
+      ],
+      [
+        0.0,
+        2816.0,
+        70.0
+      ],
+      [
+        -940.0,
+        3308.0,
+        70.0
+      ],
+      [
+        940.0,
+        3308.0,
+        70.0
+      ],
+      [
+        -1792.0,
+        4184.0,
+        70.0
+      ],
+      [
+        1792.0,
+        4184.0,
+        70.0
+      ],
+      [
+        0.0,
+        4240.0,
+        70.0
+      ]
+    ],
+    "car_linear_speed_scale": 2300.0,
+    "demo_timer_scale": 3.0,
+    "dimension": 182,
+    "episode_age_scale_ticks": 5400,
+    "flip_time_scale": 0.95,
+    "jump_time_scale": 0.2,
+    "no_touch_age_scale_ticks": 1800,
+    "orange_pad_remap": [
+      1,
+      0,
+      5,
+      4,
+      3,
+      2,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6
+    ],
+    "position_scale": [
+      4096.0,
+      5120.0,
+      2044.0
+    ],
+    "sticky_tick_scale": 3.0,
+    "supersonic_time_scale": 1.0,
+    "time_since_boosted_scale": 1.0
+  },
+  "schema_version": 1,
+  "source": {
+    "checkpoint_path": "G:\\dev\\RivalSim\\checkpoints\\rival2\\opponent_curriculum_v1\\rival2_opponent_curriculum_resume.pt",
+    "checkpoint_sha256": "3B994E118A9498713DC6115D38F061958A900EA8F4D00CE568F916942E851D9A",
+    "iteration": 479,
+    "policy_config_hash": "58C7409F34EA24CB7FAE7505A7F5FE2CC1B65021EE48B5200ED12BB8990C6136",
+    "policy_version": 479,
+    "reward_version": "RIVAL2_REWARD_GAMEPLAY_V2",
+    "rivalsim_commit": "1da8557f32a94e6a8e96d1acbb0103656e203e27",
+    "total_agent_samples": 3655854038
+  }
+}
