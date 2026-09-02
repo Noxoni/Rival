@@ -1,0 +1,48 @@
+{
+  "format": "RIVAL2_V23_RLBOT_DEPLOYMENT_EVIDENCE_V1",
+  "implementation_commit": "59f1cdd91bba56d428fb36d2bd5cea2b087247fc",
+  "source": {
+    "rivalsim_commit": "9f96d27100fcf9e709e66f6c3ff2eb20702d49a4",
+    "full_match_vs_nexto": {
+      "wins": 8,
+      "losses": 2,
+      "goals_for": 159,
+      "goals_against": 111
+    }
+  },
+  "artifacts": {
+    "blue": {
+      "checkpoint_sha256": "0263546263285384D2D9A0CE55A471C41A41A8B7D4870DD9504D0ACCEA76723C",
+      "torchscript_sha256": "1F04F3809678B66776962CAC32FD6EF5E195F4D12FD26981BA6CAA0AE0E93092"
+    },
+    "orange": {
+      "checkpoint_sha256": "56E4ECA5075EB5748402BA3C5D8D51AC91FC1AFF55219E64EA5CE688DAD3491A",
+      "torchscript_sha256": "95714F017942FAF4B2163C0A8865548F0FE7C161F891A669084169AC06D53C62"
+    }
+  },
+  "validation": {
+    "export_parity_observations_per_side": 4096,
+    "export_analog_max_abs_error": 0.0,
+    "export_buttons_exact": true,
+    "self_test": "PASS",
+    "focused_tests": {
+      "command": ".venv\\Scripts\\python.exe -m pytest tests\\test_rival2_live.py tests\\test_rival2_v23.py -q",
+      "result": "7 passed",
+      "clean_detached_worktree": true
+    },
+    "ruff": "PASS",
+    "compileall": "PASS"
+  },
+  "live_smoke": {
+    "started_local": "2026-09-02T06:54:17-04:00",
+    "launcher": "steam",
+    "human_team": "blue",
+    "rival_team": "orange",
+    "rocket_league_connected": true,
+    "rlbot_agent_ready": true,
+    "selected_policy_version": 4589,
+    "selected_checkpoint_sha256": "56E4ECA5075EB5748402BA3C5D8D51AC91FC1AFF55219E64EA5CE688DAD3491A",
+    "status": "ONGOING_HUMAN_PLAYTEST"
+  },
+  "verdict": "PASS"
+}
