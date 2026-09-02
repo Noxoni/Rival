@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_PATH = ROOT / "bot" / "rival2_live" / "runtime.py"
 MANIFEST_PATH = ROOT / "bot" / "rival2_live" / "models" / "rival2_gameplay_v2_479.json"
 MODEL_PATH = ROOT / "bot" / "rival2_live" / "models" / "rival2_gameplay_v2_479.ts"
+V23_MANIFEST_PATH = ROOT / "bot" / "rival2_v23" / "models" / "rival2_v23_blue.json"
+V23_MODEL_PATH = ROOT / "bot" / "rival2_v23" / "models" / "rival2_v23_blue.ts"
 
 
 def _runtime_module():
@@ -170,6 +172,26 @@ def test_live_runtime_decides_every_four_unique_physics_frames_and_resets():
     runtime.step(kickoff, team=0)
     assert runtime.decisions == 3
     assert runtime.adapter.memory.kickoff_indicator[0] == 0
+
+
+def test_live_runtime_uses_manifest_120hz_cadence():
+    runtime_module = _runtime_module()
+    manifest = json.loads(V23_MANIFEST_PATH.read_text(encoding="utf-8"))
+    packet, field_info = _packet(manifest, frame=200)
+    runtime = runtime_module.Rival2LiveRuntime(
+        V23_MODEL_PATH, V23_MANIFEST_PATH, field_info
+    )
+    first = runtime.step(packet, team=0)
+    duplicate = runtime.step(packet, team=0)
+    assert runtime.decisions == 1
+    assert runtime.duplicate_packets == 1
+    for frame in (201, 202, 203):
+        packet, _ = _packet(manifest, frame=frame)
+        action = runtime.step(packet, team=0)
+        assert np.isfinite(action).all()
+    assert runtime.decisions == 4
+    assert runtime.hold_ticks == 1
+    np.testing.assert_array_equal(duplicate, first)
 
 
 def test_play_launcher_builds_balanced_five_minute_human_match():

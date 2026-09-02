@@ -37,6 +37,7 @@ def _load_rivalsim(root: Path) -> dict[str, Any]:
     from rivalsim.kernels.boost_pad import SOCCAR_PAD_POSITIONS
     from rivalsim.rival2_contracts import (
         ACTION_CONTRACT_HASH,
+        ACTION_CONTRACT_V2_120HZ_HASH,
         ACTION_NAMES,
         AIR_TIME_SCALE,
         ANGULAR_SPEED_SCALE,
@@ -50,9 +51,14 @@ def _load_rivalsim(root: Path) -> dict[str, Any]:
         JUMP_TIME_SCALE,
         NO_TOUCH_AGE_SCALE_TICKS,
         OBSERVATION_SCHEMA_HASH,
+        OBSERVATION_SCHEMA_V2_120HZ_HASH,
         OBS_DIM,
         ORANGE_PAD_REMAP,
         POSITION_SCALE,
+        RIVAL2_ACTION_V2_120HZ_VERSION,
+        RIVAL2_ACTION_VERSION,
+        RIVAL2_OBS_V2_120HZ_VERSION,
+        RIVAL2_OBS_VERSION,
         STICKY_TICK_SCALE,
         SUPERSONIC_TIME_SCALE,
         TIME_SINCE_BOOSTED_SCALE,
@@ -62,6 +68,7 @@ def _load_rivalsim(root: Path) -> dict[str, Any]:
     return {
         "SOCCAR_PAD_POSITIONS": SOCCAR_PAD_POSITIONS,
         "ACTION_CONTRACT_HASH": ACTION_CONTRACT_HASH,
+        "ACTION_CONTRACT_V2_120HZ_HASH": ACTION_CONTRACT_V2_120HZ_HASH,
         "ACTION_NAMES": ACTION_NAMES,
         "AIR_TIME_SCALE": AIR_TIME_SCALE,
         "ANGULAR_SPEED_SCALE": ANGULAR_SPEED_SCALE,
@@ -75,9 +82,14 @@ def _load_rivalsim(root: Path) -> dict[str, Any]:
         "JUMP_TIME_SCALE": JUMP_TIME_SCALE,
         "NO_TOUCH_AGE_SCALE_TICKS": NO_TOUCH_AGE_SCALE_TICKS,
         "OBSERVATION_SCHEMA_HASH": OBSERVATION_SCHEMA_HASH,
+        "OBSERVATION_SCHEMA_V2_120HZ_HASH": OBSERVATION_SCHEMA_V2_120HZ_HASH,
         "OBS_DIM": OBS_DIM,
         "ORANGE_PAD_REMAP": ORANGE_PAD_REMAP,
         "POSITION_SCALE": POSITION_SCALE,
+        "RIVAL2_ACTION_V2_120HZ_VERSION": RIVAL2_ACTION_V2_120HZ_VERSION,
+        "RIVAL2_ACTION_VERSION": RIVAL2_ACTION_VERSION,
+        "RIVAL2_OBS_V2_120HZ_VERSION": RIVAL2_OBS_V2_120HZ_VERSION,
+        "RIVAL2_OBS_VERSION": RIVAL2_OBS_VERSION,
         "STICKY_TICK_SCALE": STICKY_TICK_SCALE,
         "SUPERSONIC_TIME_SCALE": SUPERSONIC_TIME_SCALE,
         "TIME_SINCE_BOOSTED_SCALE": TIME_SINCE_BOOSTED_SCALE,
@@ -126,6 +138,48 @@ def main() -> int:
         )
 
     payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
+    observation_version = payload.get(
+        "observation_version", symbols["RIVAL2_OBS_VERSION"]
+    )
+    action_version = payload.get("action_version", symbols["RIVAL2_ACTION_VERSION"])
+    supported_contracts = {
+        symbols["RIVAL2_OBS_VERSION"]: symbols["OBSERVATION_SCHEMA_HASH"],
+        symbols["RIVAL2_ACTION_VERSION"]: symbols["ACTION_CONTRACT_HASH"],
+        symbols["RIVAL2_OBS_V2_120HZ_VERSION"]: symbols[
+            "OBSERVATION_SCHEMA_V2_120HZ_HASH"
+        ],
+        symbols["RIVAL2_ACTION_V2_120HZ_VERSION"]: symbols[
+            "ACTION_CONTRACT_V2_120HZ_HASH"
+        ],
+    }
+    if observation_version not in supported_contracts:
+        raise RuntimeError(f"unsupported observation contract: {observation_version}")
+    if action_version not in supported_contracts:
+        raise RuntimeError(f"unsupported action contract: {action_version}")
+    checkpoint_contracts = payload.get("contract_hashes", {})
+    for version in (observation_version, action_version):
+        if version in checkpoint_contracts and (
+            checkpoint_contracts[version] != supported_contracts[version]
+        ):
+            raise RuntimeError(
+                f"checkpoint contract hash mismatch for {version}: "
+                f"{checkpoint_contracts[version]} != {supported_contracts[version]}"
+            )
+    physics_hz = int(payload.get("physics_hz", 120))
+    policy_hz = int(
+        payload.get(
+            "policy_hz",
+            120
+            if action_version == symbols["RIVAL2_ACTION_V2_120HZ_VERSION"]
+            else 30,
+        )
+    )
+    if physics_hz <= 0 or policy_hz <= 0 or physics_hz % policy_hz != 0:
+        raise RuntimeError(
+            f"invalid checkpoint cadence: physics_hz={physics_hz}, "
+            f"policy_hz={policy_hz}"
+        )
+    hold_ticks = physics_hz // policy_hz
     config = symbols["Rival2PolicyConfig"](**payload["policy_config"])
     if payload.get("policy_config_hash") != config.content_hash:
         raise RuntimeError("checkpoint policy configuration hash mismatch")
@@ -194,14 +248,14 @@ def main() -> int:
             "policy_config_hash": config.content_hash,
         },
         "contracts": {
-            "observation": "RIVAL2_OBS_V1",
-            "observation_schema_sha256": symbols["OBSERVATION_SCHEMA_HASH"],
-            "action": "RIVAL2_ACTION_V1",
-            "action_contract_sha256": symbols["ACTION_CONTRACT_HASH"],
+            "observation": observation_version,
+            "observation_schema_sha256": supported_contracts[observation_version],
+            "action": action_version,
+            "action_contract_sha256": supported_contracts[action_version],
             "controller_fields": list(symbols["ACTION_NAMES"]),
-            "physics_hz": 120,
-            "policy_hz": 30,
-            "hold_ticks": 4,
+            "physics_hz": physics_hz,
+            "policy_hz": policy_hz,
+            "hold_ticks": hold_ticks,
             "deployment_action": "deterministic tanh(mean), sigmoid(logit)>=0.5",
         },
         "observation": observation,

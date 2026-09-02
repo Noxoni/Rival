@@ -527,6 +527,21 @@ class Rival2LiveRuntime:
         self.manifest = json.loads(self.manifest_path.read_text(encoding="utf-8"))
         if self.manifest.get("format") != "RIVAL2_RLBOT_DEPLOY_V1":
             raise RuntimeError("unsupported Rival 2 RLBot artifact format")
+        contracts = self.manifest["contracts"]
+        physics_hz = int(contracts["physics_hz"])
+        policy_hz = int(contracts["policy_hz"])
+        self.hold_ticks = int(contracts["hold_ticks"])
+        if (
+            physics_hz <= 0
+            or policy_hz <= 0
+            or self.hold_ticks <= 0
+            or physics_hz != policy_hz * self.hold_ticks
+        ):
+            raise RuntimeError(
+                "invalid Rival 2 deployment cadence: "
+                f"physics_hz={physics_hz}, policy_hz={policy_hz}, "
+                f"hold_ticks={self.hold_ticks}"
+            )
         artifact = self.manifest["artifact"]
         actual = {
             "size_bytes": self.model_path.stat().st_size,
@@ -604,7 +619,8 @@ class Rival2LiveRuntime:
         self.last_frame = frame
         self.last_phase = phase
         should_decide = (
-            self.last_decision_frame is None or frame - self.last_decision_frame >= 4
+            self.last_decision_frame is None
+            or frame - self.last_decision_frame >= self.hold_ticks
         )
         if should_decide:
             observation = self.adapter.observation(packet)[0, int(team)]
@@ -627,6 +643,7 @@ class Rival2LiveRuntime:
             "decisions": self.decisions,
             "duplicate_packets": self.duplicate_packets,
             "missed_physics_ticks": self.missed_physics_ticks,
+            "hold_ticks": self.hold_ticks,
             "wheel_contact_semantics": "aggregate AirState.OnGround broadcast to four fields",
         }
 
