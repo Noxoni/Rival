@@ -1,0 +1,316 @@
+{
+  "artifact": {
+    "path": "aerial.ts",
+    "sha256": "BACCA38C4507265D1831CE6D7647B1AEDAA85D2FAC0ADBB7D14B088416E8D2BF",
+    "size_bytes": 2507418
+  },
+  "contracts": {
+    "action": "RIVAL2_ACTION_V2_120HZ",
+    "action_contract_sha256": "5E3747CCF9F59BA18D81D07014D60637F7D886907A0F44B0CA681C74F20EF91A",
+    "controller_fields": [
+      "throttle",
+      "steer",
+      "pitch",
+      "yaw",
+      "roll",
+      "jump",
+      "boost",
+      "handbrake"
+    ],
+    "deployment_action": "deterministic tanh(mean), sigmoid(logit)>=0.5",
+    "hold_ticks": 1,
+    "observation": "RIVAL2_OBS_V2_120HZ",
+    "observation_schema_sha256": "BF9E141E5A1E5D2F15581C8BBB10F31F11FC5AA6736B327E61C03DD8D2388237",
+    "physics_hz": 120,
+    "policy_hz": 120
+  },
+  "export_parity": {
+    "analog_max_abs_error": 0.0,
+    "buttons_exact": true,
+    "observations": 4096,
+    "pass": true,
+    "seed": 2026090311
+  },
+  "format": "RIVAL2_RLBOT_DEPLOY_V1",
+  "live_packet_qualifications": {
+    "boost_pad_mapping": "canonical pads are matched to live FieldInfo by unique horizontal center within the measured 2-unit Soccar coordinate delta because RLBot reports rendered pad coordinates rather than RivalSim's pickup trigger coordinates",
+    "individual_wheel_contacts": "RLBot v5 exposes authoritative aggregate AirState.OnGround but not four individual wheel-contact bits; live deployment broadcasts the aggregate state to the four frozen observation fields",
+    "internal_vehicle_timers": "jump/air/boost/supersonic timers omitted by live packets are maintained from authoritative packet transitions and frame_num at 120 Hz"
+  },
+  "observation": {
+    "air_time_scale": 1.25,
+    "angular_speed_scale": 6.0,
+    "ball_linear_speed_scale": 6000.0,
+    "boost_scale": 100.0,
+    "boosting_time_scale": 0.1,
+    "canonical_boost_pad_durations": [
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      10.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "canonical_boost_pad_positions": [
+      [
+        -3584.0,
+        0.0,
+        73.0
+      ],
+      [
+        3584.0,
+        0.0,
+        73.0
+      ],
+      [
+        -3072.0,
+        4096.0,
+        73.0
+      ],
+      [
+        3072.0,
+        4096.0,
+        73.0
+      ],
+      [
+        -3072.0,
+        -4096.0,
+        73.0
+      ],
+      [
+        3072.0,
+        -4096.0,
+        73.0
+      ],
+      [
+        0.0,
+        -4240.0,
+        70.0
+      ],
+      [
+        -1792.0,
+        -4184.0,
+        70.0
+      ],
+      [
+        1792.0,
+        -4184.0,
+        70.0
+      ],
+      [
+        -940.0,
+        -3308.0,
+        70.0
+      ],
+      [
+        940.0,
+        -3308.0,
+        70.0
+      ],
+      [
+        0.0,
+        -2816.0,
+        70.0
+      ],
+      [
+        -3584.0,
+        -2484.0,
+        70.0
+      ],
+      [
+        3584.0,
+        -2484.0,
+        70.0
+      ],
+      [
+        -1788.0,
+        -2300.0,
+        70.0
+      ],
+      [
+        1788.0,
+        -2300.0,
+        70.0
+      ],
+      [
+        -2048.0,
+        -1036.0,
+        70.0
+      ],
+      [
+        0.0,
+        -1024.0,
+        70.0
+      ],
+      [
+        2048.0,
+        -1036.0,
+        70.0
+      ],
+      [
+        -1024.0,
+        0.0,
+        70.0
+      ],
+      [
+        1024.0,
+        0.0,
+        70.0
+      ],
+      [
+        -2048.0,
+        1036.0,
+        70.0
+      ],
+      [
+        0.0,
+        1024.0,
+        70.0
+      ],
+      [
+        2048.0,
+        1036.0,
+        70.0
+      ],
+      [
+        -1788.0,
+        2300.0,
+        70.0
+      ],
+      [
+        1788.0,
+        2300.0,
+        70.0
+      ],
+      [
+        -3584.0,
+        2484.0,
+        70.0
+      ],
+      [
+        3584.0,
+        2484.0,
+        70.0
+      ],
+      [
+        0.0,
+        2816.0,
+        70.0
+      ],
+      [
+        -940.0,
+        3308.0,
+        70.0
+      ],
+      [
+        940.0,
+        3308.0,
+        70.0
+      ],
+      [
+        -1792.0,
+        4184.0,
+        70.0
+      ],
+      [
+        1792.0,
+        4184.0,
+        70.0
+      ],
+      [
+        0.0,
+        4240.0,
+        70.0
+      ]
+    ],
+    "car_linear_speed_scale": 2300.0,
+    "demo_timer_scale": 3.0,
+    "dimension": 182,
+    "episode_age_scale_ticks": 5400,
+    "flip_time_scale": 0.95,
+    "jump_time_scale": 0.2,
+    "no_touch_age_scale_ticks": 1800,
+    "orange_pad_remap": [
+      1,
+      0,
+      5,
+      4,
+      3,
+      2,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6
+    ],
+    "position_scale": [
+      4096.0,
+      5120.0,
+      2044.0
+    ],
+    "sticky_tick_scale": 3.0,
+    "supersonic_time_scale": 1.0,
+    "time_since_boosted_scale": 1.0
+  },
+  "schema_version": 1,
+  "source": {
+    "checkpoint_path": "checkpoints/rival2/official_v1/rival2_official_v1.pt",
+    "checkpoint_sha256": "20D03ECFAD8680D9F5464AEBA7C45B3FF86B3FD7FFDA50BE5160F3A4BF1EBC19",
+    "component": "aerial",
+    "component_source_path": "checkpoints/rival2/ground_to_air_goal_v3/rival2_ground_to_air_goal_v3.pt",
+    "component_source_sha256": "F7049F8EF6CC4D1EE3F7303D6D9CE1AA2207A10F6651A33BC71B7C344CC77154",
+    "policy_config_hash": "58C7409F34EA24CB7FAE7505A7F5FE2CC1B65021EE48B5200ED12BB8990C6136",
+    "rivalsim_commit": "89379bdb301df48ae16248c7c986c525b29cac4d"
+  }
+}
